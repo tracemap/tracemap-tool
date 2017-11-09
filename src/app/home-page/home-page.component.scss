@@ -1,0 +1,88 @@
+@import "fonts", "colors";
+
+.container {
+	display: grid;
+	grid-template-columns: 100vw;
+	grid-template-rows: 30vh 200px auto;
+	grid-template-areas:
+		"searchbar"
+		"description"
+		"details"
+}
+
+search {
+	grid-area: searchbar;
+	justify-self: center;
+	align-self: center;
+	display: grid;
+	grid-template-columns: auto 50px;
+	grid-template-rows: 50px;
+	grid-template-areas:
+		"input button";
+}
+
+#descriptionNav {
+	grid-area: description;
+	justify-self: center;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 50px 100px 50px;
+	grid-template-areas:
+		"headline headline"
+		"text text"
+		"twitter vk";
+
+	font: 100% $font-rubik;
+	border: 1px solid #000;
+	min-width: 300px;
+	max-width: 500px;
+
+	h1 {
+		grid-area: headline;
+		justify-self: center;	
+		font-size: 1.7em;
+		font-weight: 700;
+	}
+
+	p {
+		grid-area: text;
+		margin: 10px 20px;
+		max-width: 400px;
+	}
+
+	a {
+		text-decoration: none;
+		border: 1px solid #000;
+		color: $color-text;
+		text-align: center;
+		padding-top: 15px;
+
+		&:hover {
+			background-color: $color-text;
+			color: $color-bg;
+		}
+		&.active {
+			background-color: $color-bg-active;
+		}
+	}
+
+	.twitter {
+		grid-area: twitter;
+	}
+
+	.vk {
+		grid-area: vk;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	search {
+		grid-template-columns: auto;
+		grid-template-rows: 50px 50px;
+		grid-row-gap: 15px;
+		grid-template-areas:
+			"input"
+			"button";
+	}
+}
