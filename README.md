@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Prerequisites
 
 Add your twitter apps credentials to the [sample-environment.ts](./src/environments/sample-environment.ts) and copy it as <b>environment.ts</b>.
+For information on how to receive the twitter credentials, take a look [here](./src/environments/).
 
 After this step the tool (in prgress) should be ready to use.
 
