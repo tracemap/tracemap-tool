@@ -1,24 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { TwitterApiService } from './twitter/twitter-api.service';
 
 
 @Component({
   selector: 'main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
-  providers: [ TwitterApiService]
+  providers: []
 })
 
-export class MainComponent implements OnInit {
+export class MainComponent {
 
   constructor(
-    private route: ActivatedRoute,
-    private twitterApiService: TwitterApiService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.twitterApiService.getFollowers(); 
-  }
 }
