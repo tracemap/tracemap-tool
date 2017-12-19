@@ -25,6 +25,15 @@ export class ApiService {
                    });
     }
 
+    getUserInfo( userId: string): Observable<object> {
+        return this.http
+                   .get( this.url + "/twitter/get_user_info/" + userId)
+                   .map( response => {
+                       let data = response.json();
+                       return data['response'];
+                   });
+    }
+
     getRetweeters( tweetId: string): Observable<string[]> {
         return this.http
                    .get(this.url + "/twitter/get_retweeters/" + tweetId)
