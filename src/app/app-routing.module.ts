@@ -18,7 +18,6 @@ const routes: Routes = [
   { path: 'twitter/:pid', component: MainComponent },
   { path: 'vk/:uid/:pid', component: MainComponent },
 	{ path: '**', component: PageNotFoundComponent }
-
 ];
 
 @NgModule({

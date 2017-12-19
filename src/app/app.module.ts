@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
-
 import { AppComponent } from './app.component';
 import { MainComponent } from './main.component';
+import { D3Component } from './d3.component';
 import { SearchComponent } from './search.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -15,10 +15,12 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DescriptionVkComponent } from './home-page/description-vk.component';
 import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
+import { ApiService } from './api.service';
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    D3Component,
     SearchComponent,
     PageNotFoundComponent,
     HomePageComponent,
@@ -31,7 +33,7 @@ import { DescriptionTwitterComponent } from './home-page/description-twitter.com
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ ApiService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
