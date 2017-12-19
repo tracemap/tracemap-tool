@@ -1,4 +1,4 @@
-import { Component, NgModule, AfterViewInit, ViewEncapsulation} from '@angular/core';
+import { Component, NgModule, AfterViewInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 
@@ -10,6 +10,8 @@ import * as $ from 'jquery';
 })
 
 export class D3Component implements AfterViewInit{
+    @Output()
+    nodeClicked:EventEmitter<string> = new EventEmitter();
 
     graphData = {
         "nodes": [],
@@ -93,7 +95,9 @@ export class D3Component implements AfterViewInit{
             .on('mouseenter', ( node, index, circleArr) => 
                 this.highlightNeighbours( node, circleArr[index]))
             .on('mouseleave', ( node, index, circleArr) => 
-                this.resetHighlighting( node, circleArr[index]));
+                this.resetHighlighting( node, circleArr[index]))
+            .on('dblclick', ( node, index) => 
+                this.callOpenUserInfo( node));
 
         this.node
             .append("title")
@@ -189,5 +193,11 @@ export class D3Component implements AfterViewInit{
         if( !d3.event.active) this.simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
-    }   
+    }
+
+    callOpenUserInfo(userId): void {
+        userId = userId['id'];
+        this.nodeClicked.emit(userId);
+
+    }
 }

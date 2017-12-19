@@ -68,13 +68,19 @@ export class MainComponent implements AfterViewInit, OnChanges {
         this.d3Component.graphData = this.tracemapData['graphData'];
         this.d3Component.render();
         console.log(this.tracemapData['followers'])
-        console.log(this.tracemapData['graphData']['links'])
     }
 
-  ngOnChanges(): void {
-    console.log("TM-ID: " + this.tracemapId);
-  }
-  addRelations(): void {
+    openUserInfo(userId: string): void {
+        let userInfo = {};
+        console.log("requesting user data...");
+        this.apiService.getUserInfo( userId)
+            .subscribe( response => {
+                userInfo = response[userId];
+                window.open("https://twitter.com/" + userInfo['screen_name']);
+            });
+    }
 
-  }
+    ngOnChanges(): void {
+        console.log("TM-ID: " + this.tracemapId);
+    }
 }
