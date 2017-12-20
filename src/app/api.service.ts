@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { environment } from './../environments/environment';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/forkJoin';
@@ -9,7 +11,7 @@ import 'rxjs/add/observable/forkJoin';
 @Injectable( )
 
 export class ApiService {
-    url = "http://localhost:5000";
+    url = environment.apiUrl;
 
     constructor( 
         private http:Http
@@ -35,6 +37,7 @@ export class ApiService {
     }
 
     getRetweeters( tweetId: string): Observable<string[]> {
+        console.log(this.url);
         return this.http
                    .get(this.url + "/twitter/get_retweeters/" + tweetId)
                    .map( response => {
