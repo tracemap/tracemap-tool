@@ -42,7 +42,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
         let source = {};
         source['id'] = this.tracemapData['tweet_info'][this.tracemapId]['author'];
-        source['group'] = 3;
+        source['group'] = 0;
         graphData['nodes'].push(source);
 
         this.tracemapData['retweeters'].forEach(user => {
