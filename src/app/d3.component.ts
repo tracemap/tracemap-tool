@@ -23,7 +23,7 @@ export class D3Component implements AfterViewInit{
     simulation;
     node;
     link;
-    scale = d3.scaleLinear().domain([1, 50]).range([5, 15]);
+    scale = d3.scaleLinear().domain([1, 30]).range([3, 15]);
 
 
     width = $(window).width();
@@ -47,10 +47,11 @@ export class D3Component implements AfterViewInit{
         .attr("width", this.width)
         .attr("height", this.height);
 
-        this.color = d3.scaleOrdinal(d3.schemeCategory20);
+        this.color = ["#9729ff","#fff"];
 
         this.simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; }))
+            .force("link", d3.forceLink().id(function(d) { return d.id; })
+                                         .distance(function(d) {return 50;}))
             .force("charge", d3.forceManyBody().strength(-100))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
@@ -76,7 +77,7 @@ export class D3Component implements AfterViewInit{
             .data(this.graphData.links)
             .enter().append("line")
                     .attr("stroke", "#999")
-                    .attr("stroke-opacity", "0.6")
+                    .attr("stroke-opacity", "0.8")
                     .attr("stroke-width", "2");
 
         this.node = this.svg.append("g")
@@ -84,8 +85,8 @@ export class D3Component implements AfterViewInit{
             .selectAll("circle")
             .data( this.graphData.nodes)
             .enter().append("circle")
-                    .attr("r", (d) => { return this.getNeighbours(d)*1.2; })
-                    .attr("fill", (d) => { return this.color(d.group); })
+                    .attr("r", (d) => { return this.getNeighbours(d)*1.5; })
+                    .attr("fill", (d) => { return this.color[d.group]; })
                     .attr("stroke","#fff")
                     .attr("stroke-width","1.5px")
             .call(d3.drag()
@@ -116,13 +117,9 @@ export class D3Component implements AfterViewInit{
         let r = node.attr("r");
         if( factor > 0){
             node.attr("r", r * factor)
-                .style("stroke","#666")
-                .style("stroke-width","3px")
                 .raise();
         } else {
             node.attr("r", r / (factor*-1) )
-                .style("stroke", "#fff")
-                .style("stroke-width", "1.5px");
         }
     }
 
