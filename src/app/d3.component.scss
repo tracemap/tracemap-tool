@@ -9,8 +9,11 @@ svg {
 /* graph css*/
 line {
   transition: opacity 0.6s ease-out;
+  stroke-width: 2.5;
 }
 
 circle {
   transition:  opacity 0.3s ease-out;
+  stroke: #9729ff;
+  stroke-width: 3.5;
 }
