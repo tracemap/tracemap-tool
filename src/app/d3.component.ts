@@ -25,10 +25,11 @@ export class D3Component implements AfterViewInit{
     simulation;
     node;
     link;
-    scale = d3.scaleLinear().domain([1, 30]).range([3, 15]);
-
     width;
     height;
+
+    scale = d3.scaleLinear().domain([2, 30]).range([4, 18]);
+
 
     onResize(event) {
 
@@ -44,6 +45,16 @@ export class D3Component implements AfterViewInit{
                 this.callCloseUserInfo();
             }
         });
+        this.svg.append('svg:defs').append('svg:marker')
+                .attr('id','end-arrow')
+                .attr('viewBox', '0 -5 10 10')
+                .attr('refX', 6)
+                .attr('markerWidth', 3)
+                .attr('markerHeight', 3)
+                .attr('orient', 'auto')
+                .append('svg:path')
+                    .attr('d', 'M0, -5L10, 0L0,5')
+                    .attr('fill', '#666');
                      
 
         this.width = $('svg').width();
@@ -53,7 +64,7 @@ export class D3Component implements AfterViewInit{
 
         this.simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; })
-                                         .distance(function(d) {return 50;}))
+                                         .distance(function(d) {return 60;}))
             .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
@@ -81,23 +92,29 @@ export class D3Component implements AfterViewInit{
                 return d.y;
             });
         this.link
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; })
+            .attr('d', function(d) {
+                let diffX = d.target.x - d.source.x,
+                    diffY = d.target.y - d.source.y,
+                    pathLength = Math.sqrt( diffX *diffX + diffY*diffY),
+                    offsetX = diffX * (d.target.r + 5) / pathLength,
+                    offsetY = diffY * (d.target.r + 5) / pathLength,
+                    targetX = d.target.x - offsetX,
+                    targetY = d.target.y - offsetY;
+                return 'M' + d.source.x + ',' + d.source.y + 'L' + targetX + ',' + targetY;
+            });
     }
 
     render() {
-        console.log(this.width);
-        console.log(this.height);
         this.link = this.svg.append("g")
             .attr("class", "links")
-            .selectAll("line")
+            .selectAll(".link")
             .data(this.graphData.links)
-            .enter().append("line")
+            .enter().append("svg:path")
+                    .attr('class','link')
                     .attr("stroke", "#999")
                     .attr("stroke-opacity", "0.8")
-                    .attr("stroke-width", "2");
+                    .attr("stroke-width", "2")
+                    .style("marker-end","url(#end-arrow)");
 
         this.node = this.svg.append("g")
             .attr("class", "nodes")
@@ -108,10 +125,12 @@ export class D3Component implements AfterViewInit{
                 }
             }))
             .enter().append("circle")
-                    .attr("r", (d) => { return this.scale(this.getNeighbours(d))*1.5; })
+                    .attr("r", (d) => { 
+                        d.r = this.scale(this.getNeighbours(d))*1.5; 
+                        return d.r;
+                    })
                     .attr("fill", (d) => { return this.color[d.group]; })
                     .attr("stroke","#fff")
-                    .attr("stroke-width","1.5px")
             .call(d3.drag()
                     .on("start", (d) => { return this.dragstarted(d)})
                     .on("drag", (d) => { return this.dragged(d)})
@@ -121,6 +140,7 @@ export class D3Component implements AfterViewInit{
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
             .on('click', ( node) => 
+
                 this.callOpenUserInfo( node));
 
         this.node
@@ -133,7 +153,6 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
-
     }
 
     scaleCircle( node, factor) {
@@ -154,7 +173,7 @@ export class D3Component implements AfterViewInit{
         let neighbours = [];
         neighbours.push(cIndex);
 
-        d3.selectAll("line").filter( function( d, i){
+        d3.selectAll(".link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
             if ( sIndex === cIndex)
@@ -165,7 +184,7 @@ export class D3Component implements AfterViewInit{
                 return this;
         }).style("opacity", "0.2");
 
-        d3.selectAll("line").filter( function( d, i){
+        d3.selectAll(".link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
             if( neighbours.includes(sIndex) && 
@@ -183,7 +202,7 @@ export class D3Component implements AfterViewInit{
         let circle = d3.select(c);
         this.scaleCircle(circle, -1.2);
         d3.selectAll("circle").style("opacity", "1");
-        d3.selectAll("line").style("opacity", "1");
+        d3.selectAll(".link").style("opacity", "1");
     }
 
     getNeighbours(d): number {
