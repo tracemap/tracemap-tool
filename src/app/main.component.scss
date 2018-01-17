@@ -1,0 +1,19 @@
+.grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 300px auto;
+    grid-template-rows: 99%;
+    grid-template-areas:
+        "userinfo graph";
+}
+
+d3-component {
+    position: relative;
+    grid-area: graph;
+    background-color: #000;
+}
+
+user-info, tm-info {
+    grid-area: userinfo;
+}

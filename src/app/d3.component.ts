@@ -12,6 +12,8 @@ import * as $ from 'jquery';
 export class D3Component implements AfterViewInit{
     @Output()
     nodeClicked:EventEmitter<string> = new EventEmitter();
+    @Output()
+    svgClicked:EventEmitter<any> = new EventEmitter();
 
     graphData = {
         "nodes": [],
@@ -25,52 +27,69 @@ export class D3Component implements AfterViewInit{
     link;
     scale = d3.scaleLinear().domain([1, 30]).range([3, 15]);
 
-
-    width = $(window).width();
-    height = $(window).height();
+    width;
+    height;
 
     onResize(event) {
 
-        this.width = $(window).width();
-        this.height = $(window).height();
-
-        this.svg
-            .attr("width", $(window).width())
-            .attr("height", $(window).height());
         this.simulation
             .force("center", d3.forceCenter(this.width / 2, this.height / 2))
             .restart();
     }
 
     ngAfterViewInit() {
-        this.svg = d3.select("svg")
-        .attr("width", this.width)
-        .attr("height", this.height);
+        this.svg = d3.select("svg");
+        this.svg.on('click', () => {
+            if( d3.event.target.toString() === '[object SVGSVGElement]') {
+                this.callCloseUserInfo();
+            }
+        });
+                     
+
+        this.width = $('svg').width();
+        this.height = $('svg').height();
 
         this.color = ["#9729ff","#fff"];
 
         this.simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; })
                                          .distance(function(d) {return 50;}))
-            .force("charge", d3.forceManyBody().strength(-100))
+            .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
         //TODO this.render(//TODO: add graph data here);
     }
 
     ticked() {
+        let canvasWidth = this.width;
+        let canvasHeight = this.height;
+
+        this.node
+            .attr("cx", function(d) { 
+                if( d.x <= 10.0)
+                    d.x = 10.0;
+                else if( d.x >= canvasWidth){
+                    d.x = canvasWidth - 10.0;
+                }
+                return d.x;
+            })
+            .attr("cy", function(d) { 
+                if( d.y <= 10.0)
+                    d.y = 10.0;
+                else if( d.y >= canvasHeight)
+                    d.y = canvasHeight - 10.0;
+                return d.y;
+            });
         this.link
             .attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; })
-
-        this.node
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
     }
 
     render() {
+        console.log(this.width);
+        console.log(this.height);
         this.link = this.svg.append("g")
             .attr("class", "links")
             .selectAll("line")
@@ -83,9 +102,13 @@ export class D3Component implements AfterViewInit{
         this.node = this.svg.append("g")
             .attr("class", "nodes")
             .selectAll("circle")
-            .data( this.graphData.nodes)
+            .data( this.graphData.nodes.filter( d => {
+                if( this.getNeighbours(d) > 0) {
+                    return d;
+                }
+            }))
             .enter().append("circle")
-                    .attr("r", (d) => { return this.getNeighbours(d)*1.5; })
+                    .attr("r", (d) => { return this.scale(this.getNeighbours(d))*1.5; })
                     .attr("fill", (d) => { return this.color[d.group]; })
                     .attr("stroke","#fff")
                     .attr("stroke-width","1.5px")
@@ -97,7 +120,7 @@ export class D3Component implements AfterViewInit{
                 this.highlightNeighbours( node, circleArr[index]))
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
-            .on('dblclick', ( node, index) => 
+            .on('click', ( node) => 
                 this.callOpenUserInfo( node));
 
         this.node
@@ -171,7 +194,7 @@ export class D3Component implements AfterViewInit{
             if( source === d.id || target === d.id )
                 degree += 1;
         }
-        return this.scale(degree);
+        return degree;
     }
 
     dragged(d) {
@@ -195,6 +218,9 @@ export class D3Component implements AfterViewInit{
     callOpenUserInfo(userId): void {
         userId = userId['id'];
         this.nodeClicked.emit(userId);
+    }
 
+    callCloseUserInfo(): void {
+        this.svgClicked.emit();
     }
 }

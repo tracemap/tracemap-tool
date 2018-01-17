@@ -13,6 +13,8 @@ import 'rxjs/add/observable/forkJoin';
 export class ApiService {
     url = environment.apiUrl;
 
+    tracemapData;
+
     constructor( 
         private http:Http
         ) {
@@ -59,6 +61,8 @@ export class ApiService {
     getTracemapData(tweetId: string): Promise<object> {
         let tracemapData = {};
         return new Promise( (resolve, reject) => {
+            if( this.tracemapData)//TODO catch stuff correctly
+                console.log("is here");
             this.getRetweeters( tweetId)
                 .flatMap( retweeters => {
                     tracemapData['retweeters'] = retweeters;
@@ -70,6 +74,8 @@ export class ApiService {
                     return this.getFollowers( userIds)
                 }).subscribe( followersList => {
                     tracemapData['followers'] = followersList;
+                    console.log("Tracemap data:");
+                    console.log(tracemapData['tweet_info'][tweetId]);
                     resolve( tracemapData);
             })
              
