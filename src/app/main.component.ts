@@ -36,7 +36,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     addGraphData(): void {
-        console.log(this.tracemapData);
         let graphData = {
             "nodes": [],
             "links": []
@@ -53,7 +52,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
             node['id'] = user;
             node['group'] = 1;
             graphData['nodes'].push(node);
-            console.log("Node added");
 
         });
         graphData['nodes'].forEach( source => {
@@ -71,7 +69,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
         this.tracemapData['graphData'] = graphData;
         this.d3Component.graphData = this.tracemapData['graphData'];
         this.d3Component.render();
-        console.log(this.tracemapData['followers'])
     }
 
     openUserInfo(userId: string): void {
@@ -83,6 +80,5 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     ngOnChanges(): void {
-        console.log("TM-ID: " + this.tracemapId);
     }
 }
