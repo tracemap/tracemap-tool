@@ -1,1 +1,7 @@
-<d3-component #d3Component (nodeClicked)="openUserInfo($event)"></d3-component>
+<div class="grid">
+    <router-outlet></router-outlet>
+    <d3-component #d3Component 
+        (nodeClicked)="openUserInfo($event)"
+        (svgClicked)="closeUserInfo()">
+    </d3-component>
+</div>

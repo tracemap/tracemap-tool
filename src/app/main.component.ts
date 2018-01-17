@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, OnChanges, ViewChild, NgModule } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 
@@ -9,17 +9,19 @@ import { Observable } from 'rxjs/Observable';
   selector: 'main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
-  providers: [ ApiService]
+  providers: []
 })
 
 export class MainComponent implements AfterViewInit, OnChanges {
     @ViewChild('d3Component') d3Component;
+
     tracemapId: string;
     tracemapData: object;
     relations: object[];
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private apiService: ApiService
     ) {}
 
@@ -41,6 +43,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
         };
 
         let source = {};
+
         source['id'] = this.tracemapData['tweet_info'][this.tracemapId]['author'];
         source['group'] = 0;
         graphData['nodes'].push(source);
@@ -64,6 +67,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
                 });
             }
         });
+
         this.tracemapData['graphData'] = graphData;
         this.d3Component.graphData = this.tracemapData['graphData'];
         this.d3Component.render();
@@ -71,13 +75,11 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     openUserInfo(userId: string): void {
-        let userInfo = {};
-        console.log("requesting user data...");
-        this.apiService.getUserInfo( userId)
-            .subscribe( response => {
-                userInfo = response[userId];
-                window.open("https://twitter.com/" + userInfo['screen_name']);
-            });
+        this.router.navigate(['details', userId], {relativeTo: this.route});
+    }
+
+    closeUserInfo(): void {
+        this.router.navigate(['./'], {relativeTo: this.route});
     }
 
     ngOnChanges(): void {
