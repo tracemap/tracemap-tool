@@ -1,3 +1,29 @@
 <div class="user-info">
-<img src="{{userInfo.profile_image_url}}">
+    <img src="{{userImage}}">
+    <p class="name">{{userInfo.name}}</p>
+    <p class="screen-name">@{{userInfo.screen_name}}</p>
+    <p class="statuses-count info-block">
+        <span>Tweets</span>
+        {{userInfo.statuses_count}}
+    </p>
+    <p class="followers-count info-block">
+        <span>Followers</span>
+        {{userInfo.followers_count}}
+    </p>
+    <p class="following-count info-block">
+        <span>Following</span>
+        {{userInfo.friends_count}}
+    </p>
+    <a href="https://twitter.com/{{userInfo.screen_name}}" target="_blank">Open on Twitter</a>
+    <div class="account-info">
+        <h2>Account Info</h2>
+        <p class="age">
+            <span>Age:</span>
+            {{accountAge}}
+        </p>
+        <p class="location">
+            <span>Location:</span>
+            {{userInfo.location}}
+        </p>
+    </div>
 </div>
