@@ -29,6 +29,15 @@ export class ApiService {
                    });
     }
 
+    getTweetData( tweetId: string): Observable<object> {
+      return this.http
+                 .get( this.url + "/twitter/get_tweet_data/" + tweetId)
+                 .map( response => {
+                     let data = response.json();
+                     return data['response'];
+                 });
+    }
+
     getUserInfo( userId: string): Observable<object> {
         return this.http
                    .get( this.url + "/twitter/get_user_info/" + userId)
@@ -60,8 +69,11 @@ export class ApiService {
     getTracemapData(tweetId: string): Promise<object> {
         let tracemapData = {};
         return new Promise( (resolve, reject) => {
-            this.getRetweeters( tweetId)
-                .flatMap( retweeters => {
+            this.getTweetData( tweetId)
+                .flatMap( tweetData => {
+                  tracemapData['tweet_data'] = tweetData;
+                  return this.getRetweeters( tweetId)
+                }).flatMap( retweeters => {
                     tracemapData['retweeters'] = retweeters;
                     return this.getTweetInfo(tweetId);
                 }).flatMap( tweetInfo => {
@@ -73,7 +85,6 @@ export class ApiService {
                     tracemapData['followers'] = followersList;
                     resolve( tracemapData);
             })
-             
         });
     }
 }

@@ -41,13 +41,9 @@ export class UserComponent {
     setAge(): void {
         let now = Date.now()/1000;
         let created = Date.parse(this.userInfo['created_at'])/1000;
-        console.log(now);
-        console.log(created);
         let age = now - created;
-        console.log(age);
         if(age > 365 * 24 * 60 * 60){
             age = age / (365 * 24 * 60 * 60);
-            console.log(age);
             this.accountAge = Number((age).toFixed(1)) + " Years"
         } else if (age > 30 * 24 * 60 * 60){
             age = age / (30 * 24 * 60 * 60);

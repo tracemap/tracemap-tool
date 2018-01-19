@@ -18,6 +18,9 @@ export class MainComponent implements AfterViewInit, OnChanges {
     tracemapId: string;
     tracemapData: object;
     relations: object[];
+    graphData: object;
+
+    newMode = true;
 
     constructor(
         private route: ActivatedRoute,
@@ -25,50 +28,154 @@ export class MainComponent implements AfterViewInit, OnChanges {
         private apiService: ApiService
     ) {}
 
+    createSubDict(sourceDict: object, keys: string[]): Promise<object> {
+        return new Promise( (resolve, reject) => {
+            let subDict = {};
+            keys.map( key => {
+                subDict[key] = sourceDict[key];
+            });
+            resolve( subDict);
+        });
+
+    }
+
     ngAfterViewInit(): void {
         this.tracemapId = this.route.params["_value"]["pid"];
+
+        let authorKeys = [
+            'id_str',
+            'favourites_count',
+            'followers_count',
+            'friends_count'
+        ];
 
         this.apiService.getTracemapData( this.tracemapId)
             .then( tracemapData => {
                 this.tracemapData = tracemapData;
+                let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
+                return this.createSubDict(authorInfo, authorKeys);
+            }).then( graphAuthorInfo => {
+                this.graphData = {};
+                this.graphData['author_info'] = graphAuthorInfo;
+                let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
+                this.graphData['retweet_info'] = {};
+                let promiseArray:Array<any> = [];
+                this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeterId => {
+                    let retweeterInfo = retweetersInfo[retweeterId]['user'];
+                    let tmp = {};
+                    tmp['favourites_count'] = retweeterInfo['favourites_count'];
+                    tmp['followers_count'] = retweeterInfo['followers_count'];
+                    tmp['friends_count'] = retweeterInfo['friends_count'];
+                    tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
+                    this.graphData['retweet_info'][retweeterId] = tmp;
+                });
                 this.addGraphData();
-        });
+            });
     }
 
     addGraphData(): void {
-        let graphData = {
+        let graphElements = {
             "nodes": [],
             "links": []
         };
 
-        let source = {};
 
-        source['id'] = this.tracemapData['tweet_info'][this.tracemapId]['author'];
-        source['group'] = 0;
-        graphData['nodes'].push(source);
-
-        this.tracemapData['retweeters'].forEach(user => {
-            let node = {};
-            node['id'] = user;
-            node['group'] = 1;
-            graphData['nodes'].push(node);
-
+        this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
+            let node = this.graphData['retweet_info'][retweeter];
+            node['id_str'] = retweeter;
+            node['group'] = 1
+            graphElements['nodes'].push(node);
         });
-        graphData['nodes'].forEach( source => {
-            if( source['id'] in this.tracemapData['followers']) {
-                this.tracemapData['followers'][source['id']].forEach( target => {
-                    let link = {};
-                    link['source'] = source['id'];
-                    link['target'] = target;
-                    link['value'] = 1;
-                    graphData['links'].push(link);
+
+        let authorId = this.graphData['author_info']['id_str']
+        let followers = this.tracemapData['followers']
+
+        if(authorId in followers && this.newMode) {
+            // New mechanic if author is in our database
+            let connectedUsers = [];
+
+            followers[authorId].forEach( targetId => {
+                connectedUsers.push(targetId);
+                graphElements['links'].push({
+                    'source':authorId,
+                    'target':targetId
                 });
-            }
-        });
+            });
 
-        this.tracemapData['graphData'] = graphData;
+            let oldLinkNum = graphElements['links'].length;
+            let newLinkNum = oldLinkNum + 1;
+            let tmpConnectedUsers = [];
+
+            while( oldLinkNum !== newLinkNum) {
+                oldLinkNum = newLinkNum;
+                connectedUsers.forEach( sourceId => {
+                    if( sourceId in followers) {
+                        followers[sourceId].forEach( targetId => {
+                            if( targetId !== authorId) {
+                                let sourceDate = this.graphData['retweet_info'][sourceId]['retweet_created_at'];
+                                let targetDate = this.graphData['retweet_info'][targetId]['retweet_created_at'];
+
+                                if( Date.parse(sourceDate) < Date.parse(targetDate)) {
+                                    tmpConnectedUsers.push(targetId);
+                                    graphElements['links'].push({
+                                        'source': sourceId,
+                                        'target': targetId,
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+                graphElements['nodes'].push(this.graphData['author_info']);
+                console.log(oldLinkNum);
+                console.log(newLinkNum);
+                connectedUsers = tmpConnectedUsers;
+                tmpConnectedUsers = [];
+                newLinkNum = graphElements['links'].length;
+            }
+        } else {
+            console.log("no author");
+            // Old mechanic for tweets where the author isnt in our database
+            if(authorId in followers){
+                console.log("THE APP IS RUNNING WITH OLD GRAPH LOGIC");
+            } else {
+                console.log("THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE");
+            }
+
+            followers[authorId].forEach( targetId => {
+                graphElements['links'].push({
+                    'source':authorId,
+                    'target':targetId
+                });
+            });
+
+            graphElements['nodes'].push(this.graphData['author_info']);
+            graphElements['nodes'].forEach( source => {
+                let sourceId = source['id_str'];
+                if( sourceId in followers) {
+                    followers[sourceId].forEach( targetId => {
+                        if( !(targetId === authorId || sourceId === authorId)) {
+                            let sourceDate = this.graphData['retweet_info'][sourceId]['retweet_created_at'];
+                            let targetDate = this.graphData['retweet_info'][targetId]['retweet_created_at'];
+
+                            if( Date.parse(sourceDate) < Date.parse(targetDate)) {
+                                graphElements['links'].push({
+                                    'source': sourceId,
+                                    'target': targetId
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            console.log(graphElements['links'].length);
+        }
+
+        graphElements['nodes'].push(this.graphData['author_info']);
+
+        this.tracemapData['graphData'] = graphElements;
         this.d3Component.graphData = this.tracemapData['graphData'];
-        this.d3Component.render();
+        //this.d3Component.render();
     }
 
     openUserInfo(userId: string): void {
