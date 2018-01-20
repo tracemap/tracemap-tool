@@ -56,10 +56,11 @@ export class ApiService {
                    });
     }
 
-    getFollowers( retweeterIds: string[]): Observable<object> {
-        let retweetwersString = retweeterIds.toString();
+    getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
+        let retweetersString = retweeterIds.toString() + "," + authorId;
+        console.log(retweetersString);
         return this.http
-                   .get(this.url + "/neo4j/get_followers/" + retweetwersString)
+                   .get(this.url + "/neo4j/get_followers/" + retweetersString)
                    .map( response => {
                        let data = response.json();
                        return data['response'];
@@ -71,16 +72,10 @@ export class ApiService {
         return new Promise( (resolve, reject) => {
             this.getTweetData( tweetId)
                 .flatMap( tweetData => {
-                  tracemapData['tweet_data'] = tweetData;
-                  return this.getRetweeters( tweetId)
-                }).flatMap( retweeters => {
-                    tracemapData['retweeters'] = retweeters;
-                    return this.getTweetInfo(tweetId);
-                }).flatMap( tweetInfo => {
-                    tracemapData['tweet_info'] = tweetInfo;
-                    let authorId = tracemapData['tweet_info'][tweetId]['author'];
-                    let userIds = tracemapData['retweeters'].concat( [authorId]);
-                    return this.getFollowers( userIds)
+                    tracemapData['tweet_data'] = tweetData;
+                    let userIds = tracemapData['tweet_data']['retweeter_ids'];
+                    let authorId = tracemapData['tweet_data']['tweet_info']['user']['id_str'];
+                    return this.getFollowers( userIds, authorId)
                 }).subscribe( followersList => {
                     tracemapData['followers'] = followersList;
                     resolve( tracemapData);

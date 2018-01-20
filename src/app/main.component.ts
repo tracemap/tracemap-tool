@@ -57,6 +57,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
             }).then( graphAuthorInfo => {
                 this.graphData = {};
                 this.graphData['author_info'] = graphAuthorInfo;
+                this.graphData['author_info']['group'] = 0;
                 let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
                 this.graphData['retweet_info'] = {};
                 let promiseArray:Array<any> = [];
@@ -93,9 +94,11 @@ export class MainComponent implements AfterViewInit, OnChanges {
         if(authorId in followers && this.newMode) {
             // New mechanic if author is in our database
             let connectedUsers = [];
+            let checkedUsers = [];
 
             followers[authorId].forEach( targetId => {
                 connectedUsers.push(targetId);
+                checkedUsers.push(targetId);
                 graphElements['links'].push({
                     'source':authorId,
                     'target':targetId
@@ -104,9 +107,9 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
             let oldLinkNum = graphElements['links'].length;
             let newLinkNum = oldLinkNum + 1;
-            let tmpConnectedUsers = [];
 
             while( oldLinkNum !== newLinkNum) {
+                let tmpConnectedUsers = [];
                 oldLinkNum = newLinkNum;
                 connectedUsers.forEach( sourceId => {
                     if( sourceId in followers) {
@@ -116,7 +119,10 @@ export class MainComponent implements AfterViewInit, OnChanges {
                                 let targetDate = this.graphData['retweet_info'][targetId]['retweet_created_at'];
 
                                 if( Date.parse(sourceDate) < Date.parse(targetDate)) {
-                                    tmpConnectedUsers.push(targetId);
+                                    if( checkedUsers.indexOf(targetId) < 0){
+                                        tmpConnectedUsers.push(targetId);
+                                        checkedUsers.push(targetId);
+                                    }
                                     graphElements['links'].push({
                                         'source': sourceId,
                                         'target': targetId,
@@ -126,28 +132,23 @@ export class MainComponent implements AfterViewInit, OnChanges {
                         });
                     }
                 });
-                graphElements['nodes'].push(this.graphData['author_info']);
-                console.log(oldLinkNum);
-                console.log(newLinkNum);
                 connectedUsers = tmpConnectedUsers;
-                tmpConnectedUsers = [];
                 newLinkNum = graphElements['links'].length;
             }
+            graphElements['nodes'].push(this.graphData['author_info']);
         } else {
-            console.log("no author");
             // Old mechanic for tweets where the author isnt in our database
             if(authorId in followers){
                 console.log("THE APP IS RUNNING WITH OLD GRAPH LOGIC");
+                followers[authorId].forEach( targetId => {
+                    graphElements['links'].push({
+                        'source':authorId,
+                        'target':targetId
+                    });
+                });
             } else {
                 console.log("THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE");
             }
-
-            followers[authorId].forEach( targetId => {
-                graphElements['links'].push({
-                    'source':authorId,
-                    'target':targetId
-                });
-            });
 
             graphElements['nodes'].push(this.graphData['author_info']);
             graphElements['nodes'].forEach( source => {
@@ -168,14 +169,11 @@ export class MainComponent implements AfterViewInit, OnChanges {
                     });
                 }
             });
-            console.log(graphElements['links'].length);
         }
-
-        graphElements['nodes'].push(this.graphData['author_info']);
 
         this.tracemapData['graphData'] = graphElements;
         this.d3Component.graphData = this.tracemapData['graphData'];
-        //this.d3Component.render();
+        this.d3Component.render();
     }
 
     openUserInfo(userId: string): void {

@@ -63,7 +63,7 @@ export class D3Component implements AfterViewInit{
         this.color = ["#9729ff","#fff"];
 
         this.simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; })
+            .force("link", d3.forceLink().id(function(d) { return d.id_str; })
                                          .distance(function(d) {return 60;}))
             .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
@@ -126,7 +126,7 @@ export class D3Component implements AfterViewInit{
             }))
             .enter().append("circle")
                     .attr("r", (d) => { 
-                        d.r = this.scale(this.getNeighbours(d))*1.5; 
+                        d.r = this.scale(this.getNeighbours(d, "out"))*1.6; 
                         return d.r;
                     })
                     .attr("fill", (d) => { return this.color[d.group]; })
@@ -145,7 +145,7 @@ export class D3Component implements AfterViewInit{
 
         this.node
             .append("title")
-                .text( function(d) { return d.id; });
+                .text( function(d) { return d.id_str; });
 
         this.simulation
             .nodes( this.graphData.nodes)
@@ -205,12 +205,20 @@ export class D3Component implements AfterViewInit{
         d3.selectAll(".link").style("opacity", "1");
     }
 
-    getNeighbours(d): number {
+    getNeighbours(d, direction=""): number {
         let degree = 0;
         for( let i in this.graphData.links) {
             let source = this.graphData.links[i].source;
             let target = this.graphData.links[i].target;
-            if( source === d.id || target === d.id )
+            let check = true;
+            if( direction === "out") {
+                check = ( source === d.id_str);
+            } else if( direction === "in") {
+                check = ( target === d.id_str);
+            } else {
+                check = ( source === d.id_str || target === d.id_str);    
+            }
+            if( check)
                 degree += 1;
         }
         return degree;
@@ -234,8 +242,8 @@ export class D3Component implements AfterViewInit{
             d.fy = null;
     }
 
-    callOpenUserInfo(userId): void {
-        userId = userId['id'];
+    callOpenUserInfo(node): void {
+        let userId = node['id_str'];
         this.nodeClicked.emit(userId);
     }
 
