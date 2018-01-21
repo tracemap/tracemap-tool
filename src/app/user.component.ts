@@ -1,7 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from  'rxjs/Subscription';
 
 @Component({
   selector: 'user-info',
@@ -9,9 +10,10 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
-
+    subscription: Subscription;
     userId: string;
     userInfo: object;
+    usersInfo: object;
     userImage: string;
     accountAge: string;
 
@@ -21,20 +23,28 @@ export class UserComponent {
         private router: Router
     ) {
         // subscribes changed routes to switch userInfo
-        router.events.subscribe(() => this.changeUser());
+        this.apiService.tracemapData.subscribe( tracemapData => {
+            if(tracemapData){
+                this.usersInfo = tracemapData['tweet_data']['retweet_info'];
+                let creatorId = tracemapData['tweet_data']['tweet_info']['user']['id_str'];
+                let creatorInfo = tracemapData['tweet_data']['tweet_info'];
+                this.usersInfo[creatorId] = creatorInfo;
+                router.events.subscribe(() => this.changeUser());
+                if( !this.userId){
+                    this.changeUser();
+                }
+            }
+        });
     }
 
     changeUser(): void {
         let newUser = this.route.params["_value"]["uid"];
         if( newUser !== this.userId){
             this.userId = newUser;
-            this.apiService.getUserInfo( this.userId).subscribe( response => {
-                this.userInfo = response[this.userId];
-                this.userImage = "https://twitter.com/" + this.userInfo['screen_name'] + "/profile_image?size=original"
-                this.setAge();
-                console.log(this.userInfo);
-
-            });
+            this.userInfo = this.usersInfo[this.userId]['user'];
+            console.log(this.userInfo);
+            this.userImage = "https://twitter.com/" + this.userInfo['screen_name'] + "/profile_image?size=original"
+            this.setAge();
         }
     }
 

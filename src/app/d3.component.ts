@@ -1,6 +1,7 @@
 import { Component, NgModule, AfterViewInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'd3-component',
@@ -28,7 +29,13 @@ export class D3Component implements AfterViewInit{
     width;
     height;
 
+    selectedNode;
+
     scale = d3.scaleLinear().domain([2, 30]).range([4, 18]);
+
+    constructor(
+        private route: ActivatedRoute
+    ){ }
 
 
     onResize(event) {
@@ -139,9 +146,10 @@ export class D3Component implements AfterViewInit{
                 this.highlightNeighbours( node, circleArr[index]))
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
-            .on('click', ( node) => 
-
-                this.callOpenUserInfo( node));
+            .on('click', ( node, index, circleArr) =>  {
+                this.highlightSelection( circleArr[index]);
+                this.callOpenUserInfo( node);
+            });
 
         this.node
             .append("title")
@@ -153,6 +161,14 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
+        if( this.route.firstChild.snapshot.params['uid']){
+            let selectedUser = this.route.firstChild.snapshot.params['uid'];
+            this.svg.selectAll("circle").filter( ( node, index, circleArray) =>{
+                if( node['id_str'] == selectedUser){
+                    this.highlightSelection( circleArray[index]);        
+                }
+            });
+        }
     }
 
     scaleCircle( node, factor) {
@@ -196,6 +212,20 @@ export class D3Component implements AfterViewInit{
             if( !neighbours.includes(d['index']))
                 return this;
         }).style("opacity", "0.2");
+    }
+
+    highlightSelection( node) {
+        this.resetSelection();
+        let circle = d3.select(node);
+        this.selectedNode = circle;
+        this.selectedNode.oldColor = this.selectedNode.attr("fill");
+        circle.attr("fill", "#222");
+    }
+
+    resetSelection() {
+        if( this.selectedNode){
+            this.selectedNode.attr("fill", this.selectedNode.oldColor);
+        }
     }
 
     resetHighlighting( n, c) {
@@ -248,6 +278,7 @@ export class D3Component implements AfterViewInit{
     }
 
     callCloseUserInfo(): void {
+        this.resetSelection();
         this.svgClicked.emit();
     }
 }

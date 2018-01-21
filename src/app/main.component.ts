@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 
 export class MainComponent implements AfterViewInit, OnChanges {
     @ViewChild('d3Component') d3Component;
+    @ViewChild('userinfo') userComponent;
 
     tracemapId: string;
     tracemapData: object;

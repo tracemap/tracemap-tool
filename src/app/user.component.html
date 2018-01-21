@@ -1,4 +1,5 @@
-<div class="user-info">
+
+<div class="user-info" *ngIf="userInfo">
     <img src="{{userImage}}">
     <p class="name">{{userInfo.name}}</p>
     <p class="screen-name">@{{userInfo.screen_name}}</p>

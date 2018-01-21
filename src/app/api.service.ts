@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { environment } from './../environments/environment';
 
@@ -13,7 +14,8 @@ import 'rxjs/add/observable/forkJoin';
 export class ApiService {
     url = environment.apiUrl;
 
-    tracemapData;
+    
+    tracemapData = new BehaviorSubject<object>(undefined);
 
     constructor( 
         private http:Http
@@ -58,7 +60,6 @@ export class ApiService {
 
     getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
         let retweetersString = retweeterIds.toString() + "," + authorId;
-        console.log(retweetersString);
         return this.http
                    .get(this.url + "/neo4j/get_followers/" + retweetersString)
                    .map( response => {
@@ -78,6 +79,7 @@ export class ApiService {
                     return this.getFollowers( userIds, authorId)
                 }).subscribe( followersList => {
                     tracemapData['followers'] = followersList;
+                    this.tracemapData.next(tracemapData);
                     resolve( tracemapData);
             })
         });
