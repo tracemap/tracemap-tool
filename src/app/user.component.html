@@ -1,3 +1,39 @@
-<div class="user-info">
-<img src="{{userInfo.profile_image_url}}">
+
+<div class="user-info" *ngIf="userInfo">
+    <a href="https://twitter.com/{{userInfo.screen_name}}" target="_blank">
+        <div class="link-overlay">
+            <p>Go To Twitter</p>
+        </div>
+        <div class="user-details">
+            <div class="user-image">
+                <img src="{{userImage}}">
+            </div>
+            <div class="statuses-count info-block">
+                <h3>Tweets</h3>
+                <p>{{counts.statuses_count}}</p>
+            </div>
+            <div class="followers-count info-block">
+                <h3>Followers</h3>
+                <p>{{counts.followers_count}}</p>
+            </div>
+            <div class="following-count info-block">
+                <h3>Following</h3>
+                <p>{{counts.friends_count}}</p>
+            </div>
+            <p class="name">{{userInfo.name}}</p>
+            <p class="screen-name">@{{userInfo.screen_name}}</p>
+            <p class="description">{{userInfo.description}}</p>
+        </div>
+    </a>
+    <!-- <div class="account-details">
+        <h2>Account Info</h2>
+        <p class="age">
+            <span>Age:</span>
+            {{accountAge}}
+        </p>
+        <p class="location">
+            <span>Location:</span>
+            {{userInfo.location}}
+        </p>
+    </div> -->
 </div>

@@ -1,15 +1,19 @@
 svg {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 /* graph css*/
 .link {
-  transition: opacity 0.6s ease-out;
-  stroke-width:3;
+    transition: opacity 0.6s ease-out;
+    stroke-width:3;
 }
 
 circle {
-  transition:  opacity 0.3s ease-out;
-  stroke: #9729ff;
-  stroke-width: 3.5;
+    transition:  opacity 0.3s ease-out;
+    stroke: #9729ff;
+    stroke-width: 3.5;
+}
+
+circle.active {
+    stroke: #1da1f2;
 }

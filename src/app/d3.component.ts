@@ -1,6 +1,13 @@
-import { Component, NgModule, AfterViewInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { 
+    Component, 
+    NgModule, 
+    AfterViewInit, 
+    ViewEncapsulation, 
+    Output, 
+    EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'd3-component',
@@ -28,7 +35,13 @@ export class D3Component implements AfterViewInit{
     width;
     height;
 
+    selectedNode;
+
     scale = d3.scaleLinear().domain([2, 30]).range([4, 18]);
+
+    constructor(
+        private route: ActivatedRoute
+    ){ }
 
 
     onResize(event) {
@@ -63,7 +76,7 @@ export class D3Component implements AfterViewInit{
         this.color = ["#9729ff","#fff"];
 
         this.simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; })
+            .force("link", d3.forceLink().id(function(d) { return d.id_str; })
                                          .distance(function(d) {return 60;}))
             .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
@@ -99,8 +112,10 @@ export class D3Component implements AfterViewInit{
                     offsetX = diffX * (d.target.r + 5) / pathLength,
                     offsetY = diffY * (d.target.r + 5) / pathLength,
                     targetX = d.target.x - offsetX,
-                    targetY = d.target.y - offsetY;
-                return 'M' + d.source.x + ',' + d.source.y + 'L' + targetX + ',' + targetY;
+                    targetY = d.target.y - offsetY,
+                    mValue = d.source.x + ',' + d.source.y,
+                    lValue = targetX + ',' + targetY;
+                return 'M' + mValue + 'L' + lValue;
             });
     }
 
@@ -126,7 +141,7 @@ export class D3Component implements AfterViewInit{
             }))
             .enter().append("circle")
                     .attr("r", (d) => { 
-                        d.r = this.scale(this.getNeighbours(d))*1.5; 
+                        d.r = this.scale(this.getNeighbours(d, "out"))*1.6; 
                         return d.r;
                     })
                     .attr("fill", (d) => { return this.color[d.group]; })
@@ -139,13 +154,14 @@ export class D3Component implements AfterViewInit{
                 this.highlightNeighbours( node, circleArr[index]))
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
-            .on('click', ( node) => 
-
-                this.callOpenUserInfo( node));
+            .on('click', ( node, index, circleArr) =>  {
+                this.highlightSelection( circleArr[index]);
+                this.callOpenUserInfo( node);
+            });
 
         this.node
             .append("title")
-                .text( function(d) { return d.id; });
+                .text( function(d) { return d.id_str; });
 
         this.simulation
             .nodes( this.graphData.nodes)
@@ -153,6 +169,14 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
+        if( this.route.firstChild.snapshot.params['uid']){
+            let selectedUser = this.route.firstChild.snapshot.params['uid'];
+            this.svg.selectAll("circle").filter( ( node, index, circleArray) =>{
+                if( node['id_str'] == selectedUser){
+                    this.highlightSelection( circleArray[index]);        
+                }
+            });
+        }
     }
 
     scaleCircle( node, factor) {
@@ -198,6 +222,19 @@ export class D3Component implements AfterViewInit{
         }).style("opacity", "0.2");
     }
 
+    highlightSelection( node) {
+        this.resetSelection();
+        let circle = d3.select(node);
+        this.selectedNode = circle;
+        circle.attr("class", "active");
+    }
+
+    resetSelection() {
+        if( this.selectedNode){
+            this.selectedNode.attr("class", null);
+        }
+    }
+
     resetHighlighting( n, c) {
         let circle = d3.select(c);
         this.scaleCircle(circle, -1.2);
@@ -205,12 +242,20 @@ export class D3Component implements AfterViewInit{
         d3.selectAll(".link").style("opacity", "1");
     }
 
-    getNeighbours(d): number {
+    getNeighbours(d, direction=""): number {
         let degree = 0;
         for( let i in this.graphData.links) {
             let source = this.graphData.links[i].source;
             let target = this.graphData.links[i].target;
-            if( source === d.id || target === d.id )
+            let check = true;
+            if( direction === "out") {
+                check = ( source === d.id_str);
+            } else if( direction === "in") {
+                check = ( target === d.id_str);
+            } else {
+                check = ( source === d.id_str || target === d.id_str);    
+            }
+            if( check)
                 degree += 1;
         }
         return degree;
@@ -234,12 +279,13 @@ export class D3Component implements AfterViewInit{
             d.fy = null;
     }
 
-    callOpenUserInfo(userId): void {
-        userId = userId['id'];
+    callOpenUserInfo(node): void {
+        let userId = node['id_str'];
         this.nodeClicked.emit(userId);
     }
 
     callCloseUserInfo(): void {
+        this.resetSelection();
         this.svgClicked.emit();
     }
 }

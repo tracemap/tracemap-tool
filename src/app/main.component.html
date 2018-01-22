@@ -1,7 +1,9 @@
 <div class="grid">
+    <header></header>
     <router-outlet></router-outlet>
-    <d3-component #d3Component 
+    <d3-component #d3Component
         (nodeClicked)="openUserInfo($event)"
         (svgClicked)="closeUserInfo()">
     </d3-component>
+    <footer></footer>
 </div>
