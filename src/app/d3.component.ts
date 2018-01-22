@@ -1,4 +1,10 @@
-import { Component, NgModule, AfterViewInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { 
+    Component, 
+    NgModule, 
+    AfterViewInit, 
+    ViewEncapsulation, 
+    Output, 
+    EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
@@ -106,8 +112,10 @@ export class D3Component implements AfterViewInit{
                     offsetX = diffX * (d.target.r + 5) / pathLength,
                     offsetY = diffY * (d.target.r + 5) / pathLength,
                     targetX = d.target.x - offsetX,
-                    targetY = d.target.y - offsetY;
-                return 'M' + d.source.x + ',' + d.source.y + 'L' + targetX + ',' + targetY;
+                    targetY = d.target.y - offsetY,
+                    mValue = d.source.x + ',' + d.source.y,
+                    lValue = targetX + ',' + targetY;
+                return 'M' + mValue + 'L' + lValue;
             });
     }
 
@@ -218,13 +226,12 @@ export class D3Component implements AfterViewInit{
         this.resetSelection();
         let circle = d3.select(node);
         this.selectedNode = circle;
-        this.selectedNode.oldColor = this.selectedNode.attr("fill");
-        circle.attr("fill", "#222");
+        circle.attr("class", "active");
     }
 
     resetSelection() {
         if( this.selectedNode){
-            this.selectedNode.attr("fill", this.selectedNode.oldColor);
+            this.selectedNode.attr("class", null);
         }
     }
 
