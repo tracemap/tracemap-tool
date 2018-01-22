@@ -16,6 +16,7 @@ export class UserComponent {
     usersInfo: object;
     userImage: string;
     accountAge: string;
+    counts: object;
 
     constructor(
         private apiService: ApiService,
@@ -45,6 +46,7 @@ export class UserComponent {
             console.log(this.userInfo);
             this.userImage = "https://twitter.com/" + this.userInfo['screen_name'] + "/profile_image?size=original"
             this.setAge();
+            this.setCounts();
         }
     }
 
@@ -61,6 +63,29 @@ export class UserComponent {
         } else {
             age = age / (24 * 60 * 60);
             this.accountAge = Number((age).toFixed(0)) + " Days"
+        }
+    }
+
+    setCounts(): void {
+        let statuses = this.userInfo['statuses_count'];
+        let followers = this.userInfo['followers_count'];
+        let friends = this.userInfo['friends_count'];
+        this.counts = {};
+
+        if( statuses >= 100000) {
+            this.counts['statuses_count'] = (statuses / 1000).toFixed(0) + 'K'; 
+        } else {
+            this.counts['statuses_count'] = String(statuses);
+        }
+        if( followers >= 100000) {
+            this.counts['followers_count'] = (followers / 1000).toFixed(0) + 'K';
+        } else {
+            this.counts['followers_count'] = String(followers);
+        }
+        if( friends >= 100000) {
+            this.counts['friends_count'] = (friends / 1000).toFixed(0) + 'K';
+        } else {
+            this.counts['friends_count'] = String(friends);
         }
     }
 

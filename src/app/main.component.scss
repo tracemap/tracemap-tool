@@ -2,16 +2,27 @@
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: 300px auto;
-    grid-template-rows: 99%;
+    grid-template-columns: 270px auto;
+    grid-template-rows: 60px auto 30px;
     grid-template-areas:
-        "userinfo graph";
+        "header header"
+        "userinfo graph"
+        "footer footer";
+}
+
+header {
+    grid-area: header;
+    background-color: #ddd;
+}
+
+footer {
+    grid-area: footer;
+    background-color: #ddd;
 }
 
 d3-component {
     position: relative;
     grid-area: graph;
-    background-color: #fff;
 }
 
 user-info, tm-info {
