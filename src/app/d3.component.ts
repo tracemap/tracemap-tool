@@ -9,6 +9,8 @@ import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
 
+import { MainCommunicationService } from './main.communication.service';
+
 @Component({
     selector: 'd3-component',
     encapsulation: ViewEncapsulation.None,
@@ -35,13 +37,31 @@ export class D3Component implements AfterViewInit{
     width;
     height;
 
-    selectedNode;
+    hoveredNode;
+    activeNode;
 
     scale = d3.scaleLinear().domain([2, 30]).range([4, 18]);
 
     constructor(
-        private route: ActivatedRoute
-    ){ }
+        private route: ActivatedRoute,
+        private comService: MainCommunicationService
+    ){ 
+        this.comService.userNodeHighlight.subscribe( userId => {
+            if(userId) {
+                this.highlightNodeById(userId);
+            }
+        });
+        this.comService.resetUserNodeHighlight.subscribe( userId => {
+            if(userId) {
+                this.resetSelection();
+            }
+        });
+        this.comService.openUserInfo.subscribe( userId => {
+            if(userId) {
+                this.highlightNodeById(userId, "permanent");
+            }
+        });
+    }
 
 
     onResize(event) {
@@ -155,7 +175,6 @@ export class D3Component implements AfterViewInit{
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
             .on('click', ( node, index, circleArr) =>  {
-                this.highlightSelection( circleArr[index]);
                 this.callOpenUserInfo( node);
             });
 
@@ -169,16 +188,9 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
-        if( this.route.firstChild.snapshot.params['uid']){
-            let selectedUser = this.route.firstChild.snapshot.params['uid'];
-            this.svg.selectAll("circle").filter( ( node, index, circleArray) =>{
-                if( node['id_str'] == selectedUser){
-                    this.highlightSelection( circleArray[index]);        
-                }
-            });
-        }
     }
 
+    //NOT USED ANYMORE
     scaleCircle( node, factor) {
         let r = node.attr("r");
         if( factor > 0){
@@ -191,7 +203,7 @@ export class D3Component implements AfterViewInit{
 
     highlightNeighbours( n, c) {
         let circle = d3.select(c);
-        this.scaleCircle(circle, 1.2);
+        this.highlightHover(c);
         let links = this.link.nodes();
         let cIndex = c.__data__['index'];
         let neighbours = [];
@@ -222,22 +234,39 @@ export class D3Component implements AfterViewInit{
         }).style("opacity", "0.2");
     }
 
-    highlightSelection( node) {
-        this.resetSelection();
+    highlightHover( node) {
         let circle = d3.select(node);
-        this.selectedNode = circle;
-        circle.attr("class", "active");
+        this.hoveredNode = circle;
+        circle.classed("hovered", true);
+    }
+
+    highlightPermanent( node) {
+        let circle = d3.select( node);
+        this.hoveredNode = circle;
+        circle.classed("active", true);
+    }
+
+    highlightNodeById( userId, permanent=undefined) {
+        d3.selectAll('circle').filter( (node, index, circleArr) => {
+            if( node['id_str'] == userId){
+                if(permanent){
+                    this.highlightPermanent( circleArr[index]);
+                } else {
+                    this.highlightHover( circleArr[index]);
+                }
+            }
+        });
     }
 
     resetSelection() {
-        if( this.selectedNode){
-            this.selectedNode.attr("class", null);
+        if( this.hoveredNode){
+            this.hoveredNode.classed("hovered", false);
         }
     }
 
     resetHighlighting( n, c) {
+        this.resetSelection();
         let circle = d3.select(c);
-        this.scaleCircle(circle, -1.2);
         d3.selectAll("circle").style("opacity", "1");
         d3.selectAll(".link").style("opacity", "1");
     }

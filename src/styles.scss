@@ -3,6 +3,8 @@
 
 * {
     box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
 }
 body {
     margin: 0px;
@@ -25,3 +27,40 @@ router-outlet {
     display: none;
 }
 
+//used in child components
+.info-block {
+    justify-self: center;
+    text-align: center;
+    
+    h3 {
+        margin: 0px;
+        font-size: 12px;
+    }
+    p {
+        font-size: 18px;
+        color: #66757f;
+        font-weight: 600;
+    }
+}
+
+.user-names {
+    p:nth-child(1) {
+        grid-area: name;
+        font-size: 19px;
+        font-weight: bold;
+        overflow: hidden;
+    }
+    p:nth-child(2) {
+        grid-area: screen_name;
+        font-size: 16px;
+        color: #657786;
+    }
+    &.small {
+        p:nth-child(1) {
+            font-size: 15px;
+        }
+        p:nth-child(2) {
+            font-size: 13px;
+        }
+    }
+}

@@ -1,4 +1,9 @@
-import { Component, AfterViewInit, OnChanges, ViewChild, NgModule } from '@angular/core';
+import { 
+    Component, 
+    AfterViewInit, 
+    OnChanges, 
+    ViewChild, 
+    NgModule } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
@@ -15,6 +20,7 @@ import { Observable } from 'rxjs/Observable';
 export class MainComponent implements AfterViewInit, OnChanges {
     @ViewChild('d3Component') d3Component;
     @ViewChild('userinfo') userComponent;
+    @ViewChild('info') infoComponent;
 
     tracemapId: string;
     tracemapData: object;
@@ -116,10 +122,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
                     if( sourceId in followers) {
                         followers[sourceId].forEach( targetId => {
                             if( targetId !== authorId) {
-                                let sourceDate = this.graphData['retweet_info'][sourceId]['retweet_created_at'];
-                                let targetDate = this.graphData['retweet_info'][targetId]['retweet_created_at'];
-
-                                if( Date.parse(sourceDate) < Date.parse(targetDate)) {
+                                if( this.targetTweetNewer(sourceId, targetId)) {
                                     if( checkedUsers.indexOf(targetId) < 0){
                                         tmpConnectedUsers.push(targetId);
                                         checkedUsers.push(targetId);
@@ -148,6 +151,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
                     });
                 });
             } else {
+                this.graphData['auther_unknown'] = true;
                 console.log("THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE");
             }
 
@@ -157,10 +161,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
                 if( sourceId in followers) {
                     followers[sourceId].forEach( targetId => {
                         if( !(targetId === authorId || sourceId === authorId)) {
-                            let sourceDate = this.graphData['retweet_info'][sourceId]['retweet_created_at'];
-                            let targetDate = this.graphData['retweet_info'][targetId]['retweet_created_at'];
-
-                            if( Date.parse(sourceDate) < Date.parse(targetDate)) {
+                            if( this.targetTweetNewer(sourceId, targetId)) {
                                 graphElements['links'].push({
                                     'source': sourceId,
                                     'target': targetId
@@ -172,9 +173,25 @@ export class MainComponent implements AfterViewInit, OnChanges {
             });
         }
 
-        this.tracemapData['graphData'] = graphElements;
-        this.d3Component.graphData = this.tracemapData['graphData'];
+        this.graphData['nodes'] = graphElements['nodes'];
+        this.graphData['links'] = graphElements['links'];
+        this.d3Component.graphData = this.graphData;
+        this.apiService.graphData.next(this.graphData);
         this.d3Component.render();
+    }
+
+    targetTweetNewer( sourceId: string, targetId: string): boolean {
+        let sourceDate = this.graphData['retweet_info']
+                                       [sourceId]
+                                       ['retweet_created_at'];
+        let targetDate = this.graphData['retweet_info']
+                                       [targetId]
+                                       ['retweet_created_at'];
+        if( sourceDate < targetDate) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     openUserInfo(userId: string): void {
