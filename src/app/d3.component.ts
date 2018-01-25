@@ -175,7 +175,8 @@ export class D3Component implements AfterViewInit{
             .on('mouseleave', ( node, index, circleArr) => 
                 this.resetHighlighting( node, circleArr[index]))
             .on('click', ( node, index, circleArr) =>  {
-                this.callOpenUserInfo( node);
+            //    this.callOpenUserInfo( node);
+            // Needs to be changed to user comService.
             });
 
         this.node
@@ -306,15 +307,5 @@ export class D3Component implements AfterViewInit{
         if( !d3.event.active) this.simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
-    }
-
-    callOpenUserInfo(node): void {
-        let userId = node['id_str'];
-        this.nodeClicked.emit(userId);
-    }
-
-    callCloseUserInfo(): void {
-        this.resetSelection();
-        this.svgClicked.emit();
     }
 }

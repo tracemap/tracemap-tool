@@ -7,6 +7,5 @@ export class MainCommunicationService {
 
     userNodeHighlight = new BehaviorSubject<string>(undefined);
     resetUserNodeHighlight = new BehaviorSubject<string>(undefined); 
-    openUserInfo = new BehaviorSubject<string>(undefined);
-    closeUserInfo = new BehaviorSubject<string>(undefined);
+    userInfo = new BehaviorSubject<string>(undefined);
 }
