@@ -1,8 +1,8 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { ApiService } from './api.service';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from  'rxjs/Subscription';
+
 
 @Component({
   selector: 'user-info',
@@ -10,6 +10,7 @@ import { Subscription } from  'rxjs/Subscription';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
+
     subscription: Subscription;
     userId: string;
     userInfo: object;
@@ -21,7 +22,7 @@ export class UserComponent {
     constructor(
         private apiService: ApiService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
     ) {
         // subscribes changed routes to switch userInfo
         this.apiService.tracemapData.subscribe( tracemapData => {
@@ -31,6 +32,7 @@ export class UserComponent {
                 let creatorInfo = tracemapData['tweet_data']['tweet_info'];
                 this.usersInfo[creatorId] = creatorInfo;
                 router.events.subscribe(() => this.changeUser());
+                //For hardlinks
                 if( !this.userId){
                     this.changeUser();
                 }
@@ -43,7 +45,6 @@ export class UserComponent {
         if( newUser !== this.userId){
             this.userId = newUser;
             this.userInfo = this.usersInfo[this.userId]['user'];
-            console.log(this.userInfo);
             this.userImage = "https://twitter.com/" + this.userInfo['screen_name'] + "/profile_image?size=original"
             this.setAge();
             this.setCounts();

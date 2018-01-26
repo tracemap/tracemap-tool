@@ -1,7 +1,3 @@
-p {
-    margin: 0px;
-}
-
 a {
     text-decoration: none;
     color: #000;
@@ -42,15 +38,14 @@ a {
         display: grid;
         padding: 10px;
         width: 100%;
-        height: 300px;
+        height: auto;
         grid-template-columns: 150px auto;
-        grid-template-rows: 50px 50px 50px 25px 25px 100px;
+        grid-template-rows: 50px 50px 50px auto auto;
         grid-template-areas:
             "user_image statuses_count"
             "user_image followers_count"
             "user_image following_count"
-            "name name"
-            "screen_name screen_name"
+            "user_names user_names"
             "description description";
         align-items: center;
 
@@ -78,18 +73,8 @@ a {
         .following-count {
             grid-area: following_count;
         }
-        .name {
-            grid-area: name;
-            font-size: 19px;
-            font-weight: bold;
-            margin-top: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        .screen-name {
-            grid-area: screen_name;
-            font-size: 16px;
-            color: #657786;
+        .user-names {
+            grid-area: user_names;
         }
         .description {
             grid-area: description;
@@ -99,19 +84,5 @@ a {
             overflow: hidden;
         }
 
-        .info-block {
-            justify-self: center;
-            text-align: center;
-            
-            h3 {
-                margin: 0px;
-                font-size: 12px;
-            }
-            p {
-                font-size: 18px;
-                color: #66757f;
-                font-weight: 600;
-            }
-        }
     }
 }

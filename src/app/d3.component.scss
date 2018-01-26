@@ -14,6 +14,6 @@ circle {
     stroke-width: 3.5;
 }
 
-circle.active {
+circle.active, circle.hovered {
     stroke: #1da1f2;
 }
