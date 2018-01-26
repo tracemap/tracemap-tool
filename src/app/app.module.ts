@@ -18,6 +18,8 @@ import { DescriptionVkComponent } from './home-page/description-vk.component';
 import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
 import { ApiService } from './api.service';
+import { MainCommunicationService } from './main.communication.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,10 @@ import { ApiService } from './api.service';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [ ApiService ],
+  providers: [ 
+    ApiService,
+    MainCommunicationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

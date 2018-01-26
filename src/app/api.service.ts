@@ -16,6 +16,7 @@ export class ApiService {
 
     
     tracemapData = new BehaviorSubject<object>(undefined);
+    graphData = new BehaviorSubject<object>(undefined);
 
     constructor( 
         private http:Http
@@ -59,7 +60,7 @@ export class ApiService {
     }
 
     getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
-        let retweetersString = retweeterIds.toString() + "," + authorId;
+        let retweetersString = authorId + "," + retweeterIds.toString();
         return this.http
                    .get(this.url + "/neo4j/get_followers/" + retweetersString)
                    .map( response => {

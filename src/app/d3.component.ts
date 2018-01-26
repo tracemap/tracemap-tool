@@ -9,6 +9,8 @@ import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
 
+import { MainCommunicationService } from './main.communication.service';
+
 @Component({
     selector: 'd3-component',
     encapsulation: ViewEncapsulation.None,
@@ -35,13 +37,26 @@ export class D3Component implements AfterViewInit{
     width;
     height;
 
-    selectedNode;
+    hoveredNode;
+    activeNode;
 
     scale = d3.scaleLinear().domain([2, 30]).range([4, 18]);
 
     constructor(
-        private route: ActivatedRoute
-    ){ }
+        private route: ActivatedRoute,
+        private comService: MainCommunicationService
+    ){ 
+        this.comService.userNodeHighlight.subscribe( userId => {
+            if(userId) {
+                this.highlightNodeById(userId);
+            }
+        });
+        this.comService.resetUserNodeHighlight.subscribe( userId => {
+            if(userId) {
+                this.resetHoveredNode();
+            }
+        });
+    }
 
 
     onResize(event) {
@@ -55,7 +70,7 @@ export class D3Component implements AfterViewInit{
         this.svg = d3.select("svg");
         this.svg.on('click', () => {
             if( d3.event.target.toString() === '[object SVGSVGElement]') {
-                this.callCloseUserInfo();
+                this.comService.userInfo.next(undefined);
             }
         });
         this.svg.append('svg:defs').append('svg:marker')
@@ -151,17 +166,12 @@ export class D3Component implements AfterViewInit{
                     .on("drag", (d) => { return this.dragged(d)})
                     .on("end", (d) => { return this.dragended(d)}))
             .on('mouseenter', ( node, index, circleArr) => 
-                this.highlightNeighbours( node, circleArr[index]))
+                this.comService.userNodeHighlight.next(node.id_str))
             .on('mouseleave', ( node, index, circleArr) => 
-                this.resetHighlighting( node, circleArr[index]))
+                this.comService.resetUserNodeHighlight.next(node.id_str))
             .on('click', ( node, index, circleArr) =>  {
-                this.highlightSelection( circleArr[index]);
-                this.callOpenUserInfo( node);
+                this.comService.userInfo.next(node.id_str);
             });
-
-        this.node
-            .append("title")
-                .text( function(d) { return d.id_str; });
 
         this.simulation
             .nodes( this.graphData.nodes)
@@ -169,29 +179,20 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
-        if( this.route.firstChild.snapshot.params['uid']){
-            let selectedUser = this.route.firstChild.snapshot.params['uid'];
-            this.svg.selectAll("circle").filter( ( node, index, circleArray) =>{
-                if( node['id_str'] == selectedUser){
-                    this.highlightSelection( circleArray[index]);        
-                }
-            });
-        }
-    }
 
-    scaleCircle( node, factor) {
-        let r = node.attr("r");
-        if( factor > 0){
-            node.attr("r", r * factor)
-                .raise();
-        } else {
-            node.attr("r", r / (factor*-1) )
-        }
+        this.comService.userInfo.subscribe( userId => {
+            if(userId) {
+                this.resetActiveNode();
+                this.highlightNodeById(userId, "active");
+            } else {
+                this.resetActiveNode();
+            }
+        });
     }
 
     highlightNeighbours( n, c) {
         let circle = d3.select(c);
-        this.scaleCircle(circle, 1.2);
+        this.highlightHover(c);
         let links = this.link.nodes();
         let cIndex = c.__data__['index'];
         let neighbours = [];
@@ -222,22 +223,47 @@ export class D3Component implements AfterViewInit{
         }).style("opacity", "0.2");
     }
 
-    highlightSelection( node) {
-        this.resetSelection();
+    highlightHover( node) {
         let circle = d3.select(node);
-        this.selectedNode = circle;
-        circle.attr("class", "active");
+        this.hoveredNode = circle;
+        circle.classed("hovered", true);
     }
 
-    resetSelection() {
-        if( this.selectedNode){
-            this.selectedNode.attr("class", null);
+
+
+    highlightActive( node) {
+        let circle = d3.select( node);
+        this.activeNode = circle;
+        circle.classed("active", true);
+    }
+
+    highlightNodeById( userId, active=undefined) {
+        d3.selectAll('circle').filter( (node, index, circleArr) => {
+            if( node['id_str'] == userId){
+                if(active){
+                    this.highlightActive( circleArr[index]);
+                } else {
+                    this.highlightHover( circleArr[index]);
+                }
+            }
+        });
+    }
+
+    resetHoveredNode() {
+        if( this.hoveredNode){
+            this.hoveredNode.classed("hovered", false);
+        }
+    }
+
+    resetActiveNode() {
+        if( this.activeNode){
+            this.activeNode.classed("active", false);
         }
     }
 
     resetHighlighting( n, c) {
+        this.resetHoveredNode();
         let circle = d3.select(c);
-        this.scaleCircle(circle, -1.2);
         d3.selectAll("circle").style("opacity", "1");
         d3.selectAll(".link").style("opacity", "1");
     }
@@ -277,15 +303,5 @@ export class D3Component implements AfterViewInit{
         if( !d3.event.active) this.simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
-    }
-
-    callOpenUserInfo(node): void {
-        let userId = node['id_str'];
-        this.nodeClicked.emit(userId);
-    }
-
-    callCloseUserInfo(): void {
-        this.resetSelection();
-        this.svgClicked.emit();
     }
 }
