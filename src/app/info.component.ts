@@ -23,7 +23,7 @@ export class InfoComponent {
         private apiService: ApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private conService: MainCommunicationService
+        private comService: MainCommunicationService
     ) {
         this.apiService.tracemapData.subscribe( tracemapData => {
             if(tracemapData){
@@ -41,11 +41,11 @@ export class InfoComponent {
                 this.setInfluentialUsers();
             }
         });
-        this.conService.userNodeHighlight.subscribe( userId => {
-            $('.' + userId).css("color","#1da1f2");
+        this.comService.userNodeHighlight.subscribe( userId => {
+            $('.' + userId).addClass("active");
         });
-        this.conService.resetUserNodeHighlight.subscribe( userId => {
-            $('.' + userId).css("color", "#000");
+        this.comService.resetUserNodeHighlight.subscribe( userId => {
+            $('.' + userId).removeClass("active");
         });
     }
 
@@ -160,14 +160,15 @@ export class InfoComponent {
     }
 
     highlightUserNode( userId: string): void {
-        this.conService.userNodeHighlight.next(userId);
+        this.comService.userNodeHighlight.next(userId);
     }
 
     resetHighlightUserNode( userId: string): void {
-        this.conService.resetUserNodeHighlight.next(userId);
+        this.comService.resetUserNodeHighlight.next(userId);
     }
 
     openUserDetails( userId: string): void {
-        this.router.navigate(['details', userId], {relativeTo: this.route});
+        this.comService.resetUserNodeHighlight.next( userId);
+        this.comService.userInfo.next( userId);
     }
 }

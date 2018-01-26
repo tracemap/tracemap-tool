@@ -53,12 +53,7 @@ export class D3Component implements AfterViewInit{
         });
         this.comService.resetUserNodeHighlight.subscribe( userId => {
             if(userId) {
-                this.resetSelection();
-            }
-        });
-        this.comService.openUserInfo.subscribe( userId => {
-            if(userId) {
-                this.highlightNodeById(userId, "permanent");
+                this.resetHoveredNode();
             }
         });
     }
@@ -75,7 +70,7 @@ export class D3Component implements AfterViewInit{
         this.svg = d3.select("svg");
         this.svg.on('click', () => {
             if( d3.event.target.toString() === '[object SVGSVGElement]') {
-                this.callCloseUserInfo();
+                this.comService.userInfo.next(undefined);
             }
         });
         this.svg.append('svg:defs').append('svg:marker')
@@ -171,17 +166,12 @@ export class D3Component implements AfterViewInit{
                     .on("drag", (d) => { return this.dragged(d)})
                     .on("end", (d) => { return this.dragended(d)}))
             .on('mouseenter', ( node, index, circleArr) => 
-                this.highlightNeighbours( node, circleArr[index]))
+                this.comService.userNodeHighlight.next(node.id_str))
             .on('mouseleave', ( node, index, circleArr) => 
-                this.resetHighlighting( node, circleArr[index]))
+                this.comService.resetUserNodeHighlight.next(node.id_str))
             .on('click', ( node, index, circleArr) =>  {
-            //    this.callOpenUserInfo( node);
-            // Needs to be changed to user comService.
+                this.comService.userInfo.next(node.id_str);
             });
-
-        this.node
-            .append("title")
-                .text( function(d) { return d.id_str; });
 
         this.simulation
             .nodes( this.graphData.nodes)
@@ -189,17 +179,15 @@ export class D3Component implements AfterViewInit{
 
         this.simulation.force("link")
             .links(this.graphData.links);
-    }
 
-    //NOT USED ANYMORE
-    scaleCircle( node, factor) {
-        let r = node.attr("r");
-        if( factor > 0){
-            node.attr("r", r * factor)
-                .raise();
-        } else {
-            node.attr("r", r / (factor*-1) )
-        }
+        this.comService.userInfo.subscribe( userId => {
+            if(userId) {
+                this.resetActiveNode();
+                this.highlightNodeById(userId, "active");
+            } else {
+                this.resetActiveNode();
+            }
+        });
     }
 
     highlightNeighbours( n, c) {
@@ -241,17 +229,19 @@ export class D3Component implements AfterViewInit{
         circle.classed("hovered", true);
     }
 
-    highlightPermanent( node) {
+
+
+    highlightActive( node) {
         let circle = d3.select( node);
-        this.hoveredNode = circle;
+        this.activeNode = circle;
         circle.classed("active", true);
     }
 
-    highlightNodeById( userId, permanent=undefined) {
+    highlightNodeById( userId, active=undefined) {
         d3.selectAll('circle').filter( (node, index, circleArr) => {
             if( node['id_str'] == userId){
-                if(permanent){
-                    this.highlightPermanent( circleArr[index]);
+                if(active){
+                    this.highlightActive( circleArr[index]);
                 } else {
                     this.highlightHover( circleArr[index]);
                 }
@@ -259,14 +249,20 @@ export class D3Component implements AfterViewInit{
         });
     }
 
-    resetSelection() {
+    resetHoveredNode() {
         if( this.hoveredNode){
             this.hoveredNode.classed("hovered", false);
         }
     }
 
+    resetActiveNode() {
+        if( this.activeNode){
+            this.activeNode.classed("active", false);
+        }
+    }
+
     resetHighlighting( n, c) {
-        this.resetSelection();
+        this.resetHoveredNode();
         let circle = d3.select(c);
         d3.selectAll("circle").style("opacity", "1");
         d3.selectAll(".link").style("opacity", "1");

@@ -5,9 +5,10 @@ import {
     ViewChild, 
     NgModule } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 
+import { ApiService } from './api.service';
+import { MainCommunicationService } from './main.communication.service';
 
 
 @Component({
@@ -32,8 +33,21 @@ export class MainComponent implements AfterViewInit, OnChanges {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private apiService: ApiService
-    ) {}
+        private apiService: ApiService,
+        private comService: MainCommunicationService
+    ) {
+        if (this.route.firstChild.params['_value']['uid']){
+            let userId = this.route.firstChild.params['_value']['uid'];
+            this.comService.userInfo.next( userId);
+        }
+        this.comService.userInfo.subscribe( userId => {
+            if(userId){
+                this.openUserInfo( userId);
+            } else {
+                this.closeUserInfo();
+            }
+        });
+    }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
         return new Promise( (resolve, reject) => {

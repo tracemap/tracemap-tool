@@ -45,7 +45,6 @@ export class UserComponent {
         if( newUser !== this.userId){
             this.userId = newUser;
             this.userInfo = this.usersInfo[this.userId]['user'];
-            console.log(this.userInfo);
             this.userImage = "https://twitter.com/" + this.userInfo['screen_name'] + "/profile_image?size=original"
             this.setAge();
             this.setCounts();

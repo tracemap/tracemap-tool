@@ -82,6 +82,9 @@
             &:hover {
                 cursor: pointer;
             }
+            &.active {
+                color: #1da1f2;
+            }
         }
         .info-block {
             grid-area: "info_block";
