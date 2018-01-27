@@ -1,5 +1,6 @@
 <div class="grid">
     <header></header>
+    <tweet [tweetId]="tracemapId"></tweet>
     <router-outlet></router-outlet>
     <d3-component #d3Component
         (nodeClicked)="openUserInfo($event)"

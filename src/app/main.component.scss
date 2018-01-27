@@ -3,12 +3,12 @@
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-columns: 270px auto;
+    grid-template-columns: 270px minmax(400px,auto) 270px;
     grid-template-rows: 50px auto 30px;
     grid-template-areas:
-        "header header"
-        "userinfo graph"
-        "footer footer";
+        "header header header"
+        "sidepanel graph tweet"
+        "footer footer footer";
 }
 
 header {
@@ -26,6 +26,10 @@ d3-component {
     grid-area: graph;
 }
 
-user-info, tm-info {
+sidepanel, tm-info {
     grid-area: userinfo;
+}
+
+tweet {
+    grid-area: tweet;
 }
