@@ -165,10 +165,14 @@ export class D3Component implements AfterViewInit{
                     .on("start", (d) => { return this.dragstarted(d)})
                     .on("drag", (d) => { return this.dragged(d)})
                     .on("end", (d) => { return this.dragended(d)}))
-            .on('mouseenter', ( node, index, circleArr) => 
-                this.comService.userNodeHighlight.next(node.id_str))
-            .on('mouseleave', ( node, index, circleArr) => 
-                this.comService.resetUserNodeHighlight.next(node.id_str))
+            .on('mouseenter', ( node, index, circleArr) => {
+                this.comService.userNodeHighlight.next(node.id_str);
+                this.highlightNeighbours( circleArr[index]);
+            })
+            .on('mouseleave', ( node, index, circleArr) => { 
+                this.comService.resetUserNodeHighlight.next(node.id_str);
+                this.resetHighlighting( circleArr[index]);
+            })
             .on('click', ( node, index, circleArr) =>  {
                 this.comService.userInfo.next(node.id_str);
             });
@@ -190,7 +194,7 @@ export class D3Component implements AfterViewInit{
         });
     }
 
-    highlightNeighbours( n, c) {
+    highlightNeighbours( c) {
         let circle = d3.select(c);
         this.highlightHover(c);
         let links = this.link.nodes();
@@ -261,7 +265,7 @@ export class D3Component implements AfterViewInit{
         }
     }
 
-    resetHighlighting( n, c) {
+    resetHighlighting( c) {
         this.resetHoveredNode();
         let circle = d3.select(c);
         d3.selectAll("circle").style("opacity", "1");

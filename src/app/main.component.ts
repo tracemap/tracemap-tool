@@ -40,13 +40,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
             let userId = this.route.firstChild.params['_value']['uid'];
             this.comService.userInfo.next( userId);
         }
-        this.comService.userInfo.subscribe( userId => {
-            if(userId){
-                this.openUserInfo( userId);
-            } else {
-                this.closeUserInfo();
-            }
-        });
     }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
@@ -61,6 +54,14 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
+        this.comService.userInfo.subscribe( userId => {
+            if(userId){
+                this.openUserInfo( userId);
+            } else {
+                this.closeUserInfo();
+            }
+        });
+        
         this.tracemapId = this.route.params["_value"]["pid"];
 
         let authorKeys = [
