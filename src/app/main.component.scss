@@ -7,7 +7,7 @@
     grid-template-rows: 50px auto 30px;
     grid-template-areas:
         "header header header"
-        "sidepanel graph tweet"
+        "sidepanel graph graph"
         "footer footer footer";
 }
 
@@ -31,5 +31,8 @@ sidepanel, tm-info {
 }
 
 tweet {
-    grid-area: tweet;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    width: 270px;
 }

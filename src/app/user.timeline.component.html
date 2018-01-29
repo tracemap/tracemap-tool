@@ -1,0 +1,16 @@
+<div class="controls">
+    <div class="sort">
+        <h3>sort by:</h3>
+        <select (change)="changeSelection($event.target.value)">
+            <option value="time" selected>Time</option>
+            <option value="retweets">Retweets</option>
+        </select>
+    </div>
+    <div class="include">
+        <h3>include:</h3>
+        <label><input (click)="changeSelection($event.target.checked) "type="checkbox" name="replies" value="replies" checked="true">replies</label>
+    </div>
+</div>
+<div class="timeline">
+    <tweet *ngFor="let tweet of timeline" [tweetId]="tweet"></tweet>
+</div>

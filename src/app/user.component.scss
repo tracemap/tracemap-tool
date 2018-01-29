@@ -7,15 +7,26 @@ a {
     height: 100%;
     background-color:#f7f7fb;
     box-shadow: inset -1px 0px 4px rgba(0,0,0,0.25);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 350px 60px auto;
+    grid-template-areas:
+        "user_details"
+        "."
+        "timeline";
+
+    .twitter-link {
+        height: 350px;
+    }
 
     .link-overlay {
         position: absolute;
         background-color: #f7f7fb;
         display: inline;
-        height: 310px;
+        height: 350px;
         width: 266px;
         z-index: 10;
-        top: 60px;
+        top: 50px;
         left: 0px;
         opacity: 0;
         text-align: center;
@@ -35,10 +46,13 @@ a {
 
 
     .user-details {
+        grid-area: user_details;
         display: grid;
         padding: 10px;
         width: 100%;
         height: auto;
+        max-height: 350px;
+        overflow: hidden;
         grid-template-columns: 150px auto;
         grid-template-rows: 50px 50px 50px auto auto;
         grid-template-areas:
@@ -84,5 +98,13 @@ a {
             overflow: hidden;
         }
 
+    }
+
+    timeline {
+        grid-area: timeline;
+        max-height: 100%;
+        width: 270px;
+        padding: 0px 5px 0px 0px;
+        overflow-y: scroll;
     }
 }

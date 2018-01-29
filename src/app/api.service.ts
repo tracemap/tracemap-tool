@@ -41,6 +41,14 @@ export class ApiService {
                  });
     }
 
+    getTimeline( userId: string): Observable<object> {
+      return this.http
+                 .get( this.url + "/twitter/get_user_timeline/" + userId)
+                 .map( response => {
+                     return response.json();
+                 });
+    }
+
     getUserInfo( userId: string): Observable<object> {
         return this.http
                    .get( this.url + "/twitter/get_user_info/" + userId)
