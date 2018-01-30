@@ -1,6 +1,9 @@
 <div class="grid">
+    
     <header></header>
-    <router-outlet></router-outlet>
+    <div class="sidepanel">
+        <router-outlet></router-outlet>
+    </div>
     <d3-component #d3Component
         (nodeClicked)="openUserInfo($event)"
         (svgClicked)="closeUserInfo()">

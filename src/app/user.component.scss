@@ -5,11 +5,13 @@ a {
 
 .user-info {
     height: 100%;
+    width: 100%;
     background-color:#f7f7fb;
     box-shadow: inset -1px 0px 4px rgba(0,0,0,0.25);
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 350px 60px auto;
+    overflow: hidden;
     grid-template-areas:
         "user_details"
         "."
@@ -26,7 +28,7 @@ a {
         height: 350px;
         width: 266px;
         z-index: 10;
-        top: 50px;
+        top: 0px;
         left: 0px;
         opacity: 0;
         text-align: center;
@@ -97,14 +99,11 @@ a {
             align-self: start;
             overflow: hidden;
         }
-
     }
 
     timeline {
         grid-area: timeline;
         max-height: 100%;
-        width: 270px;
-        padding: 0px 5px 0px 0px;
-        overflow-y: scroll;
+        height: 100%;
     }
 }

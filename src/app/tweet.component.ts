@@ -2,8 +2,6 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TweetService } from './tweet.service';
 
-import * as $ from 'jquery';
-
 @Component({
     selector: 'tweet',
     templateUrl: './tweet.component.html',
@@ -15,60 +13,40 @@ export class TweetComponent implements OnChanges{
     @Input('tweetId') 
     tweetId: string;
     html: String;
-    processed:boolean;
+    processed:boolean = false;
     twitter: any;
 
     constructor(
         private tweetService: TweetService,
         private router: Router
     ) { 
+        window['twttr'].ready(
+            twttr => {
+                twttr.events.bind(
+                    'rendered',
+                    event => {
+                        event.target.parentNode.classList.remove("unrendered");
+                    }
+                );
+            }
+        )
     }
 
     ngOnChanges() {
         if( this.tweetId) {
             this.tweetService.getHtml(this.tweetId)
                 .then( html => {
-                    this.html = html; 
-                    this.initTwitterWidget();
+                    this.html = html;
+                    // setTimeout(fn,0) guarantees. that widgets.load
+                    // takes place after the this.html is rendered
+                    setTimeout(() => {
+                        window['twttr'].widgets.load(
+                            document.getElementsByTagName('tweet')
+                        );
+                    }, 0);
                 });
         }
     }
 
-    initTwitterWidget() {
-        window['twttr'] = (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0],
-            t = window['twttr'] || {};
-            if (d.getElementById(id)){
-                let unrendered = $('tweet blockquote');
-                console.log(unrendered);
-                t.widgets.load(unrendered);
-                $('timeline .tweet').css('opacity',1);
-                return t;
-            };
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
-
-            t._e = [];
-            t.ready = function(f) {
-                t._e.push(f);
-            };
-
-            return t;
-        })(document, "script", "twitter-wjs");
-
-        window['twttr'].ready(
-            twttr => {
-                twttr.events.bind(
-                    'rendered',
-                    event => {
-                        console.log("renderer!");
-                        event.target.parentNode.classList.add('rendered');
-                    }
-                );
-            }
-        );
-    }
 
 }

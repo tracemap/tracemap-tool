@@ -2,15 +2,18 @@
     <div class="sort">
         <h3>sort by:</h3>
         <select (change)="changeSelection($event.target.value)">
-            <option value="time" selected>Time</option>
-            <option value="retweets">Retweets</option>
+            <option value="time">Time</option>
+            <option value="retweets" selected>Retweets</option>
         </select>
     </div>
     <div class="include">
         <h3>include:</h3>
-        <label><input (click)="changeSelection($event.target.checked) "type="checkbox" name="replies" value="replies" checked="true">replies</label>
+        <label><input (click)="changeSelection($event.target.checked) "type="checkbox" name="replies" value="replies">replies</label>
     </div>
 </div>
-<div class="timeline">
-    <tweet *ngFor="let tweet of timeline" [tweetId]="tweet"></tweet>
+<div class="timeline" (scroll)="onScroll($event)">
+    <div  class="timeline-container" *ngFor="let tweet of timeline" >
+        <tweet [tweetId]="tweet"></tweet>
+        <button type="button" (click)="changeTracemap(tweet)">Generate Tracemap</button>
+    </div>
 </div>

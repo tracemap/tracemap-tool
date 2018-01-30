@@ -1,6 +1,6 @@
 .tweet {
-    opacity: 0;
-    &.rendered {
-        opacity: 1;
+    opacity: 1;
+    &.unrendered {
+        opacity: 0;
     }
 }

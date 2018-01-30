@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ApiService } from './api.service';
 import { TweetService } from './tweet.service';
 import { MainCommunicationService } from './main.communication.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observer } from 'rxjs/Observer';
 
@@ -19,12 +19,15 @@ export class UserTimelineComponent {
     timeline: string[] = [];
 
     selection: string;
-    sortBy: string = "time";
-    include: string = "";
+    sortBy: string = "retweets";
+    include: string = "_no_rts";
+
+    oldTimelineHeight: number = 0;
 
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private apiService: ApiService,
         private tweetService: TweetService,
         private comService: MainCommunicationService
@@ -33,7 +36,7 @@ export class UserTimelineComponent {
         this.apiService.getTimeline( this.userId)
             .subscribe( timeline => {
                 this.timelineData = timeline;
-                this.changeSelection(true);
+                this.changeSelection(false);
             });
     }
 
@@ -70,5 +73,18 @@ export class UserTimelineComponent {
         } 
     }
 
+    changeTracemap(tweetId: string): void {
+        this.router.navigate(['twitter',tweetId]);
+    }
 
+    onScroll(event: any): void {
+       let timelineHeight = event.target.scrollTopMax;
+       if( this.oldTimelineHeight < timelineHeight - 300){
+           let scrollPosition = event.target.scrollTop;
+           if( timelineHeight - scrollPosition < 100) {
+               this.oldTimelineHeight = timelineHeight;
+               this.addTweets();
+           }
+       }
+    }
 }
