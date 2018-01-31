@@ -3,9 +3,11 @@ import { Component } from '@angular/core';
 import { ApiService } from './api.service';
 import { TweetService } from './tweet.service';
 import { MainCommunicationService } from './main.communication.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { Observer } from 'rxjs/Observer';
+
+import * as $ from 'jquery';
 
 @Component({
     selector: 'timeline',
@@ -17,13 +19,11 @@ export class UserTimelineComponent {
     userId: string;
     timelineData: {};
     timeline: string[] = [];
+    renderedTweets = new Set;
 
     selection: string;
     sortBy: string = "retweets";
     include: string = "_no_rts";
-
-    oldTimelineHeight: number = 0;
-
 
     constructor(
         private route: ActivatedRoute,
@@ -32,12 +32,18 @@ export class UserTimelineComponent {
         private tweetService: TweetService,
         private comService: MainCommunicationService
     ){
-        this.userId = this.route.params["_value"]["uid"];
-        this.apiService.getTimeline( this.userId)
-            .subscribe( timeline => {
-                this.timelineData = timeline;
-                this.changeSelection(false);
-            });
+        this.route.params.subscribe(
+            (params: Params) => {
+                this.userId = params['uid'];
+                this.timeline = []
+                this.apiService.getTimeline( this.userId)
+                    .subscribe( timeline => {
+                        this.timelineData = timeline;
+                        this.changeSelection(this.sortBy);
+                });
+            }
+        )
+
     }
 
     changeSelection(value:any): void {
@@ -68,7 +74,13 @@ export class UserTimelineComponent {
             let sub_timeline = this.timelineData[this.selection].slice( length,
                                                                         length + addNum);
             sub_timeline.forEach( (tweet, index) => {
-                this.timeline[index + length] = tweet.id_str;
+                let tweetId: string;
+                if( tweet.retweeted) {
+                    tweetId = tweet.retweeted;
+                } else {
+                    tweetId = tweet.id_str;
+                }
+                this.timeline[index + length] = tweetId;
             });
         } 
     }
@@ -78,13 +90,17 @@ export class UserTimelineComponent {
     }
 
     onScroll(event: any): void {
-       let timelineHeight = event.target.scrollTopMax;
-       if( this.oldTimelineHeight < timelineHeight - 300){
+       if( this.timeline.length == this.renderedTweets.size){
+           let timelineHeight = event.target.scrollTopMax;
            let scrollPosition = event.target.scrollTop;
            if( timelineHeight - scrollPosition < 100) {
-               this.oldTimelineHeight = timelineHeight;
                this.addTweets();
            }
        }
+    }
+
+    tweetRendered(tweetId: string): void {
+        $('button.' + tweetId).css('visibility','visible');
+        this.renderedTweets.add(tweetId);
     }
 }

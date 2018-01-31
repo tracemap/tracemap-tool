@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TweetService } from './tweet.service';
 
@@ -9,7 +9,8 @@ import { TweetService } from './tweet.service';
 }) 
 
 export class TweetComponent implements OnChanges{
-
+    @Output()
+    rendered = new EventEmitter();
     @Input('tweetId') 
     tweetId: string;
     html: String;
@@ -26,6 +27,7 @@ export class TweetComponent implements OnChanges{
                     'rendered',
                     event => {
                         event.target.parentNode.classList.remove("unrendered");
+                        this.rendered.emit(this.tweetId);
                     }
                 );
             }
