@@ -1,0 +1,19 @@
+<div class="controls">
+    <div class="sort">
+        <h3>sort by:</h3>
+        <select (change)="changeSelection($event.target.value)">
+            <option value="time">time</option>
+            <option value="retweets" selected>retweets</option>
+        </select>
+    </div>
+    <div class="include">
+        <h3>include:</h3>
+        <label><input (click)="changeSelection($event.target.checked) "type="checkbox" name="replies" value="replies">retweets</label>
+    </div>
+</div>
+<div class="timeline" (scroll)="onScroll($event)">
+    <div  class="timeline-container" *ngFor="let tweet of timeline" >
+        <tweet [tweetId]="tweet" (rendered)="tweetRendered($event)"></tweet>
+        <button type="button" [class]="tweet" (click)="changeTracemap(tweet)">Generate Tracemap</button>
+    </div>
+</div>

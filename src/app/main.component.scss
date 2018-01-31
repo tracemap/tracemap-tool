@@ -1,14 +1,14 @@
 //used here
 .grid {
     display: grid;
-    width: 100vw;
-    height: 100vh;
-    grid-template-columns: 270px auto;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 270px minmax(400px,auto) 270px;
     grid-template-rows: 50px auto 30px;
     grid-template-areas:
-        "header header"
-        "userinfo graph"
-        "footer footer";
+        "header header header"
+        "sidepanel graph graph"
+        "footer footer footer";
 }
 
 header {
@@ -26,6 +26,16 @@ d3-component {
     grid-area: graph;
 }
 
-user-info, tm-info {
-    grid-area: userinfo;
+.sidepanel {
+    position: relative;
+    grid-area: sidepanel;
+    height: 100%;
+    max-height: 100%;
+}
+
+tweet {
+    position: absolute;
+    right: 0;
+    top: 45px;
+    width: 270px;
 }

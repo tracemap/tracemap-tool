@@ -9,6 +9,7 @@ import { Subscription } from  'rxjs/Subscription';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
+
 export class UserComponent {
 
     subscription: Subscription;

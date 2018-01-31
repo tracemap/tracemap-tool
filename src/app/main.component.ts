@@ -4,7 +4,7 @@ import {
     OnChanges, 
     ViewChild, 
     NgModule } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from './api.service';
@@ -36,17 +36,11 @@ export class MainComponent implements AfterViewInit, OnChanges {
         private apiService: ApiService,
         private comService: MainCommunicationService
     ) {
+        this.loadTwitterWidgetScript();
         if (this.route.firstChild.params['_value']['uid']){
             let userId = this.route.firstChild.params['_value']['uid'];
             this.comService.userInfo.next( userId);
         }
-        this.comService.userInfo.subscribe( userId => {
-            if(userId){
-                this.openUserInfo( userId);
-            } else {
-                this.closeUserInfo();
-            }
-        });
     }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
@@ -61,38 +55,50 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
-        this.tracemapId = this.route.params["_value"]["pid"];
+        this.comService.userInfo.subscribe( userId => {
+            if(userId){
+                this.openUserInfo( userId);
+            } else {
+                this.closeUserInfo();
+            }
+        });
+        this.route.params.subscribe(
+            (params: Params) => {
+            this.tracemapId = params["pid"];
 
-        let authorKeys = [
-            'id_str',
-            'favourites_count',
-            'followers_count',
-            'friends_count'
-        ];
+            let authorKeys = [
+                'id_str',
+                'favourites_count',
+                'followers_count',
+                'friends_count'
+            ];
 
-        this.apiService.getTracemapData( this.tracemapId)
-            .then( tracemapData => {
-                this.tracemapData = tracemapData;
-                let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
-                return this.createSubDict(authorInfo, authorKeys);
-            }).then( graphAuthorInfo => {
-                this.graphData = {};
-                this.graphData['author_info'] = graphAuthorInfo;
-                this.graphData['author_info']['group'] = 0;
-                let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
-                this.graphData['retweet_info'] = {};
-                let promiseArray:Array<any> = [];
-                this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeterId => {
-                    let retweeterInfo = retweetersInfo[retweeterId]['user'];
-                    let tmp = {};
-                    tmp['favourites_count'] = retweeterInfo['favourites_count'];
-                    tmp['followers_count'] = retweeterInfo['followers_count'];
-                    tmp['friends_count'] = retweeterInfo['friends_count'];
-                    tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
-                    this.graphData['retweet_info'][retweeterId] = tmp;
+            this.apiService.getTracemapData( this.tracemapId)
+                .then( tracemapData => {
+                    this.tracemapData = tracemapData;
+                    let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
+                    return this.createSubDict(authorInfo, authorKeys);
+                }).then( graphAuthorInfo => {
+                    this.graphData = {};
+                    this.graphData['author_info'] = graphAuthorInfo;
+                    this.graphData['author_info']['group'] = 0;
+                    let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
+                    this.graphData['retweet_info'] = {};
+                    let promiseArray:Array<any> = [];
+                    this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeterId => {
+                        let retweeterInfo = retweetersInfo[retweeterId]['user'];
+                        let tmp = {};
+                        tmp['favourites_count'] = retweeterInfo['favourites_count'];
+                        tmp['followers_count'] = retweeterInfo['followers_count'];
+                        tmp['friends_count'] = retweeterInfo['friends_count'];
+                        tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
+                        this.graphData['retweet_info'][retweeterId] = tmp;
+                    });
+                    this.addGraphData();
                 });
-                this.addGraphData();
-            });
+
+            }
+        );
     }
 
     addGraphData(): void {
@@ -217,5 +223,26 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     ngOnChanges(): void {
+    }
+
+    loadTwitterWidgetScript(): void {
+        window['twttr'] = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+            t = window['twttr'] || {};
+            if (d.getElementById(id)){
+                return t;
+            };
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+
+            return t;
+        })(document, "script", "twitter-wjs");
     }
 }
