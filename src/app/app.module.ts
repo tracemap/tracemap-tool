@@ -18,7 +18,6 @@ import { LoadingComponent } from './loading.component';
 import { ShareComponent } from './share.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
-import { DescriptionVkComponent } from './home-page/description-vk.component';
 import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
 import { ApiService } from './api.service';
@@ -39,7 +38,6 @@ import { TweetService } from './tweet.service';
     LoadingComponent,
     ShareComponent,
     HomePageComponent,
-      DescriptionVkComponent,
       DescriptionTwitterComponent,
   ],
   imports: [
