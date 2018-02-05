@@ -1,12 +1,19 @@
+.searchbar {
+    display: grid;
+    grid-template-columns: 600px 50px;
+    grid-template-rows: 50px;
+    margin-left: 50px;
+    grid-template-areas: 
+        "input button";
+    justify-content: center;
+}
+
 input[type=text] {
   grid-area: input;
-  width: 70vw;
-  max-width: 600px;
-  min-width: 300px;
+  width: 590px;
+  margin-right: 10px;
   font-weight: 600;
   font-size: 1.5em;
-  padding: 0px 10px; 
-  margin: 0px 10px 0px 20px;
 }
 button {
   grid-area: button;

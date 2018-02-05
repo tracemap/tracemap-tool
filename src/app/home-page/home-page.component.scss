@@ -1,88 +1,31 @@
-@import "fonts", "colors";
-
-.container {
-	display: grid;
-	grid-template-columns: 100vw;
-	grid-template-rows: 30vh 200px auto;
-	grid-template-areas:
-		"searchbar"
-		"description"
-		"details"
+.content {
+	max-width: 100%;
+	min-width: 1000px;
+	overflow: hidden;
+	background-image: url("./../../assets/images/bg1920.png");
+	background-size: 95%;
+	background-repeat: no-repeat;
 }
 
 search {
-	grid-area: searchbar;
-	justify-self: center;
-	align-self: center;
-	display: grid;
-	grid-template-columns: auto 50px;
-	grid-template-rows: 50px;
-	grid-template-areas:
-		"input button";
+	display: block;
+	margin-top: 100px;
+	height: 100px;
 }
 
-#descriptionNav {
-	grid-area: description;
-	justify-self: center;
+.basic-description {
 
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 50px 100px 50px;
-	grid-template-areas:
-		"headline headline"
-		"text text"
-		"twitter vk";
-
-	font: 100% $font-rubik;
-	border: 1px solid #000;
-	min-width: 300px;
-	max-width: 500px;
-
-	h1 {
-		grid-area: headline;
-		justify-self: center;	
-		font-size: 1.7em;
-		font-weight: 700;
-	}
-
-	p {
-		grid-area: text;
-		margin: 10px 20px;
-		max-width: 400px;
-	}
+	text-align: center;
+	margin-bottom: 50px;
 
 	a {
-		text-decoration: none;
-		border: 1px solid #000;
-		color: $color-text;
-		text-align: center;
-		padding-top: 15px;
-
-		&:hover {
-			background-color: $color-text;
-			color: $color-bg;
-		}
-		&.active {
-			background-color: $color-bg-active;
-		}
+		color: #323232;
 	}
-
-	.twitter {
-		grid-area: twitter;
-	}
-
-	.vk {
-		grid-area: vk;
+	p {
+		padding: 10px;
+		font-size: 22px;
+		color: #657786;
+		background: radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0));
 	}
 }
 
-@media screen and (max-width: 500px) {
-	search {
-		grid-template-columns: auto;
-		grid-template-rows: 50px 50px;
-		grid-row-gap: 15px;
-		grid-template-areas:
-			"input"
-			"button";
-	}
-}
