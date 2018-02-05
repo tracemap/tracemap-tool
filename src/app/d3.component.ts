@@ -24,6 +24,8 @@ export class D3Component implements AfterViewInit{
     @Output()
     svgClicked:EventEmitter<any> = new EventEmitter();
 
+    loaded: boolean = false;
+
     graphData = {
         "nodes": [],
         "links": []
@@ -106,12 +108,15 @@ export class D3Component implements AfterViewInit{
             });
     }
 
-    render() {
-        if(this.link){
-            this.link.remove();
-            this.node.remove();
+    resetGraph() {
+        if( this.link){
+            this.loaded = false;
+            this.svg.selectAll("*").remove();
         }
-        this.svg = d3.select("svg");
+    }
+
+    render() {
+        this.svg = d3.select(".graph");
         this.svg.on('click', () => {
             if( d3.event.target.toString() === '[object SVGSVGElement]') {
                 this.comService.userInfo.next(undefined);
@@ -129,8 +134,8 @@ export class D3Component implements AfterViewInit{
                     .attr('fill', '#666');
                      
 
-        this.width = $('svg').width();
-        this.height = $('svg').height();
+        this.width = $('.graph').width();
+        this.height = $('.graph').height();
 
         this.color = ["#9729ff","#fff"];
 
@@ -186,6 +191,8 @@ export class D3Component implements AfterViewInit{
             .nodes( this.graphData.nodes)
             .on( "tick", () => { return this.ticked()});
 
+        this.loaded = true;
+
         this.simulation.force("link")
             .links(this.graphData.links);
 
@@ -207,7 +214,7 @@ export class D3Component implements AfterViewInit{
         let neighbours = [];
         neighbours.push(cIndex);
 
-        d3.selectAll(".link").filter( function( d, i){
+        d3.selectAll(".graph .link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
             if ( sIndex === cIndex)
@@ -218,7 +225,7 @@ export class D3Component implements AfterViewInit{
                 return this;
         }).style("opacity", "0.2");
 
-        d3.selectAll(".link").filter( function( d, i){
+        d3.selectAll(".graph .link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
             if( neighbours.includes(sIndex) && 
@@ -226,7 +233,7 @@ export class D3Component implements AfterViewInit{
                 return this;
         }).style("opacity", "1");
 
-        d3.selectAll("circle").filter( function( d, i){
+        d3.selectAll(".graph circle").filter( function( d, i){
             if( !neighbours.includes(d['index']))
                 return this;
         }).style("opacity", "0.2");
@@ -247,7 +254,7 @@ export class D3Component implements AfterViewInit{
     }
 
     highlightNodeById( userId, active=undefined) {
-        d3.selectAll('circle').filter( (node, index, circleArr) => {
+        d3.selectAll('.graph circle').filter( (node, index, circleArr) => {
             if( node['id_str'] == userId){
                 if(active){
                     this.highlightActive( circleArr[index]);
@@ -273,8 +280,8 @@ export class D3Component implements AfterViewInit{
     resetHighlighting( c) {
         this.resetHoveredNode();
         let circle = d3.select(c);
-        d3.selectAll("circle").style("opacity", "1");
-        d3.selectAll(".link").style("opacity", "1");
+        d3.selectAll(".graph circle").style("opacity", "1");
+        d3.selectAll(".graph .link").style("opacity", "1");
     }
 
     getNeighbours(d, direction=""): number {

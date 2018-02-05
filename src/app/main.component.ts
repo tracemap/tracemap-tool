@@ -65,6 +65,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
         this.route.params.subscribe(
             (params: Params) => {
             this.tracemapId = params["pid"];
+            this.d3Component.resetGraph();
 
             let authorKeys = [
                 'id_str',
