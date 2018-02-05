@@ -14,6 +14,7 @@ import { D3Component } from './d3.component';
 import { SearchComponent } from './search.component';
 import { TweetComponent } from './tweet.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { LoadingComponent } from './loading.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { DescriptionVkComponent } from './home-page/description-vk.component';
@@ -34,6 +35,7 @@ import { TweetService } from './tweet.service';
     SearchComponent,
     TweetComponent,
     PageNotFoundComponent,
+    LoadingComponent,
     HomePageComponent,
       DescriptionVkComponent,
       DescriptionTwitterComponent,
