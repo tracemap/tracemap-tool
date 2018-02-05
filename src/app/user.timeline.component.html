@@ -12,6 +12,7 @@
     </div>
 </div>
 <div class="timeline" (scroll)="onScroll($event)">
+    <loader [isLoaded]="loaded"></loader>
     <div  class="timeline-container" *ngFor="let tweet of timeline" >
         <tweet [tweetId]="tweet" (rendered)="tweetRendered($event)"></tweet>
         <button type="button" [class]="tweet" (click)="changeTracemap(tweet)">Generate Tracemap</button>

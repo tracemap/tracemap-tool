@@ -21,6 +21,8 @@ export class UserTimelineComponent {
     timeline: string[] = [];
     renderedTweets = new Set;
 
+    loaded: boolean = false;
+
     selection: string;
     sortBy: string = "retweets";
     include: string = "_no_rts";
@@ -34,6 +36,7 @@ export class UserTimelineComponent {
     ){
         this.route.params.subscribe(
             (params: Params) => {
+                this.loaded = false;
                 this.userId = params['uid'];
                 this.timeline = []
                 this.apiService.getTimeline( this.userId)
@@ -47,6 +50,7 @@ export class UserTimelineComponent {
     }
 
     changeSelection(value:any): void {
+        this.renderedTweets.clear();
         if( value == 'time' || value == 'retweets') {
             this.sortBy = value;
         } else {
@@ -90,17 +94,22 @@ export class UserTimelineComponent {
     }
 
     onScroll(event: any): void {
-       if( this.timeline.length == this.renderedTweets.size){
-           let timelineHeight = event.target.scrollTopMax;
-           let scrollPosition = event.target.scrollTop;
-           if( timelineHeight - scrollPosition < 100) {
+        console.log(this.timeline.length);
+        console.log(this.renderedTweets.size);
+        if( this.timeline.length == this.renderedTweets.size){
+            let timelineHeight = event.target.scrollTopMax;
+            let scrollPosition = event.target.scrollTop;
+            if( timelineHeight - scrollPosition < 100) {
                this.addTweets();
-           }
-       }
+            }
+        }
     }
 
     tweetRendered(tweetId: string): void {
         $('button.' + tweetId).css('visibility','visible');
         this.renderedTweets.add(tweetId);
+        if(this.renderedTweets.size > 4 || this.renderedTweets.size == this.timeline.length) {
+            this.loaded = true;
+        }
     }
 }

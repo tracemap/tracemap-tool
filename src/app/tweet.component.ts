@@ -38,6 +38,8 @@ export class TweetComponent implements OnChanges{
         if( this.tweetId) {
             this.tweetService.getHtml(this.tweetId)
                 .then( html => {
+                    document.getElementsByClassName('tweet')[0]
+                            .classList.add('unrendered');
                     this.html = html;
                     // setTimeout(fn,0) guarantees. that widgets.load
                     // takes place after the this.html is rendered
