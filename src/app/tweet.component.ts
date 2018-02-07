@@ -16,17 +16,23 @@ export class TweetComponent implements OnChanges{
     ngOnChanges() {
         if( this.tweetId) {
             window['twttr'].ready( twttr => {
-
-                        twttr.widgets.createTweet(
-                            this.tweetId,
-                            document.getElementsByClassName(this.tweetId)[0],
-                            {
-                                linkColor: "#9729ff",
-                            }
-                        ).then(() => {
-                            this.rendered.emit(this.tweetId);
-                        });
-                    });
+                let domTweet = document.getElementsByClassName(this.tweetId)[0];
+                // Remove old tweet if present
+                if( domTweet.firstChild) {
+                    domTweet.removeChild( domTweet.firstChild);
+                }
+                // Create tweet from tweetId
+                twttr.widgets.createTweet(
+                    this.tweetId,
+                    domTweet,
+                    {
+                        linkColor: "#9729ff"
+                    }
+                ).then(() => {
+                    // Callback to parent for timeline loading animation
+                    this.rendered.emit(this.tweetId);
+                });
+            });
         }
     }
 
