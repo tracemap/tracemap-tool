@@ -2,6 +2,8 @@
     <input type="text" 
       #searchField
       (keydown.enter)="processUrl( searchField)"
-      [placeholder]="placeholder">
+      [placeholder]="placeholder"
+      (focus)="removePlaceholder()"
+      (focusout)="setPlaceholder()">
     <button type="button" (click)="processUrl( searchField)"></button>
 </div>
