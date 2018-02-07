@@ -22,7 +22,6 @@ import { DescriptionTwitterComponent } from './home-page/description-twitter.com
 
 import { ApiService } from './api.service';
 import { MainCommunicationService } from './main.communication.service';
-import { TweetService } from './tweet.service';
 
 @NgModule({
   declarations: [
@@ -48,8 +47,7 @@ import { TweetService } from './tweet.service';
   ],
   providers: [ 
     ApiService,
-    MainCommunicationService,
-    TweetService
+    MainCommunicationService
   ],
   bootstrap: [AppComponent]
 })
