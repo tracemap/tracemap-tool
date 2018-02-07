@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 
 export class SearchComponent {
-  placeholder = "";
+  placeholder = "Enter a Tweet URL";
   
 
   constructor(
@@ -52,5 +52,13 @@ export class SearchComponent {
       return Promise.reject("invalid vk Url");
     }
     return Promise.reject("Please enter a valid Url");
+  }
+
+  removePlaceholder(): void {
+    this.placeholder = "";
+  }
+
+  setPlaceholder(): void {
+    this.placeholder = "Enter a Tweet URL";
   }
 }
