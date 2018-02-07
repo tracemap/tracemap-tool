@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { ApiService } from './api.service';
-import { TweetService } from './tweet.service';
 import { MainCommunicationService } from './main.communication.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
@@ -31,7 +30,6 @@ export class UserTimelineComponent {
         private route: ActivatedRoute,
         private router: Router,
         private apiService: ApiService,
-        private tweetService: TweetService,
         private comService: MainCommunicationService
     ){
         this.route.params.subscribe(
@@ -94,8 +92,6 @@ export class UserTimelineComponent {
     }
 
     onScroll(event: any): void {
-        console.log(this.timeline.length);
-        console.log(this.renderedTweets.size);
         if( this.timeline.length == this.renderedTweets.size){
             let timelineHeight = event.target.scrollTopMax;
             let scrollPosition = event.target.scrollTop;

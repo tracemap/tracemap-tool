@@ -17,7 +17,6 @@ export class LoadingComponent implements OnChanges, AfterViewInit {
 
     ngAfterViewInit() {
         let svg = d3.select(".loading-animation");
-        console.log(svg);
         let radias = [30,20,10];
         this.elements = [];
         radias.forEach( radius => {
@@ -36,7 +35,6 @@ export class LoadingComponent implements OnChanges, AfterViewInit {
     }
 
     ngOnChanges() {
-        console.log(this.loaded);
         if( this.loaded == true) {
             this.canvas.nativeElement.classList.add('loaded');
             window.clearInterval(this.colorFade)
