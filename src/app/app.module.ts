@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './main.component';
+import { HeaderComponent } from './header.component';
 import { UserComponent } from './user.component';
 import { UserTimelineComponent } from './user.timeline.component';
 import { InfoComponent } from './info.component';
@@ -27,6 +28,7 @@ import { MainCommunicationService } from './main.communication.service';
   declarations: [
     AppComponent,
     MainComponent,
+    HeaderComponent,
     UserComponent,
     UserTimelineComponent,
     InfoComponent,
