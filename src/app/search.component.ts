@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 })
 
 export class SearchComponent {
+  @Input()
+  style: string;
+
   placeholder = "Enter a Tweet URL";
-  
 
   constructor(
     private router: Router

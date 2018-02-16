@@ -10,7 +10,10 @@
 search {
 	display: block;
 	margin-top: 100px;
-	height: 100px;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 50px;
 }
 
 .basic-description {
@@ -23,6 +26,8 @@ search {
 	}
 	p {
 		padding: 10px;
+		margin-top: 50px;
+		display: inline-block;
 		font-size: 22px;
 		color: #657786;
 		background: radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0));
