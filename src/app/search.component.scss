@@ -6,6 +6,10 @@
     grid-template-areas: 
         "input button";
     border-bottom: 2px solid #666;
+    &.mini {
+        grid-template-rows: 30px;
+        grid-template-columns: auto 40px;
+    }
 }
 
 input[type=text] {
@@ -22,6 +26,11 @@ input[type=text] {
   &::placeholder {
     color: #666;
     opacity: 1;
+  }
+  &.mini {
+      font-size: 1.18em;
+      padding-top: 4px;
+      font-weight: bold;
   }
 }
 

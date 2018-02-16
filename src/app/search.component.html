@@ -1,5 +1,5 @@
-<div class="searchbar">
-    <input type="text" 
+<div class="searchbar {{style}}">
+    <input class="{{style}}" type="text" 
       #searchField
       (keydown.enter)="processUrl( searchField)"
       [placeholder]="placeholder"
