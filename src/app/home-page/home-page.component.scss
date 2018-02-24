@@ -2,9 +2,10 @@
 	max-width: 100%;
 	min-width: 1000px;
 	overflow: hidden;
-	background-image: url("./../../assets/images/bg1920.png");
-	background-size: 95%;
+	background-image: url("./../../assets/images/bg_midfit.png");
+	background-size: 80%;
 	background-repeat: no-repeat;
+	background-position: 0px 50px;
 }
 
 search {
@@ -30,7 +31,6 @@ search {
 		display: inline-block;
 		font-size: 22px;
 		color: #657786;
-		background: radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0));
 	}
 }
 

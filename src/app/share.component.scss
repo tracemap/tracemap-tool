@@ -1,7 +1,7 @@
 .share-component {
     display: grid;
-    grid-template-columns: 50px 50px 50px;
-    grid-template-rows: 30px 40px;
+    grid-template-columns: 35px 35px 35px 35px;
+    grid-template-rows: 25px 35px;
     grid-template-areas:
         "head head head head"
         "twitter facebook mail telegram";
@@ -9,7 +9,7 @@
     h2 {
         text-align: center;
         grid-area: head;
-        font-size: 20px;
+        font-size: 17px;
     }
 
     .twitter-link {
@@ -31,9 +31,9 @@
     }
 
     img {
-        margin-left: 7.5px;
-        margin-right: 7.5px;
-        width: 35px;
-        height: 35px;
+        margin-left: 2px;
+        margin-right: 2px;
+        width: 25px;
+        height: 25px;
     }
 }

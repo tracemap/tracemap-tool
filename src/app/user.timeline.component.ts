@@ -93,8 +93,9 @@ export class UserTimelineComponent {
 
     onScroll(event: any): void {
         if( this.timeline.length == this.renderedTweets.size){
-            let timelineHeight = event.target.scrollTopMax;
-            let scrollPosition = event.target.scrollTop;
+            let timelineHeight = event.target.scrollHeight;
+            let scrollPosition = event.target.scrollTop +
+                                 event.target.offsetHeight;
             if( timelineHeight - scrollPosition < 100) {
                this.addTweets();
             }
