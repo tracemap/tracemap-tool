@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import { ApiService } from './../api.service';
-import { HighlightService } from './../highlight.service';
 import { Subscription } from  'rxjs/Subscription';
 
+import { ApiService } from './../services/api.service';
+import { HighlightService } from './../services/highlight.service';
 
 @Component({
   selector: 'user-info',

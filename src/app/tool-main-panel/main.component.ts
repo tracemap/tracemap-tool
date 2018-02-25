@@ -7,8 +7,8 @@ import {
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { ApiService } from './api.service';
-import { MainCommunicationService } from './main.communication.service';
+import { ApiService } from './../services/api.service';
+import { MainCommunicationService } from './../services/main.communication.service';
 
 
 @Component({

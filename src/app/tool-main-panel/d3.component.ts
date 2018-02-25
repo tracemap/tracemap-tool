@@ -9,8 +9,8 @@ import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
 
-import { MainCommunicationService } from './main.communication.service';
-import { HighlightService } from './highlight.service';
+import { MainCommunicationService } from './../services/main.communication.service';
+import { HighlightService } from './../services/highlight.service';
 
 @Component({
     selector: 'd3-component',

@@ -1,10 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { ApiService } from './../api.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MainCommunicationService } from './../main.communication.service';
-import { HighlightService } from './../highlight.service';
+import { ApiService } from './../services/api.service';
+import { MainCommunicationService } from './../services/main.communication.service';
+import { HighlightService } from './../services/highlight.service';
 
 import * as $ from 'jquery';
 

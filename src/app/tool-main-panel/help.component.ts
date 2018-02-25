@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MainCommunicationService } from './main.communication.service';
-import { HighlightService } from './highlight.service';
+import { MainCommunicationService } from './../services/main.communication.service';
+import { HighlightService } from './../services/highlight.service';
 
 @Component({
     selector: 'help',

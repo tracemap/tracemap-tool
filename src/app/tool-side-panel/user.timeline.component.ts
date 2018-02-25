@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { ApiService } from './../api.service';
-import { HighlightService } from './../highlight.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+
+import { ApiService } from './../services/api.service';
+import { HighlightService } from './../services/highlight.service';
 
 import { Observer } from 'rxjs/Observer';
 
