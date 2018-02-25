@@ -1,9 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { ApiService } from './api.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MainCommunicationService } from './main.communication.service';
+import { ApiService } from './../services/api.service';
+import { MainCommunicationService } from './../services/main.communication.service';
+import { HighlightService } from './../services/highlight.service';
 
 import * as $ from 'jquery';
 
@@ -14,6 +15,8 @@ import * as $ from 'jquery';
 })
 export class InfoComponent {
 
+    highlightDetails: string;
+    highlightInfluent: string;
     tracemapData: object;
     graphData: object;
     subscription: Subscription;
@@ -23,7 +26,8 @@ export class InfoComponent {
         private apiService: ApiService,
         private route: ActivatedRoute,
         private router: Router,
-        private comService: MainCommunicationService
+        private comService: MainCommunicationService,
+        private highlightService: HighlightService
     ) {
         this.apiService.tracemapData.subscribe( tracemapData => {
             if(tracemapData){
@@ -46,6 +50,18 @@ export class InfoComponent {
         });
         this.comService.resetUserNodeHighlight.subscribe( userId => {
             $('.' + userId).removeClass("active");
+        });
+        this.highlightService.highlight.subscribe( area => {
+            if( area == "tm-details") {
+                this.highlightDetails = "highlight";
+            } else {
+                this.highlightDetails = "";
+            }
+            if( area == "tm-influent") {
+                this.highlightInfluent = "highlight";
+            } else {
+                this.highlightInfluent = "";
+            }
         });
     }
 

@@ -7,8 +7,8 @@ import {
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { ApiService } from './api.service';
-import { MainCommunicationService } from './main.communication.service';
+import { ApiService } from './../services/api.service';
+import { MainCommunicationService } from './../services/main.communication.service';
 
 
 @Component({
@@ -118,6 +118,8 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
         let authorId = this.graphData['author_info']['id_str']
         let followers = this.tracemapData['followers']
+
+        this.comService.author.next(authorId);
 
         if(authorId in followers && this.newMode) {
             // New mechanic if author is in our database

@@ -11,7 +11,8 @@
         <label><input (click)="changeSelection($event.target.checked) "type="checkbox" name="replies" value="replies">retweets</label>
     </div>
 </div>
-<div class="timeline" (scroll)="onScroll($event)">
+<div class="timeline" (scroll)="onScroll($event)"
+                      [ngClass]="highlight">
     <loader [isLoaded]="loaded"></loader>
     <div  class="timeline-container" *ngFor="let tweet of timeline" >
         <tweet [tweetId]="tweet" (rendered)="tweetRendered($event)"></tweet>

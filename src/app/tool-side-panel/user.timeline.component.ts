@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { ApiService } from './api.service';
-import { MainCommunicationService } from './main.communication.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+
+import { ApiService } from './../services/api.service';
+import { HighlightService } from './../services/highlight.service';
 
 import { Observer } from 'rxjs/Observer';
 
@@ -20,6 +21,7 @@ export class UserTimelineComponent {
     timeline: string[] = [];
     renderedTweets = new Set;
 
+    highlight: string;
     loaded: boolean = false;
 
     selection: string;
@@ -30,7 +32,7 @@ export class UserTimelineComponent {
         private route: ActivatedRoute,
         private router: Router,
         private apiService: ApiService,
-        private comService: MainCommunicationService
+        private highlightService: HighlightService
     ){
         this.route.params.subscribe(
             (params: Params) => {
@@ -44,7 +46,13 @@ export class UserTimelineComponent {
                 });
             }
         )
-
+        this.highlightService.highlight.subscribe( area => {
+            if( area == "timeline") {
+                this.highlight = "highlight";
+            } else {
+                this.highlight = "";
+            }
+        });
     }
 
     changeSelection(value:any): void {
@@ -93,8 +101,9 @@ export class UserTimelineComponent {
 
     onScroll(event: any): void {
         if( this.timeline.length == this.renderedTweets.size){
-            let timelineHeight = event.target.scrollTopMax;
-            let scrollPosition = event.target.scrollTop;
+            let timelineHeight = event.target.scrollHeight;
+            let scrollPosition = event.target.scrollTop +
+                                 event.target.offsetHeight;
             if( timelineHeight - scrollPosition < 100) {
                this.addTweets();
             }
