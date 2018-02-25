@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import "fonts";
-@import "colors";
+@import "./sass/fonts";
+@import "./sass/colors";
 
 * {
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    transition: box-shadow 0.5s linear;
 }
 body {
     width: 100vw;
@@ -27,7 +28,7 @@ button::-moz-focus-inner {
   border: 0;
 }
 
- main {
+main {
     display: block;
     position: relative;
     height: 100%;
@@ -41,6 +42,10 @@ router-outlet {
     display: none;
 }
 
+.highlight {
+    box-shadow:inset 0px 0px 5em 0px #9729ff;
+}
+
 //used in child components
 .info-block {
     justify-self: center;
@@ -52,7 +57,7 @@ router-outlet {
     }
     p {
         font-size: 18px;
-        color: #66757f;
+        color: $font-gray;
         font-weight: 600;
     }
 }

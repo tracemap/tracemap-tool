@@ -119,6 +119,8 @@ export class MainComponent implements AfterViewInit, OnChanges {
         let authorId = this.graphData['author_info']['id_str']
         let followers = this.tracemapData['followers']
 
+        this.comService.author.next(authorId);
+
         if(authorId in followers && this.newMode) {
             // New mechanic if author is in our database
             let connectedUsers = [];

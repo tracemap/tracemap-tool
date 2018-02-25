@@ -39,5 +39,13 @@ share {
     position: absolute;
     left: 280px;
     bottom: 0px;
-    t-index: 15;
+    z-index: 15;
+}
+
+help {
+    position: absolute;
+    right: 0px;
+    bottom: 20px;
+    z-index: 15;
+    width: 270px;
 }

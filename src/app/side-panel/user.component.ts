@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import { ApiService } from './api.service';
+import { ApiService } from './../api.service';
+import { HighlightService } from './../highlight.service';
 import { Subscription } from  'rxjs/Subscription';
 
 
@@ -12,6 +13,7 @@ import { Subscription } from  'rxjs/Subscription';
 
 export class UserComponent {
 
+    highlight: string;
     subscription: Subscription;
     userId: string;
     userInfo: object;
@@ -22,6 +24,7 @@ export class UserComponent {
 
     constructor(
         private apiService: ApiService,
+        private highlightService: HighlightService,
         private route: ActivatedRoute,
         private router: Router,
     ) {
@@ -39,6 +42,14 @@ export class UserComponent {
                 }
             }
         });
+
+        this.highlightService.highlight.subscribe( area => {
+            if( area == "user-details") {
+                this.highlight = "highlight";
+            } else {
+                this.highlight = "";
+            }
+        })
     }
 
     changeUser(): void {

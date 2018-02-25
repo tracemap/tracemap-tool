@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ApiService } from './api.service';
-import { MainCommunicationService } from './main.communication.service';
+import { ApiService } from './../api.service';
+import { HighlightService } from './../highlight.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { Observer } from 'rxjs/Observer';
@@ -20,6 +20,7 @@ export class UserTimelineComponent {
     timeline: string[] = [];
     renderedTweets = new Set;
 
+    highlight: string;
     loaded: boolean = false;
 
     selection: string;
@@ -30,7 +31,7 @@ export class UserTimelineComponent {
         private route: ActivatedRoute,
         private router: Router,
         private apiService: ApiService,
-        private comService: MainCommunicationService
+        private highlightService: HighlightService
     ){
         this.route.params.subscribe(
             (params: Params) => {
@@ -44,7 +45,13 @@ export class UserTimelineComponent {
                 });
             }
         )
-
+        this.highlightService.highlight.subscribe( area => {
+            if( area == "timeline") {
+                this.highlight = "highlight";
+            } else {
+                this.highlight = "";
+            }
+        });
     }
 
     changeSelection(value:any): void {

@@ -5,8 +5,8 @@ import { HomePageComponent} from './home-page/home-page.component';
 import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
 import { MainComponent } from './main.component';
-import { UserComponent } from './user.component';
-import { InfoComponent } from './info.component';
+import { UserComponent } from './side-panel/user.component';
+import { InfoComponent } from './side-panel/info.component';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 

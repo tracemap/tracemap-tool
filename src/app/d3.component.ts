@@ -10,6 +10,7 @@ import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
 
 import { MainCommunicationService } from './main.communication.service';
+import { HighlightService } from './highlight.service';
 
 @Component({
     selector: 'd3-component',
@@ -25,6 +26,7 @@ export class D3Component implements AfterViewInit{
     svgClicked:EventEmitter<any> = new EventEmitter();
 
     loaded: boolean = false;
+    highlight: string;
 
     graphData = {
         "nodes": [],
@@ -46,7 +48,8 @@ export class D3Component implements AfterViewInit{
 
     constructor(
         private route: ActivatedRoute,
-        private comService: MainCommunicationService
+        private comService: MainCommunicationService,
+        private highlightService: HighlightService
     ){ 
         this.comService.userNodeHighlight.subscribe( userId => {
             if(userId) {
@@ -56,6 +59,13 @@ export class D3Component implements AfterViewInit{
         this.comService.resetUserNodeHighlight.subscribe( userId => {
             if(userId) {
                 this.resetHoveredNode();
+            }
+        });
+        this.highlightService.highlight.subscribe( element => {
+            if( element == "graph") {
+                this.highlight = "highlight";
+            } else {
+                this.highlight = "";
             }
         });
     }
