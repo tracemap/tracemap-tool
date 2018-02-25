@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomePageComponent} from './home-page/home-page.component';
-import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
 import { MainComponent } from './tool-main-panel/main.component';
 import { UserComponent } from './tool-side-panel/user.component';
 import { InfoComponent } from './tool-side-panel/info.component';
+import { AboutUsComponent } from './home-page/about-us.component';
 import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 
@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 const routes: Routes = [
 	{ path: 'homepage', component: HomePageComponent},
 	{ path: '', redirectTo: 'homepage', pathMatch: 'full'},
+    { path: 'about', component: AboutUsComponent},
     { path: 'howitworks', component: HowItWorksComponent},
     { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'twitter/:pid', component: MainComponent, children: [

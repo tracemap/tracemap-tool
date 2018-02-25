@@ -18,11 +18,11 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { LoadingComponent } from './multi-use/loading.component';
 import { ShareComponent } from './tool-main-panel/share.component';
 import { HelpComponent } from './tool-main-panel/help.component';
+import { AboutUsComponent } from './home-page/about-us.component';
 import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
-import { DescriptionTwitterComponent } from './home-page/description-twitter.component';
 
 import { ApiService } from './services/api.service';
 import { MainCommunicationService } from './services/main.communication.service';
@@ -44,7 +44,7 @@ import { HighlightService } from './services/highlight.service';
     ShareComponent,
     HelpComponent,
     HomePageComponent,
-    DescriptionTwitterComponent,
+    AboutUsComponent,
     HowItWorksComponent,
     CodeOfConductComponent
   ],

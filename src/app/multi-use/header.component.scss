@@ -1,18 +1,12 @@
 .header {
+    box-shadow: 0 4px 2px -2px rgba(0,0,0,0.25);
     width: 100%;
-    height: 100%;
+    height: 50px;
     display: grid;
-    grid-template-columns: auto 130px auto;
+    grid-template-columns: 1fr 130px 1fr;
     grid-template-rows: 45px;
     grid-template-areas:
-        "search logo header_links";
-
-    search {
-        grid-area: search;
-        width: 270px;
-        padding-left: 0px;
-        margin-top: 19px;
-    }
+        ". logo header_links";
 
     .logo {
         grid-area: logo;
