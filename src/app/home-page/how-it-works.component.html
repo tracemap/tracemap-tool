@@ -1,1 +1,105 @@
 <header></header>
+<div id="howTo" class="section grid_4">
+    <h2 class="column grid_4">How it works</h2>
+    <div class="imglast">
+        <div class="column grid_2 centerVertical">
+            <h3>1 - Choose a Tweet</h3>
+            <p>Have you spotted a suspicious tweet today? Or do you simply want to find out how a tweet spreads within the social network? Then, copy the URL of that tweet, paste it into the search bar and hit the search button.</p>
+        </div>
+        <div class="column grid_2">
+            <img alt="The tools start page shows an input field for the post link and a submit button"
+                 src="/assets/images/about-us/howto1_640.png"
+                 srcset="/assets/images/about-us/howto1_640.png 1x,
+                        /assets/images/about-us/howto1_1280.png 2x">
+        </div>
+    </div>
+    <div class="imgfirst">
+        <div class="column grid_2">
+            <img alt="The result is now shown as a graph with nodes which are users and edges which are connections like friendship or followships."
+                 src="/assets/images/about-us/howto2_640.png"
+                 srcset="/assets/images/about-us/howto2_640.png 1x,
+                        /assets/images/about-us/howto2_1280.png 2x">
+        </div>
+        <div class="column grid_2 centerVertical">
+            <h3>2 - Gather its traces</h3>
+            <p>The <cite>TraceMap</cite> starts to unfold from the user who first shared the post. <cite>TraceMap</cite>'s open-source algorithms display up-to-date information, showing how that tweet spread through the social network's users.</p>
+        </div>
+    </div>
+    <div class="imglast">
+        <div class="column grid_2 centerVertical">
+            <h3>3 - Explore the map</h3>
+            <p><cite>TraceMap</cite>s are easy to interpret: each node represents a user and their sizes indicate how influential they are. Click on a node to find out more about it. Connections between users reveal how information flows. Trace all possible paths!</p>
+        </div>
+        <div class="column grid_2">
+            <img alt="Now you can hover on top of the nodes to see the users social media account and additional information."
+                 src="/assets/images/about-us/howto3_640.png"
+                 srcset="/assets/images/about-us/howto3_640.png 1x,
+                        /assets/images/about-us/howto3_1280.png 2x">
+        </div>
+    </div>
+    <div class="imgfirst">
+        <div class="column grid_2">
+            <img alt="The result is now shown as a graph with nodes which are users and edges which are connections like friendship or followships."
+                 src="/assets/images/about-us/howto4_640.png"
+                 srcset="/assets/images/about-us/howto4_640.png 1x,
+                         /assets/images/about-us/howto4_1280.png 2x">
+        </div>
+        <div class="column grid_2 centerVertical">
+            <h3>4 - Share your findings</h3>
+            <p>What did you discover? Share the <cite>TraceMap</cite> and your findings with your friends and followers. Get their feedback and start a crowd-debunking process.</p>
+        </div>
+    </div>
+</div>
+<div class="seperator"></div>
+<div id="in-depth" class="section grid_4">
+    <h2 class="column grid_4">In Depth Information</h2>
+    <p class="column grid_4">
+        This section explains the data and algorithms we use to generate TraceMaps in detail.
+    </p>
+    <div class="imglast">
+        <div class="column grid_2 centerVertical">
+            <h3>1. Our Database</h3>
+            <p>We use a Neo4J graph database to store Information about Twitter users.<br>
+            Each user is saved as a node in this graph. Each link is directed and tells, that user-a is following user-b. We receive this data through the API of Twitter.</p>
+        </div>
+        <div class="column grid_2">
+            <img alt="image of some database excerpt">
+        </div>
+    </div>  
+    <div class="imgfirst">
+        <div class="column grid_2">
+            <img alt="some image showing twitters api request for tweet information">
+        </div>
+        <div class="column grid_2 centerVertical">
+            <h3>2. The tweet data</h3>
+            <p>If a user submits a Tweet Url, we request the Twitter API live. We receive information about the last 100 retweets including the time and user id of each retweet.</p>
+        </div>
+    </div>
+    <div class="imglast">
+        <div class="column grid_2 centerVertical">
+            <h3>3. Database Request</h3>
+            <p>Now, we request our database, receiving the sub-network of followship between all the retweeters of the original tweet.</p>
+        </div>
+        <div class="column grid_2">
+            <img alt="database response image">
+        </div>
+    </div>
+    <div class="imgfirst">
+        <div class="column grid_2">
+            <img alt="image of the node and link list">
+        </div>
+        <div class="column grid_2 centerVertical">
+            <h3>4. Merging the data</h3>
+            <p>Finally, we merge the information from Twitter and our Database, to generate the TraceMap.<br>Therefore we first connect all the retweeters following the author of the tweet. Then, we connect each of the remaining nodes, if the user follows one of the already connected ones.<br>
+            The link is just added if the source retweet took time before the target one.</p>
+        </div>
+    </div>
+    <p class="column grid_4">Without the database, the resulting network would always have the author directly connected to each retweeting user.<br>
+    Our logic enables us to guess, which followers of a retweeter brought the information to their timeline.<br>Of course its still a guess and sometimes there is more than one possibility of a connection. But each TraceMap shows some unique metadata from which we can extract useful information.</p>
+</div>
+<div class="seperator"></div>
+<div id="next-steps" class="section grid_4">
+    <h2>Our Next Steps</h2>
+    <p>Of course this is just one part of the TraceMap project.<br>From now on, we focus on analyzing the TraceMaps of certain Tweet categories e.g. Fake News, Hatespeech, Propaganda or just informative Tweets.<br>
+    If they show a difference in propagating, the resulting TraceMaps will also differ. After manual tagging, we could use machine learning to assess the category of each Tweet.</p>
+</div>

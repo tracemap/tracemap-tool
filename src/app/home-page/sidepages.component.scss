@@ -1,0 +1,352 @@
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+* {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+cite{
+    color: inherit;
+    margin-right: 2px;
+}
+
+a {
+    cursor: pointer;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Rubik', sans-serif;
+}
+h1 {
+    font-weight: 900;
+    font-size: 4.5em;
+}
+h2 {
+    font-weight: 900;
+    font-size: 2.8125em;
+}
+h3{
+    font-weight: 700;
+    font-size: 1.875em;
+    padding-top: 10px;
+}
+h4 {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.column {
+    text-align: center;
+    min-width: 320px;
+    padding: 10px 1em;
+}
+
+.grid_1 {
+    width: 25%;
+}
+.grid_2 {
+    width: 50%;
+}
+.grid_3 {
+    width: 75%;
+}
+.grid_4 {
+    width: 100%;
+}
+.seperator {
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+.fancySeperator {
+    border-bottom: 1px solid #9729ff;
+}
+
+.centerVertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#start {
+    position: relative;
+    margin-top: 100px;
+    height: 300px;
+    text-align: center;
+    min-width: 320px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#start .help {
+    height: 20%;
+    margin: auto;
+    font-size: 2.0em;
+}
+
+#start .help a {
+    font-weight: 600;
+    padding-top: 5px;
+    background-color: #9729ff;
+    height: 50px;
+    width: 180px;
+    color: #fff;
+}
+
+#anchor {
+    background: rgba(255, 255, 255, 0.5);
+    background: -webkit-linear-gradient(transparent, rgba(255,255,255,0.5));
+    background: -o-linear-gradient(transparent, rgba(255,255,255,0.5));
+    background: -moz-linear-gradient(transparent, rgba(255,255,255,0.5));
+    background: linear-gradient(transparent, rgba(255,255,255,0.5));
+}
+.section {
+    max-width: 1280px;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+    padding: 80px 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.section > p {
+    font-size: 1.6em;
+    padding-bottom: 50px;
+    max-width: 76%
+}
+.section h2 {
+    padding-bottom: 20px;
+}
+.section > h2 {
+    padding-bottom: 50px;
+}
+.column.grid_1 {
+    padding-bottom: 50px;
+}
+#donate {
+    padding-bottom: 50px;
+}
+
+.imglast {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
+}
+.imgfirst p, .imglast p{
+    font-family: 'Rubik';
+    text-align: left;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+.grid_2 img{
+    max-width: 100%;
+}
+.imgfirst {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.grid_2 p,.grid_1 p{
+    padding-top: 10px;
+    color: rgba(0,0,0,0.70);
+}
+.grid_2 h3 {
+    font-size: 1.2em;
+    text-align: left;
+}
+.grid_1 img{
+    max-width:  60%;
+    margin: 0px auto;
+    padding: 20px 0px;
+}
+.grid_1 p {
+    font-size: 0.75em;
+    padding: 5px 30px;
+}
+
+#partners h3, #sponsors h3 {
+    padding-bottom: 40px;
+}
+
+#partners img, #sponsors img{
+
+    margin: 0px auto;
+    filter: grayscale(100%);
+    transition: filter 0.2s linear;
+    max-width: 40%;
+}
+#partners img:hover, #sponsors img:hover {
+    filter: grayscale(0%);
+}
+
+#partners p {
+    padding-top: 0px;
+    font-weight: 700;
+}
+
+#funkyPurple {
+    border-bottom: none;
+}
+
+#donate, #contact {
+}
+#donate *, #contact *{
+    color: #9729ff;
+    text-align: left;
+    clear: both;
+}
+
+#donate h2, #contact h2 {
+    padding-bottom: 0px;
+}
+
+#donate p, #contact p{
+    max-width: 450px;
+    font-family: 'Rubik';
+    margin: 10px 0px;
+    font-size: 1.2em;
+    color: rgba(0,0,0,0.75);
+}
+#contact span{
+    font-family: 'Rubik';
+    font-size: 0.6em;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: rgba(0,0,0,0.75);
+}
+#contact cite, #donate cite {
+    color: rgba(0,0,0,0.75);
+}
+
+#donate input[type=submit], #contact input[type=submit], #donate .help {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    color: #fff;
+    background-color: #9729ff;
+    border: none;
+    width: 130px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 1.0em;
+    margin-top: 30px;
+    text-align: center;
+    border: 2px solid #9729ff;
+    letter-spacing: 0.7px;
+}
+#donate input[type=submit]:hover, #contact input[type=submit]:hover, #donate .help:hover {
+    background-color: #fff;
+    color: #9729ff;
+}
+#donate input[type=submit]:hover{
+    cursor: url('/assets/images/about-us/heart_26.ico'), pointer;
+}
+#contact input[type=submit]:hover{
+    cursor: pointer;
+}
+
+#contact input[type=text], #contact input[type=email], #contact textarea{
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.75);
+    color: rgba(0,0,0,0.75);
+    border-radius: 0.5em;
+    font-weight: 700;
+    font-size: 1em;
+    padding: 0.3em 0.5em;
+    width: 100%;
+}
+#contact input[type=text], #contact input[type=email] {
+    max-width: 320px;
+}
+
+#contact textarea{
+    resize: none;
+}
+
+#footer {
+    background-color: #9729ff;
+    height: 70px;
+    width: 100%;
+}
+#footer .logo, #socialLinks, #imprint {
+    width: 33.33333%;
+    float: left;
+}
+#footer .logo {
+    padding: 20px 0px 0px 0.5em;
+    font-size: 1.2em;
+    text-align: left;
+    color: #fff;
+}
+#socialLinks {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center; 
+}
+#socialLinks a{
+    display: block;
+    float: left;
+    height: 42px;
+    width: 50px;
+    margin: 4px 4px;
+}
+#imprint {
+    padding: 20px 0.5em 0px 0px;
+    text-align: right;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+@media screen and (orientation: landscape){
+    body {
+        background: #fff url("/assets/images/about-us/bg1920.png") no-repeat;
+        background-position: left top;
+        background-size: 99%;
+        background-origin: padding-box;
+    }
+}
+
+@media screen and (max-width: 640px){
+    h1 {
+        font-size: 2.5em;
+        line-height: 70px;
+    }
+    h2 {
+        font-size: 2.2em;
+    }
+    .section > p {
+        font-size: 1.2em;
+    }
+    #start .slogan {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (min-width: 800px){
+    #howTo .grid_2 {
+        max-width: 450px;
+    }
+}
