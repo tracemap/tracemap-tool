@@ -91,7 +91,7 @@ export class D3Component implements AfterViewInit{
             .attr("cx", function(d) { 
                 if( d.x <= 10.0)
                     d.x = 10.0;
-                else if( d.x >= canvasWidth){
+                else if( d.x >= (canvasWidth - 10)){
                     d.x = canvasWidth - 10.0;
                 }
                 return d.x;
@@ -99,7 +99,7 @@ export class D3Component implements AfterViewInit{
             .attr("cy", function(d) { 
                 if( d.y <= 10.0)
                     d.y = 10.0;
-                else if( d.y >= canvasHeight)
+                else if( d.y >= (canvasHeight - 10.0))
                     d.y = canvasHeight - 10.0;
                 return d.y;
             });
