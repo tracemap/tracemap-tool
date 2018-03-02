@@ -1,0 +1,104 @@
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.user-info {
+    height: calc(100vh - 50px);
+    max-height: calc(100vh - 50px);
+    width: 100%;
+    background-color:#f7f7fb;
+    box-shadow: inset -1px 0px 4px rgba(0,0,0,0.25);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: minmax(auto, max-content) 60px minmax(100px,1fr);
+    overflow: hidden;
+    grid-template-areas:
+        "user_details"
+        "."
+        "timeline";
+
+    .twitter-link {
+        grid-area: user_details;
+        display:block;
+        background-color: transparent;
+
+        .overlay-text {
+            position: absolute;
+            font-size: 25px;
+            font-weight: bold;
+            left: 50px;
+            top: 150px;
+            color: #000;
+            opacity: 0.0;
+            transition: opacity 0.3 ease;
+        }
+
+        &:hover {
+            .overlay-text {
+                opacity: 0.7;
+            }
+        }
+
+        .user-details {
+            display: grid;
+            padding: 10px;
+            overflow: hidden;
+            grid-template-columns: 150px auto;
+            grid-template-rows: 50px 50px 50px auto auto;
+            grid-template-areas:
+                "user_image statuses_count"
+                "user_image followers_count"
+                "user_image following_count"
+                "user_names user_names"
+                "description description";
+            align-items: center;
+            transition: opacity 0.5s ease;
+
+            &:hover {
+                opacity: 0.1;
+            }
+
+            .user-image {
+                height: 100%;
+                width: 100%;
+                grid-area: user_image;
+                overflow: hidden;
+                align-items: center;
+                img {
+                    width: 146px;
+                    height: 146px;
+                    margin: 2px;
+                    border-radius: 50%;
+                }
+            }
+
+            .statuses-count {
+                grid-area: statuses_count;
+            }
+            .followers-count {
+                grid-area: followers_count;
+            }
+            .following-count {
+                grid-area: following_count;
+            }
+            .user-names {
+                grid-area: user_names;
+            }
+            .description {
+                grid-area: description;
+                padding-top: 5px;
+                font-size: 15px;
+                align-self: start;
+                overflow: hidden;
+            }
+        }
+    }
+
+    timeline {
+        grid-area: timeline;
+        position: relative;
+        height: 100%;
+        max-height: 100%;
+    }
+}

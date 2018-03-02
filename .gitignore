@@ -43,3 +43,6 @@ Thumbs.db
 
 # Environment variables
 /src/environments
+
+attributions.txt
+package-lock.json

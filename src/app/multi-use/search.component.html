@@ -1,0 +1,9 @@
+<div class="searchbar {{style}}">
+    <input id="search" class="{{style}}" type="text" 
+      #searchField
+      (keydown.enter)="processUrl( searchField)"
+      [placeholder]="placeholder"
+      (focus)="removePlaceholder()"
+      (focusout)="setPlaceholder()">
+    <button type="button" (click)="processUrl( searchField)"></button>
+</div>

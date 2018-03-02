@@ -1,0 +1,48 @@
+<div class="tm-info">
+    <div class="tm-details" [ngClass]="highlightDetails">
+        <div class="node-count info-block">
+            <h3>Retweets in<br>the Tracemap</h3>
+            <p>{{infoData.node_count}}</p>
+        </div>
+        <div class="retweet-count info-block">
+            <h3>Total<br>Retweets</h3>
+            <p>{{infoData.retweet_count}}</p>
+        </div>
+        <div class="link-count info-block">
+            <h3>Links in<br>the Tracemap</h3>
+            <p>{{infoData.link_count}}</p>
+        </div>
+        <div class="avg-degree info-block">
+            <h3>⌀ Links<br>per User</h3>
+            <p>{{infoData.avg_degree}}</p>
+        </div>
+        <div class="first-retweet info-block retweet-block">
+        </div>
+        <div class="latest-retweet info-block retweet-block">
+        </div>
+        <div class="avg-age info-block">
+            <h3>⌀ Account Age</h3>
+            <p>{{infoData.avg_age}}</p>
+        </div>
+    </div>
+    <div class="influent-users">
+        <h2>Most Influential Users</h2>
+        <div [ngClass]="highlightInfluent">
+            <li *ngFor="let user of infoData.influential_users">
+                <div class="influent-user">
+                    <div class="user-names small {{user.id_str}}" 
+                         on-mouseenter='highlightUserNode(user.id_str)'
+                         on-mouseleave='resetHighlightUserNode(user.id_str)'
+                         (click)="openUserDetails(user.id_str)">
+                        <p>{{user.user_info.name}}</p>
+                        <p>@{{user.user_info.screen_name}}</p>
+                    </div>
+                    <div class="info-block">
+                        <h3>Users Retweeted</h3>
+                        <p>{{user.degree}}</p>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </div>
+</div>

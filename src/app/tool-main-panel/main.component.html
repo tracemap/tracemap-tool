@@ -1,0 +1,14 @@
+<div class="grid">
+    
+    <header></header>
+    <div class="sidepanel">
+        <router-outlet></router-outlet>
+    </div>
+    <d3-component #d3Component
+        (nodeClicked)="openUserInfo($event)"
+        (svgClicked)="closeUserInfo()">
+    </d3-component>
+    <tweet [tweetId]="tracemapId"></tweet>
+    <share></share>
+    <help></help>
+</div>

@@ -1,0 +1,16 @@
+search {
+    position: absolute;
+    width: 600px;
+    left: 0;
+    right: 0;
+    top: 180px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &.mini {
+        width: 270px;
+        top: 18px;
+        left: 0px;
+        margin: 0px;
+    }
+}
