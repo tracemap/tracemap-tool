@@ -71,17 +71,14 @@
 
     .influent-user {
         height: 50px;
-        display: grid;
         padding: 10px;
         width: 100%;
         height: auto;
+        display: grid;
         grid-template-columns: auto 100px;
         grid-template-rows: auto;
-        grid-template-areas:
-            "user_names info_block";
 
         .user-names {
-            grid-area: "user_names";
 
             &:hover {
                 cursor: pointer;
@@ -91,7 +88,6 @@
             }
         }
         .info-block {
-            grid-area: "info_block";
             justify-self: center;
         }
     }

@@ -1,5 +1,6 @@
 //used here
 .grid {
+    overflow: hidden;
     display: grid;
     width: 100%;
     height: 100%;
@@ -13,7 +14,6 @@
 
 header {
     grid-area: header;
-    box-shadow: 0 4px 2px -2px rgba(0,0,0,0.25);
 }
 
 d3-component {

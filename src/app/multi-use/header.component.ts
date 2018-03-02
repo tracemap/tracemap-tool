@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'header',
@@ -7,5 +8,12 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
-    searchBarStyle: string = "mini";
+
+    constructor(
+        private router: Router
+    ){}
+
+    navigate(location:string):void {
+        this.router.navigate([location]);
+    }
 }

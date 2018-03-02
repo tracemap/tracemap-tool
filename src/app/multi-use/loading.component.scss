@@ -9,8 +9,6 @@
     display: grid;
     grid-template-columns: 200px;
     grid-template-rows: 200px;
-    grid-template-areas:
-        "loading_animation";
     align-content: center;
     justify-content: center;
 
@@ -19,7 +17,6 @@
     }
 
     .loading-animation {
-        grid-area: "loading_animation";
         position: relative;
         height: 200px;
         width: 200px;

@@ -23,7 +23,7 @@ export class SearchComponent {
     this.getNewRoute(input)
       .then( 
         response => {
-          this.placeholder = "";
+          document.getElementById("search").blur();
           this.router.navigate([response]);
       },
         reject => this.placeholder = reject);
@@ -44,14 +44,6 @@ export class SearchComponent {
         return Promise.resolve("twitter/" + id);
       }
       return Promise.reject("invalid twitter Url");
-    }
-    if( url.indexOf("vk.com/") >= 0) {
-      if( url.indexOf("wall") >= 0) {
-        id = url.slice( url.indexOf("wall") + 4)
-                      .replace("_","/");
-        return Promise.resolve("vk/" + id);
-      }
-      return Promise.reject("invalid vk Url");
     }
     return Promise.reject("Please enter a valid Url");
   }
