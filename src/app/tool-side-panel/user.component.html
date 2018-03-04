@@ -1,6 +1,6 @@
 
 <div class="user-info" *ngIf="userInfo">
-    <a  class="twitter-link" href="https://twitter.com/{{userInfo.screen_name}}" target="_blank">
+    <a class="overlay-link" href="https://twitter.com/{{userInfo.screen_name}}" target="_blank">
         <p class="overlay-text">Go To Twitter</p>
         <div class="user-details" [ngClass]="highlight">
             <div class="user-image">
