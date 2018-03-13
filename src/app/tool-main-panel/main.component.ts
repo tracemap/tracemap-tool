@@ -28,7 +28,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
     relations: object[];
     graphData: object;
 
-    newMode = true;
+    newMode = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -118,6 +118,12 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
         let authorId = this.graphData['author_info']['id_str']
         let followers = this.tracemapData['followers']
+
+        let retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
+        console.log( retweeterIds.length + 1);
+        this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
+            console.log(answer);
+        })
 
         this.comService.author.next(authorId);
 

@@ -5,13 +5,13 @@
 /* graph css*/
 .graph .link {
     transition: opacity 0.6s ease-out;
-    stroke-width:3;
+    stroke-width:1;
 }
 
 .graph circle {
     transition:  opacity 0.3s ease-out;
-    stroke: #9729ff;
     stroke-width: 3.5;
+    stroke: #9729ff;
 }
 
 .graph circle.active, .graph circle.hovered {

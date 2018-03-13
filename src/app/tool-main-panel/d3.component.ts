@@ -147,12 +147,29 @@ export class D3Component implements AfterViewInit{
         this.width = $('.graph').width();
         this.height = $('.graph').height();
 
-        this.color = ["#9729ff","#fff"];
+        this.graphData.nodes.filter( (d) => {
+            if( d.group == 0){
+                d['fx'] = this.width / 3;
+                d['fy'] = this.height / 2;          
+            }
+        });
+
+        this.color = ["#fff","#9729ff"];
 
         this.simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id_str; })
-                                         .distance(function(d) {return 60;}))
-            .force("charge", d3.forceManyBody().strength(-200))
+            .force("link", d3.forceLink().id(function(d) {
+                return d.id_str; 
+            }).distance(function(d) {
+                let sourceRad = d.source.r;
+                let targetRad = d.target.r;
+                return sourceRad + targetRad;
+            }))
+            .force("collide", d3.forceCollide().radius(function(d) {
+                return d.r * 1.5;
+            }))
+            .force("charge", d3.forceManyBody().strength(function(d) {
+                return d.r * -30;
+            }))
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
         this.link = this.svg.append("g")
@@ -166,6 +183,7 @@ export class D3Component implements AfterViewInit{
                     .attr("stroke-width", "2")
                     .style("marker-end","url(#end-arrow)");
 
+
         this.node = this.svg.append("g")
             .attr("class", "nodes")
             .selectAll("circle")
@@ -177,6 +195,7 @@ export class D3Component implements AfterViewInit{
             .enter().append("circle")
                     .attr("r", (d) => { 
                         d.r = this.scale(this.getNeighbours(d, "out"))*1.6; 
+                        console.log(d);
                         return d.r;
                     })
                     .attr("fill", (d) => { return this.color[d.group]; })
@@ -320,14 +339,16 @@ export class D3Component implements AfterViewInit{
 
     dragstarted(d) {
         if( !d3.event.active)
-            this.simulation.alphaTarget(0.3).restart();
+            this.simulation.alphaTarget(0.4).restart();
         d.fx = d.x;
         d.fy = d.y;
     }
 
     dragended(d) {
         if( !d3.event.active) this.simulation.alphaTarget(0);
+        if(d.group == 1) {
             d.fx = null;
             d.fy = null;
+        }
     }
 }

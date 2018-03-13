@@ -93,4 +93,14 @@ export class ApiService {
             })
         });
     }
+
+    labelUnknownUsers( retweeterIds: string[], authorId: string): Observable<string> {
+        let retweetersString = authorId + "," + retweeterIds.toString();
+        return this.http
+                   .get(this.url + "/neo4j/label_unknown_users/" + retweetersString)
+                   .map( response => {
+                       return "" + response;
+                   });
+    }
+
 }
