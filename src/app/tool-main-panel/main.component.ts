@@ -83,6 +83,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
                     this.graphData = {};
                     this.graphData['author_info'] = graphAuthorInfo;
                     this.graphData['author_info']['group'] = 0;
+                    this.graphData['author_info']['retweet_created_at'] = this.tracemapData['tweet_data']['tweet_info']['created_at'];
                     let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
                     this.graphData['retweet_info'] = {};
                     let promiseArray:Array<any> = [];
@@ -107,7 +108,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
             "nodes": [],
             "links": []
         };
-
 
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
             let node = this.graphData['retweet_info'][retweeter];
@@ -210,13 +210,13 @@ export class MainComponent implements AfterViewInit, OnChanges {
     }
 
     targetTweetNewer( sourceId: string, targetId: string): boolean {
-        let sourceDate = this.graphData['retweet_info']
+        let sourceTimestamp = Date.parse(this.graphData['retweet_info']
                                        [sourceId]
-                                       ['retweet_created_at'];
-        let targetDate = this.graphData['retweet_info']
+                                       ['retweet_created_at']);
+        let targetTimestamp = Date.parse(this.graphData['retweet_info']
                                        [targetId]
-                                       ['retweet_created_at'];
-        if( sourceDate < targetDate) {
+                                       ['retweet_created_at']);
+        if( sourceTimestamp < targetTimestamp) {
             return true;
         } else {
             return false;

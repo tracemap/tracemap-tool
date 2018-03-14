@@ -7,6 +7,11 @@
     margin: 0px;
     padding: 0px;
     transition: box-shadow 0.5s linear;
+    outline: none;
+
+    &::-moz-focus-inner {
+        border: none;
+    }
 }
 body {
     width: 100vw;
@@ -17,14 +22,6 @@ body {
     font: 100% $font-roboto;
     max-width: 100vw;
     max-height: 100vh;
-}
-
-button {
-    outline: none;
-}
-
-button::-moz-focus-inner {
-  border: 0;
 }
 
 main {

@@ -1,7 +1,6 @@
 import { 
     Component, 
     NgModule, 
-    AfterViewInit, 
     ViewEncapsulation, 
     Output, 
     EventEmitter } from '@angular/core';
@@ -19,7 +18,7 @@ import { HighlightService } from './../services/highlight.service';
     styleUrls: ['./d3.component.scss']
 })
 
-export class D3Component implements AfterViewInit{
+export class D3Component{
     @Output()
     nodeClicked:EventEmitter<string> = new EventEmitter();
     @Output()
@@ -27,6 +26,9 @@ export class D3Component implements AfterViewInit{
 
     loaded: boolean = false;
     highlight: string;
+
+    simulations: string[] = ["default","time"];
+    simulateBy: string = "default";
 
     graphData = {
         "nodes": [],
@@ -52,35 +54,26 @@ export class D3Component implements AfterViewInit{
         private highlightService: HighlightService
     ){ 
         this.comService.userNodeHighlight.subscribe( userId => {
-            if(userId) {
-                this.highlightNodeById(userId);
-            }
+            this.highlightNodeById(userId);
         });
         this.comService.resetUserNodeHighlight.subscribe( userId => {
+            this.resetHighlightNode();
+        });
+        this.comService.userInfo.subscribe( userId => {
             if(userId) {
-                this.resetHoveredNode();
+                this.resetActiveNode();
+                this.highlightNodeById(userId, "active");
+            } else {
+                this.resetActiveNode();
             }
         });
-        this.highlightService.highlight.subscribe( element => {
-            if( element == "graph") {
-                this.highlight = "highlight";
+        this.highlightService.highlight.subscribe( area => {
+            if( area == "graph") {
+                this.highlight = "highlight"
             } else {
                 this.highlight = "";
             }
-        });
-    }
-
-
-    onResize(event) {
-
-        this.simulation
-            .force("center", d3.forceCenter(this.width / 2, this.height / 2))
-            .restart();
-    }
-
-    ngAfterViewInit() {
-
-        //TODO this.render(//TODO: add graph data here);
+        })
     }
 
     ticked() {
@@ -89,18 +82,18 @@ export class D3Component implements AfterViewInit{
 
         this.node
             .attr("cx", function(d) { 
-                if( d.x <= 10.0)
-                    d.x = 10.0;
-                else if( d.x >= (canvasWidth - 10)){
-                    d.x = canvasWidth - 10.0;
+                if( d.x <= d.r + 3.5)
+                    d.x = d.r + 3.5;
+                else if( d.x >= (canvasWidth - (d.r + 3.5))){
+                    d.x = canvasWidth - (d.r + 3.5);
                 }
                 return d.x;
             })
             .attr("cy", function(d) { 
-                if( d.y <= 10.0)
-                    d.y = 10.0;
-                else if( d.y >= (canvasHeight - 10.0))
-                    d.y = canvasHeight - 10.0;
+                if( d.y <= d.r + 3.5)
+                    d.y = d.r + 3.5;
+                else if( d.y >= (canvasHeight - (d.r + 3.5)))
+                    d.y = canvasHeight - (d.r + 3.5);
                 return d.y;
             });
         this.link
@@ -126,7 +119,7 @@ export class D3Component implements AfterViewInit{
     }
 
     render() {
-        this.svg = d3.select(".graph");
+        this.svg = d3.select(".d3-graph");
         this.svg.on('click', () => {
             if( d3.event.target.toString() === '[object SVGSVGElement]') {
                 this.comService.userInfo.next(undefined);
@@ -144,33 +137,24 @@ export class D3Component implements AfterViewInit{
                     .attr('fill', '#666');
                      
 
-        this.width = $('.graph').width();
-        this.height = $('.graph').height();
+        this.width = $('.d3-graph').width();
+        this.height = $('.d3-graph').height();
 
-        this.graphData.nodes.filter( (d) => {
-            if( d.group == 0){
-                d['fx'] = this.width / 3;
-                d['fy'] = this.height / 2;          
-            }
+        this.graphData.nodes.forEach( node => {
+            node.timestamp = Date.parse(node.retweet_created_at) / 1000;
+        });
+        this.graphData.nodes.sort( function(a,b){
+            return a.timestamp - b.timestamp;
+        });
+        this.graphData.nodes.forEach( node => {
+            let first_time = this.graphData.nodes[0].timestamp;
+            let last_time = this.graphData.nodes[this.graphData.nodes.length - 1].timestamp;
+            let multiplicator = (last_time - first_time) / (this.width - 270);
+            node.rel_timestamp = (node.timestamp - first_time) / multiplicator;
         });
 
         this.color = ["#fff","#9729ff"];
 
-        this.simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) {
-                return d.id_str; 
-            }).distance(function(d) {
-                let sourceRad = d.source.r;
-                let targetRad = d.target.r;
-                return sourceRad + targetRad;
-            }))
-            .force("collide", d3.forceCollide().radius(function(d) {
-                return d.r * 1.5;
-            }))
-            .force("charge", d3.forceManyBody().strength(function(d) {
-                return d.r * -30;
-            }))
-            .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
         this.link = this.svg.append("g")
             .attr("class", "links")
@@ -195,35 +179,22 @@ export class D3Component implements AfterViewInit{
             .enter().append("circle")
                     .attr("r", (d) => { 
                         d.r = this.scale(this.getNeighbours(d, "out"))*1.6; 
-                        console.log(d);
                         return d.r;
                     })
                     .attr("fill", (d) => { return this.color[d.group]; })
                     .attr("stroke","#fff")
-            .call(d3.drag()
-                    .on("start", (d) => { return this.dragstarted(d)})
-                    .on("drag", (d) => { return this.dragged(d)})
-                    .on("end", (d) => { return this.dragended(d)}))
             .on('mouseenter', ( node, index, circleArr) => {
                 this.comService.userNodeHighlight.next(node.id_str);
-                this.highlightNeighbours( circleArr[index]);
             })
             .on('mouseleave', ( node, index, circleArr) => { 
                 this.comService.resetUserNodeHighlight.next(node.id_str);
-                this.resetHighlighting( circleArr[index]);
             })
             .on('click', ( node, index, circleArr) =>  {
                 this.comService.userInfo.next(node.id_str);
             });
 
-        this.simulation
-            .nodes( this.graphData.nodes)
-            .on( "tick", () => { return this.ticked()});
 
         this.loaded = true;
-
-        this.simulation.force("link")
-            .links(this.graphData.links);
 
         this.comService.userInfo.subscribe( userId => {
             if(userId) {
@@ -233,39 +204,117 @@ export class D3Component implements AfterViewInit{
                 this.resetActiveNode();
             }
         });
+        this.setSimulation( this.simulateBy);
     }
 
-    highlightNeighbours( c) {
+    setSimulation( sim:string) {
+        this.simulateBy = sim;
+        if( this.simulateBy == "default") {
+            this.simulateDefault();
+        } else if( this.simulateBy == "time") {
+            this.simulateTime();
+        }
+    }
+
+    simulateDefault() {
+
+        this.graphData.nodes.forEach( node => {
+            if( node.group == 0) {
+                node.fx = node.r + 50;
+                node.fy = this.height / 2;
+            } else {
+                delete node.fx;
+            }
+        });
+
+        this.simulation = d3.forceSimulation()
+            .force("charge", d3.forceManyBody().strength(function(d) {
+                return d.r * -30;
+            }))
+            .force("link", d3.forceLink().id(function(d) {
+                return d.id_str; 
+            }).distance(function(d) {
+                let sourceRad = d.source.r;
+                let targetRad = d.target.r;
+                return sourceRad + targetRad;
+            }))
+            .force("collide", d3.forceCollide().radius(function(d) {
+                return d.r * 1.5;
+            }))
+            .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+
+        this.simulation
+            .nodes( this.graphData.nodes)
+            .on( "tick", () => { return this.ticked()});
+
+        this.simulation.force("link")
+            .links(this.graphData.links);
+
+        d3.selectAll(".d3-graph circle").call(d3.drag()
+            .on("start", (d) => { return this.dragstarted(d)})
+            .on("drag", (d) => { return this.dragged(d)})
+            .on("end", (d) => { return this.dragended(d)}));
+    }
+
+    simulateTime() {
+        this.graphData.nodes.forEach( node => {
+            if( node.group == 0) {
+                delete node.fy;
+            }
+            node.fx = node.rel_timestamp + 100;
+        })
+
+        this.simulation = d3.forceSimulation()
+            .force("link", d3.forceLink().id(function(d) {
+                return d.id_str; 
+            }))
+            .force("collide", d3.forceCollide().radius(function(d) {
+                return d.r * 1.5;
+            }).strength(1))
+            .force("charge", d3.forceManyBody().strength(function(d) {
+                return d.r * -30;
+            }));
+
+        this.simulation
+            .nodes( this.graphData.nodes);
+
+        this.simulation.force("link")
+            .links(this.graphData.links);
+
+        d3.selectAll(".d3-graph circle").on(".drag", null);
+    }
+
+    highlightNeighbours( c, direction=undefined) {
         let circle = d3.select(c);
-        this.highlightHover(c);
         let links = this.link.nodes();
         let cIndex = c.__data__['index'];
         let neighbours = [];
         neighbours.push(cIndex);
 
-        d3.selectAll(".graph .link").filter( function( d, i){
+        d3.selectAll(".d3-graph .link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
-            if ( sIndex === cIndex)
-                neighbours.push(tIndex);
-            else if (tIndex === cIndex) 
-                neighbours.push(sIndex);
-            else
-                return this;
+                if ( sIndex === cIndex)
+                    neighbours.push(tIndex);
+                else if (tIndex === cIndex) 
+                    neighbours.push(sIndex);
+                else
+                    return this;
         }).style("opacity", "0.2");
 
-        d3.selectAll(".graph .link").filter( function( d, i){
+/*        d3.selectAll(".d3-graph .link").filter( function( d, i){
             let sIndex = d['source']['index'];
             let tIndex = d['target']['index'];
             if( neighbours.includes(sIndex) && 
                 neighbours.includes(tIndex))
                 return this;
         }).style("opacity", "1");
-
-        d3.selectAll(".graph circle").filter( function( d, i){
+*/
+        d3.selectAll(".d3-graph circle").filter( function( d, i){
             if( !neighbours.includes(d['index']))
                 return this;
         }).style("opacity", "0.2");
+
     }
 
     highlightHover( node) {
@@ -283,34 +332,34 @@ export class D3Component implements AfterViewInit{
     }
 
     highlightNodeById( userId, active=undefined) {
-        d3.selectAll('.graph circle').filter( (node, index, circleArr) => {
+        d3.selectAll('.d3-graph circle').filter( (node, index, circleArr) => {
             if( node['id_str'] == userId){
                 if(active){
                     this.highlightActive( circleArr[index]);
                 } else {
                     this.highlightHover( circleArr[index]);
+                    this.highlightNeighbours( circleArr[index]);
                 }
             }
         });
     }
 
-    resetHoveredNode() {
-        if( this.hoveredNode){
+    resetHighlightNode() {
+        if( this.hoveredNode ) {
             this.hoveredNode.classed("hovered", false);
+            this.resetHighlightNeighbours();
         }
     }
 
     resetActiveNode() {
-        if( this.activeNode){
+        if( this.activeNode) {
             this.activeNode.classed("active", false);
         }
     }
 
-    resetHighlighting( c) {
-        this.resetHoveredNode();
-        let circle = d3.select(c);
-        d3.selectAll(".graph circle").style("opacity", "1");
-        d3.selectAll(".graph .link").style("opacity", "1");
+    resetHighlightNeighbours() {
+        d3.selectAll(".d3-graph circle").style("opacity", "1");
+        d3.selectAll(".d3-graph .link").style("opacity", "1");
     }
 
     getNeighbours(d, direction=""): number {
@@ -333,22 +382,23 @@ export class D3Component implements AfterViewInit{
     }
 
     dragged(d) {
-        d.fx = d3.event.x;
         d.fy = d3.event.y;
+        d.fx = d3.event.x;
     }
 
     dragstarted(d) {
+        this.simulation.force("center", null);
         if( !d3.event.active)
-            this.simulation.alphaTarget(0.4).restart();
-        d.fx = d.x;
+            this.simulation.alphaTarget(0.3).restart();
         d.fy = d.y;
+        d.fx = d.x
     }
 
     dragended(d) {
         if( !d3.event.active) this.simulation.alphaTarget(0);
         if(d.group == 1) {
-            d.fx = null;
             d.fy = null;
+            d.fx = null;
         }
     }
 }

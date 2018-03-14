@@ -1,3 +1,17 @@
-<loader [isLoaded]="loaded"></loader>
-<svg class="graph" [ngClass]="highlight" (window:resize)="onResize($event)">
-</svg>
+<div class="d3">
+    <div class="d3-controls">
+        <h3>Render by:</h3>
+        <label *ngFor="let sim of simulations">
+            <input 
+                type="radio" 
+                class="radio" 
+                value="{{sim}}" 
+                name="simulation" 
+                (click)="setSimulation(sim)"
+                [(ngModel)]="simulateBy">{{sim}}
+        </label>
+    </div>
+    <loader [isLoaded]="loaded"></loader>
+    <svg class="d3-graph" [ngClass]="highlight">
+    </svg>
+</div>
