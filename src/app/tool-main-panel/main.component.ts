@@ -201,8 +201,22 @@ export class MainComponent implements AfterViewInit, OnChanges {
             });
         }
 
-        this.graphData['nodes'] = graphElements['nodes'];
+        let linkSources = graphElements['links'].map( link => {
+            return link['source'];
+        });
+        let linkTargets = graphElements['links'].map( link => {
+            return link['target'];
+        });
+        this.graphData['nodes'] = [];
+        // just return nodes with connected links
+        graphElements['nodes'].forEach( (node) => {
+            if( linkSources.indexOf(node['id_str']) >= 0 ||
+                linkTargets.indexOf(node['id_str']) >= 0) {
+                this.graphData['nodes'].push(node);
+            }
+        });
         this.graphData['links'] = graphElements['links'];
+
         this.d3Component.graphData = this.graphData;
         this.apiService.graphData.next(this.graphData);
         this.d3Component.render();

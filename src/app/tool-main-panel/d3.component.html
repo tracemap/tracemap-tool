@@ -12,5 +12,7 @@
         </label>
     </div>
     <!-- <loader [isLoaded]="loaded"></loader> -->
-    <canvas class="d3-graph" [ngClass]="highlight"></canvas>
+    <div class="canvas">
+        <canvas class="d3-graph" [ngClass]="highlight" (window:resize)="resizeCanvas()"></canvas>
+    </div>
 </div>
