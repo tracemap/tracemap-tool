@@ -1,4 +1,4 @@
-<div class="d3">
+<div class="d3" [ngClass]="highlight"> 
     <div class="d3-controls">
         <h3>Render by:</h3>
         <label *ngFor="let sim of simulations">
@@ -7,12 +7,11 @@
                 class="radio" 
                 value="{{sim}}" 
                 name="simulation" 
-                (click)="setSimulation(sim)"
                 [(ngModel)]="simulateBy">{{sim}}
         </label>
     </div>
     <!-- <loader [isLoaded]="loaded"></loader> -->
     <div class="canvas">
-        <canvas class="d3-graph" [ngClass]="highlight" (window:resize)="resizeCanvas()"></canvas>
+        <canvas class="d3-graph" (window:resize)="resizeCanvas()"></canvas>
     </div>
 </div>

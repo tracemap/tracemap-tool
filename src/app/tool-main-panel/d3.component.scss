@@ -40,23 +40,5 @@
         grid-area: graph;
         width: 100%;
         height: 100%;
-
-        .link {
-            transition: opacity 0.6s ease-out;
-            stroke-width:1;
-        }
-        circle {
-            transition:  opacity 0.3s ease-out;
-            stroke-width: 3.5;
-            stroke: #9729ff;
-
-            &.active, &.hovered {
-                stroke: #1da1f2;
-            }
-        }
-        .opac {
-            opacity: 0.2;
-        }
-
     }
 }
