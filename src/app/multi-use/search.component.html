@@ -1,9 +1,10 @@
-<div class="searchbar {{style}}">
-    <input id="search" class="{{style}}" type="text" 
+<div class="searchbar" [ngClass]="classes">
+    <input id="search" [ngClass]="classes" type="text" 
       #searchField
       (keydown.enter)="processUrl( searchField)"
       [placeholder]="placeholder"
       (focus)="removePlaceholder()"
-      (focusout)="setPlaceholder()">
+      (focusout)="setPlaceholder()"
+      [disabled]="disabled">
     <button type="button" (click)="processUrl( searchField)"></button>
 </div>

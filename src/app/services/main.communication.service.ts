@@ -9,4 +9,6 @@ export class MainCommunicationService {
     resetUserNodeHighlight = new BehaviorSubject<string>(undefined); 
     userInfo = new BehaviorSubject<string>(undefined);
     author = new BehaviorSubject<string>(undefined);
+    backendError = new BehaviorSubject<string>(undefined);
+    searchbarStyle = new BehaviorSubject<string>(undefined);
 }
