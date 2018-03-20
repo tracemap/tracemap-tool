@@ -11,6 +11,9 @@
         grid-template-columns: auto 40px;
         border-bottom: 1px solid #666;
     }
+    &.disabled {
+        opacity: 0.2;
+    }
 }
 
 input[type=text] {

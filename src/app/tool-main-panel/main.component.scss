@@ -20,6 +20,24 @@ d3-component {
     grid-area: graph;
 }
 
+.error {
+    grid-area: graph;
+    text-align: center;
+    margin-top: 100px;
+
+    span {
+        display: block;
+        position: relative;
+        margin-bottom: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    img {
+        width: 400px;
+    }
+}
+
 .sidepanel {
     grid-area: sidepanel;
     height: 100%;

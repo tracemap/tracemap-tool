@@ -1,6 +1,6 @@
 import { 
     Component, 
-    AfterViewInit, 
+    OnInit, 
     OnChanges, 
     ViewChild, 
     NgModule } from '@angular/core';
@@ -18,7 +18,7 @@ import { MainCommunicationService } from './../services/main.communication.servi
   providers: []
 })
 
-export class MainComponent implements AfterViewInit, OnChanges {
+export class MainComponent implements OnInit, OnChanges {
     @ViewChild('d3Component') d3Component;
     @ViewChild('userinfo') userComponent;
     @ViewChild('info') infoComponent;
@@ -27,6 +27,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
     tracemapData: object;
     relations: object[];
     graphData: object;
+    errorMsg: string[];
 
     newMode = false;
 
@@ -41,6 +42,14 @@ export class MainComponent implements AfterViewInit, OnChanges {
             let userId = this.route.firstChild.params['_value']['uid'];
             this.comService.userInfo.next( userId);
         }
+        this.comService.backendError.subscribe( error => {
+            if( error) {
+                this.errorMsg = ["Connection to our Server is not possible.",
+                                "Please try again later."];
+            } else {
+                this.errorMsg = undefined;
+            }
+        });
     }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
@@ -54,7 +63,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
     }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         this.comService.userInfo.subscribe( userId => {
             if(userId){
                 this.openUserInfo( userId);
@@ -76,6 +85,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
             this.apiService.getTracemapData( this.tracemapId)
                 .then( tracemapData => {
                     this.tracemapData = tracemapData;
+                    console.log(this.tracemapData);
                     let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
@@ -115,8 +125,8 @@ export class MainComponent implements AfterViewInit, OnChanges {
             graphElements['nodes'].push(node);
         });
 
-        let authorId = this.graphData['author_info']['id_str']
-        let followers = this.tracemapData['followers']
+        let authorId = this.graphData['author_info']['id_str'];
+        let followers = this.tracemapData['followers'];
 
         let retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
         console.log( retweeterIds.length + 1);
