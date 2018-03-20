@@ -7,7 +7,8 @@
                 class="radio" 
                 value="{{sim}}" 
                 name="simulation" 
-                [(ngModel)]="simulateBy">{{sim}}
+                [(ngModel)]="simulateBy"
+                (click)="setSimulation(sim)">{{sim}}
         </label>
     </div>
     <!-- <loader [isLoaded]="loaded"></loader> -->

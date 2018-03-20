@@ -77,13 +77,14 @@ export class D3Component{
             }
             if( y < 0 + r){
                 node.y = 0 + r;
-            } else if ( y > this.height -r){
+            } else if ( this.simulateBy == "default" && y > this.height -r){
                 node.y = this.height - r;
+            } else if ( y > this.height - r - 100){
+                node.y = this.height -r - 100;
             }
         });
 
         this.context.clearRect(0, 0, this.width, this.height);
-
         this.context.beginPath();
         this.graphData.links.filter( link => {
             if( link.opacity == 1) {
@@ -126,9 +127,7 @@ export class D3Component{
         });
     }
 
-    render( sim="default") {
-        this.simulateBy = sim;
-
+    render() {
         this.width = $('.canvas').width();
         this.height = $('.canvas').height();
         this.canvas = document.querySelector(".d3-graph");
@@ -146,21 +145,16 @@ export class D3Component{
         this.addTimestamps();
         this.setSimulation().then( (simulation) => {
             this.simulation = simulation;
-            if(this.simulateBy == "default") {
-                d3.select(this.canvas)
-                    .call( d3.drag()
-                        .container(this.canvas)
-                        .subject( () => { return node_hovered(this.canvas)})
-                        .on("start", () => { return this.dragstarted() })
-                        .on("drag", () => { return this.dragged()})
-                        .on("end", () => { return this.dragended()}));
-            } else {
-                d3.select(this.canvas)
-                    .on(".drag",null);
-            }
+            d3.select(this.canvas)
+                .call( d3.drag()
+                    .container(this.canvas)
+                    .subject( () => { return nodeHovered(this.canvas)})
+                    .on("start", () => { return this.dragstarted() })
+                    .on("drag", () => { return this.dragged()})
+                    .on("end", () => { return this.dragended()}));
             d3.select(this.canvas)
                 .on("mousemove", () => {
-                    let node = node_hovered(this.canvas);
+                    let node = nodeHovered(this.canvas);
                     if( node && !this.hoveredNode ) {
                         this.hoveredNode = node;
                         this.comService.userNodeHighlight.next(node.id_str);
@@ -169,7 +163,7 @@ export class D3Component{
                     }
                 })
                 .on("click", () => {
-                    let node = node_hovered(this.canvas);
+                    let node = nodeHovered(this.canvas);
                     if( node) {
                         this.activeNode = node;
                         this.comService.userInfo.next(node.id_str);
@@ -178,14 +172,16 @@ export class D3Component{
                     }
                 });
 
-            function node_hovered(canvas) {
+            function nodeHovered(canvas) {
                 let mouse = d3.mouse(canvas);
                 let x = mouse[0];
                 let y = mouse[1];
                 let node = simulation.find( x, y);
                 return simulation.find( x, y, node.r);
             }
+
         });
+
 
         this.comService.userInfo.subscribe( userId => {
             if( userId) {
@@ -219,6 +215,7 @@ export class D3Component{
 
     }
 
+
     addTimestamps() {
         this.graphData.nodes.forEach( node => {
             node.timestamp = Date.parse(node.retweet_created_at) / 1000;
@@ -226,11 +223,12 @@ export class D3Component{
         this.graphData.nodes.sort( (a,b) => {
             return a.timestamp - b.timestamp;
         })
-        let firstTime = this.graphData.nodes[0].timestamp;
+        let authorNode = this.graphData.nodes[0];
+        let firstTime = authorNode.timestamp;
         let lastTime = this.graphData.nodes[this.graphData.nodes.length -1].timestamp;
-        let multiplicator = (lastTime - firstTime) / (this.width);
+        let multiplicator = (lastTime - firstTime) / (this.width - authorNode.r);
         this.graphData.nodes.forEach( node => {
-            node.rel_timestamp = (node.timestamp - firstTime) / multiplicator;
+            node.rel_timestamp = authorNode.r + ((node.timestamp - firstTime) / multiplicator);
         })
     }
 
@@ -238,13 +236,17 @@ export class D3Component{
     dragstarted() {
         this.dragging = true;
         if( !d3.event.active)
-            this.simulation.alphaTarget(0.1).restart();
-        d3.event.subject.fx = d3.event.subject.x;
+            this.simulation.alphaTarget(0.3).restart();
+        if(this.simulateBy == "default") {
+            d3.event.subject.fx = d3.event.subject.x;
+        }
         d3.event.subject.fy = d3.event.subject.y;
     }
 
     dragged() {
-        d3.event.subject.fx = d3.event.x;
+        if(this.simulateBy == "default") {
+            d3.event.subject.fx = d3.event.x;
+        }
         d3.event.subject.fy = d3.event.y;
     }
 
@@ -253,8 +255,10 @@ export class D3Component{
         if( !d3.event.active) 
             this.simulation.alphaTarget(0);
         if(d3.event.subject.group == 1) {
+            if(this.simulateBy == "default") {
+                d3.event.subject.fx = null;
+            }
             d3.event.subject.fy = null;
-            d3.event.subject.fx = null;
         }
     }
 
@@ -320,7 +324,8 @@ export class D3Component{
         this.context.stroke();
     }
 
-    setSimulation(): Promise<d3.forceSimulation> {
+    setSimulation(sim=this.simulateBy): Promise<d3.forceSimulation> {
+        this.simulateBy=sim;
         return new Promise( (resolve, reject) => {
             if( this.simulateBy == "default") {
                 this.simulateDefault().then( (simulation) => {
@@ -375,31 +380,19 @@ export class D3Component{
     simulateTime(): Promise<d3.forceSimulation> {
         return new Promise( (resolve, reject) => {
             this.graphData.nodes.forEach( node => {
-                if( node.group == 0) {
-                    node.fy = this.height / 2;
-                }
-                node.fx = node.rel_timestamp + 50;
+                node.fx = node.rel_timestamp;
             });
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink().id(function(d) {
                     return d.id_str; 
-                }).distance(function(d) {
-                    let sourceRad = d.source.r;
-                    let targetRad = d.target.r;
-                    return (sourceRad + targetRad);
                 }))
                 .force("charge", d3.forceManyBody().strength(function(d) {
-                    return d.r * -20;
-                }))
-                .force("collide", d3.forceCollide().radius(function(d) {
-                    return d.r * 1.5;
-                }))
-                .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+                    return d.r * -30;
+                }));
 
             simulation
                 .nodes( this.graphData.nodes)
                 .on( "tick", () => { return this.ticked()});
-
             simulation.force("link")
                 .links(this.graphData.links);
             resolve(simulation);

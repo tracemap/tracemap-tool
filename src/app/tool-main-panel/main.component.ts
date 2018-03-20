@@ -225,6 +225,7 @@ export class MainComponent implements OnInit, OnChanges {
                 this.graphData['nodes'].push(node);
             }
         });
+        console.log(this.graphData['nodes'].length);
         this.graphData['links'] = graphElements['links'];
 
         this.d3Component.graphData = this.graphData;
