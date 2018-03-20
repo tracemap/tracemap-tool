@@ -1,6 +1,6 @@
 import { 
     Component, 
-    AfterViewInit, 
+    OnInit, 
     OnChanges, 
     ViewChild, 
     NgModule } from '@angular/core';
@@ -18,7 +18,7 @@ import { MainCommunicationService } from './../services/main.communication.servi
   providers: []
 })
 
-export class MainComponent implements AfterViewInit, OnChanges {
+export class MainComponent implements OnInit, OnChanges {
     @ViewChild('d3Component') d3Component;
     @ViewChild('userinfo') userComponent;
     @ViewChild('info') infoComponent;
@@ -27,8 +27,9 @@ export class MainComponent implements AfterViewInit, OnChanges {
     tracemapData: object;
     relations: object[];
     graphData: object;
+    errorMsg: string[];
 
-    newMode = true;
+    newMode = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -41,6 +42,14 @@ export class MainComponent implements AfterViewInit, OnChanges {
             let userId = this.route.firstChild.params['_value']['uid'];
             this.comService.userInfo.next( userId);
         }
+        this.comService.backendError.subscribe( error => {
+            if( error) {
+                this.errorMsg = ["Connection to our Server is not possible.",
+                                "Please try again later."];
+            } else {
+                this.errorMsg = undefined;
+            }
+        });
     }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
@@ -54,7 +63,7 @@ export class MainComponent implements AfterViewInit, OnChanges {
 
     }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         this.comService.userInfo.subscribe( userId => {
             if(userId){
                 this.openUserInfo( userId);
@@ -65,7 +74,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
         this.route.params.subscribe(
             (params: Params) => {
             this.tracemapId = params["pid"];
-            this.d3Component.resetGraph();
 
             let authorKeys = [
                 'id_str',
@@ -77,12 +85,14 @@ export class MainComponent implements AfterViewInit, OnChanges {
             this.apiService.getTracemapData( this.tracemapId)
                 .then( tracemapData => {
                     this.tracemapData = tracemapData;
+                    console.log(this.tracemapData);
                     let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
                     this.graphData = {};
                     this.graphData['author_info'] = graphAuthorInfo;
                     this.graphData['author_info']['group'] = 0;
+                    this.graphData['author_info']['retweet_created_at'] = this.tracemapData['tweet_data']['tweet_info']['created_at'];
                     let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
                     this.graphData['retweet_info'] = {};
                     let promiseArray:Array<any> = [];
@@ -108,7 +118,6 @@ export class MainComponent implements AfterViewInit, OnChanges {
             "links": []
         };
 
-
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
             let node = this.graphData['retweet_info'][retweeter];
             node['id_str'] = retweeter;
@@ -116,8 +125,14 @@ export class MainComponent implements AfterViewInit, OnChanges {
             graphElements['nodes'].push(node);
         });
 
-        let authorId = this.graphData['author_info']['id_str']
-        let followers = this.tracemapData['followers']
+        let authorId = this.graphData['author_info']['id_str'];
+        let followers = this.tracemapData['followers'];
+
+        let retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
+        console.log( retweeterIds.length + 1);
+        this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
+            console.log(answer);
+        })
 
         this.comService.author.next(authorId);
 
@@ -196,21 +211,36 @@ export class MainComponent implements AfterViewInit, OnChanges {
             });
         }
 
-        this.graphData['nodes'] = graphElements['nodes'];
+        let linkSources = graphElements['links'].map( link => {
+            return link['source'];
+        });
+        let linkTargets = graphElements['links'].map( link => {
+            return link['target'];
+        });
+        this.graphData['nodes'] = [];
+        // just return nodes with connected links
+        graphElements['nodes'].forEach( (node) => {
+            if( linkSources.indexOf(node['id_str']) >= 0 ||
+                linkTargets.indexOf(node['id_str']) >= 0) {
+                this.graphData['nodes'].push(node);
+            }
+        });
+        console.log(this.graphData['nodes'].length);
         this.graphData['links'] = graphElements['links'];
+
         this.d3Component.graphData = this.graphData;
         this.apiService.graphData.next(this.graphData);
         this.d3Component.render();
     }
 
     targetTweetNewer( sourceId: string, targetId: string): boolean {
-        let sourceDate = this.graphData['retweet_info']
+        let sourceTimestamp = Date.parse(this.graphData['retweet_info']
                                        [sourceId]
-                                       ['retweet_created_at'];
-        let targetDate = this.graphData['retweet_info']
+                                       ['retweet_created_at']);
+        let targetTimestamp = Date.parse(this.graphData['retweet_info']
                                        [targetId]
-                                       ['retweet_created_at'];
-        if( sourceDate < targetDate) {
+                                       ['retweet_created_at']);
+        if( sourceTimestamp < targetTimestamp) {
             return true;
         } else {
             return false;

@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { MainCommunicationService } from './../services/main.communication.service';
 
 @Component({
 	selector: 'search',
@@ -8,14 +10,31 @@ import { Router } from '@angular/router';
 })
 
 export class SearchComponent {
-  @Input()
-  style: string;
+  classes = {};
 
   placeholder = "Enter a Tweet URL";
+  disabled = false;
 
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private comService: MainCommunicationService
+  ) {
+    this.comService.backendError.subscribe( error => {
+      if( error) {
+        this.disabled = true;
+        this.classes["disabled"] = true;
+      } else {
+        this.classes["disabled"] = false;
+      }
+    });
+    this.comService.searchbarStyle.subscribe( style => {
+      if( style == 'mini') {
+        this.classes["mini"] = true;
+      } else {
+        this.classes["mini"] = false;
+      }
+    })
+  }
 
   processUrl( searchField): void {
     let input = String(searchField.value);
