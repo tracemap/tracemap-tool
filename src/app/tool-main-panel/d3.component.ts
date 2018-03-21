@@ -28,7 +28,7 @@ export class D3Component{
     highlight: string;
 
     simulations: string[] = ["default","time"];
-    simulateBy: string = "default";
+    simulateBy: string = "time";
 
     graphData = {
         "nodes": [],
@@ -160,6 +160,10 @@ export class D3Component{
                         this.comService.userNodeHighlight.next(node.id_str);
                     } else if ( !node && this.hoveredNode && !this.dragging ){
                         this.comService.userNodeHighlight.next(undefined);
+                    } else if (nodeHovered(this.canvas) != this.hoveredNode) {
+                        let newNode = nodeHovered(this.canvas);
+                        this.comService.userNodeHighlight.next(undefined);
+                        this.comService.userNodeHighlight.next(newNode.id_str);
                     }
                 })
                 .on("click", () => {
@@ -324,6 +328,17 @@ export class D3Component{
         this.context.stroke();
     }
 
+    drawTimeline() {
+
+    }
+
+    generateTimeline() {
+        let start = this.graphData.nodes[0].retweet_created_at;
+        let end = this.graphData.nodes[this.graphData.nodes.length -1].retweet_created_at;
+        console.log(start);
+        console.log(end);
+    }
+
     setSimulation(sim=this.simulateBy): Promise<d3.forceSimulation> {
         this.simulateBy=sim;
         return new Promise( (resolve, reject) => {
@@ -333,6 +348,7 @@ export class D3Component{
                 });
             } else if( this.simulateBy == "time") {
                 this.simulateTime().then( (simulation) => {
+                    this.generateTimeline();
                     resolve(simulation);
                 });
             }
@@ -379,12 +395,17 @@ export class D3Component{
 
     simulateTime(): Promise<d3.forceSimulation> {
         return new Promise( (resolve, reject) => {
+            this.addTimestamps();
             this.graphData.nodes.forEach( node => {
                 node.fx = node.rel_timestamp;
             });
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink().id(function(d) {
                     return d.id_str; 
+                }).distance(function(d) {
+                    let sourceRad = d.source.r;
+                    let targetRad = d.target.r;
+                    return ((sourceRad + targetRad) * 2);
                 }))
                 .force("charge", d3.forceManyBody().strength(function(d) {
                     return d.r * -30;

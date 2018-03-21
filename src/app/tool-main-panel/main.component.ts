@@ -85,7 +85,6 @@ export class MainComponent implements OnInit, OnChanges {
             this.apiService.getTracemapData( this.tracemapId)
                 .then( tracemapData => {
                     this.tracemapData = tracemapData;
-                    console.log(this.tracemapData);
                     let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user']
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
@@ -117,21 +116,24 @@ export class MainComponent implements OnInit, OnChanges {
             "nodes": [],
             "links": []
         };
-
+        // Necessary because the twitter api sometimes returns users multiple times
+        let nodesChecked = []
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
-            let node = this.graphData['retweet_info'][retweeter];
-            node['id_str'] = retweeter;
-            node['group'] = 1
-            graphElements['nodes'].push(node);
+            if( nodesChecked.indexOf(retweeter) < 0) {
+                nodesChecked.push(retweeter);
+                let node = this.graphData['retweet_info'][retweeter];
+                node['id_str'] = retweeter;
+                node['group'] = 1
+                graphElements['nodes'].push(node);
+            }
         });
 
         let authorId = this.graphData['author_info']['id_str'];
         let followers = this.tracemapData['followers'];
 
         let retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
-        console.log( retweeterIds.length + 1);
         this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
-            console.log(answer);
+            console.log("Unknown users are crawled live.");
         })
 
         this.comService.author.next(authorId);
@@ -225,7 +227,6 @@ export class MainComponent implements OnInit, OnChanges {
                 this.graphData['nodes'].push(node);
             }
         });
-        console.log(this.graphData['nodes'].length);
         this.graphData['links'] = graphElements['links'];
 
         this.d3Component.graphData = this.graphData;

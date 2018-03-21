@@ -29,7 +29,6 @@ export class AppComponent {
             }
         });
         this.apiService.getTweetInfo( "975834710495645696").subscribe( (data) => {
-            console.log("DATA: " + data);
         }, (error) => {
             if( error.type == 3) {
                 console.log("Connection to backend not possible.");
