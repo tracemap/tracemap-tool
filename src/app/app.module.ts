@@ -27,6 +27,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ApiService } from './services/api.service';
 import { MainCommunicationService } from './services/main.communication.service';
 import { HighlightService } from './services/highlight.service';
+import { LocalStorageService } from './services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { HighlightService } from './services/highlight.service';
   providers: [ 
     ApiService,
     MainCommunicationService,
-    HighlightService
+    HighlightService,
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })

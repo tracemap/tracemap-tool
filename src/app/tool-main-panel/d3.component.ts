@@ -3,13 +3,15 @@ import {
     NgModule, 
     ViewEncapsulation, 
     Output, 
-    EventEmitter } from '@angular/core';
+    EventEmitter,
+    OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { ActivatedRoute } from '@angular/router';
 
 import { MainCommunicationService } from './../services/main.communication.service';
 import { HighlightService } from './../services/highlight.service';
+import { LocalStorageService } from './../services/local-storage.service';
 
 @Component({
     selector: 'd3-component',
@@ -18,7 +20,7 @@ import { HighlightService } from './../services/highlight.service';
     styleUrls: ['./d3.component.scss']
 })
 
-export class D3Component{
+export class D3Component implements OnDestroy{
     @Output()
     nodeClicked:EventEmitter<string> = new EventEmitter();
     @Output()
@@ -28,7 +30,11 @@ export class D3Component{
     highlight: string;
 
     simulations: string[] = ["default","time"];
-    simulateBy: string = "time";
+    highlights: string[] = ["next","previous","both"];
+    config = {
+        simulate_by: "default",
+        highlight_by: "both"
+    };
 
     graphData = {
         "nodes": [],
@@ -51,7 +57,8 @@ export class D3Component{
     constructor(
         private route: ActivatedRoute,
         private comService: MainCommunicationService,
-        private highlightService: HighlightService
+        private highlightService: HighlightService,
+        private storageService: LocalStorageService
     ){ 
         // this.comService.resetUserNodeHighlight.subscribe( userId => {
         //     this.resetHighlightNode();
@@ -62,7 +69,15 @@ export class D3Component{
             } else {
                 this.highlight = "";
             }
-        })
+        });
+        let storageConfig = this.storageService.getD3Config();
+        for( let key in storageConfig) {
+            this.config[key] = storageConfig[key];
+        }
+    }
+
+    ngOnDestroy() {
+        this.storageService.setD3Config(this.config);
     }
 
     ticked() {
@@ -77,10 +92,10 @@ export class D3Component{
             }
             if( y < 0 + r){
                 node.y = 0 + r;
-            } else if ( this.simulateBy == "default" && y > this.height -r){
-                node.y = this.height - r;
-            } else if ( y > this.height - r - 100){
-                node.y = this.height -r - 100;
+            } else if ( this.config.simulate_by == "time" && y > this.height -r - 100){
+                node.y = this.height - r - 100;
+            } else if ( y > this.height - r){
+                node.y = this.height -r;
             }
         });
 
@@ -158,9 +173,12 @@ export class D3Component{
                     if( node && !this.hoveredNode ) {
                         this.hoveredNode = node;
                         this.comService.userNodeHighlight.next(node.id_str);
-                    } else if ( !node && this.hoveredNode && !this.dragging ){
+                    } else if ( !node && 
+                                this.hoveredNode && 
+                                !this.dragging ){
                         this.comService.userNodeHighlight.next(undefined);
-                    } else if (nodeHovered(this.canvas) != this.hoveredNode) {
+                    } else if ( nodeHovered(this.canvas) != this.hoveredNode &&
+                                !this.dragging) {
                         let newNode = nodeHovered(this.canvas);
                         this.comService.userNodeHighlight.next(undefined);
                         this.comService.userNodeHighlight.next(newNode.id_str);
@@ -206,7 +224,7 @@ export class D3Component{
                 this.graphData.nodes.forEach( node => {
                     if( node.id_str == userId) {
                         this.hoveredNode = node;
-                        this.highlightNeighbours(node);
+                        this.highlightNeighbours(node, this.config.highlight_by);
                         this.ticked();
                     }
                 });
@@ -241,14 +259,14 @@ export class D3Component{
         this.dragging = true;
         if( !d3.event.active)
             this.simulation.alphaTarget(0.3).restart();
-        if(this.simulateBy == "default") {
+        if(this.config.simulate_by == "default") {
             d3.event.subject.fx = d3.event.subject.x;
         }
         d3.event.subject.fy = d3.event.subject.y;
     }
 
     dragged() {
-        if(this.simulateBy == "default") {
+        if(this.config.simulate_by == "default") {
             d3.event.subject.fx = d3.event.x;
         }
         d3.event.subject.fy = d3.event.y;
@@ -259,10 +277,10 @@ export class D3Component{
         if( !d3.event.active) 
             this.simulation.alphaTarget(0);
         if(d3.event.subject.group == 1) {
-            if(this.simulateBy == "default") {
+            if(this.config.simulate_by == "default") {
                 d3.event.subject.fx = null;
+                d3.event.subject.fy = null;
             }
-            d3.event.subject.fy = null;
         }
     }
 
@@ -335,18 +353,23 @@ export class D3Component{
     generateTimeline() {
         let start = this.graphData.nodes[0].retweet_created_at;
         let end = this.graphData.nodes[this.graphData.nodes.length -1].retweet_created_at;
-        console.log(start);
-        console.log(end);
     }
 
-    setSimulation(sim=this.simulateBy): Promise<d3.forceSimulation> {
-        this.simulateBy=sim;
+    changeConfig(key, value) {
+        this.config[key] = value;
+        this.storageService.setD3Config(this.config);
+        if( key == "simulate_by") {
+            this.setSimulation();
+        }
+    }
+
+    setSimulation(): Promise<d3.forceSimulation> {
         return new Promise( (resolve, reject) => {
-            if( this.simulateBy == "default") {
+            if( this.config.simulate_by == "default") {
                 this.simulateDefault().then( (simulation) => {
                     resolve(simulation);
                 });
-            } else if( this.simulateBy == "time") {
+            } else if( this.config.simulate_by == "time") {
                 this.simulateTime().then( (simulation) => {
                     this.generateTimeline();
                     resolve(simulation);
@@ -403,9 +426,12 @@ export class D3Component{
                 .force("link", d3.forceLink().id(function(d) {
                     return d.id_str; 
                 }).distance(function(d) {
-                    let sourceRad = d.source.r;
-                    let targetRad = d.target.r;
-                    return ((sourceRad + targetRad) * 2);
+                    let sourceY = d.source.y;
+                    let targetY = d.target.y;
+                    if(Math.abs(targetY - sourceY) < 10) {
+                        d.target.y = d.source.y + 30;
+                    }
+                    return (d.source.r + d.target.r) * 2;
                 }))
                 .force("charge", d3.forceManyBody().strength(function(d) {
                     return d.r * -30;
@@ -420,7 +446,7 @@ export class D3Component{
         });
     }
 
-    highlightNeighbours( node, direction=undefined) {
+    highlightNeighbours( node, direction) {
         let childLinks;
         let children;
         let parentLinks;
@@ -435,7 +461,7 @@ export class D3Component{
             link.opacity = 0.2;
         });
         //make neighbour links visible and create lists of children/parents
-        if( !direction || direction=="out") { 
+        if( direction=="both" || direction=="next") { 
             childLinks = this.graphData.links.filter( link => {
                 if( link.source == node) {
                     link.opacity = 1;
@@ -446,7 +472,7 @@ export class D3Component{
                 return link.target;
             });
         }
-        if( !direction || direction=="in") {
+        if( direction=="both" || direction=="previous") {
             parentLinks = this.graphData.links.filter( link => {
                 if( link.target == node) {
                     link.opacity = 1;
@@ -460,14 +486,14 @@ export class D3Component{
 
         node.opacity = 1;
         //make neighbour nodes visible
-        if( !direction || direction=="out") {
+        if( direction=="both" || direction=="next") {
             this.graphData.nodes.forEach( node => {
                 if( children.indexOf(node) >= 0){
                     node.opacity = 1;
                 }
             });
         }
-        if( !direction || direction=="in") {
+        if( direction=="both" || direction=="previous") {
             this.graphData.nodes.forEach( node => {
                 if( parents.indexOf(node) >= 0) {
                     node.opacity = 1;

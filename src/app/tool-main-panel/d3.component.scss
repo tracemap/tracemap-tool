@@ -4,7 +4,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 270px;
-    grid-template-rows: 25px 1fr 60px;
+    grid-template-rows: auto 1fr 60px;
     grid-template-areas:
         "controls ."
         "graph ."
@@ -17,23 +17,28 @@
         padding-left: 5px;
         padding-top: 5px;
 
-        h3 {
-            display: inline-block;
-            font-size: 15px;
-            margin-bottom: 4px;
-            margin-right: 10px;
-        }
+        .control {
+            float: left;
+            margin-right: 20px;
+            h3 {
+                display: inline-block;
+                font-size: 15px;
+                margin-bottom: 4px;
+                margin-right: 10px;
+            }
 
-        label {
-            color: $font-gray;
-            font-size: 12px;
-            margin-right: 6px;
-            input {
-                margin-top: -2px;
-                vertical-align: middle;
-                margin-right: 2px;
+            label {
+                color: $font-gray;
+                font-size: 12px;
+                margin-right: 6px;
+                input {
+                    margin-top: -2px;
+                    vertical-align: middle;
+                    margin-right: 2px;
+                }
             }
         }
+
     }
 
     .canvas {
