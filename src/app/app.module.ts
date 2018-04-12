@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,7 +28,9 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ApiService } from './services/api.service';
 import { MainCommunicationService } from './services/main.communication.service';
 import { HighlightService } from './services/highlight.service';
+import { LocalStorageService } from './services/local-storage.service';
 
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,12 +55,15 @@ import { HighlightService } from './services/highlight.service';
     BrowserModule,
     HttpModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
   ],
   providers: [ 
     ApiService,
     MainCommunicationService,
-    HighlightService
+    HighlightService,
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })
