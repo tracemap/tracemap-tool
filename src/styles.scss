@@ -7,6 +7,11 @@
     margin: 0px;
     padding: 0px;
     transition: box-shadow 0.5s linear;
+    outline: none;
+
+    &::-moz-focus-inner {
+        border: none;
+    }
 }
 body {
     width: 100vw;
@@ -14,28 +19,20 @@ body {
     min-width: 800px;
     margin: 0px;
     min-height: 700px;
-    font: 100% $font-roboto;
+    font-family: $font-plex;
     max-width: 100vw;
     max-height: 100vh;
 }
 
-button {
-    outline: none;
+h1, h2, h3 {
+    color: $color-header;
 }
 
-button::-moz-focus-inner {
-  border: 0;
+p {
+    color: $color-paragraph;
 }
 
-main {
-    display: block;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
-}
+//OLD
 
 router-outlet {
     display: none;
@@ -56,7 +53,7 @@ router-outlet {
     }
     p {
         font-size: 18px;
-        color: $font-gray;
+        color: $color-paragraph;
         font-weight: 600;
     }
 }
