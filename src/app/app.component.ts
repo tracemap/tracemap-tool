@@ -19,13 +19,15 @@ export class AppComponent {
         private apiService: ApiService
     ){
         this.router.events.subscribe( (val) => {
-            if( val['url'].indexOf("homepage") >= 0 ||
-                val['url'] == '/') {
-                this.comService.searchbarStyle.next(undefined);
-                this.searchClasses['mini'] = false;
-            } else {
-                this.comService.searchbarStyle.next('mini');
-                this.searchClasses['mini'] = true;
+            if( val['url']) {
+                if( val['url'].indexOf("homepage") >= 0 ||
+                    val['url'] == '/') {
+                    this.comService.searchbarStyle.next(undefined);
+                    this.searchClasses['mini'] = false;
+                } else {
+                    this.comService.searchbarStyle.next('mini');
+                    this.searchClasses['mini'] = true;
+                }
             }
         });
         this.apiService.getTweetInfo( "975834710495645696").subscribe( (data) => {

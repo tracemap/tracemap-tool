@@ -80,25 +80,65 @@ export class D3Component implements OnDestroy{
         this.storageService.setD3Config(this.config);
     }
 
+    transformLinear(): Promise<void> {
+        return new Promise( (resolve) => {
+            let nodesCount = this.graphData.nodes.length;
+            this.graphData.nodes.sort( (a,b) => {
+                return a.x - b.x;
+            });
+            let firstX = this.graphData.nodes[0].x;
+            let lastX = this.graphData.nodes[nodesCount - 1].x;
+            this.graphData.nodes.sort( (a,b) => {
+                return a.y - b.y;
+            });
+            let firstY = this.graphData.nodes[0].y;
+            let lastY = this.graphData.nodes[nodesCount - 1].y;
+            let offset;
+            if( firstY < firstX) {
+                if( firstY <= 0) {
+                    offset = Math.abs(firstY);
+                } else {
+                    offset = firstY * -1;
+                }
+            } else {
+                if( firstX <= 0) {
+                    offset = Math.abs(firstX);
+                } else {
+                    offset = firstX * -1;
+                }
+            }
+            let multiplicator = ((lastX + offset) - (firstX + offset)) 
+                                / this.width;
+            if(( (lastY + offset) / multiplicator) > this.height) {
+                multiplicator = ((lastY + offset) - firstY + offset)
+                                / this.height;
+            }
+            this.canvas['multiplicator'] = multiplicator;
+            this.canvas['offset'] = offset;
+            this.graphData.nodes.forEach( node => {
+                node['canvasX'] = (node.x + offset) / multiplicator;
+                node['canvasY'] = (node.y + offset) / multiplicator;
+            });
+            resolve();
+        })
+    }
+
     ticked() {
         this.graphData.nodes.forEach( node => {
             let x = node.x;
             let y = node.y;
             let r = node.r;
-            if( x < 0 + r){
+            if( x < 0 + r) {
                 node.x = 0 + r;
             } else if ( x > this.width - r) {
                 node.x = this.width - r;
             }
-            if( y < 0 + r){
+            if( y < 0 + r) {
                 node.y = 0 + r;
-            } else if ( this.config.simulate_by == "time" && y > this.height -r - 100){
-                node.y = this.height - r - 100;
-            } else if ( y > this.height - r){
-                node.y = this.height -r;
+            } else if ( y > this.height - r) {
+                node.y = this.height - r;
             }
         });
-
         this.context.clearRect(0, 0, this.width, this.height);
         this.context.beginPath();
         this.graphData.links.filter( link => {
@@ -276,17 +316,20 @@ export class D3Component implements OnDestroy{
         this.dragging = false;
         if( !d3.event.active) 
             this.simulation.alphaTarget(0);
-        if(d3.event.subject.group == 1) {
-            if(this.config.simulate_by == "default") {
-                d3.event.subject.fx = null;
-                d3.event.subject.fy = null;
-            }
+        let node = d3.event.subject;
+        if( node.locked && node.locked == true) {
+            node.fx = null;
+            node.fy = null;
+            node.locked = false;
+        } else {
+            node['locked'] = true;
         }
     }
 
 
     drawLink(d) {
-        let angle = Math.atan2( d.target.y- d.source.y, d.target.x - d.source.x);
+        let angle = Math.atan2( d.target.y- d.source.y, 
+                                d.target.x - d.source.x);
         let xPos = d.target.x - d.target.r * Math.cos(angle);
         let yPos = d.target.y - d.target.r * Math.sin(angle);
         this.context.moveTo(d.source.x, d.source.y);
@@ -382,8 +425,8 @@ export class D3Component implements OnDestroy{
         return new Promise((resolve, reject) => {
             this.graphData.nodes.forEach( node => {
                 if( node.group == 0) {
-                    node.fx = node.r + 50;
-                    node.fy = node.r + 50;
+                    node.fx = this.width / 2;
+                    node.fy = this.height / 2;
                 } else {
                     delete node.fx;
                 }
@@ -397,9 +440,10 @@ export class D3Component implements OnDestroy{
                     let targetRad = d.target.r;
                     return (sourceRad + targetRad);
                 }))
-                .force("charge", d3.forceManyBody().strength(function(d) {
-                    return d.r * -20;
-                }))
+                .force("charge", d3.forceManyBody()
+                                   .strength( (d) => {
+                                       return d.r * -20;
+                                   }))
                 .force("collide", d3.forceCollide().radius(function(d) {
                     return d.r * 1.5;
                 }))
