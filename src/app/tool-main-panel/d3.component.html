@@ -1,15 +1,29 @@
 <div class="d3" [ngClass]="highlight"> 
     <div class="d3-controls">
-        <h3>Render by:</h3>
-        <label *ngFor="let sim of simulations">
-            <input 
-                type="radio" 
-                class="radio" 
-                value="{{sim}}" 
-                name="simulation" 
-                [(ngModel)]="simulateBy"
-                (click)="setSimulation(sim)">{{sim}}
-        </label>
+        <div class="control">
+            <h3>Render by:</h3>
+            <label *ngFor="let sim of simulations">
+                <input 
+                    type="radio" 
+                    class="radio" 
+                    value="{{sim}}" 
+                    name="simulation" 
+                    [(ngModel)]="config.simulate_by"
+                    (click)="changeConfig('simulate_by',sim)">{{sim}}
+            </label>
+        </div>
+        <div class="control">
+            <h3>Highlight:</h3>
+            <label *ngFor="let item of highlights">
+                <input 
+                    type="radio" 
+                    class="radio" 
+                    value="{{item}}" 
+                    name="highlight" 
+                    [(ngModel)]="config.highlight_by"
+                    (click)="changeConfig('highlight_by',item)">{{item}}
+            </label>
+        </div>
     </div>
     <!-- <loader [isLoaded]="loaded"></loader> -->
     <div class="canvas">
