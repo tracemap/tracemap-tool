@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./sass/fonts";
 @import "./sass/colors";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 * {
     box-sizing: border-box;
@@ -33,6 +34,16 @@ p {
 }
 
 //OLD
+=======
+main {
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
 
 router-outlet {
     display: none;

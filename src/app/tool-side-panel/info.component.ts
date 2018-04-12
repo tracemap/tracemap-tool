@@ -21,6 +21,7 @@ export class InfoComponent {
     graphData: object;
     subscription: Subscription;
     infoData: object = {};
+    hoverUserId: string;
 
     constructor(
         private apiService: ApiService,
@@ -46,10 +47,13 @@ export class InfoComponent {
             }
         });
         this.comService.userNodeHighlight.subscribe( userId => {
-            $('.' + userId).addClass("active");
-        });
-        this.comService.resetUserNodeHighlight.subscribe( userId => {
-            $('.' + userId).removeClass("active");
+            if( userId) {
+                this.hoverUserId = userId;
+                $('.' + userId).addClass("active");
+            } else {
+                $('.' + this.hoverUserId).removeClass("active");
+                this.hoverUserId = undefined;
+            }
         });
         this.highlightService.highlight.subscribe( area => {
             if( area == "tm-details") {
@@ -180,11 +184,11 @@ export class InfoComponent {
     }
 
     resetHighlightUserNode( userId: string): void {
-        this.comService.resetUserNodeHighlight.next(userId);
+        this.comService.userNodeHighlight.next(undefined);
     }
 
     openUserDetails( userId: string): void {
-        this.comService.resetUserNodeHighlight.next( userId);
+        this.comService.userNodeHighlight.next(undefined);
         this.comService.userInfo.next( userId);
     }
 }
