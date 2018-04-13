@@ -1,0 +1,62 @@
+<div class="menu-button" (click)="openMenu()">
+    <img *ngIf="color == 'purple'"
+    srcset="
+    ../../assets/images/menu-purple_128.png 4x,
+    ../../assets/images/menu-purple_64.png 2x,
+    ../../assets/images/menu-purple_32.png 1x
+    " 
+    src="../../assets/images/menu-purple_32.png">
+    <img *ngIf="color == 'white'"
+    srcset="
+    ../../assets/images/menu-white_128.png 4x,
+    ../../assets/images/menu-white_64.png 2x,
+    ../../assets/images/menu-white_32.png 1x
+    " 
+    src="../../assets/images/menu-white_32.png">
+</div>
+<div class="overlay" [ngClass]="{'open': open}">
+</div>
+<div class="menu" [ngClass]="{'open': open}">
+    <div class="close-button" (click)="closeMenu()">
+        <img srcset="
+        ../../assets/images/close_128.png 4x,
+        ../../assets/images/close_64.png 2x,
+        ../../assets/images/close_32.png 1x
+        "
+        src="../../assets/images/close_32.png">
+    </div>
+    <div class="links">
+        <a
+        *ngFor="let item of navItems"
+        routerLink={{item.path}}
+        routerLinkActive="active">
+            {{item.label}}
+        </a>
+    </div>
+    <div class="social-links">
+        <a href="https://twitter.com/trace_map">
+            <img srcset="
+            ../../assets/images/twitter_128.png 4x,
+            ../../assets/images/twitter_64.png 2x,
+            ../../assets/images/twitter_32.png 1x
+            "
+            src="../../assets/images/twitter_64.png">
+        </a>
+        <a href="https://www.linkedin.com/company/trace-map">
+            <img srcset="
+            ../../assets/images/linkedin_128.png 4x,
+            ../../assets/images/linkedin_64.png 2x,
+            ../../assets/images/linkedin_32.png 1x
+            "
+            src="../../assets/images/linkedin_64.png">
+        </a>
+        <a href="https://github.com/tracemap/">
+            <img srcset="
+            ../../assets/images/github_128.png 4x,
+            ../../assets/images/github_64.png 2x,
+            ../../assets/images/github_32.png 1x
+            "
+            src="../../assets/images/github_64.png">
+        </a>
+    </div>
+</div>

@@ -1,18 +1,42 @@
 <div class="content">
-    <header></header>
+    <div class="section full-screen start">
+        <div class="bg"></div>
+        <div class="bg-outer">
+            <div class="bg-inner"></div>
+        </div>
+        <h3 class="logo-text">TRACEMAP</h3>
+        <menu></menu>
+        <div class="basic-desc">
+            <p>Trace a Tweet</p>
+            <p>
+                Enter its Url from <a href="https://twitter.com" target="_blank">Twitter</a>.
+            </p>
+        </div>
+        <div class="searchbar" [ngClass]="classes">
+            <input id="search" [ngClass]="classes" type="text" 
+              #searchField
+              (keydown.enter)="processUrl( searchField)"
+              [placeholder]="placeholder"
+              (focus)="removePlaceholder()"
+              (focusout)="setPlaceholder()"
+              [disabled]="disabled">
+            <div class="search-button" (click)="processUrl( searchField)">
+                <img srcset="
+                ../../assets/images/loupe_256.png 4x,
+                ../../assets/images/loupe_128.png 2x,
+                ../../assets/images/loupe_64.png 1x
+                "
+                src="../../assets/images/loupe_64.png">
+            </div>
+        </div>        
+        <div class="anchors">
+            <p><a href="#what">↳ What Is This?</a></p>
+            <p><a href="#how">↳ How It Works</a></p>
+            <p><a href="#newsletter">↳ Stay Up To Date</a></p>
+        </div>
+    </div>
     <p class="error" *ngIf="errorMsg">
         <span *ngFor="let line of errorMsg">{{line}}</span>
         <img src="/assets/images/sad_cloud800.png" alt="">
     </p>
-	<div class="hint" *ngIf="!errorMsg">
-		<p>
-			Enter a Tweets Url from <a href="https://twitter.com">Twitter</a>.
-		</p>
-	</div>
-    <div class="description" *ngIf="!errorMsg">
-        <img  class="picture-1" src="./../../assets/images/post_twitter_1.png" alt="an example vk.com post on someones timeline.">
-        <p class="text-1">1. Click on the posts timestamp</p>
-        <img class="picture-2" src="./../../assets/images/post_twitter_2.png" alt="the example after the timestamp was clicked">
-        <p class="text-2">2. Paste the URL of the post to our tools search bar</p>
-    </div>
 </div>

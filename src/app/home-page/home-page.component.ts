@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MainCommunicationService } from './../services/main.communication.service';
 
@@ -12,16 +13,60 @@ export class HomePageComponent {
 
     errorMsg:string[];
 
+    placeholder = "Your Url";
+    disabled = false;
+
     constructor(
-        private comService: MainCommunicationService
+        private comService: MainCommunicationService,
+        private router: Router
     ){
         this.comService.backendError.subscribe( error => {
             if( error) {
                 this.errorMsg = ["Connection to our Server is not possible.",
                                 "Please try again later."];
+                this.disabled = true;
             } else {
                 this.errorMsg = undefined;
             }
         });
+
     }
+    processUrl( searchField): void {
+    let input = String(searchField.value);
+    searchField.value = "";
+    this.getNewRoute(input)
+      .then( 
+        response => {
+          document.getElementById("search").blur();
+          this.router.navigate([response]);
+      },
+        reject => this.placeholder = reject);
+  }
+
+  getNewRoute(url: string): Promise<string> {
+    let dirtyId;
+    let id;
+
+    if( url.indexOf("twitter.com/") >= 0) {
+      if( url.indexOf("/status/") >= 0) {
+        dirtyId = url.slice( url.indexOf("/status/") + 8);
+        if( dirtyId.indexOf("/") >= 0) {
+          id = dirtyId.slice(0, dirtyId.indexOf("/"));
+        } else {
+          id = dirtyId;
+        }
+        return Promise.resolve("twitter/" + id);
+      }
+      return Promise.reject("invalid twitter Url");
+    }
+    return Promise.reject("Please enter a valid Url");
+  }
+
+  removePlaceholder(): void {
+    this.placeholder = "";
+  }
+
+  setPlaceholder(): void {
+    this.placeholder = "Your Url";
+  }
 }

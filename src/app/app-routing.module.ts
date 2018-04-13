@@ -13,8 +13,7 @@ import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 const routes: Routes = [
-	{ path: 'homepage', component: HomePageComponent},
-	{ path: '', redirectTo: 'homepage', pathMatch: 'full'},
+	{ path: '', component: HomePageComponent},
     { path: 'about', component: AboutUsComponent},
     { path: 'howitworks', component: HowItWorksComponent},
     { path: 'codeofconduct', component: CodeOfConductComponent},

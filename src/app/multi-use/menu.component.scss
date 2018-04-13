@@ -1,0 +1,109 @@
+@import "../../styles.scss";
+.menu-button {
+    background-color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    &:hover {
+        cursor: pointer;
+    }
+
+    img {
+        background-color: transparent;
+        width: 25px;
+        margin-top: 11.5px;
+        margin-left: 11.5px;
+    }
+}
+
+.overlay {
+    position: fixed;
+    height: 100vh;
+    width: 0px;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    background-color: $color-gray-bg-light;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    &.open {
+        opacity: 0.92;
+        width: 100vw;
+    }
+}
+
+.menu {
+    position: fixed;
+    width: 0px;
+    height: 100vh;
+    min-height: 500px;
+    top: 0px;
+    right: 0px;
+    z-index: 11;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(15,19,26,0.1) 0 0 11px 0 rgba(15,19,26,0.1), 0 0 2px 0 rgba(15,19,26,0.1);
+    transition: width 0.5s ease-in-out;
+    &.open {
+        width: 350px;
+    }
+
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 120px auto 40px 1fr;
+    grid-template-areas:
+        ". close_button"
+        ". menu_links"
+        ". menu_social"
+        ". .";
+
+    .close-button {
+        grid-area: close_button;
+        justify-self: right;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 0 1px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
+        margin-top: 30px;
+        margin-right: 30px;
+
+        img {
+            width: 18px;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+    }
+
+    .links {
+        grid-area: menu_links;
+        margin-bottom: 20px;
+
+        a {
+            display: block;
+            color: $color-gray-font-dark;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 40px;
+
+            &.active {
+                cursor: default;
+            }
+        }
+    }
+
+    .social-links {
+        grid-area: menu_social;
+        width: 290px;
+
+        a {
+            margin-right: 20px;
+            width: 30px;
+            height: 30px;
+
+            img {
+                width: 30px;
+            }
+        }
+    }
+}
