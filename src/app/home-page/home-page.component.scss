@@ -4,14 +4,18 @@
     width: 100vw;
 	min-width: 850px;
 
-    .section.full-screen {
-        height: 100vh;
+    .section {
         width: 100%;
         padding-left: 80px;
         padding-right: 80px;
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    .full-screen {
+        min-height: 100vh;
 
         &.start {
-            min-height: 500px;
             background-color: transparent;
             display: grid;
             grid-template-columns: 500px 1fr;
@@ -133,11 +137,156 @@
                 font-size: 18px;
                 line-height: 34px;
                 justify-self: right;
-                margin-right: 80px;
-                align-self: center;
+                margin-right: 40px;
+                align-self: end;
                 a {
                     text-decoration: none;
                     color: #FFF;
+                }
+            }
+        }
+    }
+
+    .text-box {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header paragraph"
+            "header button";
+
+        h2 {
+            grid-area: header;
+            font-size: 24px;
+            line-height: 40px;
+        }
+
+        p {
+            grid-area: paragraph;
+            max-width: 750px;
+            font-size: 24px;
+            line-height: 40px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        button {
+            grid-area: button;
+            width: 147px;
+            height: 46px;
+        }
+    }
+
+    .content-box {
+        &.white-bg {
+            background-color: #FFF;
+        }
+        &.gray-bg {
+            background-color: $color-gray-bg;
+        }
+
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header box_content";
+
+        h2 {
+            grid-area: header;
+            font-size: 24px;
+            line-height: 40px;
+        }
+
+        .box-content {
+            grid-area: box_content;
+            max-width: 750px;
+
+            .img-box {
+                display: grid;
+
+                &.padded {
+                    padding-top: 12px;
+                    padding-bottom: 60px;
+                }
+                grid-template-rows: auto;
+                grid-template-columns: 329px 1fr;
+                grid-template-areas:
+                    "image description";
+                img {
+                    grid-area: image;
+                }
+
+                p {
+                    grid-area: description;
+                    padding-left: 26px;
+                    font-size: 18px;
+                    line-height: 28px;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .newsletter-box {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-tmplate-rows: auto auto auto;
+            grid-template-areas:
+                "text"
+                "newsletter_form"
+                "social_links";
+
+            p {
+                grid-area: text;
+                max-width: 750px;
+                font-size: 24px;
+                line-height: 40px;
+                font-weight: 300;
+                margin-bottom: 40px;
+            }
+
+            .newsletter-form {
+                grid-area: newsletter_form;
+
+                input {
+                    width: 370px;
+                    height: 46px;
+                    border: 1.5px solid #C0C4CC;
+                    border-radius: 4px;
+                    font-size: 18px;
+                    line-height: 28px;
+                    padding-left: 15px;
+                    &::placeholder {
+                        color: #A8ABB3;
+                        opacity: 1;
+                    }
+                    margin-bottom: 70px;
+                }
+
+                .purple-button {
+                    width: 142px;
+                    height: 45px;
+                    margin-left: 10px;
+                    vertical-align: top;
+                }
+            }
+
+            .follow-us {
+                height: 30px;
+                display: grid;
+                grid-template-columns: 83px auto;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "text social_links";
+                p {
+                    grid-area: text;
+                    font-size: 18px;
+                    line-height: 28px;
+                    width: 83px;
+                }
+
+                .social-links-light {
+                    grid-area: social_links;
+                    margin-left: 28px;
                 }
             }
         }

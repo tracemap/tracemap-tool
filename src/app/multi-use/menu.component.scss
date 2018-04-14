@@ -25,10 +25,11 @@
     z-index: 10;
     background-color: $color-gray-bg-light;
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, width 0s .2s;
     &.open {
         opacity: 0.92;
         width: 100vw;
+        transition: opacity 0.2s ease-in-out, width 0s 0s;
     }
 }
 
@@ -77,6 +78,7 @@
     .links {
         grid-area: menu_links;
         margin-bottom: 20px;
+        width: 260px;
 
         a {
             display: block;
@@ -92,18 +94,7 @@
         }
     }
 
-    .social-links {
+    .social-links-light {
         grid-area: menu_social;
-        width: 290px;
-
-        a {
-            margin-right: 20px;
-            width: 30px;
-            height: 30px;
-
-            img {
-                width: 30px;
-            }
-        }
     }
 }

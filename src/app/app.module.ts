@@ -24,6 +24,7 @@ import { HelpComponent } from './tool-main-panel/help.component';
 import { AboutUsComponent } from './home-page/about-us.component';
 import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
+import { FooterComponent } from './home-page/footer.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
 
@@ -52,7 +53,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     HomePageComponent,
     AboutUsComponent,
     HowItWorksComponent,
-    CodeOfConductComponent
+    CodeOfConductComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

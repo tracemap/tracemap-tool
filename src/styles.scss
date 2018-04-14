@@ -23,6 +23,8 @@ body {
     font-family: $font-plex;
     max-width: 100vw;
     max-height: 100vh;
+    overflow-x: hidden; 
+    scroll-behavior: smooth;
 }
 
 h1, h2, h3 {
@@ -31,6 +33,41 @@ h1, h2, h3 {
 
 p {
     color: $color-paragraph;
+}
+
+.button {
+    border: 2px solid $color-purple-dark;
+    border-radius: 5px;
+    font-family: $font-plex;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+}
+
+.light-button {
+    background-color: #FFF;
+    color: $color-purple-dark;
+}
+    
+.purple-button {
+    background-color: $color-purple-dark;
+    color: #FFF;
+}
+    
+.social-links-light {
+    width: 170px;
+
+    a {
+        margin-right: 20px;
+        width: 30px;
+        height: 30px;
+        text-decoration: none;
+
+        img {
+            width: 30px;
+        }
+    }
 }
 
 //OLD

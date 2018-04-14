@@ -39,4 +39,67 @@
         <span *ngFor="let line of errorMsg">{{line}}</span>
         <img src="/assets/images/sad_cloud800.png" alt="">
     </p>
+    <div class="section text-box" id="what">
+        <h2>What is this?</h2>
+        <p>TraceMap gives you the Possibillity to follow the Flow of a Tweet through Twitter. It will show you who retweeted the Post from which User and gives you an Insight of how the Users are connected with eachother.<br><br>
+        By now TraceMap is restricted by Twitter to the last 100 Retweets, though Tweets with more than 100 Retweets will be displayed incomplete. Therefore some of the distributors might not be shown or some Connections will be missing.
+        </p>
+        <button type="button" class="light-button button">More Details</button>
+    </div>
+    <div class="section content-box gray-bg">
+        <h2>How it works</h2>
+        <div class="box-content">
+            <div class="img-box padded">
+                <img src="../../assets/images/placeholder.png">
+                <p>1. Find a Tweet on Twitter, you like to trace. Click on the Dropdown-Button of the Tweet.</p>
+            </div>
+            <div class="img-box">
+                <img src="../../assets/images/placeholder.png">
+                <p>2. Press „Copy Url“ and paste it in the Search-Field of TraceMap.</p>
+            </div>
+        </div>
+    </div>
+    <div class="section content-box white-bg">
+        <h2>Stay up to date</h2>
+        <div class="box-content newsletter-box">
+            <p>TraceMap is still in Beta, but we are constantly pushing things forward. Be one of the first to know about new Features and Releases of TraceMap.</p>
+            <div class="newsletter-form">
+                <input type="text" 
+                #emailAdress
+                (keydown.enter)="addToNewsletter( emailAdress)"
+                placeholder="Your E-Mail">
+                <button class="purple-button button" (click)="addToNewsletter( emailAdress)">
+                    Subscribe
+                </button>
+            </div>
+            <div class="follow-us">
+                <p>Follow us:</p>
+                <div class="social-links-light">
+                    <a href="https://twitter.com/trace_map">
+                        <img srcset="
+                        ../../assets/images/twitter_128.png 4x,
+                        ../../assets/images/twitter_64.png 2x,
+                        ../../assets/images/twitter_32.png 1x
+                        "
+                        src="../../assets/images/twitter_64.png">
+                    </a>
+                    <a href="https://www.linkedin.com/company/trace-map">
+                        <img srcset="
+                        ../../assets/images/linkedin_128.png 4x,
+                        ../../assets/images/linkedin_64.png 2x,
+                        ../../assets/images/linkedin_32.png 1x
+                        "
+                        src="../../assets/images/linkedin_64.png">
+                    </a>
+                    <a href="https://github.com/tracemap/">
+                        <img srcset="
+                        ../../assets/images/github_128.png 4x,
+                        ../../assets/images/github_64.png 2x,
+                        ../../assets/images/github_32.png 1x
+                        "
+                        src="../../assets/images/github_64.png">
+                    </a>
+                </div>
+            </div>
+        </div>
 </div>
