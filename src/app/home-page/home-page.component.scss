@@ -228,7 +228,7 @@
             grid-tmplate-rows: auto auto auto;
             grid-template-areas:
                 "text"
-                "newsletter_form"
+                "newsletter_area"
                 "social_links";
 
             p {
@@ -240,37 +240,50 @@
                 margin-bottom: 40px;
             }
 
-            .newsletter-form {
-                grid-area: newsletter_form;
-                margin-bottom: 40px;
-                display: grid;
-                grid-template-columns: 370px 142px;
-                grid-template-rows: 46px;
-                grid-template-areas:
-                    "input button";
+            .newsletter-area {
+                grid-area: newsletter_area;
 
-                input {
-                    grid-area: input;
-                    border: 1.5px solid #C0C4CC;
-                    width: 367px;
-                    height: 43px;
-                    border-radius: 4px;
-                    font-size: 18px;
-                    line-height: 28px;
-                    padding-left: 15px;
-                    &::placeholder {
-                        color: #A8ABB3;
-                        opacity: 1;
+                p {
+                    margin-top: -30px;
+                    color: $color-header;
+
+                    &.subscription-answer {
+                        font-weight: 400;
                     }
                 }
 
-                .purple-button {
-                    grid-area: button;
-                    height: 42px;
-                    margin-left: 15px;
-                    vertical-align: top;
+                .newsletter-form {
+                    margin-bottom: 40px;
+                    display: grid;
+                    grid-template-columns: 370px 142px;
+                    grid-template-rows: 46px;
+                    grid-template-areas:
+                        "input button";
+
+                    input {
+                        grid-area: input;
+                        border: 1.5px solid #C0C4CC;
+                        width: 367px;
+                        height: 43px;
+                        border-radius: 4px;
+                        font-size: 18px;
+                        line-height: 28px;
+                        padding-left: 15px;
+                        &::placeholder {
+                            color: #A8ABB3;
+                            opacity: 1;
+                        }
+                    }
+
+                    .purple-button {
+                        grid-area: button;
+                        height: 42px;
+                        margin-left: 15px;
+                        vertical-align: top;
+                    }
                 }
             }
+
 
             .follow-us {
                 grid-area: social_links;

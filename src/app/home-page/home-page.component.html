@@ -63,14 +63,28 @@
         <h2>Stay up to date</h2>
         <div class="box-content newsletter-box">
             <p>TraceMap is still in Beta, but we are constantly pushing things forward. Be one of the first to know about new Features and Releases of TraceMap.</p>
-            <div class="newsletter-form">
-                <input type="text" 
-                #emailAdress
-                (keydown.enter)="addToNewsletter( emailAdress)"
-                placeholder="Your E-Mail">
-                <button class="purple-button button" (click)="addToNewsletter( emailAdress)">
-                    Subscribe
-                </button>
+            <div class="newsletter-area">
+                <div *ngIf="!subscriptionResponse" class="newsletter-form">
+                    <input type="text" 
+                    #emailAdress
+                    (keydown.enter)="addToNewsletter( emailAdress.value)"
+                    placeholder="Your E-Mail">
+                    <button class="purple-button button" 
+                    (click)="addToNewsletter( emailAdress.value)">
+                        Subscribe
+                    </button>
+                </div>
+                <p *ngIf="wrongEmail">
+                    You entered an invalid E-Mail.
+                </p>
+                <p *ngIf="subscriptionResponse == 'success'"
+                class="subscription-answer">
+                    Thanks for your interest.<br>Your subscription was successful.
+                </p>
+                <p *ngIf="subscriptionResponse == 'exists'"
+                class="subscription-answer">
+                    Thanks for insisting.<br>You have already subscribed.
+                </p>
             </div>
             <div class="follow-us">
                 <p>Follow us:</p>
