@@ -61,11 +61,7 @@
                 position: absolute;
                 top: 42px;
                 left: 80px;
-                font-size: 14px;
-                font-weight: 600;
-                color: #FFF;
-                letter-spacing: 3px;
-            }
+            }   
 
             menu, .menu {
                 position: absolute;
@@ -246,11 +242,18 @@
 
             .newsletter-form {
                 grid-area: newsletter_form;
+                margin-bottom: 40px;
+                display: grid;
+                grid-template-columns: 370px 142px;
+                grid-template-rows: 46px;
+                grid-template-areas:
+                    "input button";
 
                 input {
-                    width: 370px;
-                    height: 46px;
+                    grid-area: input;
                     border: 1.5px solid #C0C4CC;
+                    width: 367px;
+                    height: 43px;
                     border-radius: 4px;
                     font-size: 18px;
                     line-height: 28px;
@@ -259,24 +262,24 @@
                         color: #A8ABB3;
                         opacity: 1;
                     }
-                    margin-bottom: 70px;
                 }
 
                 .purple-button {
-                    width: 142px;
-                    height: 45px;
-                    margin-left: 10px;
+                    grid-area: button;
+                    height: 42px;
+                    margin-left: 15px;
                     vertical-align: top;
                 }
             }
 
             .follow-us {
+                grid-area: social_links;
                 height: 30px;
                 display: grid;
                 grid-template-columns: 83px auto;
                 grid-template-rows: auto;
                 grid-template-areas:
-                    "text social_links";
+                    "text social_icons";
                 p {
                     grid-area: text;
                     font-size: 18px;
@@ -285,7 +288,7 @@
                 }
 
                 .social-links-light {
-                    grid-area: social_links;
+                    grid-area: social_icons;
                     margin-left: 28px;
                 }
             }
