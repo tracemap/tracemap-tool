@@ -12,7 +12,7 @@
             grid-template-columns: 500px 1fr;
             grid-template-rows: 1fr 1fr 100px;
             grid-template-areas:
-                "basic_desc basic-desc"
+                "basic_desc basic_desc"
                 "searchbar searchbar"
                 "anchors anchors"; 
 
@@ -128,7 +128,16 @@
             "header paragraph"
             "header button";
 
+        h2 {
+            grid-area: header;
+        }
+
+        p {
+            grid-area: paragraph;
+        }
+
         button {
+            margin-top: 40px;
             grid-area: button;
             width: 147px;
             height: 46px;
