@@ -7,7 +7,8 @@ import { ApiService } from './../services/api.service';
 @Component({
 	selector: 'home-page',
 	templateUrl: './home-page.component.html',
-	styleUrls: ['./home-page.component.scss']
+	styleUrls: ['./home-page.scss',
+                './home-page.component.scss']
 })
 
 export class HomePageComponent {
@@ -42,7 +43,7 @@ export class HomePageComponent {
         .then( 
             response => {
                 document.getElementById("search").blur();
-                this.router.navigate([response]);
+                this.navigate(response);
             },
         reject => this.placeholder = reject);
     }
@@ -95,4 +96,8 @@ export class HomePageComponent {
         var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         return re.test(String(email).toLowerCase());
     }
+
+    navigate(location:string):void {
+        this.router.navigate([location]);
+    }  
 }

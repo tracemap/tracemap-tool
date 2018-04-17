@@ -1,5 +1,5 @@
 <div class="content">
-    <div class="section full-screen start">
+        <div class="section full-screen start">
         <div class="bg"></div>
         <div class="bg-outer">
             <div class="bg-inner"></div>
@@ -41,20 +41,33 @@
     </p>
     <div class="section text-box" id="what">
         <h2>What is this?</h2>
-        <p>TraceMap gives you the Possibillity to follow the Flow of a Tweet through Twitter. It will show you who retweeted the Post from which User and gives you an Insight of how the Users are connected with eachother.<br><br>
-        By now TraceMap is restricted by Twitter to the last 100 Retweets, though Tweets with more than 100 Retweets will be displayed incomplete. Therefore some of the distributors might not be shown or some Connections will be missing.
+        <p>TraceMap gives you the possibillity to follow the flow of a Tweet through Twitter. It will show you who retweeted the post from which user and gives you an insight of how the users are connected with each other.<br><br>
+        By now TraceMap is restricted by Twitter to the last 100 retweets of a tweet. Though Tweets with more than 100 retweets will be displayed incomplete. Some of the distributors might not be shown and some connections will be missing.
         </p>
-        <button type="button" class="light-button button">More Details</button>
+        <button 
+        type="button" 
+        class="light-button button"
+        (click)="navigate('/information')">More Details</button>
     </div>
     <div class="section content-box gray-bg" id="how">
         <h2>How it works</h2>
         <div class="box-content">
-            <div class="img-box padded">
-                <img src="../../assets/images/placeholder.png">
+            <div class="img-box first">
+                <img srcset="
+                ../../assets/images/howto-1_1320.png 4x,
+                ../../assets/images/howto-1_660.png 2x,
+                ../../assets/images/howto-1_330.png 1x
+                "
+                src="../../assets/images/howto-1_330.png">
                 <p>1. Find a Tweet on Twitter, you like to trace. Click on the Dropdown-Button of the Tweet.</p>
             </div>
             <div class="img-box">
-                <img src="../../assets/images/placeholder.png">
+                <img srcset="
+                ../../assets/images/howto-2_1320.png 4x,
+                ../../assets/images/howto-2_660.png 2x,
+                ../../assets/images/howto-2_330.png 1x
+                "
+                src="../../assets/images/howto-2_330.png">
                 <p>2. Press „Copy Url“ and paste it in the Search-Field of TraceMap.</p>
             </div>
         </div>
@@ -62,7 +75,7 @@
     <div class="section content-box white-bg" id="newsletter">
         <h2>Stay up to date</h2>
         <div class="box-content newsletter-box">
-            <p>TraceMap is still in Beta, but we are constantly pushing things forward. Be one of the first to know about new Features and Releases of TraceMap.</p>
+            <p>TraceMap is still in closed beta, but we are constantly pushing things forward. Be one of the first to know about new features and releases of TraceMap.</p>
             <div class="newsletter-area">
                 <div *ngIf="!subscriptionResponse" class="newsletter-form">
                     <input type="text" 

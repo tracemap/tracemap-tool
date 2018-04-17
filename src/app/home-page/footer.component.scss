@@ -7,7 +7,7 @@
     padding-bottom: 120px;
     background-color: $color-black-bg;
     display: grid;
-    grid-template-columns: 320px 320px 320px;
+    grid-template-columns: 350px 320px 320px;
     grid-template-rows: 50px 50px 50px;
     grid-template-areas: 
         "logo_text row_1 row_2"
@@ -47,5 +47,12 @@
                 cursor: default;
             }
         }
+    }
+}
+
+@media only screen and (max-width: 1049px) {
+    .content {
+        padding-left: 60px;
+        grid-template-columns: 300px 200px 200px; 
     }
 }

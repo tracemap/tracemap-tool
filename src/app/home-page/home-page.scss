@@ -1,0 +1,61 @@
+@import "../../styles.scss";
+
+// General home-page styles (layout, sections etc.)
+.content {
+    min-width: 1050px;
+    width: 100vw;
+
+    .section {
+        width: 100%;
+        padding-left: 80px;
+        padding-right: 80px;
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    .white-bg {
+        background-color: #FFF;
+    }
+    .gray-bg {
+        background-color: $color-gray-bg;
+    }
+
+
+    .text-box {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header paragraph"
+            "header paragraph";
+
+        h2 {
+            grid-area: header;
+            font-size: 24px;
+            line-height: 40px;
+        }
+
+        p {
+            grid-area: paragraph;
+            max-width: 700px;
+            font-size: 24px;
+            line-height: 40px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+    }
+
+    .content-box {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header box_content";
+
+        h2 {
+            grid-area: header;
+            font-size: 24px;
+            line-height: 40px;
+        }
+    }
+}
