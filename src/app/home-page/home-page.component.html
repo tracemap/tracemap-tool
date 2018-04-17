@@ -4,8 +4,8 @@
         <div class="bg-outer">
             <div class="bg-inner"></div>
         </div>
-        <h3 class="logo-text">TRACEMAP</h3>
-        <menu></menu>
+        <h3 class="logo-text top">TRACEMAP</h3>
+        <menu [color]="'white'"></menu>
         <div class="basic-desc">
             <p>Trace a Tweet</p>
             <p>
@@ -39,7 +39,7 @@
         <span *ngFor="let line of errorMsg">{{line}}</span>
         <img src="/assets/images/sad_cloud800.png" alt="">
     </p>
-    <div class="section text-box" id="what">
+    <div class="section text-box white-bg" id="what">
         <h2>What is this?</h2>
         <p>TraceMap gives you the possibillity to follow the flow of a Tweet through Twitter. It will show you who retweeted the post from which user and gives you an insight of how the users are connected with each other.<br><br>
         By now TraceMap is restricted by Twitter to the last 100 retweets of a tweet. Though Tweets with more than 100 retweets will be displayed incomplete. Some of the distributors might not be shown and some connections will be missing.

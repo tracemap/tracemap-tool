@@ -9,6 +9,7 @@ import { InfoComponent } from './tool-side-panel/info.component';
 import { AboutUsComponent } from './home-page/about-us.component';
 import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
+import { InformationComponent } from './home-page/information.component';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'about', component: AboutUsComponent},
     { path: 'howitworks', component: HowItWorksComponent},
     { path: 'codeofconduct', component: CodeOfConductComponent},
+    { path: 'information', component: InformationComponent},
     { path: 'twitter/:pid', component: MainComponent, children: [
     	{path: 'details/:uid', component: UserComponent},
         {path: '**', component: InfoComponent}

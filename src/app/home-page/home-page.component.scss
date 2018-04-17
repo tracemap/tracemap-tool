@@ -49,12 +49,6 @@
                 }
             }
 
-            .logo-text {
-                position: absolute;
-                top: 42px;
-                left: 80px;
-            }   
-
             .basic-desc {
                 grid-area: basic_desc;
                 margin-bottom: 50px;
@@ -143,16 +137,14 @@
 
     .content-box {
         .box-content {
-            grid-area: box_content;
-            width: 700px;
             .img-box {
-                display: grid;
                 float: left;
-
                 &.first {
                     padding-right: 0px;
                     margin-right: 30px;
                 }
+                
+                display: grid;
                 grid-template-rows: 277px 90px;
                 grid-template-columns: 330px;
                 grid-template-areas:
@@ -263,28 +255,14 @@
 
 @media only screen and (max-width: 1049px) {
     .content {
-        min-width: 760px;
-        width: 100vw;
-
-        .section {
-            padding-left: 60px;
-            padding-right: 60px;
-        }
-
-        .text-box {
-            grid-template-columns: 300px 1fr;
-        }
 
         .content-box {
-            grid-template-columns: 300px 1fr;
-
             .box-content {
-                min-width: 350px;
-                width: 50%;
                 .img-box {
+                    padding-top: 30px;
                     &.first {
                         padding-right: 0px;
-                        padding-bottom: 30px;
+                        padding-top: 0px;
                     }
 
                     grid-template-rows: 277px auto;

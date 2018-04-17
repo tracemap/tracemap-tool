@@ -1,0 +1,73 @@
+@import "../../styles.scss";
+
+.content {
+    .logo-text.top {
+        color: $color-purple-dark;
+    }
+    .box-content.team {
+        display: grid;
+        justify-items: left;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        grid-column-gap: 30px;
+        grid-row-gap: 50px; 
+
+
+        .small-img-box {
+            display: grid;
+            grid-template-rows: 165px 20px auto auto;
+            grid-template-columns: 150px;
+            grid-template-areas:
+                "image"
+                "header"
+                "paragraph"
+                "social_links";
+
+            .picture {
+                grid-area: image;
+                width: 150px;
+            }
+
+            h4 {
+                justify-self: center;
+                grid-area: header;
+                font-size: 16px;
+                font-weight: 300;
+            }
+
+            p {
+                text-align: center;
+                grid-area: paragraph;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .social-links-light {
+                grid-area: social_links;
+                margin-top: 5px;
+                text-align: center;
+                a {
+                    width: 20px;
+                    height: 20px;
+                    img {
+                        width: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .content-box.partners, .content-box.sponsors {
+        a {
+            display: block;
+            margin-top: 50px;
+            &.first {
+                margin-top: 0px;
+            }
+
+            font-size: 40px;
+            font-weight: 800;
+            text-decoration: none;
+            color: $color-header;
+        }
+    }
+}

@@ -5,6 +5,12 @@
     min-width: 1050px;
     width: 100vw;
 
+    .logo-text.top {
+        position: absolute;
+        top: 42px;
+        left: 80px;
+    }
+
     .section {
         width: 100%;
         padding-left: 80px;
@@ -41,7 +47,6 @@
             font-size: 24px;
             line-height: 40px;
             font-weight: 300;
-            margin-bottom: 40px;
         }
     }
 
@@ -56,6 +61,39 @@
             grid-area: header;
             font-size: 24px;
             line-height: 40px;
+        }
+        .box-content {
+            grid-area: box_content;
+            width: 700px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1049px) {
+    .content {
+        min-width: 760px;
+        width: 100vw;
+
+        .logo-text.top {
+            left: 60px;
+        }
+
+        .section {
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+
+        .text-box {
+            grid-template-columns: 300px 1fr;
+        }
+
+        .content-box {
+            grid-template-columns: 300px 1fr;
+
+            .box-content {
+                min-width: 350px;
+                width: 100%;
+            }
         }
     }
 }

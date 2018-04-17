@@ -1,12 +1,15 @@
-<div class="menu-button" (click)="openMenu()">
-    <img *ngIf="color == 'purple'"
+<div 
+class="menu-button" 
+(click)="openMenu()"
+[ngClass]="color">
+    <img *ngIf="color == 'white'"
     srcset="
     ../../assets/images/menu-purple_128.png 4x,
     ../../assets/images/menu-purple_64.png 2x,
     ../../assets/images/menu-purple_32.png 1x
     " 
     src="../../assets/images/menu-purple_32.png">
-    <img *ngIf="color == 'white'"
+    <img *ngIf="color != 'white'"
     srcset="
     ../../assets/images/menu-white_128.png 4x,
     ../../assets/images/menu-white_64.png 2x,

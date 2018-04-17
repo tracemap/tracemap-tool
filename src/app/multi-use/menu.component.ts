@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -7,9 +7,11 @@ import { Router, RouterLinkActive } from '@angular/router';
     styleUrls: ['./menu.component.scss']
 })
 
-export class MenuComponent {
+export class MenuComponent{
 
-    color = "purple";
+    @Input('color')
+    color: string;
+
     open = false;
 
     navItems = [
@@ -41,6 +43,7 @@ export class MenuComponent {
 
     openMenu(): void {
         this.open = true;
+        console.log(this.color);
     }
 
     navigate(location:string):void {

@@ -7,7 +7,7 @@ import { Router, RouterLinkActive } from '@angular/router';
     styleUrls: ['./footer.component.scss']
 })
 
-export class FooterComponent {
+export class FooterComponent{
     navItems1 = [
         {
             label: "TraceMap",

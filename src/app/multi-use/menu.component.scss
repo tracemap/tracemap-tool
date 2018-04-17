@@ -7,6 +7,15 @@
     width: 48px;
     height: 48px;
     border-radius: 24px;
+    &.white {
+        background-color: #FFF;
+    }
+    &.purple {
+        background-color: $color-purple-dark;
+    }
+    &.black {
+        background-color: #000;
+    }
     &:hover {
         cursor: pointer;
     }
