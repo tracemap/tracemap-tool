@@ -7,7 +7,7 @@ import { MainComponent } from './tool-main-panel/main.component';
 import { UserComponent } from './tool-side-panel/user.component';
 import { InfoComponent } from './tool-side-panel/info.component';
 import { AboutUsComponent } from './home-page/about-us.component';
-import { HowItWorksComponent } from './home-page/how-it-works.component';
+import { HelpUsComponent } from './home-page/help-us.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
 
@@ -17,7 +17,7 @@ const routes: Routes = [
 	{ path: 'home', component: HomePageComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'about', component: AboutUsComponent},
-    { path: 'howitworks', component: HowItWorksComponent},
+    { path: 'helpus', component: HelpUsComponent},
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
     // { path: 'twitter/:pid', component: MainComponent, children: [

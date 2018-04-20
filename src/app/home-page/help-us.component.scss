@@ -4,6 +4,27 @@
     .logo-text.top {
         color: $color-purple-dark;
     }
+
+    .text-box {
+        grid-template-areas:
+            "header paragraph"
+            "header button";
+
+        h2 {
+            grid-area: header;
+        }
+
+        p {
+            grid-area: paragraph;
+        }
+
+        button {
+            margin-top: 40px;
+            grid-area: button;
+            width: 147px;
+            height: 46px;
+        }
+    }
     .content-box {
         .box-content {
             p {
@@ -38,38 +59,6 @@
                     width: 128px;
                 }
             }
-
-            .studie-box {
-                margin-top: 40px;
-                &.first {
-                    margin-top: 0px;
-                }
-                a {
-                    text-decoration: none;
-
-                     h3 {
-                        font-size: 20px;
-                        font-weight: 300;
-                        line-height: 28px;
-                     }
-
-                     p {
-                        margin-bottom: 0px;
-                        font-size: 16px;
-                        font-weight: 300;
-                        line-height: 22px;
-                     }
-
-                     p.date {
-                        font-weight: 400;
-                     }
-                }
-            }
-        }
-    }
-    .text-box {
-        a {
-            color: $color-paragraph;
         }
     }
 }

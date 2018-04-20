@@ -29,9 +29,13 @@ export class FooterComponent{
         //     path: "/codeofconduct"
         // },
         {
-            label: "Imprint",
-            path: "/imprint"
-        }
+            label: "Help Us",
+            path: "/helpus"
+        },
+        // {
+        //     label: "Imprint",
+        //     path: "/imprint"
+        // }
     ];
 
     constructor(

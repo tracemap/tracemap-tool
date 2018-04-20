@@ -22,9 +22,9 @@ import { LoadingComponent } from './multi-use/loading.component';
 import { ShareComponent } from './tool-main-panel/share.component';
 import { HelpComponent } from './tool-main-panel/help.component';
 import { AboutUsComponent } from './home-page/about-us.component';
-import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
+import { HelpUsComponent } from './home-page/help-us.component';
 import { FooterComponent } from './home-page/footer.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
@@ -53,9 +53,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     HelpComponent,
     HomePageComponent,
     AboutUsComponent,
-    HowItWorksComponent,
     CodeOfConductComponent,
     InformationComponent,
+    HelpUsComponent,
     FooterComponent
   ],
   imports: [

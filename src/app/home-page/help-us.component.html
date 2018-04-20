@@ -1,0 +1,33 @@
+<div class="content">
+    <h3 class="logo-text top">TRACEMAP</h3>
+    <menu [color]="'purple'"></menu>
+    <div class="section text-box white-bg">
+        <h2>Donate a token</h2>
+        <div class="box-content">
+            <p>Twitter token are a very important resource for our tool. They enable us to request Twitters data more frequently. If our data is more up to date, the whole system of TraceMap is more reliable.<br>All you need for generating a token is a Twitter account and 10 seconds of time.</p>
+        </div>
+        <a href="https://twitter.tracemap.info/" target="_blank">
+            <button 
+            type="button" 
+            class="button purple-button">Donate Token</button>
+        </a>
+    </div>
+    <div class="section content-box gray-bg">
+        <h2>Privacy</h2>
+        <div class="box-content">
+            <div class="icon-text first">
+                <p>If you authenticate with the TraceMap application, your private data cannot be seen by us. We chose the most restrictive access to your data and can just read Tweets from your timeline and see who you follow. In general this is public information on Twitter, because Twiter is an open social network.<br><br>If you manually changed your privacy-settings to hide who you follow or what you tweet, we can see this information after you authenticated.</p>
+                <img srcset="
+                ../../assets/images/privacy_512.png 4x,
+                ../../assets/images/privacy_256.png 2x,
+                ../../assets/images/privacy_128.png 1x"
+                src="../../assets/images/privacy_128.png">            
+            </div>
+        </div>
+    </div>
+    <div class="section text-box white-bg">
+        <h2>About the tokens</h2>
+        <p>From 2012 on, Twitter's API (an interface for external applications like ours) requires user authentication. With this authentication, they also limit the amount of requests an application can make per minute.<br>To request the API more frequently, we need Access Tokens that are generated upon login. Every user that logs in through our website generates one token. We need approximately 600 of them to collect the German data and multiple thousand to scale up to Twitter's entire network. That's why your help is decisive!</p>
+    </div>
+</div>
+<my-footer></my-footer>

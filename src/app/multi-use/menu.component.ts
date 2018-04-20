@@ -26,6 +26,10 @@ export class MenuComponent{
         {
             label: "Information",
             path: "/information"
+        },
+        {
+            label: "Help Us",
+            path: "/helpus"
         }
         // {
         //     label: "Code of Conduct",
