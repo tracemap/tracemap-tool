@@ -18,12 +18,12 @@ const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'about', component: AboutUsComponent},
     { path: 'howitworks', component: HowItWorksComponent},
-    { path: 'codeofconduct', component: CodeOfConductComponent},
+    // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
-    { path: 'twitter/:pid', component: MainComponent, children: [
-    	{path: 'details/:uid', component: UserComponent},
-        {path: '**', component: InfoComponent}
-    ]},
+    // { path: 'twitter/:pid', component: MainComponent, children: [
+    	// {path: 'details/:uid', component: UserComponent},
+        // {path: '**', component: InfoComponent}
+    // ]},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 

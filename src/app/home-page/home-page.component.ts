@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MainCommunicationService } from './../services/main.communication.service';
@@ -11,7 +11,7 @@ import { ApiService } from './../services/api.service';
                 './home-page.component.scss']
 })
 
-export class HomePageComponent implements OnInit{
+export class HomePageComponent {
 
     errorMsg:string[];
 
@@ -35,10 +35,6 @@ export class HomePageComponent implements OnInit{
             }
         });
 
-    }
-
-    ngOnInit() {
-        window.scrollTo(0, 0);
     }
 
     processUrl( searchField): void {

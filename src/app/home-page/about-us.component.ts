@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'about-us',
@@ -9,8 +10,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class AboutUsComponent implements OnInit{
 
+    constructor(
+        private router: Router
+    ){}
+
     ngOnInit() {
-        window.scrollTo(0, 0);
     }
 
 }
