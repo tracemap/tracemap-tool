@@ -3,9 +3,6 @@
 .content {
 
     .full-screen {
-        height: 100vh;
-        min-height: 600px;
-
         &.start {
             background-color: transparent;
             display: grid;
@@ -166,7 +163,7 @@
                 p {
                     grid-area: description;
                     padding-top: 27px;
-                    font-size: 18px;
+                    font-size: 20px;
                     line-height: 28px;
                     font-weight: 400;
                 }

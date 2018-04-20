@@ -11,7 +11,7 @@ export class FooterComponent{
     navItems1 = [
         {
             label: "TraceMap",
-            path: "/"
+            path: "/home"
         },
         {
             label: "About Us",
@@ -24,10 +24,10 @@ export class FooterComponent{
     ];
 
     navItems2 = [
-        {
-            label: "Code of Conduct",
-            path: "/codeofconduct"
-        },
+        // {
+        //     label: "Code of Conduct",
+        //     path: "/codeofconduct"
+        // },
         {
             label: "Imprint",
             path: "/imprint"

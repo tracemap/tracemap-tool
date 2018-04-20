@@ -5,6 +5,46 @@
     min-width: 1050px;
     width: 100vw;
 
+    .full-screen {
+        height: 100vh;
+        min-height: 600px;
+
+        &.quote {
+            background-color: $color-purple-dark;
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas:
+                "quote"
+                "anchors";
+
+            p {
+                grid-area: quote;
+                margin-bottom: 50px;
+                align-self: end;
+                color: #FFF;
+                font-size: 42.64px;
+                font-weight: 300;
+                line-height: 68px;
+                max-width: 600px;
+            }
+
+            .anchors {
+                grid-area: anchors;
+                font-size: 18px;
+                line-height: 34px;
+                justify-self: right;
+                margin-right: 60px;
+                align-self: end;
+                a {
+                    text-decoration: none;
+                    color: #FFF;
+                }
+            }
+        }
+
+    }
+
     .logo-text.top {
         position: absolute;
         top: 42px;

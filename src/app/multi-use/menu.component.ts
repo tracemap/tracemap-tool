@@ -17,7 +17,7 @@ export class MenuComponent{
     navItems = [
         {
             label: "TraceMap",
-            path: "/"
+            path: "/home"
         },
         {
             label: "About Us",
@@ -27,10 +27,10 @@ export class MenuComponent{
             label: "Information",
             path: "/information"
         },
-        {
-            label: "Code of Conduct",
-            path: "/codeofconduct"
-        }
+        // {
+        //     label: "Code of Conduct",
+        //     path: "/codeofconduct"
+        // }
     ];
 
     constructor(

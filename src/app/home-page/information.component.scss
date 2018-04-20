@@ -1,0 +1,70 @@
+@import "../../styles.scss";
+
+.content {
+    .logo-text.top {
+        color: $color-purple-dark;
+    }
+    .content-box {
+        .box-content {
+            p {
+                font-size: 24px;
+                line-height: 40px;
+                font-weight: 300;
+                margin-bottom: 40px;
+            }
+
+            .icon-text {
+                display: grid;
+                grid-template-columns: 1fr 128px;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "text icon";
+
+                p {
+                    grid-area: text;
+                    font-size: 18px;
+                    line-height: 28px;
+                    font-weight: 300;
+                    padding-right: 40px;
+                }
+
+                img {
+                    grid-area: icon;
+                    width: 128px;
+                }
+            }
+
+            .studie-box {
+                margin-top: 40px;
+                &.first {
+                    margin-top: 0px;
+                }
+                a {
+                    text-decoration: none;
+
+                     h3 {
+                        font-size: 20px;
+                        font-weight: 300;
+                        line-height: 28px;
+                     }
+
+                     p {
+                        margin-bottom: 0px;
+                        font-size: 16px;
+                        font-weight: 300;
+                        line-height: 22px;
+                     }
+
+                     p.date {
+                        font-weight: 400;
+                     }
+                }
+            }
+        }
+    }
+    .text-box {
+        a {
+            color: $color-paragraph;
+        }
+    }
+}

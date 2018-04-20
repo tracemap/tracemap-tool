@@ -14,7 +14,8 @@ import { InformationComponent } from './home-page/information.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 const routes: Routes = [
-	{ path: '', component: HomePageComponent},
+	{ path: 'home', component: HomePageComponent},
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'about', component: AboutUsComponent},
     { path: 'howitworks', component: HowItWorksComponent},
     { path: 'codeofconduct', component: CodeOfConductComponent},
