@@ -39,6 +39,7 @@ export class FooterComponent{
     ){}
 
     navigate(location:string):void {
+        console.log("hit it!");
         this.router.navigate([location]);
     }
 }

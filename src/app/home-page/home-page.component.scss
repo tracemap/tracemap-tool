@@ -9,7 +9,7 @@
             grid-template-columns: 500px 1fr;
             grid-template-rows: 1fr 1fr 100px;
             grid-template-areas:
-                ". ."
+                "searchbar searchbar"
                 "searchbar searchbar"
                 "anchors anchors"; 
 
@@ -65,6 +65,7 @@
             // }
             .beta-info {
                 grid-area: searchbar;
+                align-self: center;
                 p {
                     color: $color-purple-dark;
                     background-color: rgba(255,255,255,0.8);
