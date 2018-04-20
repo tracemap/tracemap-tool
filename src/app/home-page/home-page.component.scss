@@ -66,6 +66,8 @@
             .beta-info {
                 grid-area: searchbar;
                 align-self: center;
+                justify-self: center;
+                max-width: 800px;
                 p {
                     color: $color-purple-dark;
                     background-color: rgba(255,255,255,0.8);
