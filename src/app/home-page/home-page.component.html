@@ -6,13 +6,16 @@
         </div>
         <h3 class="logo-text top">TRACEMAP</h3>
         <menu [color]="'white'"></menu>
-        <div class="basic-desc">
+<!--         <div class="basic-desc">
             <p>Trace a Tweet</p>
             <p>
                 Enter its Url from <a href="https://twitter.com" target="_blank">Twitter</a>.
             </p>
         </div>
-        <div class="searchbar" [ngClass]="classes">
+ -->        <div class="beta-info">
+            <p>The beta is starting soon.<br>Subscribe the <span (click)="scrollToID('newsletter')">newsletter</span> to stay up to date.</p>
+        </div>
+<!--         <div class="searchbar" [ngClass]="classes">
             <input id="search" [ngClass]="classes" type="text" 
               #searchField
               (keydown.enter)="processUrl( searchField)"
@@ -29,10 +32,10 @@
                 src="../../assets/images/loupe_64.png">
             </div>
         </div>        
-        <div class="anchors">
-            <p><a href="#what">↳ What Is This?</a></p>
-            <p><a href="#how">↳ How It Works</a></p>
-            <p><a href="#newsletter">↳ Stay Up To Date</a></p>
+ -->        <div class="anchors">
+            <p (click)="scrollToID('what')">↳ What Is This?</p>
+            <p (click)="scrollToID('how')">↳ How It Works</p>
+            <p (click)="scrollToID('newsletter')">↳ Stay Up To Date</p>
         </div>
     </div>
     <p class="error" *ngIf="errorMsg">

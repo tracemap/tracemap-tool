@@ -9,7 +9,7 @@
             grid-template-columns: 500px 1fr;
             grid-template-rows: 1fr 1fr 100px;
             grid-template-areas:
-                "basic_desc basic_desc"
+                ". ."
                 "searchbar searchbar"
                 "anchors anchors"; 
 
@@ -46,65 +46,85 @@
                 }
             }
 
-            .basic-desc {
-                grid-area: basic_desc;
-                margin-bottom: 50px;
-                align-self: end;
+            // .basic-desc {
+            //     grid-area: basic_desc;
+            //     margin-bottom: 50px;
+            //     align-self: end;
+            //     p {
+            //         color: #FFF;
+            //         line-height: 68px;
+            //         font-weight: 300;
+            //         font-size: 42.64px;
+
+            //         a {
+            //             color: #FFF;
+            //             text-decoration: none;
+            //             border-bottom: 2px solid #FFF;
+            //         }
+            //     }
+            // }
+            .beta-info {
+                grid-area: searchbar;
                 p {
-                    color: #FFF;
+                    color: $color-purple-dark;
+                    background-color: rgba(255,255,255,0.8);
+                    border-radius: 10px;
                     line-height: 68px;
-                    font-weight: 300;
+                    font-weight: 400;
+                    padding: 0px 20px;
+                    text-align: center;
                     font-size: 42.64px;
 
-                    a {
-                        color: #FFF;
-                        text-decoration: none;
-                        border-bottom: 2px solid #FFF;
-                    }
-                }
-            }
-            .searchbar {
-                grid-area: searchbar;
-                width: 400px;
-                height: 60px;
-                margin-top: 30px;
-                border-bottom: 2px solid #FFF;
-                display: grid;
-                grid-template-columns: 1fr 50px;
-                grid-template-rows: 52px;
-                grid-template-areas:
-                    "input button";
-
-                &.disabled {
-                    opacity: 0.2;
-                }
-
-                input[type=text] {
-                    grid-area: input;
-                    width: 100%;
-                    background-color: transparent;
-                    border: none;
-                    margin-right: 10px;
-                    font-size: 23.99px;
-                    color: #FFF;
-                    line-height: 40px;
-                    &::placeholder {
-                        color: #FFF;
-                        opacity: 1;
-                    }
-                }
-
-                .search-button {
-                    grid-area: button;
-                    &:hover {
+                    span {
+                        text-decoration: underline;
                         cursor: pointer;
-                    }
-                    img {
-                        width: 40px;
+
                     }
                 }
 
             }
+            // .searchbar {
+            //     grid-area: searchbar;
+            //     width: 400px;
+            //     height: 60px;
+            //     margin-top: 30px;
+            //     border-bottom: 2px solid #FFF;
+            //     display: grid;
+            //     grid-template-columns: 1fr 50px;
+            //     grid-template-rows: 52px;
+            //     grid-template-areas:
+            //         "input button";
+
+            //     &.disabled {
+            //         opacity: 0.2;
+            //     }
+
+            //     input[type=text] {
+            //         grid-area: input;
+            //         width: 100%;
+            //         background-color: transparent;
+            //         border: none;
+            //         margin-right: 10px;
+            //         font-size: 23.99px;
+            //         color: #FFF;
+            //         line-height: 40px;
+            //         &::placeholder {
+            //             color: #FFF;
+            //             opacity: 1;
+            //         }
+            //     }
+
+            //     .search-button {
+            //         grid-area: button;
+            //         &:hover {
+            //             cursor: pointer;
+            //         }
+            //         img {
+            //             width: 40px;
+            //         }
+            //     }
+
+            // }
             .anchors {
                 grid-area: anchors;
                 font-size: 18px;
@@ -112,9 +132,11 @@
                 justify-self: right;
                 margin-right: 60px;
                 align-self: end;
-                a {
-                    text-decoration: none;
+                p {
                     color: #FFF;
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
             }
         }

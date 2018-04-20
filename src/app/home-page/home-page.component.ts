@@ -37,6 +37,12 @@ export class HomePageComponent {
 
     }
 
+    scrollToID(id_name: string) {
+        let id = "#" + id_name;
+        let target = document.querySelector(id);
+        window.scrollTo( 0, target['offsetTop']); 
+    }
+
     processUrl( searchField): void {
     let input = String(searchField.value);
     searchField.value = "";

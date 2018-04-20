@@ -10,7 +10,7 @@ import { Router, RouterLinkActive } from '@angular/router';
 export class FooterComponent{
     navItems1 = [
         {
-            label: "TraceMap",
+            label: "Home",
             path: "/home"
         },
         {

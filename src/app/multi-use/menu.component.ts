@@ -16,7 +16,7 @@ export class MenuComponent{
 
     navItems = [
         {
-            label: "TraceMap",
+            label: "Home",
             path: "/home"
         },
         {
