@@ -1,18 +1,137 @@
 <div class="content">
-    <header></header>
+        <div class="section full-screen start">
+        <div class="bg"></div>
+        <div class="bg-outer">
+            <div class="bg-inner"></div>
+        </div>
+        <h3 class="logo-text top">TRACEMAP</h3>
+        <menu [color]="'white'"></menu>
+<!--         <div class="basic-desc">
+            <p>Trace a Tweet</p>
+            <p>
+                Enter its Url from <a href="https://twitter.com" target="_blank">Twitter</a>.
+            </p>
+        </div>
+ -->        
+        <div class="beta-info">
+            <p>The beta is starting soon.<br>Subscribe to the <span (click)="scrollToID('newsletter')">newsletter</span> and stay up to date.</p>
+        </div>
+<!--         <div class="searchbar" [ngClass]="classes">
+            <input id="search" [ngClass]="classes" type="text" 
+              #searchField
+              (keydown.enter)="processUrl( searchField)"
+              [placeholder]="placeholder"
+              (focus)="removePlaceholder()"
+              (focusout)="setPlaceholder()"
+              [disabled]="disabled">
+            <div class="search-button" (click)="processUrl( searchField)">
+                <img srcset="
+                ../../assets/images/loupe_256.png 4x,
+                ../../assets/images/loupe_128.png 2x,
+                ../../assets/images/loupe_64.png 1x
+                "
+                src="../../assets/images/loupe_64.png">
+            </div>
+        </div>        
+ -->        <div class="anchors">
+            <p (click)="scrollToID('what')">↳ What Is TraceMap?</p>
+            <p (click)="scrollToID('how')">↳ How It Works</p>
+            <p (click)="scrollToID('newsletter')">↳ Stay Up To Date</p>
+        </div>
+    </div>
     <p class="error" *ngIf="errorMsg">
         <span *ngFor="let line of errorMsg">{{line}}</span>
         <img src="/assets/images/sad_cloud800.png" alt="">
     </p>
-	<div class="hint" *ngIf="!errorMsg">
-		<p>
-			Enter a Tweets Url from <a href="https://twitter.com">Twitter</a>.
-		</p>
-	</div>
-    <div class="description" *ngIf="!errorMsg">
-        <img  class="picture-1" src="./../../assets/images/post_twitter_1.png" alt="an example vk.com post on someones timeline.">
-        <p class="text-1">1. Click on the posts timestamp</p>
-        <img class="picture-2" src="./../../assets/images/post_twitter_2.png" alt="the example after the timestamp was clicked">
-        <p class="text-2">2. Paste the URL of the post to our tools search bar</p>
+    <div class="section text-box white-bg" id="what">
+        <h2>What is TraceMap?</h2>
+        <p>TraceMap gives you the possibillity to visually follow the flow of a Tweet through Twitter. It will show you who retweeted a post from which user and gives you an insight of how the users are connected with each other.<br><br>
+        By elevating in depth information and metrics about a tweet, its propagation and the network of users sharing it, TraceMap will be a great tool for Tweet analysis. In a later version, interactive tagging features for users of the tool and machine learning algorithms will give an automatic estimation of each tweets trustworthiness.
+        </p>
+        <button 
+        type="button" 
+        class="light-button button"
+        (click)="navigate('/information')">More Details</button>
     </div>
+    <div class="section content-box gray-bg" id="how">
+        <h2>How it works</h2>
+        <div class="box-content">
+            <div class="img-box first">
+                <img srcset="
+                ../../assets/images/howto-1_1320.png 4x,
+                ../../assets/images/howto-1_660.png 2x,
+                ../../assets/images/howto-1_330.png 1x
+                "
+                src="../../assets/images/howto-1_330.png">
+                <p>1. Find a Tweet on Twitter you like to trace. Click on the Dropdown-Button of the Tweet.</p>
+            </div>
+            <div class="img-box">
+                <img srcset="
+                ../../assets/images/howto-2_1320.png 4x,
+                ../../assets/images/howto-2_660.png 2x,
+                ../../assets/images/howto-2_330.png 1x
+                "
+                src="../../assets/images/howto-2_330.png">
+                <p>2. Press „Copy link to Tweet“ and paste it into the search-field of TraceMap.</p>
+            </div>
+        </div>
+    </div>
+    <div class="section content-box white-bg" id="newsletter">
+        <h2>Stay up to date</h2>
+        <div class="box-content newsletter-box">
+            <p>TraceMap is still in closed beta, but we are constantly pushing things forward. Be one of the first to know about new features and releases of TraceMap.</p>
+            <div class="newsletter-area">
+                <div *ngIf="!subscriptionResponse" class="newsletter-form">
+                    <input type="text" 
+                    #emailAdress
+                    (keydown.enter)="addToNewsletter( emailAdress.value)"
+                    placeholder="Your E-Mail">
+                    <button class="purple-button button" 
+                    (click)="addToNewsletter( emailAdress.value)">
+                        Subscribe
+                    </button>
+                </div>
+                <p *ngIf="wrongEmail">
+                    You entered an invalid E-Mail.
+                </p>
+                <p *ngIf="subscriptionResponse == 'success'"
+                class="subscription-answer">
+                    Thanks for your interest.<br>Your subscription was successful.
+                </p>
+                <p *ngIf="subscriptionResponse == 'exists'"
+                class="subscription-answer">
+                    Thanks for insisting.<br>You have already subscribed.
+                </p>
+            </div>
+            <div class="follow-us">
+                <p>Follow us:</p>
+                <div class="social-links-light">
+                    <a href="https://twitter.com/trace_map" target="_blank">
+                        <img srcset="
+                        ../../assets/images/twitter_128.png 4x,
+                        ../../assets/images/twitter_64.png 2x,
+                        ../../assets/images/twitter_32.png 1x
+                        "
+                        src="../../assets/images/twitter_64.png">
+                    </a>
+                    <a href="https://www.linkedin.com/company/trace-map" target="_blank">
+                        <img srcset="
+                        ../../assets/images/linkedin_128.png 4x,
+                        ../../assets/images/linkedin_64.png 2x,
+                        ../../assets/images/linkedin_32.png 1x
+                        "
+                        src="../../assets/images/linkedin_64.png">
+                    </a>
+                    <a href="https://github.com/tracemap/" target="_blank">
+                        <img srcset="
+                        ../../assets/images/github_128.png 4x,
+                        ../../assets/images/github_64.png 2x,
+                        ../../assets/images/github_32.png 1x
+                        "
+                        src="../../assets/images/github_64.png">
+                    </a>
+                </div>
+            </div>
+        </div>
 </div>
+<my-footer></my-footer>
