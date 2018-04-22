@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './tool-main-panel/main.component';
 import { HeaderComponent } from './multi-use/header.component';
+import { MenuComponent } from './multi-use/menu.component';
 import { UserComponent } from './tool-side-panel/user.component';
 import { UserTimelineComponent } from './tool-side-panel/user.timeline.component';
 import { InfoComponent } from './tool-side-panel/info.component';
@@ -20,8 +22,10 @@ import { LoadingComponent } from './multi-use/loading.component';
 import { ShareComponent } from './tool-main-panel/share.component';
 import { HelpComponent } from './tool-main-panel/help.component';
 import { AboutUsComponent } from './home-page/about-us.component';
-import { HowItWorksComponent } from './home-page/how-it-works.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
+import { InformationComponent } from './home-page/information.component';
+import { HelpUsComponent } from './home-page/help-us.component';
+import { FooterComponent } from './home-page/footer.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
 
@@ -36,6 +40,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     AppComponent,
     MainComponent,
     HeaderComponent,
+    MenuComponent,
     UserComponent,
     UserTimelineComponent,
     InfoComponent,
@@ -48,8 +53,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     HelpComponent,
     HomePageComponent,
     AboutUsComponent,
-    HowItWorksComponent,
-    CodeOfConductComponent
+    CodeOfConductComponent,
+    InformationComponent,
+    HelpUsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +65,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    RouterModule
   ],
   providers: [ 
     ApiService,

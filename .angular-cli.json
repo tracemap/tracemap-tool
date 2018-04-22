@@ -19,10 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/font-awesome/scss/font-awesome.scss",
-        "fonts.scss",
+        "sass/_fonts.scss",
+        "sass/_colors.scss",
+        "sass/_reset.scss",
         "styles.scss",
-        "../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-custom.scss"
+        "../node_modules/@ibm/plex/css/ibm-plex.css"
       ],
       "stylePreprocessorOptions": {
         "includePaths": [

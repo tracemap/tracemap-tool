@@ -1,0 +1,58 @@
+@import "../../styles.scss";
+
+.content {
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 60px;
+    padding-bottom: 120px;
+    background-color: $color-black-bg;
+    display: grid;
+    grid-template-columns: 350px 320px 320px;
+    grid-template-rows: 50px 50px 50px;
+    grid-template-areas: 
+        "logo_text row_1 row_2"
+        "logo_text row_1 row_2"
+        "logo_text row_1 social_links";
+
+    .logo-text {
+        grid-area: logo_text;
+    }
+    .links.row1 {
+        grid-area: row_1;
+    }
+    .links.row2 {
+        grid-area: row_2;
+    }
+    .social-links-light {
+        grid-area: social_links;
+        a {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        img {
+            width: 20px;
+        }
+    }
+
+    .links {
+        a {
+            display: block;
+            text-decoration: none;
+            font-size: 18px;
+            margin-bottom: 32px;
+            color: $color-paragraph;
+            &.active {
+                color: $color-gray-icons;
+                cursor: default;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1049px) {
+    .content {
+        padding-left: 60px;
+        grid-template-columns: 300px 200px 200px; 
+    }
+}

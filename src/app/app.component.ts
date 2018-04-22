@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { MainCommunicationService } from './services/main.communication.service';
 import { ApiService } from './services/api.service';
@@ -9,7 +9,7 @@ import { ApiService } from './services/api.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
     title = 'TraceMap';
     searchClasses = {}
 
@@ -18,24 +18,18 @@ export class AppComponent {
         private comService: MainCommunicationService,
         private apiService: ApiService
     ){
-        this.router.events.subscribe( (val) => {
-            if( val['url']) {
-                if( val['url'].indexOf("homepage") >= 0 ||
-                    val['url'] == '/') {
-                    this.comService.searchbarStyle.next(undefined);
-                    this.searchClasses['mini'] = false;
-                } else {
-                    this.comService.searchbarStyle.next('mini');
-                    this.searchClasses['mini'] = true;
-                }
-            }
-        });
         this.apiService.getTweetInfo( "975834710495645696").subscribe( (data) => {
         }, (error) => {
             if( error.type == 3) {
                 console.log("Connection to backend not possible.");
                 this.comService.backendError.next(error.type);
             }
+        });
+    }
+
+    ngOnInit() {
+        this.router.events.subscribe( (evt) => {
+            window.scrollTo(0, 0);
         });
     }
 }

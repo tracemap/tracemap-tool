@@ -103,4 +103,12 @@ export class ApiService {
                    });
     }
 
+    addToNewsletter( emailAdress: string): Observable<string> {
+        return this.http
+                   .get( this.url + "/newsletter/save_subscriber/" + emailAdress)
+                   .map( response => {
+                       return response.text();
+                   })
+    }
+
 }
