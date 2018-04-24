@@ -35,7 +35,7 @@
 
                 img {
                     grid-area: icon;
-                    width: 128px;
+                    width: 100%;
                 }
             }
 
@@ -70,6 +70,22 @@
     .text-box {
         a {
             color: $color-paragraph;
+        }
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .content {
+        .content-box {
+            .box-content {
+                .icon-text {
+                    grid-template-columns: 1fr 80px;
+
+                    p {
+                        padding-right: 20px;
+                    }
+                }
+            }
         }
     }
 }

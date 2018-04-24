@@ -56,7 +56,48 @@
 
                 img {
                     grid-area: icon;
-                    width: 128px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 749px ) {
+    .content {
+        .logo-text.top {
+            color: $color-purple-dark;
+        }
+
+        .text-box {
+            grid-template-columns: 1fr;
+            grid-template-rows: 70px auto auto;
+            grid-template-areas:
+                "header"
+                "paragraph"
+                "button";
+
+            h2 {
+                grid-area: header;
+            }
+
+            p {
+                grid-area: paragraph;
+            }
+
+            button {
+                grid-area: button;
+            }
+        }
+
+        .content-box {
+            .box-content {
+                .icon-text {
+                    grid-template-columns: 1fr 60px;
+                    
+                     p {
+                        padding-right: 20px;
+                     }
                 }
             }
         }

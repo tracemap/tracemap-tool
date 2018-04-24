@@ -25,7 +25,7 @@
 
             .picture {
                 grid-area: image;
-                width: 150px;
+                width: 100%;
             }
 
             h4 {
@@ -68,6 +68,25 @@
             font-weight: 800;
             text-decoration: none;
             color: $color-header;
+        }
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .content {
+        .box-content.team {
+            .small-img-box {
+                grid-template-columns: 125px;
+                grid-template-rows: 140px 20px auto auto;
+            }
+        }
+        .content-box.partners, .content-box.sponsors {
+            a {
+                img {
+                    width: 280px;
+                }
+                font-size: 35px;
+            }
         }
     }
 }
