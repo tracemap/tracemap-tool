@@ -10,6 +10,7 @@ import { AboutUsComponent } from './home-page/about-us.component';
 import { HelpUsComponent } from './home-page/help-us.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
+import { SitemapComponent } from './home-page/sitemap.component';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'helpus', component: HelpUsComponent},
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
+    { path: 'imprint', component: SitemapComponent},
     // { path: 'twitter/:pid', component: MainComponent, children: [
     	// {path: 'details/:uid', component: UserComponent},
         // {path: '**', component: InfoComponent}

@@ -26,6 +26,7 @@ import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
 import { HelpUsComponent } from './home-page/help-us.component';
 import { FooterComponent } from './home-page/footer.component';
+import { SitemapComponent } from './home-page/sitemap.component';
 
 import { HomePageComponent } from './home-page/home-page.component';
 
@@ -55,6 +56,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     AboutUsComponent,
     CodeOfConductComponent,
     InformationComponent,
+    SitemapComponent,
     HelpUsComponent,
     FooterComponent
   ],

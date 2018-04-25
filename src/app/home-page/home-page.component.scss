@@ -9,8 +9,8 @@
             grid-template-columns: 500px 1fr;
             grid-template-rows: 1fr 1fr 100px;
             grid-template-areas:
-                "searchbar searchbar"
-                "searchbar searchbar"
+                "basic_desc basic_desc"
+                "basic_desc basic_desc"
                 "anchors anchors"; 
 
             .bg {
@@ -46,45 +46,23 @@
                 }
             }
 
-            // .basic-desc {
-            //     grid-area: basic_desc;
-            //     margin-bottom: 50px;
-            //     align-self: end;
-            //     p {
-            //         color: #FFF;
-            //         line-height: 68px;
-            //         font-weight: 300;
-            //         font-size: 42.64px;
-
-            //         a {
-            //             color: #FFF;
-            //             text-decoration: none;
-            //             border-bottom: 2px solid #FFF;
-            //         }
-            //     }
-            // }
-            .beta-info {
-                grid-area: searchbar;
+            .basic-desc {
+                grid-area: basic_desc;
+                margin-bottom: 50px;
                 align-self: center;
-                justify-self: center;
-                max-width: 800px;
                 p {
-                    color: $color-purple-dark;
-                    background-color: rgba(255,255,255,0.8);
-                    border-radius: 5px;
+                    color: #FFF;
                     line-height: 68px;
-                    font-weight: 400;
-                    padding: 0px 20px;
-                    text-align: center;
+                    font-weight: 300;
                     font-size: 42.64px;
 
                     span {
-                        text-decoration: underline;
+                        color: #FFF;
+                        text-decoration: none;
+                        border-bottom: 2px solid #FFF;
                         cursor: pointer;
-
                     }
                 }
-
             }
             // .searchbar {
             //     grid-area: searchbar;
@@ -341,17 +319,21 @@
                 height: 100vh;
                 min-height: 600px;
                 grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
+                grid-template-rows: 40vw auto 1fr;
                 grid-template-areas:
-                    "searchbar"
+                    "basic_desc"
+                    "basic_desc"
                     "anchors";
 
-                .beta-info {
-                    grid-area: searchbar;
+                .basic-desc {
+                    grid-area: basic_desc;
                     p {
-                        font-size: 24px;
-                        line-height: 30px;
-                        padding: 10px 20px;
+                        font-size: 32px;
+                        line-height: 45px;
+
+                        span {
+                            border-bottom: 1.5px solid #FFF;
+                        }
                     }
                 }
 
@@ -361,7 +343,8 @@
                     font-size: 15px;
                     line-height: 28px;
                 }
-            }
+           }
+
         }
 
         .text-box {
@@ -385,13 +368,17 @@
         .content-box {
             .box-content {
                .img-box {
-                    grid-template-columns: 280px;
-                    grid-template-rows: 240px auto;
+                    grid-template-columns: minmax(1fr, 330px);
+                    grid-template-rows: auto auto;
                     width: 100%;
 
                     p {
                         font-size: 18px;
                         line-height: 24px; 
+                    }
+
+                    img {
+                        width: 100%;
                     }
                 } 
             }

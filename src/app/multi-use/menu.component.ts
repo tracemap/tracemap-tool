@@ -30,11 +30,11 @@ export class MenuComponent{
         {
             label: "Help Us",
             path: "/helpus"
+        },
+        {
+            label: "Imprint",
+            path: "/imprint"
         }
-        // {
-        //     label: "Code of Conduct",
-        //     path: "/codeofconduct"
-        // }
     ];
 
     constructor(
