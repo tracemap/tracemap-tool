@@ -17,7 +17,7 @@
 body {
     width: 100vw;
     height: 100vh;
-    min-width: 800px;
+    min-width: 320px;
     margin: 0px;
     min-height: 700px;
     font-family: $font-plex;
@@ -25,6 +25,7 @@ body {
     max-height: 100vh;
     overflow-x: hidden; 
     scroll-behavior: smooth;
+
 }
 
 h1, h2, h3 {

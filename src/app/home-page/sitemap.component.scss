@@ -1,0 +1,33 @@
+@import "../../styles.scss";
+
+.content {
+    .logo-text.top {
+        color: $color-purple-dark;
+    }
+
+    .content-box {
+        .box-content {
+            p {
+                font-size: 18px;
+                line-height: 28px;
+            }
+            h3 {
+                font-size: 18px;
+                line-height: 40px;
+            }
+            a {
+                display: block;
+                font-size: 18px;
+                line-height: 28px;
+                color: $color-purple-dark;
+                text-decoration: none;
+            }
+
+            &.credits {
+                p {
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+}

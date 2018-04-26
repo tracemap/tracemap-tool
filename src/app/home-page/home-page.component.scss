@@ -9,8 +9,8 @@
             grid-template-columns: 500px 1fr;
             grid-template-rows: 1fr 1fr 100px;
             grid-template-areas:
-                "searchbar searchbar"
-                "searchbar searchbar"
+                "basic_desc basic_desc"
+                "basic_desc basic_desc"
                 "anchors anchors"; 
 
             .bg {
@@ -20,71 +20,49 @@
                 width: 100vw;
                 height: 100vh;
                 min-height: 600px;
-                min-width: 850px;
+                min-width: 320px;
                 z-index: -2;
                 background-color: $color-purple-dark;
             }
             .bg-outer {
                 position: absolute;
                 z-index: -1;
-                width: 528px;
-                height: 528px;
+                width: 50vw;
+                height: 50vw;
                 border-radius: 50%;
                 left: 50%;
-                margin-left: -264px;
+                margin-left: -25vw;
                 top: 50%;
-                margin-top: -264px;
+                margin-top: -25vw;
                 background-color: $color-purple-light;
 
                 .bg-inner {
-                    width: 228px;
-                    height: 228px;
+                    width: 20vw;
+                    height: 20vw;
                     border-radius: 50%;
-                    margin-left: 150px;
-                    margin-top: 150px;
+                    margin-left: 15vw;
+                    margin-top: 15vw;
                     background-color: $color-purple-dark;
                 }
             }
 
-            // .basic-desc {
-            //     grid-area: basic_desc;
-            //     margin-bottom: 50px;
-            //     align-self: end;
-            //     p {
-            //         color: #FFF;
-            //         line-height: 68px;
-            //         font-weight: 300;
-            //         font-size: 42.64px;
-
-            //         a {
-            //             color: #FFF;
-            //             text-decoration: none;
-            //             border-bottom: 2px solid #FFF;
-            //         }
-            //     }
-            // }
-            .beta-info {
-                grid-area: searchbar;
+            .basic-desc {
+                grid-area: basic_desc;
+                margin-bottom: 50px;
                 align-self: center;
-                justify-self: center;
-                max-width: 800px;
                 p {
-                    color: $color-purple-dark;
-                    background-color: rgba(255,255,255,0.8);
-                    border-radius: 5px;
+                    color: #FFF;
                     line-height: 68px;
-                    font-weight: 400;
-                    padding: 0px 20px;
-                    text-align: center;
+                    font-weight: 300;
                     font-size: 42.64px;
 
                     span {
-                        text-decoration: underline;
+                        color: #FFF;
+                        text-decoration: none;
+                        border-bottom: 2px solid #FFF;
                         cursor: pointer;
-
                     }
                 }
-
             }
             // .searchbar {
             //     grid-area: searchbar;
@@ -183,6 +161,7 @@
                     "description";
                 img {
                     grid-area: image;
+                    width: 100%;
                 }
 
                 p {
@@ -333,3 +312,84 @@
     }
 }
 
+@media only screen and (max-width: 749px) {
+    .content {
+        .full-screen {
+            &.start {
+                height: 100vh;
+                min-height: 600px;
+                grid-template-columns: 1fr;
+                grid-template-rows: 40vw auto 1fr;
+                grid-template-areas:
+                    "basic_desc"
+                    "basic_desc"
+                    "anchors";
+
+                .basic-desc {
+                    grid-area: basic_desc;
+                    p {
+                        font-size: 32px;
+                        line-height: 45px;
+
+                        span {
+                            border-bottom: 1.5px solid #FFF;
+                        }
+                    }
+                }
+
+                .anchors {
+                    grid-area: anchors;
+                    margin-right: 0px;
+                    font-size: 15px;
+                    line-height: 28px;
+                }
+           }
+
+        }
+
+        .text-box {
+            grid-template-rows: 70px auto auto;
+            grid-template-areas:
+                "header"
+                "paragraph"
+                "button";
+
+            h2 {
+                grid-area: header;
+            }
+            p {
+                grid-area: paragraph;
+            }
+            button {
+                grid-area: button;
+            }
+        }
+
+        .content-box {
+            .box-content {
+               .img-box {
+                    grid-template-columns: minmax(1fr, 330px);
+                    grid-template-rows: auto auto;
+                    width: 100%;
+
+                    p {
+                        font-size: 18px;
+                        line-height: 24px; 
+                    }
+
+                    img {
+                        width: 100%;
+                    }
+                } 
+            }
+            .newsletter-box {
+                .newsletter-area .newsletter-form {
+                    input {
+                        width: 280px;
+                    }
+                }
+            }
+        }
+
+    }
+}
