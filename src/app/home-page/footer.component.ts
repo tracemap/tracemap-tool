@@ -32,10 +32,10 @@ export class FooterComponent{
             label: "Help Us",
             path: "/helpus"
         },
-        // {
-        //     label: "Imprint",
-        //     path: "/imprint"
-        // }
+        {
+            label: "Imprint",
+            path: "/imprint"
+        }
     ];
 
     constructor(

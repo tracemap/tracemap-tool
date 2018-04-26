@@ -2,7 +2,7 @@
 
 // General home-page styles (layout, sections etc.)
 .content {
-    min-width: 1050px;
+    min-width: 320px;
     width: 100vw;
 
     .full-screen {
@@ -133,6 +133,56 @@
             .box-content {
                 min-width: 350px;
                 width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 749px) {
+    .content {
+        min-width: 320px;
+        width: 100vw;
+        overflow-x: hidden;
+
+        .logo-text.top {
+            left: 20px;
+            top: 25px;
+        }
+
+        .section {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .text-box {
+            grid-template-columns: 1fr;
+            grid-template-rows: 70px auto;
+            grid-template-areas:
+                "header"
+                "paragraph";
+
+            h2 {
+                grid-area: header;
+            }
+
+            p {
+                grid-area: paragraph;
+            }
+        }
+
+        .content-box {
+            grid-template-columns: 1fr;
+            grid-template-rows: 70px auto;
+            grid-template-areas:
+                "header"
+                "box_content";
+
+            h2 {
+                grid-area: header;
+            }
+
+            .box-content {
+                grid-area: box_content;
+                min-width: 280px;
             }
         }
     }

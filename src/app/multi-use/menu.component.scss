@@ -110,3 +110,30 @@
         grid-area: menu_social;
     }
 }
+
+@media only screen and (max-width: 749px) {
+    .menu-button {
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+
+        img {
+            width: 20px;
+            margin-left: 8px;
+            margin-top: 8px;
+        }
+    }
+}
+
+@media only screen and (max-height: 349px) {
+    .menu {
+        .links {
+            a {
+                font-size: 20px;
+                margin-bottom: 20px;
+
+            }
+        }
+    }
+}
