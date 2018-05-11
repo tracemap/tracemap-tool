@@ -3,9 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomePageComponent} from './home-page/home-page.component';
 
-import { MainComponent } from './tool-main-panel/main.component';
-import { UserComponent } from './tool-side-panel/user.component';
-import { InfoComponent } from './tool-side-panel/info.component';
 import { AboutUsComponent } from './home-page/about-us.component';
 import { HelpUsComponent } from './home-page/help-us.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';

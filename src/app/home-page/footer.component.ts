@@ -29,7 +29,7 @@ export class FooterComponent{
         //     path: "/codeofconduct"
         // },
         {
-            label: "Help Us",
+            label: "Support Us",
             path: "/helpus"
         },
         {
