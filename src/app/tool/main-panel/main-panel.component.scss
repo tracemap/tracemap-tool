@@ -1,0 +1,53 @@
+.grid {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 45px 30px;
+    grid-template-rows:  1fr 24px 30px;
+    grid-template-areas:
+        "graph side_controls ."
+        "timeslider side_controls ."
+        ". . .";
+
+    .graph {
+        grid-area: graph;
+        background-color: #fff;
+    }
+
+    .side-controls {
+        grid-area: side_controls;
+        align-content: end;
+        background-color: #aaa;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 45px 10px 45px 10px 45px 45px;
+        grid-template-areas:
+            "settings"
+            "."
+            "tour"
+            "."
+            "zoom"
+            "zoom";
+
+        .settings {
+            grid-area: settings;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .tour {
+            grid-area: tour;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .zoom {
+            grid-area: zoom;
+            background-color: #fff;
+        }
+ 
+   }
+
+    .timeslider {
+        grid-area: timeslider;
+        background-color: #999;
+    }
+}

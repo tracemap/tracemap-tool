@@ -1,0 +1,24 @@
+.grid {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60px minmax(auto, 60px) 10px 1fr 10px minmax(auto, 60px) 30px;
+    grid-template-rows: 100%;
+    grid-template-areas:
+        ". start_label . slider . end_label .";
+
+    .start {
+        grid-area: start_label;
+        background-color: #666;
+    }
+    .end {
+        grid-area: end_label;
+        background-color: #666;
+    }
+    .slider {
+        grid-area: slider;
+        background-color: #ddd;
+        height: 100%;
+        width: 100%;
+    }
+}

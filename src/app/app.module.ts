@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { GestureConfig } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MultiUseModule } from './multi-use/multi-use.module';
 
 import { AppComponent } from './app.component';
-import { MenuComponent } from './multi-use/menu.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AboutUsComponent } from './home-page/about-us.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
@@ -22,7 +24,6 @@ import { MainCommunicationService } from './services/main.communication.service'
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     PageNotFoundComponent,
     HomePageComponent,
     AboutUsComponent,
@@ -34,13 +35,16 @@ import { MainCommunicationService } from './services/main.communication.service'
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    MultiUseModule
   ],
   providers: [ 
     ApiService,
     MainCommunicationService,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]
 })

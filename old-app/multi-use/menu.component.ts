@@ -47,6 +47,7 @@ export class MenuComponent{
 
     openMenu(): void {
         this.open = true;
+        console.log(this.color);
     }
 
     navigate(location:string):void {

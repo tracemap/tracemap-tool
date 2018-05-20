@@ -19,10 +19,7 @@ const routes: Routes = [
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
     { path: 'imprint', component: SitemapComponent},
-    // { path: 'twitter/:pid', component: MainComponent, children: [
-    	// {path: 'details/:uid', component: UserComponent},
-        // {path: '**', component: InfoComponent}
-    // ]},
+    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule'},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 

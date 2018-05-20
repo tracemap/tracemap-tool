@@ -67,7 +67,7 @@ export class HomePageComponent {
                 } else {
                     id = dirtyId;
                 }
-                return Promise.resolve("twitter/" + id);
+                return Promise.resolve("tool/" + id);
             }
             return Promise.reject("invalid twitter Url");
         }
