@@ -3,7 +3,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 45px 30px;
-    grid-template-rows:  1fr 24px 30px;
+    grid-template-rows:  1fr 36px 30px;
     grid-template-areas:
         "graph side_controls ."
         "timeslider side_controls ."
@@ -48,6 +48,6 @@
 
     .timeslider {
         grid-area: timeslider;
-        background-color: #999;
+        background-color: transparent;
     }
 }
