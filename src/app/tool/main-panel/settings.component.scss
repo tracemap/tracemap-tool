@@ -1,0 +1,163 @@
+@import "../../../styles.scss";
+@import '~@angular/material/theming';
+.settings-button {
+    position: absolute;
+    img {
+        width: 23px;
+        margin-top: 11px;
+        margin-left: 11px;
+    }
+}
+
+.overlay {
+    position: fixed;
+    z-index: 10;
+    height: 100vh;
+    width: 0px;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    background-color: $color-gray-bg-light;
+    opacity: 0;
+    &.open {
+        width: 100vw;
+    }
+}
+
+.tooltip {
+    position: fixed;
+    z-index: 11;
+    right: 100px;
+    bottom: 100px;
+    width: 0px;
+    height: 500px;
+    opacity: 0;
+    overflow: hidden;
+    box-shadow: 0 3px 5px 0 rgba(15,19,26,0.1), 0 9px 11px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
+    border-radius: 6px;
+    transition: opacity 0.1s ease-in-out;
+    &.open {
+        transition: opacity 0.1s ease-in-out;
+        width: 320px;
+        opacity: 1;
+    }
+
+    .shadow {
+        position: fixed;
+        z-index: 9;
+        right: 80px;
+        bottom: 189px;
+        width: 0;
+        height: 0;
+        border-top: 19px solid transparent;
+        border-bottom: 19px solid transparent;
+        border-left: 19px solid rgba(15,19,26,0.1);
+        filter: blur(0.2px);
+    }
+    .arrow {
+        position: fixed;
+        z-index: 12;
+        right: 82px;
+        bottom: 190px;
+        width: 0;
+        height: 0;
+        border-top: 18px solid transparent;
+        border-bottom: 18px solid transparent;
+        border-left: 18px solid white;
+    }
+
+    .head {
+        background-color: $color-black-bg;
+        height: 72px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: "auto 1fr";
+        grid-template-rows: "1fr";
+        grid-template-areas:
+            "header close";
+
+        h2 {
+            grid-area: header;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 28px;
+            color: #fff;
+            margin-top: 22px;
+            margin-left: 20px;
+        }
+        div {
+            grid-area: close;
+            justify-self: right;
+
+            img {
+                width: 15px;
+                margin-right: 20px;
+                margin-top: 26px;
+            }
+        }
+    }
+
+    .body {
+        background-color: white;
+        height: 100%;
+
+        .setting {
+            margin-left: 20px;
+
+            h2 {
+                padding-top: 20px;
+                padding-bottom: 16px;
+                color: $color-black-bg;
+                font-size: 18px;
+            }
+
+            .control {
+                padding-bottom: 10px;
+                p {
+                    font-size: 13.5px;
+                    line-height: 20px;
+                    color: $color-gray-font-dark;
+                }
+            }
+        }
+        .slider-toggle {
+            .control {
+                display: grid;
+                grid-template-columns: 40px auto;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "slider label";
+
+                mat-slide-toggle {
+                    grid-area: slider;
+                }
+                p {
+                    grid-area: label;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+        .checkbox {
+
+            .control {
+                display: grid;
+                grid-template-columns: 100px 100px;
+                .option {
+                    width: 100px;
+                    display: grid;
+                    grid-template-columns: 22px auto;
+                    grid-template-areas:
+                        "checkbox label";
+                    mat-checkbox {
+                        grid-area: checkbox;
+                    }
+                    p {
+                        grid-area: label;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

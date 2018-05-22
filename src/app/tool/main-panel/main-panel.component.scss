@@ -11,13 +11,11 @@
 
     .graph {
         grid-area: graph;
-        background-color: #fff;
     }
 
     .side-controls {
         grid-area: side_controls;
         align-content: end;
-        background-color: #aaa;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 45px 10px 45px 10px 45px 45px;

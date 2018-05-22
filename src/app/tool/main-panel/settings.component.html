@@ -1,0 +1,75 @@
+<div 
+class="settings-button"
+(click)="openSettings()"
+[ngClass]="{'open': open}">
+    <img *ngIf="!open"
+    srcset="
+    ../../../assets/images/settings-gear_128.png 4x,
+    ../../../assets/images/settings-gear_64.png 2x,
+    ../../../assets/images/settings-gear_32.png 1x,
+    "
+    src="../../../assets/images/settings-gear_32.png">
+    <img *ngIf="open"
+    srcset="
+    ../../../assets/images/settings-gear-purple_128.png 4x,
+    ../../../assets/images/settings-gear-purple_64.png 2x,
+    ../../../assets/images/settings-gear-purple_32.png 1x,
+    "
+    src="../../../assets/images/settings-gear-purple_32.png">
+
+</div>
+<div class="overlay" (click)="closeSettings()" [ngClass]="{'open': open}"></div>
+<div class="settings tooltip" [ngClass]="{'open': open}">
+    <div class="shadow"></div>
+    <div class="arrow"></div>
+    <div class="head">
+        <h2>Visual Settings</h2>
+        <div class="close-button" (click)="closeSettings()">
+            <img srcset="
+            ../../assets/images/close-white_128.png 4x,
+            ../../assets/images/close-white_64.png 2x,
+            ../../assets/images/close-white_32.png 1x
+            "
+            src="../../assets/images/close-white_32.png">
+        </div>
+    </div>
+    <div class="body">
+        <div class="slider-toggle setting">
+            <h2>Show Arrows</h2>
+            <div class="control">
+                <mat-slide-toggle color="primary" [(ngModel)]="settings.arrows"></mat-slide-toggle>
+                <p *ngIf="settings.arrows">Arrows visible</p>
+                <p *ngIf="!settings.arrows">Arrows hidden</p>
+            </div>
+        </div>
+        <div class="slider-toggle setting">
+            <h2>Show Leafs</h2>
+            <div class="control">
+                <mat-slide-toggle color="primary" [(ngModel)]="settings.leafs"></mat-slide-toggle>
+                <p *ngIf="settings.leafs">Leafs visible</p>
+                <p *ngIf="!settings.leafs">Leafs hidden</p>
+            </div>
+        </div>
+        <div class="checkbox setting">
+            <h2>Highlight Node Neighbours</h2>
+            <div class="control">
+                <div class="option">
+                    <mat-checkbox color="primary" [(ngModel)]="settings.lastHighlight"></mat-checkbox>
+                    <p>last</p>
+                </div>
+                <div class="option">
+                    <mat-checkbox color="primary" [(ngModel)]="settings.nextHighlight"></mat-checkbox>
+                    <p>next</p>
+                </div>
+            </div>
+        </div>
+        <div class="slider-toggle setting">
+            <h2>Stick Dragged Nodes</h2>
+            <div class="control">
+                <mat-slide-toggle color="primary" [(ngModel)]="settings.fixedDrag"></mat-slide-toggle>
+                <p *ngIf="settings.fixedDrag">Nodes fixed</p>
+                <p *ngIf="!settings.fixedDrag">Nodes float</p>
+            </div>
+        </div>
+    </div>
+</div>

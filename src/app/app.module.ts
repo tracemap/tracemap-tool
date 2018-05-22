@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { GestureConfig } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -19,7 +17,6 @@ import { SitemapComponent } from './home-page/sitemap.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 import { ApiService } from './services/api.service';
-import { MainCommunicationService } from './services/main.communication.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +32,6 @@ import { MainCommunicationService } from './services/main.communication.service'
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     HttpModule,
     AppRoutingModule,
     RouterModule,
@@ -43,8 +39,6 @@ import { MainCommunicationService } from './services/main.communication.service'
   ],
   providers: [ 
     ApiService,
-    MainCommunicationService,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MultiUseModule } from './../multi-use/multi-use.module';
-import { MatSliderModule } from '@angular/material/slider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+
 import { ToolRoutingModule } from './tool-routing.module';
 import { ToolComponent } from './tool.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
@@ -17,7 +20,9 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
       CommonModule,
       ToolRoutingModule,
       MultiUseModule,
-      MatSliderModule
+      MatSlideToggleModule,
+      MatCheckboxModule,
+      FormsModule
   ],
   declarations: [
       ToolComponent,

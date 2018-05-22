@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MainCommunicationService } from './../services/main.communication.service';
 import { ApiService } from './../services/api.service';
 
 @Component({
@@ -21,21 +20,9 @@ export class HomePageComponent {
     wrongEmail = false;
 
     constructor(
-        private comService: MainCommunicationService,
         private apiService: ApiService,
         private router: Router
-    ){
-        this.comService.backendError.subscribe( error => {
-            if( error) {
-                this.errorMsg = ["Connection to our Server is not possible.",
-                                "Please try again later."];
-                this.disabled = true;
-            } else {
-                this.errorMsg = undefined;
-            }
-        });
-
-    }
+    ){}
 
     scrollToID(id_name: string) {
         let id = "#" + id_name;
