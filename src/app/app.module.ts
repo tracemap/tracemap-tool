@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -24,7 +26,7 @@ import { ApiService } from './services/api.service';
     PageNotFoundComponent,
     HomePageComponent,
     AboutUsComponent,
-    CodeOfConductComponent,
+    CodeOfConductComponent, 
     InformationComponent,
     SitemapComponent,
     HelpUsComponent,
@@ -32,6 +34,7 @@ import { ApiService } from './services/api.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     AppRoutingModule,
     RouterModule,
@@ -39,6 +42,7 @@ import { ApiService } from './services/api.service';
   ],
   providers: [ 
     ApiService,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]
 })

@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MultiUseModule } from './../multi-use/multi-use.module';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 
 import { ToolRoutingModule } from './tool-routing.module';
+import { MultiUseModule } from './../multi-use/multi-use.module';
+
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { GestureConfig } from '@angular/material';
+
 import { ToolComponent } from './tool.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
     import { GraphComponent } from './main-panel/graph.component';
@@ -15,6 +19,11 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
     import { TimesliderComponent } from './main-panel/timeslider.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
 
+import { CommunicationService } from './services/communication.service';
+import { GraphService } from './services/graph.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { TweetService } from './services/tweet.service';
+
 @NgModule({
   imports: [
       CommonModule,
@@ -22,7 +31,14 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
       MultiUseModule,
       MatSlideToggleModule,
       MatCheckboxModule,
+      MatSliderModule,
       FormsModule
+  ],
+  providers: [ 
+    GraphService,
+    CommunicationService,
+    LocalStorageService,
+    TweetService
   ],
   declarations: [
       ToolComponent,

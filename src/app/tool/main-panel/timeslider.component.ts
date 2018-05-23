@@ -1,6 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+
+import { GraphService } from './../services/graph.service';
 
 import * as $ from 'jquery';
+
 
 @Component({
     selector: 'timeslider',
@@ -8,29 +11,52 @@ import * as $ from 'jquery';
     styleUrls: ['./timeslider.component.scss']
 })
 
-export class TimesliderComponent implements AfterViewInit {
+export class TimesliderComponent {
     circlePos = 0;
-    width;
+    range: number;
+    label: number;
+    unit;
+    value = 0;
+    factor;
+    stepSize;
 
-    ngAfterViewInit() {
-        this.width = $('.slider').width();
+    constructor(
+        private graphService: GraphService
+    ) {
+        this.graphService.timeRange.subscribe( timeRange => {
+            this.range = timeRange;
+            this.stepSize = Math.floor(timeRange / 100);
+            this.addLabelUnit();
+            this.graphService.timesliderPosition.next(0);
+        })
     }
 
-    moveHandle(event) {
-        this.circlePos = event.clientX - 356 - 60 - 60 - 10;
-    }
-
-    slideHandle(event) {
-        document.onmousemove = (event2) => {
-            this.circlePos = event2.clientX - 356 - 60 - 60 - 10;
-            if(this.circlePos > this.width) {
-                this.circlePos = this.width
-            } else if (this.circlePos < 0){
-                this.circlePos = 0;
-            }
-        };
-        document.onmouseup = (event3) => {
-            document.onmousemove = null;
+    addLabelUnit() {
+        let range = this.range;
+        let minutes = this.range / 60;
+        let hours = minutes / 60;
+        let days = hours / 24;
+        if( hours > 100) {
+            this.label = Math.floor(hours / 24);
+            this.unit = "DAYS";
+            this.factor = 1 / 60 / 60 / 24;
+        } else if ( minutes > 600){
+            this.label = Math.floor(hours);
+            this.unit = "HOURS";
+            this.factor = 1 / 60 / 60
+        } else {
+            this.label = Math.floor(minutes);
+            this.unit = "MINUTES";
+            this.factor = 1 / 60;
         }
     }
+
+    formatThumbLabel(value) {
+        return value * this.factor;
+    }
+    onChange() {
+        console.log(this.value);
+        this.graphService.timesliderPosition.next(this.value);
+    }
+
 }

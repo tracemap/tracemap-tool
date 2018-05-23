@@ -1,6 +1,9 @@
+@import "../../../styles.scss";
+
 .grid {
     height: 100%;
     width: 100%;
+    background-color: $color-gray-bg-light;
     display: grid;
     grid-template-columns: 1fr 45px 30px;
     grid-template-rows:  1fr 36px 30px;
@@ -29,8 +32,6 @@
 
         .settings {
             grid-area: settings;
-            border-radius: 50%;
-            background-color: #fff;
         }
         .tour {
             grid-area: tour;

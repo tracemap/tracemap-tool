@@ -1,7 +1,10 @@
 @import "../../../styles.scss";
 @import '~@angular/material/theming';
 .settings-button {
-    position: absolute;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #DFE1E6;
     img {
         width: 23px;
         margin-top: 11px;

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ToolComponent } from './tool.component';
 
 const routes: Routes = [
-    { path: ':pid', component: ToolComponent}
+    { path: ':tid', component: ToolComponent}
 ];
 
 @NgModule({
