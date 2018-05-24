@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import { GraphService } from './../services/graph.service';
 
@@ -15,7 +15,7 @@ import * as $ from 'jquery';
 export class TimesliderComponent {
     circlePos = 0;
     range: number;
-    label: number;
+    endLabel;
     unit;
     value = 0;
     factor;
@@ -28,44 +28,55 @@ export class TimesliderComponent {
         y: 0
     };
     timer;
+    autoSlideSubscription;
 
     constructor(
         private graphService: GraphService
     ) {
         this.graphService.timeRange.subscribe( timeRange => {
             this.range = timeRange;
-            this.stepSize = Math.floor(timeRange / 100);
-            this.addLabelUnit();
+            this.stepSize = Math.floor(timeRange / 300);
+            this.endLabel = this.getLabelFormat(this.range);
+            this.value = 0;
             this.graphService.timesliderPosition.next(0);
 
         })
+        this.graphService.rendered.subscribe( rendered => {
+            if( rendered) {
+                this.autoSlide();
+            }
+        })
     }
 
-    addLabelUnit() {
-        let range = this.range;
-        let minutes = this.range / 60;
+    getLabelFormat( value) {
+        let minutes = value / 60;
         let hours = minutes / 60;
         let days = hours / 24;
-        if( hours > 100) {
-            this.label = Math.floor(hours / 24);
-            this.unit = "DAYS";
-            this.factor = 1 / 60 / 60 / 24;
-        } else if ( minutes > 600){
-            this.label = Math.floor(hours);
-            this.unit = "HOURS";
-            this.factor = 1 / 60 / 60
-        } else {
-            this.label = Math.floor(minutes);
-            this.unit = "MINUTES";
-            this.factor = 1 / 60;
-        }
-    }
 
-    formatThumbLabel(value) {
-        return value * this.factor;
+        let result = {
+            value: 0,
+            unit: "",
+        }
+        if( hours > 100) {
+            result.value = Math.floor(hours / 24);
+            result.unit = "DAYS";
+        } else if ( minutes > 120){
+            result.value = Math.floor(hours);
+            result.unit = "HOURS";
+        } else if ( value > 59){
+            result.value = Math.floor(minutes);
+            result.unit = "MINUTES";
+        } else {
+            result.value = Math.floor(value);
+            result.unit = "SECONDS";
+        }
+        return result;
     }
 
     changeValue(slider) {
+        if( this.autoSlideSubscription) {
+            this.autoSlideSubscription.unsubscribe();
+        }
         let value = slider._value;
         this.value = value;
         this.graphService.timesliderPosition.next(this.value);
@@ -79,9 +90,10 @@ export class TimesliderComponent {
         let y = position.top;
         let width = slider.width();
         let thumbPosition = x + (width * (this.value / this.range));
+        let labelTextDict = this.getLabelFormat(this.value);
         this.hintConfig.x = thumbPosition;
         this.hintConfig.y = y;
-        this.hintConfig.text = (this.value * this.factor).toFixed(1) + " " + this.unit.toLowerCase();
+        this.hintConfig.text =  labelTextDict.value + " " + labelTextDict.unit.toLowerCase();
         this.moving = true;
         if(this.timer) {
             clearTimeout(this.timer);
@@ -91,4 +103,18 @@ export class TimesliderComponent {
         }, 2000);
     }
 
+    autoSlide() {
+        this.autoSlideSubscription = Observable.interval(80).subscribe( x => {
+            let newValue = ( this.value == 0 ? 1 : this.value * 1.1);
+            if( newValue >= this.range) {
+                newValue = this.range;
+            }
+            this.value = newValue;
+            this.graphService.timesliderPosition.next(this.value);
+            this.addLabel();
+            if( this.value == this.range) {
+                this.autoSlideSubscription.unsubscribe();
+            }
+        });
+    }
 }

@@ -1,5 +1,5 @@
 <div class="grid">
-    <p class="label start" *ngIf="unit && label">0 {{unit}}</p>
+    <p class="label start" *ngIf="endLabel.value">CREATION</p>
         <mat-slider
         #slider
         class="slider" 
@@ -9,6 +9,6 @@
         [disabled]="!range"
         [(ngModel)]="value"
         (input)="changeValue(slider)"></mat-slider>
-    <p class="label end" *ngIf="unit && label">{{label}} {{unit}}</p>
+    <p class="label end" *ngIf="endLabel.value">{{endLabel.value}} {{endLabel.unit}}</p>
     <hint *ngIf="moving" [config]="hintConfig"></hint>    
 </div>

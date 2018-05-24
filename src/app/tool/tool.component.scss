@@ -2,6 +2,7 @@
     display: grid;
     height: 100vh;
     min-height: 600px;
+    overflow: hidden;
     grid-template-columns: 356px 1fr;
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -9,7 +10,6 @@
 
     .side-panel {
         grid-area: side_panel;
-        background-color: #ddd;
     }
     .main-panel {
         grid-area: main_panel;

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { GraphService } from './../services/graph.service';
 @Component({
     selector: 'settings',
     templateUrl: './settings.component.html',
@@ -16,8 +17,13 @@ export class SettingsComponent {
         leafs: true,
         lastHighlight: true,
         nextHighlight: true,
-        fixedDrag: true
+        fixedDrag: true,
+        fixedAuthor: true
     }
+
+    constructor(
+        private graphService: GraphService
+    ){}
 
     openSettings() {
         this.open = true;
@@ -25,5 +31,9 @@ export class SettingsComponent {
 
     closeSettings() {
         this.open = false;
+    }
+
+    updateSettings() {
+        this.graphService.settings.next(this.settings);
     }
 }

@@ -19,6 +19,7 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
     import { ZoomComponent } from './main-panel/zoom.component';
     import { TimesliderComponent } from './main-panel/timeslider.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
+    import { SearchbarComponent } from './side-panel/searchbar.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -50,7 +51,8 @@ import { TweetService } from './services/tweet.service';
           TourComponent,
           ZoomComponent,
           TimesliderComponent,
-      SidePanelComponent
+      SidePanelComponent,
+          SearchbarComponent
   ]
 })
 export class ToolModule { }

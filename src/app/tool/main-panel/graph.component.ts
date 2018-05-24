@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { GraphService } from './../services/graph.service';
 
+import { ActivatedRoute, Params } from '@angular/router';
+
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 
@@ -13,6 +15,7 @@ import * as $ from 'jquery';
 
 export class GraphComponent {
 
+    tracemapId;
     graphData = {
         nodes: [],
         links: [],
@@ -44,8 +47,15 @@ export class GraphComponent {
     scale = d3.scaleLinear().domain([2, 30]).range([6,18]);
 
     constructor(
-        private graphService: GraphService
+        private graphService: GraphService,
+        private route: ActivatedRoute
     ) {
+        this.route.params.subscribe( (params: Params) => {
+            if( params["tid"] != this.tracemapId) {
+                this.resetGraph();
+                this.tracemapId = params["tid"];
+            }
+        })
         this.graphService.graphData.subscribe( graphData => {
             if( graphData) {
                 this.graphData.nodes = graphData["nodes"];
@@ -92,6 +102,28 @@ export class GraphComponent {
                 }
             }
         })
+        this.graphService.settings.subscribe( settings => {
+            if( settings) {
+                if( settings["arrows"] != this.settings.arrows) {
+                    this.settings.arrows = settings["arrows"];
+                    if( this.simulation) {
+                        this.ticked()
+                    }
+                }
+            }
+        })
+    }
+
+    resetGraph() {
+        console.log("resetting graph");
+        if( this.simulation) {
+            this.simulation.alpha(0);
+            this.simulation.nodes([]);
+            this.simulation.force("link").links([]);
+        }
+        if( this.context) {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
     }
 
     init() {
@@ -114,6 +146,7 @@ export class GraphComponent {
         this.addTimestamps();
         this.setSimulation().then( (simulation) => {
             this.simulation = simulation;
+            this.graphService.rendered.next(true);
         })
     }
 
@@ -135,7 +168,7 @@ export class GraphComponent {
                         return (sourceRad + targetRad);
                     }))
                 .force("charge", d3.forceManyBody().strength( (d) => {
-                    return d.r * -20
+                    return (d.r * 2) * -20
                 }))
                 .force("collide", d3.forceCollide().radius( function(d) {
                     return d.r * 1.5;
@@ -204,11 +237,13 @@ export class GraphComponent {
         this.context.lineTo( xPos, yPos);
         this.context.strokeStyle = "rgba("+this.linkColor+","+d.opacity+")";
         this.context.lineWidth = 0.5;
-        this.drawHead(xPos, yPos, angle)
+        if( this.settings.arrows) {
+            this.drawHead(xPos, yPos, angle)
+        }
     }
 
     drawHead(xPos, yPos, angle) {
-        let headlen = 7;
+        let headlen = 5;
         let headRightX = xPos - headlen * Math.cos(angle - Math.PI/6);
         let headRightY = yPos - headlen * Math.sin(angle - Math.PI/6); 
         this.context.lineTo( headRightX, headRightY);

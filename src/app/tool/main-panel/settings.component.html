@@ -37,7 +37,10 @@ class="settings-button"
         <div class="slider-toggle setting">
             <h2>Show Arrows</h2>
             <div class="control">
-                <mat-slide-toggle color="primary" [(ngModel)]="settings.arrows"></mat-slide-toggle>
+                <mat-slide-toggle 
+                color="primary" 
+                [(ngModel)]="settings.arrows"
+                (change)="updateSettings()"></mat-slide-toggle>
                 <p *ngIf="settings.arrows">Arrows visible</p>
                 <p *ngIf="!settings.arrows">Arrows hidden</p>
             </div>
@@ -45,7 +48,10 @@ class="settings-button"
         <div class="slider-toggle setting">
             <h2>Show Leafs</h2>
             <div class="control">
-                <mat-slide-toggle color="primary" [(ngModel)]="settings.leafs"></mat-slide-toggle>
+                <mat-slide-toggle 
+                color="primary" 
+                [(ngModel)]="settings.leafs"
+                (change)="updateSettings()"></mat-slide-toggle>
                 <p *ngIf="settings.leafs">Leafs visible</p>
                 <p *ngIf="!settings.leafs">Leafs hidden</p>
             </div>
@@ -54,11 +60,17 @@ class="settings-button"
             <h2>Highlight Node Neighbours</h2>
             <div class="control">
                 <div class="option">
-                    <mat-checkbox color="primary" [(ngModel)]="settings.lastHighlight"></mat-checkbox>
+                    <mat-checkbox 
+                    color="primary" 
+                    [(ngModel)]="settings.lastHighlight"
+                    (change)="updateSettings()"></mat-checkbox>
                     <p>last</p>
                 </div>
                 <div class="option">
-                    <mat-checkbox color="primary" [(ngModel)]="settings.nextHighlight"></mat-checkbox>
+                    <mat-checkbox 
+                    color="primary" 
+                    [(ngModel)]="settings.nextHighlight"
+                    (change)="updateSettings()"></mat-checkbox>
                     <p>next</p>
                 </div>
             </div>
@@ -66,9 +78,20 @@ class="settings-button"
         <div class="slider-toggle setting">
             <h2>Stick Dragged Nodes</h2>
             <div class="control">
-                <mat-slide-toggle color="primary" [(ngModel)]="settings.fixedDrag"></mat-slide-toggle>
+                <mat-slide-toggle 
+                color="primary" 
+                [(ngModel)]="settings.fixedDrag"
+                (change)="updateSettings()"></mat-slide-toggle>
                 <p *ngIf="settings.fixedDrag">Nodes fixed</p>
                 <p *ngIf="!settings.fixedDrag">Nodes float</p>
+            </div>
+            <div class="control">
+                <mat-slide-toggle 
+                color="primary" 
+                [(ngModel)]="settings.fixedAuthor"
+                (change)="updateSettings()"></mat-slide-toggle>
+                <p *ngIf="settings.fixedAuthor">Author fixed</p>
+                <p *ngIf="!settings.fixedAuthor">Author floats</p>
             </div>
         </div>
     </div>
