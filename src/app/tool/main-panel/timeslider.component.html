@@ -1,12 +1,14 @@
 <div class="grid">
     <p class="label start" *ngIf="unit && label">0 {{unit}}</p>
-        <mat-slider 
+        <mat-slider
+        #slider
         class="slider" 
         color="primary"
         [step]="stepSize"
         [max]="range"
         [disabled]="!range"
         [(ngModel)]="value"
-        (change)="onChange()"></mat-slider>
+        (input)="changeValue(slider)"></mat-slider>
     <p class="label end" *ngIf="unit && label">{{label}} {{unit}}</p>
+    <hint *ngIf="moving" [config]="hintConfig"></hint>    
 </div>

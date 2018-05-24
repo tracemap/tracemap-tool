@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { GraphService } from './../services/graph.service';
 
@@ -19,6 +20,14 @@ export class TimesliderComponent {
     value = 0;
     factor;
     stepSize;
+    moving;
+    hintConfig = {
+        text: "test",
+        arrowPos: "bottom",
+        x: 0,
+        y: 0
+    };
+    timer;
 
     constructor(
         private graphService: GraphService
@@ -28,6 +37,7 @@ export class TimesliderComponent {
             this.stepSize = Math.floor(timeRange / 100);
             this.addLabelUnit();
             this.graphService.timesliderPosition.next(0);
+
         })
     }
 
@@ -54,9 +64,31 @@ export class TimesliderComponent {
     formatThumbLabel(value) {
         return value * this.factor;
     }
-    onChange() {
-        console.log(this.value);
+
+    changeValue(slider) {
+        let value = slider._value;
+        this.value = value;
         this.graphService.timesliderPosition.next(this.value);
+        this.addLabel();
+    }
+
+    addLabel() {
+        let slider = $('.slider');
+        let position = slider.position();
+        let x = position.left;
+        let y = position.top;
+        let width = slider.width();
+        let thumbPosition = x + (width * (this.value / this.range));
+        this.hintConfig.x = thumbPosition;
+        this.hintConfig.y = y;
+        this.hintConfig.text = (this.value * this.factor).toFixed(1) + " " + this.unit.toLowerCase();
+        this.moving = true;
+        if(this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.timer = setTimeout( () => {
+            this.moving = false;
+        }, 2000);
     }
 
 }

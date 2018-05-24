@@ -11,6 +11,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { GestureConfig } from '@angular/material';
 
 import { ToolComponent } from './tool.component';
+import { HintComponent } from './multi-use/hint.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
     import { GraphComponent } from './main-panel/graph.component';
     import { SettingsComponent } from './main-panel/settings.component';
@@ -42,6 +43,7 @@ import { TweetService } from './services/tweet.service';
   ],
   declarations: [
       ToolComponent,
+      HintComponent,
       MainPanelComponent,
           GraphComponent,
           SettingsComponent,

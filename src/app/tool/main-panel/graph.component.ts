@@ -40,6 +40,7 @@ export class GraphComponent {
     }
 
     colors = ["110,113,122","127,37,230"];
+    linkColor = ["204,208,217"];
     scale = d3.scaleLinear().domain([2, 30]).range([6,18]);
 
     constructor(
@@ -80,8 +81,6 @@ export class GraphComponent {
                     })
                     this.renderedLinks = renderedLinks;
 
-
-                    console.log("GraphComponent: " + this.renderedNodes.length + " node is displayed.");
                     if( this.simulation) {
                         this.simulation.nodes( this.renderedNodes)
 
@@ -99,11 +98,13 @@ export class GraphComponent {
         this.width = $('.d3-graph').width();
         this.height = $('.d3-graph').height();
         this.canvas = document.querySelector(".d3-graph");
-        this.canvas.width = this.width * 2;
-        this.canvas.height = this.height * 2;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
         this.context = this.canvas.getContext("2d");
+        this.context.translate(0.5, 0.5);
+        this.context.imageSmoothingEnabled = true;
         this.graphData.nodes.forEach( node => {
-            node.r = this.scale(this.getNeighbours(node, "out")) * 1.6 * 2;
+            node.r = this.scale(this.getNeighbours(node, "out")) * 1.6;
             node.opacity = 1.0;
             node.color = 0;
         })
@@ -120,8 +121,8 @@ export class GraphComponent {
         return new Promise( (resolve, reject) => {
             this.renderedNodes.forEach( node => {
                 if( this.settings.fixedAuthor && node.group == 0) {
-                    node.fx = this.width;
-                    node.fy = this.height;
+                    node.fx = this.width / 2;
+                    node.fy = this.height / 2;
                 }
             })
 
@@ -201,13 +202,13 @@ export class GraphComponent {
         let yPos = d.target.y - d.target.r * Math.sin(angle);
         this.context.moveTo(d.source.x, d.source.y);
         this.context.lineTo( xPos, yPos);
-        this.context.strokeStyle = "rgba(140,140,140,"+d.opacity+")";
-        this.context.lineWidth = 1;
+        this.context.strokeStyle = "rgba("+this.linkColor+","+d.opacity+")";
+        this.context.lineWidth = 0.5;
         this.drawHead(xPos, yPos, angle)
     }
 
     drawHead(xPos, yPos, angle) {
-        let headlen = 5;
+        let headlen = 7;
         let headRightX = xPos - headlen * Math.cos(angle - Math.PI/6);
         let headRightY = yPos - headlen * Math.sin(angle - Math.PI/6); 
         this.context.lineTo( headRightX, headRightY);
@@ -233,16 +234,14 @@ export class GraphComponent {
     }
 
     drawAuthor(d) {
-        d.color = 0;
-        let lineWidth = d.r / 7;
+        d.color = 1;
+        let lineWidth = d.r / 2.2;
         let radius = d.r - lineWidth;
         this.context.beginPath();
         this.context.moveTo( d.x + radius, d.y)
         this.context.arc(d.x, d.y, radius, 0, 2*Math.PI);
-        this.context.moveTo( d.x + radius / 2, d.y)
-        this.context.arc(d.x, d.y, radius / 2, 0, 2*Math.PI);
         this.context.lineWidth = lineWidth;
-        this.context.fillStyle = "#000";
+        this.context.fillStyle = "#fff";
         this.context.strokeStyle = "rgba("+this.colors[d.color]+","+d.opacity+")";
         this.context.fill();
         this.context.stroke();
