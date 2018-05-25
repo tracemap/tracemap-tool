@@ -1,0 +1,148 @@
+<div 
+class="share-button"
+(click)="openOverlay()">
+    <p>Share this TraceMap</p>
+    <img srcset="
+    ../../../assets/images/share_128.png 4x,
+    ../../../assets/images/share_64.png 2x,
+    ../../../assets/images/share_32.png 1x
+    "
+    src="../../../assets/images/share_32.png">
+</div>
+<div class="share-overlay">
+    <div 
+    class="overlay"
+    (click)="closeOverlay()"
+    [ngClass]="{'open': open}">
+        <div class="share-menu" *ngIf="open">
+            <h2>SOCIAL MEDIA</h2>
+            <p>Share this TraceMap with the World around you:</p>
+            <div 
+            class="twitter-link"
+            [ngClass]="{'purple-bg': hovered == 'twitter'}"
+            (mouseenter)="highlight('twitter')"
+            (mouseleave)="highlight()">
+                <a target="_blank"
+                   href="https://twitter.com/share?url={{tracemapUrl}}&via=trace_map&hashtags=TraceMap&text=Take%20a%20look%20at%20this%20TraceMap!">
+                    <img 
+                    *ngIf="hovered != 'twitter'"
+                    alt="share on twitter"
+                    srcset="
+                    ../../../assets/images/twitter-purple_128.png 4x,
+                    ../../../assets/images/twitter-purple_64.png 2x,
+                    ../../../assets/images/twitter-purple_32.png 1x"
+                    src="./../../../assets/images/twitter-purple_32.png">
+                    <img 
+                    *ngIf="hovered == 'twitter'"
+                    alt="share on twitter"
+                    srcset="
+                    ../../../assets/images/twitter-white_128.png 4x,
+                    ../../../assets/images/twitter-white_64.png 2x,
+                    ../../../assets/images/twitter-white_32.png 1x"
+                    src="./../../../assets/images/twitter-white_32.png">
+                </a>
+            </div>
+            <div 
+            class="facebook-link"
+
+            [ngClass]="{'purple-bg': hovered == 'facebook'}"
+            (mouseenter)="highlight('facebook')"
+            (mouseleave)="highlight()">
+                <a target="_blank"
+                   href="https://www.facebook.com/sharer/sharer.php?u={{tracemapUrl}}&amp;src=sdkpreparse">
+                    <img 
+                    *ngIf="hovered != 'facebook'"
+                    alt="share on facebook"
+                    srcset="
+                    ../../../assets/images/facebook-purple_128.png 4x,
+                    ../../../assets/images/facebook-purple_64.png 2x,
+                    ../../../assets/images/facebook-purple_32.png 1x"
+                    src="./../../../assets/images/facebook-purple_32.png">
+                    <img 
+                    *ngIf="hovered == 'facebook'"
+                    alt="share on facebook"
+                    srcset="
+                    ../../../assets/images/facebook-white_128.png 4x,
+                    ../../../assets/images/facebook-white_64.png 2x,
+                    ../../../assets/images/facebook-white_32.png 1x"
+                    src="./../../../assets/images/facebook-white_32.png">
+                </a>
+            </div>
+            <div 
+            class="googleplus-link"
+            [ngClass]="{'purple-bg': hovered == 'googleplus'}"
+            (mouseenter)="highlight('googleplus')"
+            (mouseleave)="highlight()">
+                <a target="_blank"
+                    href="">
+                    <img 
+                    *ngIf="hovered != 'googleplus'"
+                    alt="share on google plus"
+                    srcset="
+                    ../../../assets/images/googleplus-purple_128.png 4x,
+                    ../../../assets/images/googleplus-purple_64.png 2x,
+                    ../../../assets/images/googleplus-purple_32.png 1x"
+                    src="./../../../assets/images/googleplus-purple_32.png">
+                    <img 
+                    *ngIf="hovered == 'googleplus'"
+                    alt="share on google plus"
+                    srcset="
+                    ../../../assets/images/googleplus-white_128.png 4x,
+                    ../../../assets/images/googleplus-white_64.png 2x,
+                    ../../../assets/images/googleplus-white_32.png 1x"
+                    src="./../../../assets/images/googleplus-white_32.png">
+                </a>
+            </div>
+            <div 
+            class="telegram-link"
+            [ngClass]="{'purple-bg': hovered == 'telegram'}"
+            (mouseenter)="highlight('telegram')"
+            (mouseleave)="highlight()">
+                <a target="_blank"
+                    href="https://t.me/share/url?url={{tracemapUrl}}">
+                    <img 
+                    *ngIf="hovered != 'telegram'"
+                    alt="share on telegram"
+                    srcset="
+                    ../../../assets/images/telegram-purple_128.png 4x,
+                    ../../../assets/images/telegram-purple_64.png 2x,
+                    ../../../assets/images/telegram-purple_32.png 1x"
+                    src="./../../../assets/images/telegram-purple_32.png">
+                    <img 
+                    *ngIf="hovered == 'telegram'"
+                    alt="share on telegram"
+                    srcset="
+                    ../../../assets/images/telegram-white_128.png 4x,
+                    ../../../assets/images/telegram-white_64.png 2x,
+                    ../../../assets/images/telegram-white_32.png 1x"
+                    src="./../../../assets/images/telegram-white_32.png">
+                </a>
+            </div>
+            <div 
+            class="mail-link"
+            [ngClass]="{'purple-bg': hovered == 'mail'}"
+            (mouseenter)="highlight('mail')"
+            (mouseleave)="highlight()">
+                <a target="_blank"
+                    href="mailto:?subject=Take%20a%20look%20at%20this%20TraceMap&body={{tracemapUrl}}">
+                    <img 
+                    *ngIf="hovered != 'mail'"
+                    alt="share on mail"
+                    srcset="
+                    ../../../assets/images/mail-purple_128.png 4x,
+                    ../../../assets/images/mail-purple_64.png 2x,
+                    ../../../assets/images/mail-purple_32.png 1x"
+                    src="./../../../assets/images/mail-purple_32.png">
+                    <img 
+                    *ngIf="hovered == 'mail'"
+                    alt="share on mail"
+                    srcset="
+                    ../../../assets/images/mail-white_128.png 4x,
+                    ../../../assets/images/mail-white_64.png 2x,
+                    ../../../assets/images/mail-white_32.png 1x"
+                    src="./../../../assets/images/mail-white_32.png">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

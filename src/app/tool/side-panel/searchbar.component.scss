@@ -6,7 +6,7 @@
     background-color: $color-gray-font-dark;
     align-items: center;
     display: grid;
-    grid-template-columns: 20px 1fr 28px 20px;
+    grid-template-columns: 20px 1fr 20px 30px;
     grid-template-rows: 1fr;
     grid-template-areas:
         ". input button .";
