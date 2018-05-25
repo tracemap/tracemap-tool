@@ -1,0 +1,28 @@
+<div class="accordeons">
+    <div 
+    *ngFor="let accordeon of accordeons"
+    class="accordeon">
+        <div 
+        class="label"
+        (click)="toggle(accordeon)"
+        [ngClass]="{'open': accordeon.open}">
+            <h2>{{accordeon.name}}</h2>
+            <img
+            [ngClass]="{'open': accordeon.open}"
+            srcset="
+            ../../../assets/images/arrow-right_128.png 4x,
+            ../../../assets/images/arrow-right_64.png 2x,
+            ../../../assets/images/arrow-right_32.png 1x
+            "
+            src="../../../assets/images/arrow-right_32.png">
+        </div>
+        <div 
+        class="content"
+        [ngClass]="{'open': accordeon.open, 'rendered': accordeon.rendered}">
+            <acc-source
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-source'">
+            </acc-source>
+        </div>
+    </div>
+</div>

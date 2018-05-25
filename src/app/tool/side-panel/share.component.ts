@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class ShareComponent {
-    open = true;
+    open = false;
     tracemapUrl: string;
     hovered: undefined;
 

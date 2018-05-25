@@ -12,6 +12,7 @@ import { GestureConfig } from '@angular/material';
 
 import { ToolComponent } from './tool.component';
 import { HintComponent } from './multi-use/hint.component';
+import { TweetComponent } from './multi-use/tweet.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
     import { GraphComponent } from './main-panel/graph.component';
     import { SettingsComponent } from './main-panel/settings.component';
@@ -21,7 +22,8 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
     import { SearchbarComponent } from './side-panel/searchbar.component';
     import { ShareComponent } from './side-panel/share.component';
-
+    import { AccordeonsComponent } from './side-panel/accordeons/accordeons.component';
+        import { AccSourceComponent } from './side-panel/accordeons/acc-source.component';
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
@@ -46,6 +48,7 @@ import { TweetService } from './services/tweet.service';
   declarations: [
       ToolComponent,
       HintComponent,
+      TweetComponent,
       MainPanelComponent,
           GraphComponent,
           SettingsComponent,
@@ -54,7 +57,9 @@ import { TweetService } from './services/tweet.service';
           TimesliderComponent,
       SidePanelComponent,
           SearchbarComponent,
-          ShareComponent
+          ShareComponent,
+          AccordeonsComponent,
+              AccSourceComponent,
   ]
 })
 export class ToolModule { }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from './../services/api.service';
 import { GraphService } from './services/graph.service';
+import { CommunicationService } from './services/communication.service';
 
 @Component({
     selector: 'tool',
@@ -22,7 +23,8 @@ export class ToolComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private apiService: ApiService,
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ) {}
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
@@ -36,6 +38,7 @@ export class ToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadTwitterWidgetScript();
         this.route.params.subscribe( params => {
             this.tweetId = params["tid"];  
 
@@ -49,6 +52,10 @@ export class ToolComponent implements OnInit {
                     ];
 
                     this.tracemapData = tracemapData;
+
+                    let retweets = this.tracemapData['tweet_data']['tweet_info']['retweet_count'];
+                    this.communicationService.retweetCount.next(retweets);
+
                     let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user'];
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
@@ -203,5 +210,26 @@ export class ToolComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    loadTwitterWidgetScript(): void {
+        window['twttr'] = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+            t = window['twttr'] || {};
+            if (d.getElementById(id)){
+                return t;
+            };
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function(f) {
+                t._e.push(f);
+            };
+
+            return t;
+        })(document, "script", "twitter-wjs");
     }
 }
