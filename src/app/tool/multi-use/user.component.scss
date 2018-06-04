@@ -1,0 +1,33 @@
+@import "../../../styles.scss";
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 38px 9px 1fr;
+    grid-template-rows: 19px 19px;
+    background-color: #fff;
+    grid-template-areas:
+        "image . name"
+        "image . screen_name";
+
+    img {
+        grid-area: image;
+        width: 100%;
+        border-radius: 50%;
+    }
+
+    h3 {
+        grid-area: name;
+        line-height: 19px;
+        font-size: 14px;
+        font-weight: bold;
+        color: $color-gray-font-blackish;
+    }
+
+    p {
+        grid-area: screen_name;
+        line-height: 19px;
+        font-size: 14px;
+        color: $color-paragraph;
+    }
+}

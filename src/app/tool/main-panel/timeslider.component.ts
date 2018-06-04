@@ -29,6 +29,7 @@ export class TimesliderComponent {
     };
     timer;
     autoSlideSubscription;
+    relTimestampList: number[];
 
     constructor(
         private graphService: GraphService
@@ -40,6 +41,9 @@ export class TimesliderComponent {
             this.value = 0;
             this.graphService.timesliderPosition.next(0);
 
+        })
+        this.graphService.relTimestampList.subscribe( relTimestampList => {
+            this.relTimestampList = relTimestampList;
         })
         this.graphService.rendered.subscribe( rendered => {
             if( rendered) {
@@ -104,15 +108,11 @@ export class TimesliderComponent {
     }
 
     autoSlide() {
-        this.autoSlideSubscription = Observable.interval(80).subscribe( x => {
-            let newValue = ( this.value == 0 ? 1 : this.value * 1.1);
-            if( newValue >= this.range) {
-                newValue = this.range;
-            }
-            this.value = newValue;
+        this.autoSlideSubscription = Observable.interval(100).subscribe( i => {
+            this.value = this.relTimestampList[i];
             this.graphService.timesliderPosition.next(this.value);
             this.addLabel();
-            if( this.value == this.range) {
+            if( this.relTimestampList.length == i + 1) {
                 this.autoSlideSubscription.unsubscribe();
             }
         });

@@ -23,6 +23,10 @@
             (rendered)="toggleRendered($event, accordeon)"
             *ngIf="accordeon.selector == 'acc-source'">
             </acc-source>
+            <acc-influential
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-influential'">
+            </acc-influential>
         </div>
     </div>
 </div>

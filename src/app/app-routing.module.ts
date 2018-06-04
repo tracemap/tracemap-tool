@@ -5,7 +5,7 @@ import { HomePageComponent} from './home-page/home-page.component';
 
 import { AboutUsComponent } from './home-page/about-us.component';
 import { HelpUsComponent } from './home-page/help-us.component';
-import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
+// import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
 import { SitemapComponent } from './home-page/sitemap.component';
 

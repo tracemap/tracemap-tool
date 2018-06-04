@@ -11,12 +11,12 @@ export class AccordeonsComponent {
         {
             name: "Source Tweet",
             selector: "acc-source",
-            open: true,
+            open: false,
             rendered: false
         },{
             name: "Most Influential Users",
-            selector: "AccInfluentialComponent",
-            open: false,
+            selector: "acc-influential",
+            open: true,
             rendered: false
         },{
             name: "Metrics",

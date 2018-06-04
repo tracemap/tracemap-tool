@@ -136,10 +136,14 @@ export class GraphComponent {
         this.context.translate(0.5, 0.5);
         this.context.imageSmoothingEnabled = true;
         this.graphData.nodes.forEach( node => {
-            node.r = this.scale(this.getNeighbours(node, "out")) * 1.6;
+            node.out_degree = this.getNeighbours(node, "out");
+            node.r = this.scale(node.out_degree) * 1.6;
             node.opacity = 1.0;
             node.color = 0;
         })
+        // update graphService.nodeList with out_degree for
+        // acc-influential.component
+        this.graphService.nodeList.next(this.graphData.nodes);
         this.graphData.links.forEach( link => {
             link.opacity = 1.0;
         })
@@ -291,13 +295,15 @@ export class GraphComponent {
         })
         let tweetTime = this.graphData.nodes[0].timestamp;
         let lastRetweetTime = this.graphData.nodes[this.graphData.nodes.length - 1].timestamp;
+        let relTimestampList = [];
         this.graphData.nodes.forEach( node => {
             node.rel_timestamp = node.timestamp - tweetTime;
+            relTimestampList.push(node.rel_timestamp);
         });
         let timeRange = lastRetweetTime - tweetTime;
         console.log("GraphComponent: Timestamps added.")
         this.graphService.timeRange.next(timeRange);
-
+        this.graphService.relTimestampList.next(relTimestampList);
     }
 
     getNeighbours(node, direction=undefined): number {

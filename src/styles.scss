@@ -93,10 +93,6 @@ router-outlet {
     display: none;
 }
 
-.highlight {
-    box-shadow:inset 0px 0px 5em 0px #9729ff;
-}
-
 //used in child components
 .info-block {
     justify-self: center;

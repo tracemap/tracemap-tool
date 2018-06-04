@@ -1,0 +1,45 @@
+<div class="content">
+    <ng-container
+    *ngFor="let user of influentialUsers">
+        <div 
+        class="user-card"
+        (mouseenter)="hovered = user.id_str"
+        (mouseleave)="hovered = undefined">
+            <user 
+            class="user" 
+            [name]="user.name"
+            [screenName]="user.screen_name"
+            [image]="user.profile_image_url">
+            </user>
+            <div 
+            class="user-button"
+            [ngClass]="{'highlight': hovered == user.id_str}">
+                <img
+                *ngIf="hovered != user.id_str"
+                srcset="
+                ../../../assets/images/arrow-right_128.png 4x,
+                ../../../assets/images/arrow-right_64.png 2x,
+                ../../../assets/images/arrow-right_32.png 1x
+                "
+                src="../../../assets/images/arrow-right_32.png">
+                <img
+                *ngIf="hovered == user.id_str"
+                srcset="
+                ../../../assets/images/arrow-right-white_128.png 4x,
+                ../../../assets/images/arrow-right-white_64.png 2x,
+                ../../../assets/images/arrow-right-white_32.png 1x
+                "
+                src="../../../assets/images/arrow-right-white_32.png">
+            </div>
+        </div>
+        <div class="retweet-count">
+            <img srcset="
+            ../../../assets/images/retweet_64.png 4x,
+            ../../../assets/images/retweet_32.png 2x,
+            ../../../assets/images/retweet_16.png 1x
+            "
+            src="../../../assets/images/retweet_16.png">
+            <p><span>{{user.out_degree}}</span> Users retweetet from this source</p>
+        </div>
+    </ng-container>
+</div>

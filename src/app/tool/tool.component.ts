@@ -25,7 +25,18 @@ export class ToolComponent implements OnInit {
         private apiService: ApiService,
         private graphService: GraphService,
         private communicationService: CommunicationService
-    ) {}
+    ) {
+        this.graphService.graphData.subscribe( graphData => {
+            if( graphData) {
+                let nodeIds = graphData["nodes"].map( node => {
+                    return node.id_str;
+                }).toString();
+                this.apiService.getUserInfo(nodeIds).subscribe( userInfo => {
+                    this.graphService.userInfo.next(userInfo);
+                });
+            }
+        })
+    }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
         return new Promise( (resolve, reject) => {
