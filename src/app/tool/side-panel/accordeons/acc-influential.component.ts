@@ -20,7 +20,6 @@ export class AccInfluentialComponent {
     constructor(
         private graphService: GraphService
     ){
-        console.log("blaaaa");
         this.graphService.nodeList.subscribe( nodeList => {
             if( nodeList) {
                 this.nodes = nodeList;

@@ -9,6 +9,7 @@ import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { GestureConfig } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 import { ToolComponent } from './tool.component';
 import { HintComponent } from './multi-use/hint.component';
@@ -26,10 +27,15 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
     import { AccordeonsComponent } from './side-panel/accordeons/accordeons.component';
         import { AccSourceComponent } from './side-panel/accordeons/acc-source.component';
         import { AccInfluentialComponent } from './side-panel/accordeons/acc-influential.component';
+        import { AccMetricsComponent } from './side-panel/accordeons/acc-metrics.component';
+
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TweetService } from './services/tweet.service';
+
+import { TimeLabelPipe } from './pipes/time-label.pipe';
+import { ToYearPipe } from './pipes/to-year.pipe';
 
 @NgModule({
   imports: [
@@ -39,6 +45,7 @@ import { TweetService } from './services/tweet.service';
       MatSlideToggleModule,
       MatCheckboxModule,
       MatSliderModule,
+      MatProgressSpinnerModule,
       FormsModule
   ],
   providers: [ 
@@ -64,6 +71,9 @@ import { TweetService } from './services/tweet.service';
           AccordeonsComponent,
               AccSourceComponent,
               AccInfluentialComponent,
+              AccMetricsComponent,
+      TimeLabelPipe,
+      ToYearPipe
   ]
 })
 export class ToolModule { }

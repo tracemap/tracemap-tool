@@ -11,7 +11,7 @@
     width: 100%;
     display: grid;
     overflow: default;
-    grid-template-columns: 50px minmax(auto, 60px) 20px 1fr 20px minmax(auto, 60px) 20px;
+    grid-template-columns: 30px minmax(auto, 60px) 15px 1fr 15px minmax(auto, 80px) 20px;
     grid-template-rows: 48px;
     grid-template-areas:
         ". start_label . slider . end_label .";

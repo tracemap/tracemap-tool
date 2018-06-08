@@ -21,6 +21,8 @@
         line-height: 19px;
         font-size: 14px;
         font-weight: bold;
+        overflow: hidden;
+        white-space: nowrap;
         color: $color-gray-font-blackish;
     }
 
@@ -29,5 +31,7 @@
         line-height: 19px;
         font-size: 14px;
         color: $color-paragraph;
+        overflow: hidden;
+        white-space: nowrap;
     }
 }

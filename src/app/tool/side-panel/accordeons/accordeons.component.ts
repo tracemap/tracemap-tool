@@ -16,12 +16,12 @@ export class AccordeonsComponent {
         },{
             name: "Most Influential Users",
             selector: "acc-influential",
-            open: true,
+            open: false,
             rendered: false
         },{
             name: "Metrics",
-            selector: "AccMetricsComponent",
-            open: false,
+            selector: "acc-metrics",
+            open: true,
             rendered: false
         },{
             name: "Enhanced Metrics",

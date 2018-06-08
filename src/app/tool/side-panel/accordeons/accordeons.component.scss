@@ -27,7 +27,7 @@
 
             h2 {
                 grid-area: text;
-                width: 100%; 
+                width: 100%;
                 color: $color-gray-font-acc;
                 height: 18px;
                 font-size: 18px;
@@ -42,6 +42,10 @@
                 &.open {
                     transform:rotate(270deg);
                 }
+            }
+            .spinner {
+                grid-area: image;
+                width: 18px;
             }
         }
 

@@ -5,9 +5,16 @@
         <div 
         class="label"
         (click)="toggle(accordeon)"
-        [ngClass]="{'open': accordeon.open}">
+        [ngClass]="{'open': accordeon.open && accordeon.rendered}">
             <h2>{{accordeon.name}}</h2>
+            <mat-spinner
+            class="spinner"
+            [diameter]="18"
+            [color]="primary"
+            [strokeWidth]="3"
+            *ngIf="!accordeon.rendered"></mat-spinner>
             <img
+            *ngIf="accordeon.rendered"
             [ngClass]="{'open': accordeon.open}"
             srcset="
             ../../../assets/images/arrow-right_128.png 4x,
@@ -27,6 +34,10 @@
             (rendered)="toggleRendered($event, accordeon)"
             *ngIf="accordeon.selector == 'acc-influential'">
             </acc-influential>
+            <acc-metrics
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-metrics'">
+            </acc-metrics>
         </div>
     </div>
 </div>
