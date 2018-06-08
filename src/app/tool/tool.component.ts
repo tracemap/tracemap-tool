@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from './../services/api.service';
@@ -50,8 +50,11 @@ export class ToolComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadTwitterWidgetScript();
-        this.route.params.subscribe( params => {
-            this.tweetId = params["tid"];  
+        this.route.params.subscribe( (params:Params) => {
+            if(this.tweetId != params["tid"]) {
+                this.tweetId = params["tid"];
+                this.communicationService.resetData.next(true);
+            }
 
             this.apiService.getTracemapData( this.tweetId)
                 .then( tracemapData => {

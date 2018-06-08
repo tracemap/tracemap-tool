@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { GraphService } from './../../services/graph.service';
+import { CommunicationService } from './../../services/communication.service';
 
 @Component({
     selector: 'acc-influential',
@@ -18,7 +19,8 @@ export class AccInfluentialComponent {
     hovered: string;
 
     constructor(
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ){
         this.graphService.nodeList.subscribe( nodeList => {
             if( nodeList) {
@@ -30,6 +32,11 @@ export class AccInfluentialComponent {
             if( userInfo) {
                 this.userInfo = userInfo;
                 this.addInfluentialUsers();
+            }
+        })
+        this.communicationService.resetData.subscribe( reset => {
+            if( reset) {
+                this.rendered.next(false);
             }
         })
     }

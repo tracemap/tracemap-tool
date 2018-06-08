@@ -2,6 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { GraphService } from './../services/graph.service';
+import { CommunicationService } from './../services/communication.service';
 
 import * as $ from 'jquery';
 
@@ -32,7 +33,8 @@ export class TimesliderComponent {
     relTimestampList: number[];
 
     constructor(
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ) {
         this.graphService.timeRange.subscribe( timeRange => {
             this.range = timeRange;
@@ -48,6 +50,14 @@ export class TimesliderComponent {
         this.graphService.rendered.subscribe( rendered => {
             if( rendered) {
                 this.autoSlide();
+            }
+        })
+        this.communicationService.resetData.subscribe( reset => {
+            if( reset) {
+                if(this.autoSlideSubscription) {
+                    this.autoSlideSubscription.unsubscribe();
+                    this.value = 0;
+                }
             }
         })
     }

@@ -23,7 +23,7 @@ export class AccSourceComponent {
         private route: ActivatedRoute
     ) {
         this.route.params.subscribe( (params: Params) => {
-            if( this.tweetId){
+            if( this.tweetId != params["tid"]){
                 this.rendered.next(false);
             }
             this.tweetId = params["tid"];

@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 import { GraphService } from './../../services/graph.service';
+import { CommunicationService } from './../../services/communication.service';
 
 @Component({
     selector:'acc-metrics',
@@ -31,18 +32,22 @@ export class AccMetricsComponent {
     userMetricsRendered = false;
 
     constructor(
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ){
         Promise.all([this.propagationDelay, this.graphDataMetrics]).then(() => {
-            this.tracemapMetricsRendered = true;
             this.rendered.next(true);
         })
         this.userDataMetrics.then(() => {
-            this.userMetricsRendered = true;
             this.rendered.next(true);
         })
+        this.communicationService.resetData.subscribe( resetData => {
+            if( resetData) {
+                this.userMetricsRendered = false;
+                this.tracemapMetricsRendered = false;
+            } 
+        }) 
     }
-
     propagationDelay = new Promise( (res) => {
         this.graphService.relTimestampList.subscribe( timestampList => {
             if( timestampList) {
@@ -74,7 +79,10 @@ export class AccMetricsComponent {
                 Promise.all([
                     promAvgLinks,
                     promUserNumber,
-                ]).then( () => res());
+                ]).then( () => {
+                    this.tracemapMetricsRendered = true;
+                    res();
+                });
 
             }
         })
@@ -106,6 +114,7 @@ export class AccMetricsComponent {
                 this.userMetrics.avg_followees = avgFollowees;
                 this.userMetrics.avg_tweets = avgTweets;
                 this.userMetrics.avg_age = avgAge;
+                this.userMetricsRendered = true;
                 res();
             }
         }) 
