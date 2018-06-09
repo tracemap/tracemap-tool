@@ -9,11 +9,17 @@ import { Component, Input } from '@angular/core';
 export class HintComponent {
     @Input('config')
     config;
+    @Input('text')
+    text;
+    @Input('arrowPos')
+    arrowPos;
     // config = {
     //     text: "",
     //     arrowPos: "",
     //     x: "",
     //     y: ""
     // };
-
+    // or
+    // text = ""
+    // arrowPos = "",
 }

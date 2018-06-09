@@ -15,6 +15,7 @@ import { ToolComponent } from './tool.component';
 import { HintComponent } from './multi-use/hint.component';
 import { TweetComponent } from './multi-use/tweet.component';
 import { UserComponent } from './multi-use/user.component';
+import { InfoButtonComponent } from './multi-use/info-button.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
     import { GraphComponent } from './main-panel/graph.component';
     import { SettingsComponent } from './main-panel/settings.component';
@@ -59,6 +60,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
       HintComponent,
       TweetComponent,
       UserComponent,
+      InfoButtonComponent,
       MainPanelComponent,
           GraphComponent,
           SettingsComponent,

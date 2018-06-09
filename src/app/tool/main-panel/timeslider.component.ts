@@ -24,7 +24,6 @@ export class TimesliderComponent {
     moving;
     hintConfig = {
         text: "test",
-        arrowPos: "bottom",
         x: 0,
         y: 0
     };

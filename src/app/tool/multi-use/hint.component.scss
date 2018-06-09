@@ -1,5 +1,5 @@
 @import "../../../styles.scss";
-.fixed-hint-container {
+.hint-container {
     position: fixed;
     margin-left: 7px;
     display: inline-block;
@@ -50,6 +50,47 @@
             line-height: 28px;
             text-align: center;
             padding: 4px 18px;
+        }
+    }
+    &.left, &.right, &.top, &.bottom {
+
+        margin-left: 45px;
+        .hint {
+            margin: 0px;
+            display: inline-block;
+            max-width: 250px;
+
+            p {
+                padding: 15px;
+                font-size: 13.5px;
+                line-height: 20px;
+                text-align: left;
+                padding-left: auto;
+                padding-right: auto;
+            }
+        }
+    }
+    &.left {
+        margin-top: -25px;
+        .hint {
+            .shadow {
+                margin: 0px;
+                margin-top: 24px;
+                top: 0px;
+                left: -24px;
+                border-right: 12px solid rgba(15,19,26,0.2);
+                border-top: 12px solid transparent;
+                border-bottom: 12px solid transparent;
+            }
+            .arrow {
+                margin: 0px;
+                margin-top: 25px;
+                top: 0px;
+                left: -20px;
+                border-right: 10px solid white;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;               
+            }
         }
     }
 }

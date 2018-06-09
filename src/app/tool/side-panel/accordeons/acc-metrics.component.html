@@ -18,41 +18,21 @@
             <div class="metric">
                 <p class="value">{{tracemapMetrics.avg_links.toFixed(1)}}</p>
                 <p class="text">Ø Links per User</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'The number of links represents the density of a network.'"></info-button>
             </div>
             <div class="metric">
                 <p class="value">{{tracemapMetrics.user_number}}</p>
                 <p class="text">Users in the Tracemap</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
+
             </div>
             <div class="metric">
                 <p class="value">{{tracemapMetrics.propagation_delay | timeLabel: 60}}</p>
                 <p class="text">Propagation Delay</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'This amount of time passed from creation of the tweet until 50% of retweets happended.'"></info-button>
             </div>
         </div>
     </div>
@@ -75,54 +55,24 @@
             <div class="metric">
                 <p class="value">{{userMetrics.avg_followers}}</p>
                 <p class="text">Ø Followers per User</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
             </div>
             <div class="metric">
                 <p class="value">{{userMetrics.avg_followees}}</p>
                 <p class="text">Ø Friends per User</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
             </div>
             <div class="metric">
                 <p class="value">{{userMetrics.avg_tweets}}</p>
                 <p class="text">Ø Tweets authored per User</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'If the average number of tweets authored by an account is very high compared to their age, this can be an indicator for low quality tweets or even bots.'"></info-button>
             </div>
             <div class="metric">
                 <p class="value">{{userMetrics.avg_age | toYear:1}}</p>
                 <p class="text">Ø Account Age in Years</p>
-                <p class="info-button">
-                    <img
-                    srcset="
-                    ../../../assets/images/info-white_128.png 4x,
-                    ../../../assets/images/info-white_64.png 2x,
-                    ../../../assets/images/info-white_32.png 1x
-                    "
-                    src="../../../assets/images/info-white_32.png">
-                </p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'Accounts sharing misinformation are younger in average.'"></info-button>
             </div>
         </div>
     </div>

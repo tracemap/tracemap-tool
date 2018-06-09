@@ -68,22 +68,8 @@
                 font-size: 13.5px;
             }
 
-            .info-button {
-                height: 24px;
+            info-button {
                 grid-area: button;
-                background-color: $color-gray-placeholder;
-                border-radius: 50%;
-                transition: background-color 0.2s linear;
-                &:hover {
-                    background-color: $color-purple-dark;
-                    transition: background-color 0.2s linear;
-                }
-
-                img {
-                    width: 10px;
-                    margin-left:7px;
-                    margin-top: 7px;
-                }
             }
         }
     }
