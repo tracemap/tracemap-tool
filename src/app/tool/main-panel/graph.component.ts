@@ -32,6 +32,7 @@ export class GraphComponent {
     canvas;
     context;
     simulation;
+    dragging = false;
 
     settings = {
         arrows: true,
@@ -41,6 +42,8 @@ export class GraphComponent {
         fixedDrag: true,
         fixedAuthor: true
     }
+
+    timesliderPosition = 0;
 
     colors = ["110,113,122","127,37,230"];
     linkColor = ["204,208,217"];
@@ -68,13 +71,17 @@ export class GraphComponent {
         })
         this.graphService.timesliderPosition.subscribe( time => {
             if( time != undefined) {
+                this.timesliderPosition = time;
                 let renderedNodes = [];
                 let renderedNodeIds = [];
                 let renderedLinks = [];
                 this.graphData.nodes.forEach( node => {
                     if( node.rel_timestamp <= time) {
-                        renderedNodes.push(node);
-                        renderedNodeIds.push(node.id_str);
+                        if( this.settings.leafs
+                            || node.out_degree != 0) {
+                            renderedNodes.push(node);
+                            renderedNodeIds.push(node.id_str);
+                        }
                     }
                 })
                 if( this.renderedNodes.length != renderedNodes.length) {
@@ -109,6 +116,16 @@ export class GraphComponent {
                     if( this.simulation) {
                         this.ticked()
                     }
+                }
+                if( settings["fixedDrag"] != this.settings.fixedDrag
+                    || settings["fixedAuthor"] != this.settings.fixedAuthor) {
+                    this.settings.fixedDrag = settings["fixedDrag"];
+                    this.settings.fixedAuthor = settings["fixedAuthor"];
+                    this.changeFixed();
+                }
+                if( settings["leafs"] != this.settings.leafs) {
+                    this.settings.leafs = settings["leafs"];
+                    this.graphService.timesliderPosition.next(this.timesliderPosition);
                 }
             }
         })
@@ -151,6 +168,20 @@ export class GraphComponent {
         this.setSimulation().then( (simulation) => {
             this.simulation = simulation;
             this.graphService.rendered.next(true);
+            d3.select(this.canvas)
+                .call( d3.drag()
+                    .container( this.canvas)
+                    .subject( () => { return nodeHovered(this.canvas)})
+                    .on("start", () => {return this.dragstarted() })
+                    .on("drag", () => {return this.dragged() })
+                    .on("end", () => { return this.dragended()}));
+            function nodeHovered(canvas) {
+                let mouse = d3.mouse(canvas);
+                let x = mouse[0];
+                let y = mouse[1];
+                let node = simulation.find( x, y);
+                return simulation.find( x, y, node.r);
+            }
         })
     }
 
@@ -321,5 +352,55 @@ export class GraphComponent {
             }
         })
         return matches.length;
+    }
+
+    dragstarted() {
+        this.dragging = true;
+        if( !d3.event.active)
+            this.simulation.alphaTarget(0.3).restart();
+        d3.event.subject.fx = d3.event.subject.x;
+        d3.event.subject.fy = d3.event.subject.y;
+    }
+
+    dragged() {
+        d3.event.subject.fx = d3.event.x;
+        d3.event.subject.fy = d3.event.y;
+    }
+
+    dragended() {
+        this.dragging = false;
+        if( !d3.event.active) 
+            this.simulation.alphaTarget(0);
+        let node = d3.event.subject;
+        if( node.group == 1 && !this.settings.fixedDrag) {
+            node.fx = null;
+            node.fy = null;
+        } else if (node.group == 0 && !this.settings.fixedAuthor) {
+            node.fx = null;
+            node.fy = null;
+        }
+    }
+
+    changeFixed() {
+        this.graphData.nodes.forEach( node => {
+            if( node.group == 0) {
+                if( this.settings.fixedAuthor) {
+                    node.fx = node.x;
+                    node.fy = node.y;
+                } else {
+                    node.fx = null;
+                    node.fy = null;
+                }
+            } else {
+                if( !this.settings.fixedDrag) {
+                    node.fx = null;
+                    node.fy = null;
+                }
+            }
+        })
+        if( this.simulation) {
+            this.simulation.restart();
+            this.simulation.alpha(0.3);
+        }
     }
 }
