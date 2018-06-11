@@ -27,9 +27,6 @@ export class AccEnhancedMetricsComponent {
         private communicationService: CommunicationService,
         private graphService: GraphService
     ){
-        setTimeout( () => {
-            this.rendered.next(true);
-        }, 1000);
         this.communicationService.retweetCount.subscribe( retweetCount => {
             this.retweetCount = retweetCount;
         })
@@ -51,27 +48,29 @@ export class AccEnhancedMetricsComponent {
             return user;
         });
         let element = document.getElementsByClassName("retweets-to-time")[0];
-        console.log(users);
         this.initChart( users, ".retweets-to-time");
     }
 
     initChart(data: object[], elementName: string) {
-        let margin = 25;
-        let width = $(elementName).width();
-        let height = $(elementName).height();
+        let margin = 15;
+        let width = $(elementName).width() - margin;
+        let height = $(elementName).height() - margin;
+
+        let remainder = data.length % 20;
+        let yDomain = remainder == 0 ? data.length : data.length + 20 - remainder;
 
         let xScale = d3.scaleTime()
             .domain( d3.extent(data, d => d.x))
             .range([0, width - margin]);
         let yScale = d3.scaleLinear()
-            .domain([0, data.length])
+            .domain([0, yDomain])
             .range([height - margin, 0]);
 
         let svg = d3.select(elementName)
             .attr("width", width + "px")
             .attr("height", height + "px")
             .append("g")
-            .attr("transform", `translate(${margin}, 0)`);
+            .attr("transform", `translate(${margin + 5}, ${margin / 2})`);
 
         let line = d3.line()
             .x(d => xScale(d.x))
@@ -84,26 +83,29 @@ export class AccEnhancedMetricsComponent {
             .attr("stroke", "#7F25E6")
             .attr("stroke-width", "2px");
 
-        let xAxis = d3.axisBottom(xScale).ticks(6)
+        let xAxis = d3.axisBottom(xScale).ticks(5)
             .tickFormat( d => {
                 let minute = 60;
                 let hour = minute * 60;
                 let day = hour * 24;
-                if( d > minute * 99) {
-                    return (d / hour).toFixed(1) + "h";
-                } else if ( d > day * 4) {
+                if ( d > day * 4) {
                     return (d / day).toFixed(1) + "d";
+                } else if( d > minute * 99) {
+                    return (d / hour).toFixed(1) + "h";
                 } else {
                     return Math.floor(d / minute) + "m";
                 }
-            });
-        let yAxis = d3.axisLeft(yScale).ticks(4);
+            }).tickSize(0).tickPadding(10);
+
+        let yAxis = d3.axisLeft(yScale).ticks( 5).tickSize( - (width - margin) )
+                .tickSizeOuter(0);
 
         svg.append("g")
             .attr("transform", `translate(0, ${height - margin})`)
             .attr("stroke-width","2px")
             .call(xAxis);
-        svg.append("g").attr("stroke-width", "0px").call(yAxis);
+        svg.append("g").attr("stroke-width", "0.2px")
+            .classed("grid", true).call(yAxis);
 
         // Classing for styling reasons
         svg.selectAll("text")
@@ -112,6 +114,6 @@ export class AccEnhancedMetricsComponent {
             .style("font-weight", "500")
             .style("font-family", "IBM Plex Sans")
             .style("font-weight", "500");
-
+        this.rendered.next(true);    
     }
 }
