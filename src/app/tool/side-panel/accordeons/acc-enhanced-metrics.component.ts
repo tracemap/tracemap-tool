@@ -56,7 +56,7 @@ export class AccEnhancedMetricsComponent {
     }
 
     initChart(data: object[], elementName: string) {
-        let margin = 30;
+        let margin = 25;
         let width = $(elementName).width();
         let height = $(elementName).height();
 
@@ -81,20 +81,37 @@ export class AccEnhancedMetricsComponent {
             .data([data])
             .attr("d", d => line(d))
             .attr("fill", "none")
-            .attr("stroke", "#000")
+            .attr("stroke", "#7F25E6")
             .attr("stroke-width", "2px");
 
-        let xAxis = d3.axisBottom(xScale).ticks(5);
+        let xAxis = d3.axisBottom(xScale).ticks(6)
+            .tickFormat( d => {
+                let minute = 60;
+                let hour = minute * 60;
+                let day = hour * 24;
+                if( d > minute * 99) {
+                    return (d / hour).toFixed(1) + "h";
+                } else if ( d > day * 4) {
+                    return (d / day).toFixed(1) + "d";
+                } else {
+                    return Math.floor(d / minute) + "m";
+                }
+            });
         let yAxis = d3.axisLeft(yScale).ticks(4);
 
         svg.append("g")
             .attr("transform", `translate(0, ${height - margin})`)
+            .attr("stroke-width","2px")
             .call(xAxis);
-        svg.append("g").call(yAxis);
+        svg.append("g").attr("stroke-width", "0px").call(yAxis);
 
         // Classing for styling reasons
         svg.selectAll("text")
-            .classed("text",true);
+            .style("fill","#8E9299")
+            .style("font-size", "11px")
+            .style("font-weight", "500")
+            .style("font-family", "IBM Plex Sans")
+            .style("font-weight", "500");
 
     }
 }
