@@ -16,6 +16,7 @@ import { HintComponent } from './multi-use/hint.component';
 import { TweetComponent } from './multi-use/tweet.component';
 import { UserComponent } from './multi-use/user.component';
 import { InfoButtonComponent } from './multi-use/info-button.component';
+import { ChartComponent } from './multi-use/chart.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
     import { GraphComponent } from './main-panel/graph.component';
     import { SettingsComponent } from './main-panel/settings.component';
@@ -29,6 +30,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccSourceComponent } from './side-panel/accordeons/acc-source.component';
         import { AccInfluentialComponent } from './side-panel/accordeons/acc-influential.component';
         import { AccMetricsComponent } from './side-panel/accordeons/acc-metrics.component';
+        import { AccEnhancedMetricsComponent } from './side-panel/accordeons/acc-enhanced-metrics.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -61,6 +63,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
       TweetComponent,
       UserComponent,
       InfoButtonComponent,
+      ChartComponent,
       MainPanelComponent,
           GraphComponent,
           SettingsComponent,
@@ -74,6 +77,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
               AccSourceComponent,
               AccInfluentialComponent,
               AccMetricsComponent,
+              AccEnhancedMetricsComponent,
       TimeLabelPipe,
       ToYearPipe
   ]

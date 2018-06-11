@@ -38,6 +38,10 @@
             (rendered)="toggleRendered($event, accordeon)"
             *ngIf="accordeon.selector == 'acc-metrics'">
             </acc-metrics>
+            <acc-enhanced-metrics
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-enhanced-metrics'">
+            </acc-enhanced-metrics>
         </div>
     </div>
 </div>

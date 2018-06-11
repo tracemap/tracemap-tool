@@ -21,12 +21,12 @@ export class AccordeonsComponent {
         },{
             name: "Metrics",
             selector: "acc-metrics",
-            open: true,
+            open: false,
             rendered: false
         },{
             name: "Enhanced Metrics",
-            selector: "AccEnhancedMetricsComponent",
-            open: false,
+            selector: "acc-enhanced-metrics",
+            open: true,
             rendered: false
         },{
             name: "Last TraceMaps",
