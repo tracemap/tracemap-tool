@@ -1,15 +1,6 @@
 <div class="content">
-    <h2>Retweets by Time</h2>
-    <info-button 
-    [arrowPos]="'left'"
-    [text]="'Here you can see how the tweet evolved by time.'"></info-button>
-    <div class="enlarge-button">
-        <img srcset="
-        ../../../assets/images/arrows-up-down-white_64.png 4x,
-        ../../../assets/images/arrows-up-down-white_32.png 2x,
-        ../../../assets/images/arrows-up-down-white_16.png 1x
-        "
-        src="../../../assets/images/arrows-up-down-white_16.png">
-    </div>
-    <svg class="retweets-to-time"></svg>
+    <line-chart 
+    *ngIf="retweetsToTimeData"
+    [data]="retweetsToTimeData" 
+    class="retweets-to-time"></line-chart>
 </div>

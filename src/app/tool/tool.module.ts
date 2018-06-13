@@ -31,6 +31,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccInfluentialComponent } from './side-panel/accordeons/acc-influential.component';
         import { AccMetricsComponent } from './side-panel/accordeons/acc-metrics.component';
         import { AccEnhancedMetricsComponent } from './side-panel/accordeons/acc-enhanced-metrics.component';
+        import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -78,6 +79,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
               AccInfluentialComponent,
               AccMetricsComponent,
               AccEnhancedMetricsComponent,
+              AccLineChartComponent,
       TimeLabelPipe,
       ToYearPipe
   ]
