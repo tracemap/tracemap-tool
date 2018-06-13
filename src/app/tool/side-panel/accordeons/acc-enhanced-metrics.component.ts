@@ -23,7 +23,6 @@ export class AccEnhancedMetricsComponent {
     retweetsToTimeData: object;
     retweetsToTimeRendered: false;
 
-
     constructor(
         private communicationService: CommunicationService,
         private graphService: GraphService

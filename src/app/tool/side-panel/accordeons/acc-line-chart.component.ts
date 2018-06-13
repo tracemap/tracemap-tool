@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { CommunicationService } from './../../services/communication.service';
+import { GraphService } from './../../services/graph.service';
 
 import * as d3 from 'd3';
 import * as $ from 'jquery';
@@ -19,19 +20,31 @@ export class AccLineChartComponent implements OnChanges {
     rendered = new EventEmitter(false);
 
     svg;
+    line;
+
+    fullScreen = false;
+    timesliderPosition = 0;
 
     constructor(
-        private communicationService: CommunicationService
+        private communicationService: CommunicationService,
+        private graphService: GraphService
     ){
         this.communicationService.resetData.subscribe( reset => {
             if( reset && this.svg) {
                 this.svg.remove();
             }
         })
+        this.graphService.timesliderPosition.subscribe( timesliderPosition => {
+            this.timesliderPosition = timesliderPosition;
+            this.drawPath();
+        })
     }
 
     ngOnChanges() {
         if( this.data) {
+            if( this.svg) {
+                this.svg.selectAll("path").remove();
+            }
             let margin = 15;
             let width = $(".svg").width() - margin;
             let height = $(".svg").height() - margin;
@@ -48,31 +61,17 @@ export class AccLineChartComponent implements OnChanges {
                 .domain([0, yDomain])
                 .range([height - margin, 0]);
 
-            this.svg = d3.select(".svg")
+            this.svg = d3.select(".svg.small")
                 .attr("width", width + "px")
                 .attr("height", height + "px")
                 .append("g")
                 .attr("transform", `translate(${margin + 10}, ${margin / 2})`);
 
-            let line = d3.line()
+            this.line = d3.line()
                 .x(d => xScale(d.x))
                 .y(d => yScale(d.y));
 
-            if( this.data["invalid"]) {
-                this.svg.append("path")
-                    .data([validData])
-                    .attr("d", d => line(d))
-                    .attr("fill", "none")
-                    .attr("stroke", "#7F25E6")
-                    .attr("stroke-width", "2px");
-            } else {
-                this.svg.append("path")
-                    .data([validData])
-                    .attr("d", d => line(d))
-                    .attr("fill", "none")
-                    .attr("stroke", "#7F25E6")
-                    .attr("stroke-width", "2px");
-            }
+            this.drawPath();
 
             let xAxis = d3.axisBottom(xScale).ticks(5)
                 .tickFormat( d => {
@@ -118,5 +117,30 @@ export class AccLineChartComponent implements OnChanges {
             this.rendered.next(true);    
 
         }
+    }
+    drawPath() {
+        if(this.svg) {
+            this.svg.selectAll("path").remove();
+            let data = this.data["valid"].filter( d => {
+                if( d.x <= this.timesliderPosition) {
+                    return d;
+                }
+            })
+            this.svg.append("path")
+                .data([data])
+                .attr("d", d => this.line(d))
+                .attr("fill", "none")
+                .attr("stroke", "#7F25E6")
+                .attr("stroke-width", "2px");
+        }
+    }
+
+    openFullScreen() {
+        console.log("open full-screen")
+        this.fullScreen = true;
+    }
+
+    closeFullScreen() {
+        this.fullScreen = false;
     }
 }
