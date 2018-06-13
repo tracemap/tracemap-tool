@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiService } from './../services/api.service';
 import { GraphService } from './services/graph.service';
 import { CommunicationService } from './services/communication.service';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
     selector: 'tool',
@@ -18,13 +19,15 @@ export class ToolComponent implements OnInit {
     tracemapData: object;
     graphData: object;
     newMode = false;
+    cookiePolicyOpen = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private apiService: ApiService,
         private graphService: GraphService,
-        private communicationService: CommunicationService
+        private communicationService: CommunicationService,
+        private localStorageService: LocalStorageService
     ) {
         this.graphService.graphData.subscribe( graphData => {
             if( graphData) {
@@ -34,6 +37,18 @@ export class ToolComponent implements OnInit {
                 this.apiService.getUserInfo(nodeIds).subscribe( userInfo => {
                     this.graphService.userInfo.next(userInfo);
                 });
+            }
+        })
+
+        let cookieSettings = this.localStorageService.getSettings();
+        if( !cookieSettings) {
+            this.localStorageService.showPolicy.next(true);
+        }
+        this.localStorageService.showPolicy.subscribe( showPolicy => {
+            if( !showPolicy) {
+                this.cookiePolicyOpen = false;
+            } else {
+                this.cookiePolicyOpen = true;
             }
         })
     }

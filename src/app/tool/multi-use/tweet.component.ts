@@ -12,6 +12,8 @@ export class TweetComponent implements OnChanges{
     rendered = new EventEmitter();
     @Input('tweetId') 
     tweetId: string;
+    @Input('cards')
+    cards = true;
 
     ngOnChanges() {
         if( this.tweetId) {
@@ -21,17 +23,32 @@ export class TweetComponent implements OnChanges{
                 if( domTweet.firstChild) {
                     domTweet.removeChild( domTweet.firstChild);
                 }
-                // Create tweet from tweetId
-                twttr.widgets.createTweet(
-                    this.tweetId,
-                    domTweet,
-                    {
-                        linkColor: "#9729ff"
-                    }
-                ).then(() => {
-                    // Callback to parent for timeline loading animation
-                    this.rendered.emit(this.tweetId);
-                });
+                if( this.cards) {
+                    // Create tweet from tweetId
+                    twttr.widgets.createTweet(
+                        this.tweetId,
+                        domTweet,
+                        {
+                            linkColor: "#9729ff"
+                        }
+                    ).then(() => {
+                        // Callback to parent for timeline loading animation
+                        this.rendered.emit(this.tweetId);
+                    });
+                } else {
+                    // Create tweet from tweetId
+                    twttr.widgets.createTweet(
+                        this.tweetId,
+                        domTweet,
+                        {
+                            linkColor: "#9729ff",
+                            cards: "hidden"
+                        }
+                    ).then(() => {
+                        // Callback to parent for timeline loading animation
+                        this.rendered.emit(this.tweetId);
+                    });
+                }
             });
         }
     }

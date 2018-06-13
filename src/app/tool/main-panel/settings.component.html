@@ -23,7 +23,7 @@ class="settings-button"
     <div class="shadow"></div>
     <div class="arrow"></div>
     <div class="head">
-        <h2>Visual Settings</h2>
+        <h2>Settings</h2>
         <div class="close-button" (click)="closeSettings()">
             <img srcset="
             ../../assets/images/close-white_128.png 4x,
@@ -82,8 +82,8 @@ class="settings-button"
                 color="primary" 
                 [(ngModel)]="settings.fixedDrag"
                 (change)="updateSettings()"></mat-slide-toggle>
-                <p *ngIf="settings.fixedDrag">Nodes fixed</p>
-                <p *ngIf="!settings.fixedDrag">Nodes float</p>
+                <p *ngIf="settings.fixedDrag">Nodes fixed after drag</p>
+                <p *ngIf="!settings.fixedDrag">Nodes float after drag</p>
             </div>
             <div class="control">
                 <mat-slide-toggle 
@@ -94,5 +94,10 @@ class="settings-button"
                 <p *ngIf="!settings.fixedAuthor">Author floats</p>
             </div>
         </div>
+        <p 
+        class="footer"
+        (click)="openCookiePolicy()">
+            Change Cookie Settings
+        </p>
     </div>
 </div>

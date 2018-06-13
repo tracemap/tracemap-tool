@@ -1,0 +1,89 @@
+@import "../../styles.scss";
+
+.content {
+
+    .overlay {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 12;
+        opacity: 0.92;
+        transition: opacity 0.5s;
+        &.applied {
+            opacity: 0;
+        }
+    }
+    .policy-container {
+        position: fixed;
+        z-index: 13;
+        top: 0px;
+        left: 50%;
+        width: 600px;
+        margin-left: -300px;
+        background-color: #fff;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+        padding: 20px;
+        box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+        transition: top 0.5s;
+        &.applied {
+            top: -600px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .settings-container {
+            p {
+                margin-bottom: 0px;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 16px;
+            }
+
+            .option {
+                display: grid;
+                margin-top: 10px;
+                grid-template-columns: 24px 120px 24px;
+                grid-template-rows: 24px;
+                grid-column-gap: 5px;
+                grid-template-areas:
+                    "checkbox text info_button";
+
+                mat-checkbox {
+                    grid-area: checkbox;
+                }
+
+                p {
+                    grid-area: text;
+                    line-height: 24px;
+                }
+
+                info-button {
+                    grid-area: info_button
+                }
+            }
+        }
+
+        button {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 70px;
+            height: 35px;
+        }
+
+    }
+}

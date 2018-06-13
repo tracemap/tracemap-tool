@@ -22,13 +22,11 @@ export class InfoButtonComponent {
     openHint() {
         let config = {};
         let source = this.elem.nativeElement.getBoundingClientRect();
-        console.log(source);
         config["x"] = source.left;
         config["y"] = source.top;
         config["arrowPos"] = this.arrowPos;
         config["text"] = this.text;
         this.config = config;
-        console.log(this.config.y);
     }
 
     closeHint() {

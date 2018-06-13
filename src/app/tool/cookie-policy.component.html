@@ -1,0 +1,41 @@
+<div class="content">
+    <div class="overlay" [ngClass]="{'applied': applied}"></div>
+    <div class="policy-container" [ngClass]="{'applied': applied}">
+        <h2>Cookies</h2>
+        <p>We save cookies in your browsers storage for some features on this page.</p>
+        <div class="settings-container">
+            <p> By unchecking a box we will not save the according cookie.<br>This will limit the tools functionality.</p>
+            <div class="option">
+                <mat-checkbox
+                color="primary"
+                [(ngModel)]="settings.cookie"></mat-checkbox>
+                <p>Cookie Preferences</p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'If you unselect this checkbox, we will not save your cookie preferences and this pop-up will open at the next visit of our website.'"></info-button>
+            </div>
+            <div class="option">
+                <mat-checkbox
+                color="primary"
+                [(ngModel)]="settings.graph"></mat-checkbox>
+                <p>Graph Settings</p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'If you unselect this checkbox, we will not save your graph settings.'"></info-button>
+            </div>
+            <div class="option">
+                <mat-checkbox
+                color="primary"
+                [(ngModel)]="settings.lastTracemaps"></mat-checkbox>
+                <p>Last Tracemaps</p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'If you unselect this checkbox, we will not save your history of generated TraceMaps.'"></info-button>
+            </div>
+        </div>
+        <button class="purple-button button"
+        (click)="saveSettings()">
+            Apply
+        </button>
+    </div>
+</div>

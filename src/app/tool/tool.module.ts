@@ -12,6 +12,7 @@ import { GestureConfig } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material';
 
 import { ToolComponent } from './tool.component';
+import { CookiePolicyComponent } from './cookie-policy.component';
 import { HintComponent } from './multi-use/hint.component';
 import { TweetComponent } from './multi-use/tweet.component';
 import { UserComponent } from './multi-use/user.component';
@@ -60,6 +61,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
   ],
   declarations: [
       ToolComponent,
+      CookiePolicyComponent,
       HintComponent,
       TweetComponent,
       UserComponent,

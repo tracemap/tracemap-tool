@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { GraphService } from './../services/graph.service';
+import { LocalStorageService } from './../services/local-storage.service';
+
 @Component({
     selector: 'settings',
     templateUrl: './settings.component.html',
@@ -22,8 +24,17 @@ export class SettingsComponent {
     }
 
     constructor(
-        private graphService: GraphService
-    ){}
+        private graphService: GraphService,
+        private localStorageService: LocalStorageService
+    ){
+        let settings = this.localStorageService.getGraphSettings();
+        if( settings) {
+            Object.keys(settings).forEach( key => {
+                this.settings[key] = settings[key];
+            });
+            this.updateSettings();
+        }
+    }
 
     openSettings() {
         this.open = true;
@@ -35,5 +46,10 @@ export class SettingsComponent {
 
     updateSettings() {
         this.graphService.settings.next(this.settings);
+        this.localStorageService.setGraphSettings(this.settings);
+    }
+
+    openCookiePolicy() {
+        this.localStorageService.showPolicy.next(true);
     }
 }
