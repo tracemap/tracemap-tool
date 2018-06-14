@@ -14,7 +14,7 @@ export class LocalStorageService {
     }
 
     constructor(){
-        let settings = this.retrieve("settings");
+        let settings = this.retrieve("cookie");
         if( settings) {
             Object.keys(settings).forEach( key => {
                 this.settings[key] = settings[key];

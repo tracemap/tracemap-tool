@@ -1,0 +1,21 @@
+<div class="content">
+    <div class="tweet-container" *ngIf="tweetId">
+        <tweet (rendered)="tweetRendered(tweetId)" class="tweet" [tweetId]="tweetId" [cards]="false"></tweet>
+    </div>
+    <div class="tweet-info">
+        <img srcset="
+        ../../../assets/images/retweet_64.png 4x,
+        ../../../assets/images/retweet_32.png 2x,
+        ../../../assets/images/retweet_16.png 1x
+        "
+        src="../../../assets/images/retweet_16.png">
+        <p>{{retweetCount}}</p>
+        <button 
+        class="button purple-button"
+        [routerLink]="['/tool', tweetId]">
+            Show Tracemap
+            <div class="circle">
+            </div>
+        </button>
+    </div>
+</div>

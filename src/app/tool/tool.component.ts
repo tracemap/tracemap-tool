@@ -29,6 +29,7 @@ export class ToolComponent implements OnInit {
         private communicationService: CommunicationService,
         private localStorageService: LocalStorageService
     ) {
+        this.loadTwitterWidgetScript();
         this.graphService.graphData.subscribe( graphData => {
             if( graphData) {
                 let nodeIds = graphData["nodes"].map( node => {
@@ -64,7 +65,6 @@ export class ToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadTwitterWidgetScript();
         this.route.params.subscribe( (params:Params) => {
             if(this.tweetId != params["tid"]) {
                 this.tweetId = params["tid"];

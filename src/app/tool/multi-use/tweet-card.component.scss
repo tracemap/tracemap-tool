@@ -1,0 +1,67 @@
+@import "../../../styles.scss";
+.content {
+    width: 308px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 50px;
+    grid-template-areas:
+        "tweet_container"
+        "tweet_info";
+    .tweet-container {
+        grid-area: tweet_container;
+        width: 100%;
+    }
+
+    .tweet-info {
+        grid-area: tweet_info;
+        height: 100%;
+        padding-left: 20px;
+        margin-top: -1px;
+        box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+        background-color: $color-gray-tweet;
+        border-radius: 0px 0px 6px 6px;
+        display: grid;
+        grid-template-columns: 16px auto 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "image text button";
+
+        img {
+            grid-area: image;
+            align-self: center;
+            width: 16px;
+        }
+        p {
+            grid-area: text;
+            font-size: 11px;
+            margin-left: 10px;
+            align-self: center;
+            line-height: 11px;
+            font-weight: bold;
+        }
+        .button {
+            grid-area: button;
+            width: 136px;
+            height: 30px;
+            align-self: center;
+            line-height: 20px;
+            justify-self: right;
+            margin-right: 9px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: left;
+            padding: 0px 10px;
+            .circle {
+                width: 14px;
+                height: 14px;
+                background-color: $color-purple-dark;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                float: right;
+                margin-top: 3px;
+            }
+        }
+    }
+}

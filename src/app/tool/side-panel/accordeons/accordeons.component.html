@@ -42,6 +42,10 @@
             (rendered)="toggleRendered($event, accordeon)"
             *ngIf="accordeon.selector == 'acc-enhanced-metrics'">
             </acc-enhanced-metrics>
+            <acc-last-tracemaps
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-last-tracemaps'">
+            </acc-last-tracemaps>
         </div>
     </div>
 </div>

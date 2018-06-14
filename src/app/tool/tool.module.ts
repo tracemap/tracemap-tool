@@ -15,6 +15,7 @@ import { ToolComponent } from './tool.component';
 import { CookiePolicyComponent } from './cookie-policy.component';
 import { HintComponent } from './multi-use/hint.component';
 import { TweetComponent } from './multi-use/tweet.component';
+import { TweetCardComponent } from './multi-use/tweet-card.component';
 import { UserComponent } from './multi-use/user.component';
 import { InfoButtonComponent } from './multi-use/info-button.component';
 import { ChartComponent } from './multi-use/chart.component';
@@ -33,6 +34,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccMetricsComponent } from './side-panel/accordeons/acc-metrics.component';
         import { AccEnhancedMetricsComponent } from './side-panel/accordeons/acc-enhanced-metrics.component';
         import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
+        import { AccLastTracemapsComponent } from './side-panel/accordeons/acc-last-tracemaps.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -64,6 +66,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
       CookiePolicyComponent,
       HintComponent,
       TweetComponent,
+      TweetCardComponent,
       UserComponent,
       InfoButtonComponent,
       ChartComponent,
@@ -82,6 +85,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
               AccMetricsComponent,
               AccEnhancedMetricsComponent,
               AccLineChartComponent,
+              AccLastTracemapsComponent,
       TimeLabelPipe,
       ToYearPipe
   ]

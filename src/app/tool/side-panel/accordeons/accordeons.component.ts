@@ -26,12 +26,12 @@ export class AccordeonsComponent {
         },{
             name: "Enhanced Metrics",
             selector: "acc-enhanced-metrics",
-            open: true,
+            open: false,
             rendered: false
         },{
             name: "Last TraceMaps",
-            selector: "AccHistoryComponent",
-            open: false,
+            selector: "acc-last-tracemaps",
+            open: true,
             rendered: false
         }
     ];
