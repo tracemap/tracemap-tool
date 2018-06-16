@@ -3,8 +3,8 @@
     *ngFor="let user of influentialUsers">
         <div 
         class="user-card"
-        (mouseenter)="hovered = user.id_str"
-        (mouseleave)="hovered = undefined">
+        (mouseenter)="setHovered(user.id_str)"
+        (mouseleave)="setHovered(undefined)">
             <user 
             class="user" 
             [name]="user.name"

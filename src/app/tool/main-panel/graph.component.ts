@@ -26,6 +26,8 @@ export class GraphComponent {
     renderedNodes = [];
     renderedLinks = [];
 
+    hoveredNode;
+
     width;
     height;
 
@@ -45,8 +47,8 @@ export class GraphComponent {
 
     timesliderPosition = 0;
 
-    colors = ["110,113,122","127,37,230"];
-    linkColor = ["204,208,217"];
+    colors = ["110,113,122","127,37,230", "76,80,89"];
+    linkColors = ["204,208,217", "142,146,153"];
     scale = d3.scaleLinear().domain([2, 30]).range([6,18]);
 
     constructor(
@@ -88,15 +90,14 @@ export class GraphComponent {
                     this.renderedNodes = renderedNodes;
 
                     this.graphData.links.forEach( link => {
-                        if( renderedNodeIds.indexOf(link.source) >= 0 &&
-                            renderedNodeIds.indexOf(link.target) >= 0) {
-                            let renderedLink = {};
-                            renderedLink['source'] = link.source;
-                            renderedLink['target'] = link.target;
-                            renderedLinks.push(renderedLink);
+                        if( renderedNodeIds.indexOf(link.source_id) >= 0 &&
+                            renderedNodeIds.indexOf(link.target_id) >= 0) {
+                            renderedLinks.push(link);
                         }
                     })
                     this.renderedLinks = renderedLinks;
+                    console.log(this.renderedLinks.length);
+                    console.log(this.renderedLinks[this.renderedLinks.length - 1]);
 
                     if( this.simulation) {
                         this.simulation.nodes( this.renderedNodes)
@@ -127,6 +128,12 @@ export class GraphComponent {
                     this.settings.leafs = settings["leafs"];
                     this.graphService.timesliderPosition.next(this.timesliderPosition);
                 }
+                if( this.settings.lastHighlight != settings["lastHighlight"]) {
+                    this.settings.lastHighlight = settings["lastHighlight"];
+                } 
+                if( this.settings.nextHighlight != settings["nextHighlight"]) {
+                    this.settings.nextHighlight = settings["nextHighlight"];
+                } 
             }
         })
     }
@@ -169,6 +176,12 @@ export class GraphComponent {
         this.context = this.canvas.getContext("2d");
         this.context.translate(0.5, 0.5);
         this.context.imageSmoothingEnabled = true;
+        this.graphData.links.forEach( link => {
+            link.opacity = 1;
+            link.color = 0;
+            link.target_id = link.target + "";
+            link.source_id = link.source + "";
+        })
         this.graphData.nodes.forEach( node => {
             node.out_degree = this.getNeighbours(node, "out");
             node.r = this.scale(node.out_degree) * 1.6;
@@ -178,13 +191,11 @@ export class GraphComponent {
         // update graphService.nodeList with out_degree for
         // acc-influential.component
         this.graphService.nodeList.next(this.graphData.nodes);
-        this.graphData.links.forEach( link => {
-            link.opacity = 1.0;
-        })
         this.addTimestamps();
         this.setSimulation().then( (simulation) => {
             this.simulation = simulation;
             this.graphService.rendered.next(true);
+            // Dragging calls
             d3.select(this.canvas)
                 .call( d3.drag()
                     .container( this.canvas)
@@ -192,12 +203,43 @@ export class GraphComponent {
                     .on("start", () => {return this.dragstarted() })
                     .on("drag", () => {return this.dragged() })
                     .on("end", () => { return this.dragended()}));
+            // Hover behavior
+            d3.select(this.canvas)
+                .on("mousemove", () => {
+                    let node = nodeHovered(this.canvas);
+                    if( node && !this.hoveredNode) {
+                        this.hoveredNode = node;
+                        this.graphService.userNodeHighlight.next(node.id_str);
+                    } else if ( !node
+                                && this.hoveredNode
+                                && !this.dragging) {
+                        this.graphService.userNodeHighlight.next(undefined);
+                    } else if ( node != this.hoveredNode 
+                                && !this.dragging) {
+                        this.graphService.userNodeHighlight.next(undefined);
+                        this.graphService.userNodeHighlight.next(node.id_str);
+                    }
+                })
+
             function nodeHovered(canvas) {
                 let mouse = d3.mouse(canvas);
                 let x = mouse[0];
                 let y = mouse[1];
                 let node = simulation.find( x, y);
-                return simulation.find( x, y, node.r);
+                return simulation.find( x, y, node.r + (node.r / 7));
+            }
+        })
+        this.graphService.userNodeHighlight.subscribe( userId => {
+            if( userId) {
+                this.renderedNodes.forEach( node => {
+                    if( node.id_str == userId) {
+                        this.hoveredNode = node;
+                        this.highlightNeighbours( node);
+                    }
+                })
+            } else {
+                this.hoveredNode = undefined;
+                this.resetHighlightNeighbours();
             }
         })
     }
@@ -254,24 +296,24 @@ export class GraphComponent {
             }
         });
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.beginPath();
-        this.renderedLinks.filter( link => {
-            if( link.opacity == 1) {
-                return link;
-            }
-        }).forEach( link => this.drawLink(link));
-        this.context.stroke();
 
-        this.context.beginPath();
-        this.renderedLinks.filter( link => {
-            if( link.opacity !== 1) {
-                return link;
-            }
-        }).forEach( link => this.drawLink(link));
-        this.context.stroke();
+        this.renderedLinks.filter( link => link.opacity != 1).forEach( link => {
+            this.drawLink( link);
+        });
 
-        this.context.beginPath();
-        this.renderedNodes.forEach(node => {
+        this.renderedNodes.filter( node => node.opacity != 1).forEach(node => {
+            if( node.group == 1) {
+                this.drawNode(node);
+            } else {
+                this.drawAuthor(node);
+            }
+        })
+
+        this.renderedLinks.filter( link => link.opacity == 1).forEach( link => {
+            this.drawLink( link);
+        });
+
+        this.renderedNodes.filter( node => node.opacity == 1).forEach(node => {
             if( node.group == 1) {
                 this.drawNode(node);
             } else {
@@ -285,13 +327,15 @@ export class GraphComponent {
                                 d.target.x - d.source.x);
         let xPos = d.target.x - d.target.r * Math.cos(angle);
         let yPos = d.target.y - d.target.r * Math.sin(angle);
+        this.context.beginPath();
         this.context.moveTo(d.source.x, d.source.y);
         this.context.lineTo( xPos, yPos);
-        this.context.strokeStyle = "rgba("+this.linkColor+","+d.opacity+")";
-        this.context.lineWidth = 0.5;
+        this.context.strokeStyle = "rgba("+this.linkColors[d.color]+","+d.opacity+")";
+        this.context.lineWidth = 1;
         if( this.settings.arrows) {
             this.drawHead(xPos, yPos, angle)
         }
+        this.context.stroke();
     }
 
     drawHead(xPos, yPos, angle) {
@@ -307,7 +351,6 @@ export class GraphComponent {
     }
 
     drawNode(d) {
-        d.color = 0;
         let lineWidth = d.r / 7;
         let radius = d.r - lineWidth;
         this.context.beginPath();
@@ -358,17 +401,66 @@ export class GraphComponent {
         let matches = [];
         this.graphData.links.forEach( link => {
             if( !direction || direction == "in") {
-                if( link.target == node.id_str) {
+                if( link.target_id == node.id_str) {
                     matches.push(link);
                 }
             }
             if( !direction || direction == "out") {
-                if( link.source == node.id_str) {
+                if( link.source_id == node.id_str) {
                     matches.push(link);
                 }
             }
         })
         return matches.length;
+    }
+
+    highlightNeighbours( node) {
+        console.log(node);
+        let matchParents = this.settings.lastHighlight;
+        let matchChildren = this.settings.nextHighlight;
+
+        this.renderedLinks.forEach( link => {
+            link.opacity = 0.2;
+        });
+        this.renderedNodes.forEach( node => {
+            node.opacity = 0.2
+        })
+
+        if( matchChildren) {
+            this.renderedLinks.forEach( link => {
+                if( link.source == node) {
+                    link.opacity = 1;
+                    link.color = 1;
+                    link.target.opacity = 1;
+                    link.target.color = 2;
+                }
+            })
+        }
+        if( matchParents) {
+            this.renderedLinks.forEach( link => {
+                if( link.target == node) {
+                    link.opacity = 1;
+                    link.color = 1;
+                    link.source.opacity = 1;
+                    link.source.color = 2;
+                }
+            })
+        }
+        node.opacity = 1;
+        node.color = 1;
+        this.ticked();
+    }
+
+    resetHighlightNeighbours() {
+        this.renderedLinks.forEach( link => {
+            link.color = 0;
+            link.opacity = 1;
+        })
+        this.renderedNodes.forEach( node => {
+            node.color = 0;
+            node.opacity = 1;
+        })
+        this.ticked();
     }
 
     dragstarted() {

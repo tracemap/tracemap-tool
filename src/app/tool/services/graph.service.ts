@@ -12,4 +12,5 @@ export class GraphService {
     timesliderPosition = new BehaviorSubject<number>(undefined);
     settings = new BehaviorSubject<object>(undefined);
     rendered = new BehaviorSubject<boolean>(undefined);
+    userNodeHighlight = new BehaviorSubject<string>(undefined);
 }

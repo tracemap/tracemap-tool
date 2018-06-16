@@ -39,6 +39,9 @@ export class AccInfluentialComponent {
                 this.rendered.next(false);
             }
         })
+        this.graphService.userNodeHighlight.subscribe( userId => {
+            this.hovered = userId;
+        })
     }
 
     addInfluentialNodes() {
@@ -57,6 +60,10 @@ export class AccInfluentialComponent {
         })
         this.influentialUsers = users;
         this.rendered.next(true);
+    }
+
+    setHovered(userId) {
+        this.graphService.userNodeHighlight.next(userId);
     }
 
 }
