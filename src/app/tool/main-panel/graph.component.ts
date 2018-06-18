@@ -27,6 +27,7 @@ export class GraphComponent {
     renderedLinks = [];
 
     hoveredNode;
+    userPreviewRendered;
 
     width;
     height;
@@ -96,8 +97,6 @@ export class GraphComponent {
                         }
                     })
                     this.renderedLinks = renderedLinks;
-                    console.log(this.renderedLinks.length);
-                    console.log(this.renderedLinks[this.renderedLinks.length - 1]);
 
                     if( this.simulation) {
                         this.simulation.nodes( this.renderedNodes)
@@ -239,6 +238,7 @@ export class GraphComponent {
                 })
             } else {
                 this.hoveredNode = undefined;
+                this.userPreviewRendered = false;
                 this.resetHighlightNeighbours();
             }
         })
@@ -415,7 +415,6 @@ export class GraphComponent {
     }
 
     highlightNeighbours( node) {
-        console.log(node);
         let matchParents = this.settings.lastHighlight;
         let matchChildren = this.settings.nextHighlight;
 
@@ -511,5 +510,10 @@ export class GraphComponent {
             this.simulation.restart();
             this.simulation.alpha(0.3);
         }
+    }
+
+    setUserPreviewRendered( value) {
+        console.log(value);
+        this.userPreviewRendered = value;
     }
 }

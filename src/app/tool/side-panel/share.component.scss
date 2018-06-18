@@ -48,93 +48,86 @@
             width: 100vw;
             transition: opacity 0.2s ease-in-out;
         }
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas:
-            "share_menu";
-        justify-items: center;
-        align-items: center;
 
     }
-        .share-menu {
-            position: fixed;
-            top: 50%;
-            margin-top: -175px;
-            left: 50%;
-            margin-left: -277px;
-            height: 350px;
-            width: 504px;
-            background-color: #fff;
-            opacity: 1.0;
-            box-shadow: 0 3px 5px 0 rgba(15,19,26,0.1), 0 9px 11px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
-            z-index: 12; 
+    .share-menu {
+        position: fixed;
+        top: 50%;
+        margin-top: -175px;
+        left: 50%;
+        margin-left: -277px;
+        height: 350px;
+        width: 504px;
+        background-color: #fff;
+        opacity: 1.0;
+        box-shadow: 0 3px 5px 0 rgba(15,19,26,0.1), 0 9px 11px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
+        z-index: 12; 
+        display: grid;
+        grid-template-columns: 1fr 60px 60px 60px 60px 60px 1fr;
+        grid-template-rows: 60px 20px 20px 80px 30px 60px 1fr;
+        grid-column-gap: 20px;
+        grid-template-areas:
+            ". . . . . . ."
+            ". head head head head head ."
+            ". . . . . . ."
+            ". text text text text text ."
+            ". . . . . . ."
+            ". twitter facebook googleplus telegram mail ."
+            ". . . . . . .";
+
+        h2 {
+            grid-area: head;
+            color: $color-gray-font-blackish;
+            font-size: 10.13px;
+            font-weight: 600;
+            line-height: 20px;
+            text-align: center;
+            letter-spacing: 0.7px;
+        }
+
+        p {
+            grid-area: text;
+            color: $color-gray-font-dark;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .twitter-link {
+            grid-area: twitter;
+        }
+        .facebook-link {
+            grid-area: facebook;
+        }
+        .googleplus-link {
+            grid-area: googleplus
+        }
+        .telegram-link {
+            grid-area: telegram;
+        }
+        .mail-link {
+            grid-area: mail;
+        }
+
+        div {
+            border: 2px solid $color-purple-dark;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
             display: grid;
-            grid-template-columns: 1fr 60px 60px 60px 60px 60px 1fr;
-            grid-template-rows: 60px 20px 20px 80px 30px 60px 1fr;
-            grid-column-gap: 20px;
-            grid-template-areas:
-                ". . . . . . ."
-                ". head head head head head ."
-                ". . . . . . ."
-                ". text text text text text ."
-                ". . . . . . ."
-                ". twitter facebook googleplus telegram mail ."
-                ". . . . . . .";
-
-            h2 {
-                grid-area: head;
-                color: $color-gray-font-blackish;
-                font-size: 10.13px;
-                font-weight: 600;
-                line-height: 20px;
-                text-align: center;
-                letter-spacing: 0.7px;
+            justify-items: center;
+            align-items: center;
+            cursor: pointer;
+            &.purple-bg {
+                background-color: $color-purple-dark;
             }
 
-            p {
-                grid-area: text;
-                color: $color-gray-font-dark;
-                font-size: 24px;
-                font-weight: 400;
-                line-height: 40px;
-                text-align: center;
-            }
-
-            .twitter-link {
-                grid-area: twitter;
-            }
-            .facebook-link {
-                grid-area: facebook;
-            }
-            .googleplus-link {
-                grid-area: googleplus
-            }
-            .telegram-link {
-                grid-area: telegram;
-            }
-            .mail-link {
-                grid-area: mail;
-            }
-
-            div {
-                border: 2px solid $color-purple-dark;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                display: grid;
-                justify-items: center;
-                align-items: center;
-                cursor: pointer;
-                &.purple-bg {
-                    background-color: $color-purple-dark;
-                }
-
-                img {
-                    width: 25px;
-                    margin-top: 3px;
-                    margin-left: -1px;
-                }
+            img {
+                width: 25px;
+                margin-top: 3px;
+                margin-left: -1px;
             }
         }
+    }
 }
