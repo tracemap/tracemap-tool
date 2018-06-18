@@ -284,8 +284,8 @@ export class GraphComponent {
             let x = node.x;
             let y = node.y;
             let r = node.r;
-            if( x < 0 + r) {
-                node.x = 0 + r;
+            if( x < (0 + r + 5)) {
+                node.x = (0 + r + 5);
             } else if ( x > this.canvas.width - r) {
                 node.x = this.canvas.width - r;
             }
@@ -331,7 +331,7 @@ export class GraphComponent {
         this.context.moveTo(d.source.x, d.source.y);
         this.context.lineTo( xPos, yPos);
         this.context.strokeStyle = "rgba("+this.linkColors[d.color]+","+d.opacity+")";
-        this.context.lineWidth = 1;
+        this.context.lineWidth = 0.8;
         if( this.settings.arrows) {
             this.drawHead(xPos, yPos, angle)
         }
