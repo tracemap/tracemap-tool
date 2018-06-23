@@ -28,7 +28,7 @@ export class MenuComponent{
             path: "/information"
         },
         {
-            label: "Support Us",
+            label: "Help Us",
             path: "/helpus"
         },
         {

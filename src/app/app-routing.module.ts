@@ -5,7 +5,6 @@ import { HomePageComponent} from './home-page/home-page.component';
 
 import { AboutUsComponent } from './home-page/about-us.component';
 import { HelpUsComponent } from './home-page/help-us.component';
-// import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { InformationComponent } from './home-page/information.component';
 import { SitemapComponent } from './home-page/sitemap.component';
 
@@ -19,7 +18,6 @@ const routes: Routes = [
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
     { path: 'imprint', component: SitemapComponent},
-    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule'},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 
