@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CommunicationService } from './../../services/communication.service';
+import { GraphService } from './../../services/graph.service';
 
 @Component({
     selector: 'user-details',
@@ -15,11 +15,12 @@ export class UserDetailsComponent {
 
     constructor(
         private route: ActivatedRoute,
-        private communicationService: CommunicationService
+        private graphService: GraphService
     ){
         this.route.params.subscribe( (params:Params) => {
             if( params["uid"] && this.userId != params["uid"]) {
                 this.userId = params["uid"];
+                this.graphService.activeNode.next(this.userId);
             } 
         })
     }

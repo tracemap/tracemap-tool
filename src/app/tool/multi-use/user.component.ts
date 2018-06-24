@@ -1,5 +1,6 @@
 import { Component, Input,Output, OnChanges, EventEmitter } from '@angular/core';
-import { ApiService } from './../../services/api.service';
+
+import { CommunicationService } from './../services/communication.service';
 
 @Component({
     selector: 'user',
@@ -20,12 +21,14 @@ export class UserComponent implements OnChanges{
     rendered = new EventEmitter(false);
 
     constructor(
-        private apiService: ApiService
+        private communicationService: CommunicationService
     ){}
 
     ngOnChanges() {
         if( this.userId) {
-            this.apiService.getUserInfo(this.userId).subscribe( userInfo => {
+            let userIdList = [];
+            userIdList.push( this.userId);
+            this.communicationService.getUserInfo(userIdList).then( userInfo => {
                 let info = userInfo[this.userId];
                 this.name = info.name;
                 this.screenName = info.screen_name;

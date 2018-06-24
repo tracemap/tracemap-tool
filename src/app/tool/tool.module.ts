@@ -35,6 +35,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccEnhancedMetricsComponent } from './side-panel/accordeons/acc-enhanced-metrics.component';
         import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
         import { AccLastTracemapsComponent } from './side-panel/accordeons/acc-last-tracemaps.component';
+    import { UserDetailsComponent } from './side-panel/user/user-details.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -86,6 +87,7 @@ import { ToYearPipe } from './pipes/to-year.pipe';
               AccEnhancedMetricsComponent,
               AccLineChartComponent,
               AccLastTracemapsComponent,
+          UserDetailsComponent,
       TimeLabelPipe,
       ToYearPipe
   ]

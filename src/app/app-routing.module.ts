@@ -18,6 +18,7 @@ const routes: Routes = [
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'information', component: InformationComponent},
     { path: 'imprint', component: SitemapComponent},
+    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule'},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 

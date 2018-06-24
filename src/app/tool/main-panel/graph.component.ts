@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { GraphService } from './../services/graph.service';
+import { CommunicationService } from './../services/communication.service';
 
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -27,6 +28,7 @@ export class GraphComponent {
     renderedLinks = [];
 
     hoveredNode;
+    activeNode;
     userPreviewRendered;
 
     width;
@@ -54,7 +56,8 @@ export class GraphComponent {
 
     constructor(
         private graphService: GraphService,
-        private route: ActivatedRoute
+        private communicationService: CommunicationService,
+        private route: ActivatedRoute,
     ) {
         this.route.params.subscribe( (params: Params) => {
             if( params["tid"] != this.tracemapId) {
@@ -133,6 +136,35 @@ export class GraphComponent {
                 if( this.settings.nextHighlight != settings["nextHighlight"]) {
                     this.settings.nextHighlight = settings["nextHighlight"];
                 } 
+            }
+        })
+        this.graphService.rendered.subscribe( rendered => {
+            if( rendered) {
+                this.graphService.userNodeHighlight.subscribe( userId => {
+                    if( userId) {
+                        this.graphData.nodes.forEach( node => {
+                            if( node.id_str == userId) {
+                                this.hoveredNode = node;
+                                this.highlightNeighbours( node);
+                            }
+                        })
+                    } else {
+                        this.hoveredNode = undefined;
+                        this.userPreviewRendered = false;
+                        this.resetHighlightNeighbours();
+                    }
+                })
+                this.graphService.activeNode.subscribe( nodeId => {
+                    if( nodeId) {
+                        let node = this.getNodeById(nodeId).then( node => {
+                            this.activeNode = node;
+                            this.highlightNeighbours( node);
+                        })
+                    } else {
+                        this.activeNode = undefined;
+                        this.resetHighlightNeighbours();
+                    }
+                });
             }
         })
     }
@@ -215,8 +247,17 @@ export class GraphComponent {
                         this.graphService.userNodeHighlight.next(undefined);
                     } else if ( node != this.hoveredNode 
                                 && !this.dragging) {
+                        this.hoveredNode = node;
                         this.graphService.userNodeHighlight.next(undefined);
                         this.graphService.userNodeHighlight.next(node.id_str);
+                    }
+                })
+                .on("click", () => {
+                    let node = nodeHovered(this.canvas);
+                    if( node) {
+                        this.graphService.activeNode.next(node.id_str);
+                    } else {
+                        this.graphService.activeNode.next(undefined);
                     }
                 })
 
@@ -226,20 +267,6 @@ export class GraphComponent {
                 let y = mouse[1];
                 let node = simulation.find( x, y);
                 return simulation.find( x, y, node.r + (node.r / 7));
-            }
-        })
-        this.graphService.userNodeHighlight.subscribe( userId => {
-            if( userId) {
-                this.renderedNodes.forEach( node => {
-                    if( node.id_str == userId) {
-                        this.hoveredNode = node;
-                        this.highlightNeighbours( node);
-                    }
-                })
-            } else {
-                this.hoveredNode = undefined;
-                this.userPreviewRendered = false;
-                this.resetHighlightNeighbours();
             }
         })
     }
@@ -270,11 +297,11 @@ export class GraphComponent {
                 .force("center", d3.forceCenter(this.width/2, this.height/2));
 
             simulation
-                .nodes( this.renderedNodes)
+                .nodes( this.graphData.nodes)
                 .on( "tick", () => {return this.ticked()});
 
             simulation.force("link")
-                .links( this.renderedLinks);
+                .links( this.graphData.links);
             resolve(simulation);
         })
     }
@@ -418,15 +445,15 @@ export class GraphComponent {
         let matchParents = this.settings.lastHighlight;
         let matchChildren = this.settings.nextHighlight;
 
-        this.renderedLinks.forEach( link => {
+        this.graphData.links.forEach( link => {
             link.opacity = 0.2;
         });
-        this.renderedNodes.forEach( node => {
+        this.graphData.nodes.forEach( node => {
             node.opacity = 0.2
         })
 
         if( matchChildren) {
-            this.renderedLinks.forEach( link => {
+            this.graphData.links.forEach( link => {
                 if( link.source == node) {
                     link.opacity = 1;
                     link.color = 1;
@@ -436,7 +463,7 @@ export class GraphComponent {
             })
         }
         if( matchParents) {
-            this.renderedLinks.forEach( link => {
+            this.graphData.links.forEach( link => {
                 if( link.target == node) {
                     link.opacity = 1;
                     link.color = 1;
@@ -459,6 +486,9 @@ export class GraphComponent {
             node.color = 0;
             node.opacity = 1;
         })
+        if( this.activeNode) {
+            this.highlightNeighbours(this.activeNode);
+        }
         this.ticked();
     }
 
@@ -513,7 +543,19 @@ export class GraphComponent {
     }
 
     setUserPreviewRendered( value) {
-        console.log(value);
-        this.userPreviewRendered = value;
+        setTimeout( () => {
+            this.userPreviewRendered = value;
+        }, 200);
+    }
+
+    getNodeById( nodeId): Promise<object> {
+        return new Promise( (resolve, reject) => {
+            this.graphData.nodes.forEach( node => {
+                if( node.id_str == nodeId) {
+                    resolve(node);
+                }
+            })
+            reject();
+        })
     }
 }

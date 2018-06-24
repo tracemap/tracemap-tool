@@ -4,7 +4,8 @@
         <div 
         class="user-card"
         (mouseenter)="setHovered(user.id_str)"
-        (mouseleave)="setHovered(undefined)">
+        (mouseleave)="setHovered(undefined)"
+        (click)="setActive(user.id_str)">
             <user 
             class="user" 
             [name]="user.name"

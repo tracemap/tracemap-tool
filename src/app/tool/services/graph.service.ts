@@ -13,4 +13,5 @@ export class GraphService {
     settings = new BehaviorSubject<object>(undefined);
     rendered = new BehaviorSubject<boolean>(undefined);
     userNodeHighlight = new BehaviorSubject<string>(undefined);
+    activeNode = new BehaviorSubject<string>(undefined);
 }

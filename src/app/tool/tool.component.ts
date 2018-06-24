@@ -16,6 +16,7 @@ import { LocalStorageService } from './services/local-storage.service';
 export class ToolComponent implements OnInit {
 
     tweetId: string;
+    userId: string;
     tracemapData: object;
     graphData: object;
     newMode = false;
@@ -27,7 +28,7 @@ export class ToolComponent implements OnInit {
         private apiService: ApiService,
         private graphService: GraphService,
         private communicationService: CommunicationService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
     ) {
         this.loadTwitterWidgetScript();
         this.graphService.graphData.subscribe( graphData => {
@@ -35,9 +36,6 @@ export class ToolComponent implements OnInit {
                 let nodeIds = graphData["nodes"].map( node => {
                     return node.id_str;
                 }).toString();
-                this.apiService.getUserInfo(nodeIds).subscribe( userInfo => {
-                    this.graphService.userInfo.next(userInfo);
-                });
             }
         })
 
@@ -50,6 +48,16 @@ export class ToolComponent implements OnInit {
                 this.cookiePolicyOpen = false;
             } else {
                 this.cookiePolicyOpen = true;
+            }
+        })
+        this.graphService.activeNode.subscribe( userId => {
+            if( userId &&
+                this.userId != userId) {
+                this.userId = userId;
+                this.router.navigate(['details', userId], {relativeTo: this.route});
+            } else if( !userId && this.userId) {
+                this.userId = undefined;
+                this.router.navigate(['./'], {relativeTo: this.route});
             }
         })
     }
@@ -69,6 +77,9 @@ export class ToolComponent implements OnInit {
             if(this.tweetId != params["tid"]) {
                 this.tweetId = params["tid"];
                 this.communicationService.resetData.next(true);
+            }
+            if( params["uid"]) {
+                this.graphService.activeNode.next(params["uid"]);
             }
 
             this.apiService.getTracemapData( this.tweetId)

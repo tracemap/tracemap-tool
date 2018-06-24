@@ -89,34 +89,37 @@ export class AccMetricsComponent {
     })
 
     userDataMetrics = new Promise( (res) => {
-        this.graphService.userInfo.subscribe( userInfo => {
-            if( userInfo) {
-                let userCount = 0;
-                let followers = 0;
-                let followees = 0;
-                let tweets = 0;
-                let age = 0;
-                let currentTime = Date.now();
-                Object.keys(userInfo).forEach( key => {
-                    let user = userInfo[key];
-                    userCount += 1;
-                    followers += user["followers_count"];
-                    followees += user["friends_count"];
-                    tweets += user["statuses_count"];
-                    let creationDate = Date.parse(user["created_at"]);
-                    age += currentTime - creationDate;
+        this.graphService.nodeList.subscribe( nodeList => {
+            if( nodeList) {
+                let nodeIds = nodeList.map( node => node["id_str"]);
+                this.communicationService.getUserInfo(nodeIds).then( userInfos => {
+                    let userCount = 0;
+                    let followers = 0;
+                    let followees = 0;
+                    let tweets = 0;
+                    let age = 0;
+                    let currentTime = Date.now();
+                    Object.keys(userInfos).forEach( key => {
+                        let user = userInfos[key];
+                        userCount += 1;
+                        followers += user["followers_count"];
+                        followees += user["friends_count"];
+                        tweets += user["statuses_count"];
+                        let creationDate = Date.parse(user["created_at"]);
+                        age += currentTime - creationDate;
+                    })
+                    let avgFollowers = Math.floor(followers / userCount);
+                    let avgFollowees = Math.floor(followees / userCount);
+                    let avgTweets = Math.floor(tweets / userCount);
+                    let avgAge = (age / userCount);
+                    this.userMetrics.avg_followers = avgFollowers;
+                    this.userMetrics.avg_followees = avgFollowees;
+                    this.userMetrics.avg_tweets = avgTweets;
+                    this.userMetrics.avg_age = avgAge;
+                    this.userMetricsRendered = true;
+                    res();
                 })
-                let avgFollowers = Math.floor(followers / userCount);
-                let avgFollowees = Math.floor(followees / userCount);
-                let avgTweets = Math.floor(tweets / userCount);
-                let avgAge = (age / userCount);
-                this.userMetrics.avg_followers = avgFollowers;
-                this.userMetrics.avg_followees = avgFollowees;
-                this.userMetrics.avg_tweets = avgTweets;
-                this.userMetrics.avg_age = avgAge;
-                this.userMetricsRendered = true;
-                res();
             }
-        }) 
+        })
     })
 }
