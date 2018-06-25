@@ -1,0 +1,96 @@
+@import "../../../../styles.scss";
+
+.content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    min-height: 600px;
+    margin-left: -600px;
+    overflow: hidden;
+    width: 360px;
+    background-color: $color-gray-bg-light;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 72px auto auto 1fr;
+    grid-template-areas:
+        "go_back"
+        "user"
+        "description"
+        "timeline";
+    transition: margin 0.4s;
+    &.open {
+        transition: margin 0.4s;
+        margin-left: 0px;
+    }
+    .go-back {
+        grid-area: go_back;
+        background-color: $color-gray-font-dark;
+        padding-left: 20px;
+        align-items: center;
+        display: grid;
+        grid-template-columns: 20px auto;
+        grid-template-rows: 1fr;
+        cursor: pointer;
+
+        img {
+            width: 20px;
+            transform: rotate(180deg);
+        }
+        p {
+            margin-left: 10px;
+            color: #fff;
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+    .user-base {
+        grid-area: user;
+        background-color: #fff;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 15px;
+    }
+    .user-description {
+        grid-area: description;
+        background-color: #fff;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 22px;
+        p.description::ng-deep {
+            font-size: 14px;
+            color: $color-black-bg;
+            line-height: 20px;
+            padding-bottom: 15px;
+
+            a {
+
+                text-decoration: none;
+                color: $color-blue-link;
+            }
+        }
+        .numbers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 20px;
+            align-items: center;
+
+            .item {
+                height: 11px;
+                p {
+                    float: left;
+                    font-size: 11px;
+                    color: $color-paragraph;
+                    font-weight: bold;
+                }
+                .unit {
+                    margin-left: 3px;
+                    font-weight: normal;
+                }
+            }
+        }
+    }
+    .timeline {
+        grid-area: timeline;
+    }
+}

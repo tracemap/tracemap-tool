@@ -14,13 +14,20 @@ export class CommunicationService {
     resetData = new BehaviorSubject<boolean>(undefined);
     userId = new BehaviorSubject<string>(undefined);
 
-    userInfo = {};
+    userInfo = new BehaviorSubject<object>(undefined);
+    oldUserInfo = {};
     getUserInfo(userIds): Promise<object> {
         return new Promise( (resolve) => {
+            let input = [];
+            if( typeof userIds == 'string' || userIds instanceof String) {
+                input.push(userIds);
+            } else {
+                input = userIds;
+            }
             let userInfos = {};
             let unknown = [];
-            userIds.forEach( userId => {
-                let userInfo = this.userInfo[userId];
+            input.forEach( userId => {
+                let userInfo = this.oldUserInfo[userId];
                 if( userInfo) {
                     userInfos[userId] = userInfo;
                 } else {
@@ -33,7 +40,7 @@ export class CommunicationService {
                 this.apiService.getUserInfo(unknown.toString()).subscribe( apiUserInfos => {
                     Object.keys(apiUserInfos).forEach( key => {
                         let userInfo = apiUserInfos[key];
-                        this.userInfo[key] = userInfo;
+                        this.oldUserInfo[key] = userInfo;
                         userInfos[key] = userInfo;
                     })
                     resolve(userInfos);

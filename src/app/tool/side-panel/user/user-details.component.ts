@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { GraphService } from './../../services/graph.service';
+import { CommunicationService } from './../../services/communication.service';
 
 @Component({
     selector: 'user-details',
@@ -12,17 +13,42 @@ import { GraphService } from './../../services/graph.service';
 export class UserDetailsComponent {
 
     userId: string;
+    userInfo: object;
+    activeUserInfo: object;
+    open: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ){
-        this.route.params.subscribe( (params:Params) => {
-            if( params["uid"] && this.userId != params["uid"]) {
-                this.userId = params["uid"];
-                this.graphService.activeNode.next(this.userId);
-            } 
+        let params = this.route.params.subscribe( (params:Params) => {
+            if( params["uid"] && params["uid"] != this.userId) {
+                this.graphService.activeNode.next(params["uid"]);
+            }
+        });
+
+        this.communicationService.userInfo.subscribe( userInfo => {
+            if( userInfo) {
+                this.userInfo = userInfo;
+                console.log(this.userInfo);
+
+                this.graphService.activeNode.subscribe( nodeId => {
+                    if( nodeId && nodeId != this.userId) {
+                        this.userId = nodeId;
+                        this.activeUserInfo = this.userInfo[this.userId];
+                        params.unsubscribe();
+                        this.open = true;
+                    }
+                })
+            }
         })
     }
 
+    closeUserInfo():void {
+        this.open = false;
+        setTimeout( () => {
+            this.graphService.activeNode.next(undefined);
+        }, 400);
+    }
 }

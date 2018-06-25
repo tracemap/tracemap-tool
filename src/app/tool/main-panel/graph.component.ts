@@ -359,14 +359,16 @@ export class GraphComponent {
         this.context.lineTo( xPos, yPos);
         this.context.strokeStyle = "rgba("+this.linkColors[d.color]+","+d.opacity+")";
         this.context.lineWidth = 0.8;
-        if( this.settings.arrows) {
-            this.drawHead(xPos, yPos, angle)
-        }
         this.context.stroke();
+        if( this.settings.arrows) {
+            this.drawHead(d, xPos, yPos, angle)
+        }
     }
 
-    drawHead(xPos, yPos, angle) {
-        let headlen = 5;
+    drawHead(node, xPos, yPos, angle) {
+        this.context.beginPath();
+        this.context.moveTo(xPos, yPos);
+        let headlen = 3;
         let headRightX = xPos - headlen * Math.cos(angle - Math.PI/6);
         let headRightY = yPos - headlen * Math.sin(angle - Math.PI/6); 
         this.context.lineTo( headRightX, headRightY);
@@ -374,18 +376,20 @@ export class GraphComponent {
         let headLeftX = xPos - headlen * Math.cos(angle + Math.PI/6);
         let headLeftY = yPos - headlen * Math.sin(angle + Math.PI/6); 
         this.context.lineTo( headLeftX, headLeftY);
-
+        this.context.strokeStyle = "rgba("+this.linkColors[1]+","+node.opacity+")";
+        this.context.lineWidth = 1.5;
+        this.context.stroke();
     }
 
     drawNode(d) {
-        let lineWidth = d.r / 7;
+        let lineWidth = 2;
         let radius = d.r - lineWidth;
         this.context.beginPath();
         this.context.moveTo( d.x + radius, d.y)
         this.context.arc(d.x, d.y, radius, 0, 2*Math.PI);
         this.context.lineWidth = lineWidth;
         this.context.fillStyle = "rgba("+this.colors[d.color]+","+d.opacity+")";
-        this.context.strokeStyle = "rgba("+this.colors[d.color]+","+d.opacity+")";
+        this.context.strokeStyle = "#F5F6F7";
         this.context.fill();
         this.context.stroke();
     }

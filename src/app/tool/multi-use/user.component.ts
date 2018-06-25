@@ -32,7 +32,7 @@ export class UserComponent implements OnChanges{
                 let info = userInfo[this.userId];
                 this.name = info.name;
                 this.screenName = info.screen_name;
-                this.image = info.profile_image_url;
+                this.image = "https://twitter.com/" + info.screen_name + "/profile_image";
                 this.rendered.next(true);
             })
         }

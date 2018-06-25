@@ -44,6 +44,8 @@ import { TweetService } from './services/tweet.service';
 
 import { TimeLabelPipe } from './pipes/time-label.pipe';
 import { ToYearPipe } from './pipes/to-year.pipe';
+import { ShortNumberPipe } from './pipes/short-number.pipe';
+import { LinkedStringPipe } from './pipes/linked-string.pipe';
 
 @NgModule({
   imports: [
@@ -89,7 +91,9 @@ import { ToYearPipe } from './pipes/to-year.pipe';
               AccLastTracemapsComponent,
           UserDetailsComponent,
       TimeLabelPipe,
-      ToYearPipe
+      ToYearPipe,
+      ShortNumberPipe,
+      LinkedStringPipe
   ]
 })
 export class ToolModule { }

@@ -19,6 +19,7 @@ export class ToolComponent implements OnInit {
     userId: string;
     tracemapData: object;
     graphData: object;
+    userInfos: object = {};
     newMode = false;
     cookiePolicyOpen = false;
 
@@ -97,6 +98,7 @@ export class ToolComponent implements OnInit {
                     this.communicationService.retweetCount.next(retweets);
 
                     let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user'];
+                    this.userInfos[authorInfo['id_str']] = authorInfo;
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
                     this.graphData = {};
@@ -114,7 +116,9 @@ export class ToolComponent implements OnInit {
                         tmp['friends_count'] = retweeterInfo['friends_count'];
                         tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
                         this.graphData['retweet_info'][retweeterId] = tmp;
+                        this.userInfos[retweeterId] = retweeterInfo;
                     });
+                    this.communicationService.userInfo.next(this.userInfos);
                     this.addGraphData();
                 })
         })

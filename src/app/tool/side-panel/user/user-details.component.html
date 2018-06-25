@@ -1,0 +1,42 @@
+<div 
+class="content" 
+[ngClass]="{'open':open}">
+    <div 
+    class="go-back"
+    (click)="closeUserInfo()">
+        <img srcset="
+        ../../../../assets/images/arrow-right-white_128.png 4x,
+        ../../../../assets/images/arrow-right-white_64.png 2x,
+        ../../../../assets/images/arrow-right-white_32.png 1x,
+        "
+        src="../../../../assets/images/arrow-right-white_32.png">
+        <p>Back</p>
+    </div>
+    <div class="user-base">
+        <user
+        *ngIf="userId"
+        [id]="userId"></user>
+    </div>
+    <div class="user-description">
+        <p class="description"
+        *ngIf="activeUserInfo" [innerHTML]="activeUserInfo.description | linkedString"></p>
+        <div class="numbers" *ngIf="activeUserInfo">
+            <div class="item">
+                <p class="number">{{activeUserInfo.statuses_count | shortNumber}}</p>
+                <p class="unit">Tweets</p>
+            </div>
+            <div class="item">
+                <p class="number">{{activeUserInfo.followers_count | shortNumber}}</p>
+                <p class="unit">Followers</p>
+            </div>
+            <div class="item">
+                <p class="number">{{activeUserInfo.friends_count | shortNumber}}</p>
+                <p class="unit">Following</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="timeline">
+        
+    </div>
+</div>
