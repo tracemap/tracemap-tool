@@ -7,23 +7,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'linkedString'})
 export class LinkedStringPipe implements PipeTransform {
     transform( text: string): string {
-        let html = "";
-        let words = text.split(' ');
-        words = words.map( word => {
-            if( word.indexOf("https://") == 0) {
-                return "<a href='" + word + "'>"+word+"</a>";
-            } else if( word.indexOf("@") == 0) {
-                let accountName = word.slice(1);
-                return "<a href=\"https://twitter.com/"+accountName+"\">"+word+"</a>";
-            } else if( word.indexOf("#") == 0) {
-                let hashtag = word.slice(1);
-                return "<a href=\"https://twitter.com/hashtag/"+hashtag+"\">"+word+"</a>";
-            } else {
-                return word;
-            }
+        text = text.replace(/https:.*/g, (link) => {
+            return "<a target='_blank' href='"+link+"'>"+link+"</a>";
         })
-        console.log(words);
-        html = words.join(' ');
-        return html;
+        text = text.replace(/#\w*/g, (hashtag) => {
+            return "<a target='_blank' href='https://twitter.com/hashtag/"+hashtag.slice(1)+"?src=hash'>"+hashtag+"</a>";
+        })
+        text = text.replace(/@\w*/g, (user) => {
+            return "<a target='_blank' href='https://twitter.com/"+user.slice(1)+"'>"+user+"</a>"
+        })
+        return text;
     }
 }

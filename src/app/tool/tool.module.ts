@@ -36,6 +36,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
         import { AccLastTracemapsComponent } from './side-panel/accordeons/acc-last-tracemaps.component';
     import { UserDetailsComponent } from './side-panel/user/user-details.component';
+        import { TimelineComponent } from './side-panel/user/timeline.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -48,52 +49,53 @@ import { ShortNumberPipe } from './pipes/short-number.pipe';
 import { LinkedStringPipe } from './pipes/linked-string.pipe';
 
 @NgModule({
-  imports: [
-      CommonModule,
-      ToolRoutingModule,
-      MultiUseModule,
-      MatSlideToggleModule,
-      MatCheckboxModule,
-      MatSliderModule,
-      MatProgressSpinnerModule,
-      FormsModule
-  ],
-  providers: [ 
-    GraphService,
-    CommunicationService,
-    LocalStorageService,
-    TweetService
-  ],
-  declarations: [
-      ToolComponent,
-      CookiePolicyComponent,
-      HintComponent,
-      TweetComponent,
-      TweetCardComponent,
-      UserComponent,
-      InfoButtonComponent,
-      ChartComponent,
-      MainPanelComponent,
-          GraphComponent,
-          SettingsComponent,
-          TourComponent,
-          ZoomComponent,
-          TimesliderComponent,
-      SidePanelComponent,
-          SearchbarComponent,
-          ShareComponent,
-          AccordeonsComponent,
-              AccSourceComponent,
-              AccInfluentialComponent,
-              AccMetricsComponent,
-              AccEnhancedMetricsComponent,
-              AccLineChartComponent,
-              AccLastTracemapsComponent,
-          UserDetailsComponent,
-      TimeLabelPipe,
-      ToYearPipe,
-      ShortNumberPipe,
-      LinkedStringPipe
-  ]
+    imports: [
+        CommonModule,
+        ToolRoutingModule,
+        MultiUseModule,
+        MatSlideToggleModule,
+        MatCheckboxModule,
+        MatSliderModule,
+        MatProgressSpinnerModule,
+        FormsModule
+    ],
+    providers: [ 
+      GraphService,
+      CommunicationService,
+      LocalStorageService,
+      TweetService
+    ],
+    declarations: [
+        ToolComponent,
+        CookiePolicyComponent,
+        HintComponent,
+        TweetComponent,
+        TweetCardComponent,
+        UserComponent,
+        InfoButtonComponent,
+        ChartComponent,
+        MainPanelComponent,
+            GraphComponent,
+            SettingsComponent,
+            TourComponent,
+            ZoomComponent,
+            TimesliderComponent,
+        SidePanelComponent,
+            SearchbarComponent,
+            ShareComponent,
+            AccordeonsComponent,
+                AccSourceComponent,
+                AccInfluentialComponent,
+                AccMetricsComponent,
+                AccEnhancedMetricsComponent,
+                AccLineChartComponent,
+                AccLastTracemapsComponent,
+            UserDetailsComponent,
+                TimelineComponent,
+        TimeLabelPipe,
+        ToYearPipe,
+        ShortNumberPipe,
+        LinkedStringPipe
+    ]
 })
 export class ToolModule { }

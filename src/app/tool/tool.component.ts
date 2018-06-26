@@ -58,7 +58,9 @@ export class ToolComponent implements OnInit {
                 this.router.navigate(['details', userId], {relativeTo: this.route});
             } else if( !userId && this.userId) {
                 this.userId = undefined;
-                this.router.navigate(['./'], {relativeTo: this.route});
+                setTimeout( () => {
+                    this.router.navigate(['./'], {relativeTo: this.route});
+                }, 400);
             }
         })
     }

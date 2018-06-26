@@ -31,7 +31,6 @@ export class UserDetailsComponent {
         this.communicationService.userInfo.subscribe( userInfo => {
             if( userInfo) {
                 this.userInfo = userInfo;
-                console.log(this.userInfo);
 
                 this.graphService.activeNode.subscribe( nodeId => {
                     if( nodeId && nodeId != this.userId) {
@@ -39,6 +38,8 @@ export class UserDetailsComponent {
                         this.activeUserInfo = this.userInfo[this.userId];
                         params.unsubscribe();
                         this.open = true;
+                    } else if(!nodeId) {
+                        this.open = false;
                     }
                 })
             }
@@ -46,9 +47,6 @@ export class UserDetailsComponent {
     }
 
     closeUserInfo():void {
-        this.open = false;
-        setTimeout( () => {
-            this.graphService.activeNode.next(undefined);
-        }, 400);
+        this.graphService.activeNode.next(undefined);
     }
 }

@@ -171,6 +171,8 @@ export class GraphComponent {
 
     resetGraph() {
         console.log("resetting graph");
+        this.graphService.activeNode.next(undefined);
+        this.graphService.userNodeHighlight.next(undefined);
         if( this.simulation) {
             this.simulation.alpha(0);
             this.simulation.nodes([]);

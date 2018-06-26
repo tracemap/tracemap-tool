@@ -29,7 +29,6 @@ export class ShareComponent {
     }
 
     highlight(element=undefined) {
-        console.log("hovered!");
         this.hovered = element;
     }
 }

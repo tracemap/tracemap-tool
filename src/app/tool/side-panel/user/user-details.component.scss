@@ -67,6 +67,9 @@
 
                 text-decoration: none;
                 color: $color-blue-link;
+                &:hover {
+                    border-bottom: 1px solid $color-blue-link;
+                }
             }
         }
         .numbers {
