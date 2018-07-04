@@ -95,5 +95,7 @@
     }
     .timeline {
         grid-area: timeline;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 }

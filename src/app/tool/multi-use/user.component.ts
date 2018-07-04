@@ -1,4 +1,4 @@
-import { Component, Input,Output, OnChanges, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
 import { CommunicationService } from './../services/communication.service';
 
@@ -15,7 +15,7 @@ export class UserComponent implements OnChanges{
     screenName: string;
     @Input('image')
     image: string;
-    @Input('id')
+    @Input()
     userId: string;
     @Output()
     rendered = new EventEmitter(false);
@@ -25,16 +25,16 @@ export class UserComponent implements OnChanges{
     ){}
 
     ngOnChanges() {
-        if( this.userId) {
-            let userIdList = [];
+        if ( this.userId) {
+            const userIdList = [];
             userIdList.push( this.userId);
             this.communicationService.getUserInfo(userIdList).then( userInfo => {
-                let info = userInfo[this.userId];
+                const info = userInfo[this.userId];
                 this.name = info.name;
                 this.screenName = info.screen_name;
-                this.image = "https://twitter.com/" + info.screen_name + "/profile_image";
+                this.image = 'https://twitter.com/' + info.screen_name + '/profile_image';
                 this.rendered.next(true);
-            })
+            });
         }
     }
 }

@@ -8,22 +8,22 @@ import { ApiService } from './../../services/api.service';
 })
 
 export class TweetCardComponent implements OnChanges {
-    @Input('tweetId')
+    @Input()
     tweetId: string;
+    @Input()
+    retweetCount: number;
     @Output()
     rendered = new EventEmitter();
 
-    retweetCount: number;
-
     constructor(
         private apiService: ApiService
-    ){}
+    ) {}
 
     ngOnChanges() {
-        if( this.tweetId) {
+        if ( this.tweetId && !this.retweetCount) {
             this.apiService.getTweetInfo(this.tweetId).subscribe( tweetInfo => {
-                this.retweetCount = tweetInfo[this.tweetId]["retweet_count"];
-            })
+                this.retweetCount = tweetInfo[this.tweetId]['retweet_count'];
+            });
         }
     }
 

@@ -21,7 +21,7 @@ export class AccordeonsComponent {
         },{
             name: "Metrics",
             selector: "acc-metrics",
-            open: true,
+            open: false,
             rendered: false
         },{
             name: "Enhanced Metrics",
@@ -31,7 +31,7 @@ export class AccordeonsComponent {
         },{
             name: "Last TraceMaps",
             selector: "acc-last-tracemaps",
-            open: false,
+            open: true,
             rendered: false
         }
     ];
