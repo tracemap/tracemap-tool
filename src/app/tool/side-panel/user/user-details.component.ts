@@ -42,6 +42,7 @@ export class UserDetailsComponent {
                 this.graphService.activeNode.subscribe( nodeId => {
                     if ( nodeId && nodeId !== this.userId) {
                         this.userId = nodeId;
+                        this.timelineRendered = false;
                         this.activeUserInfo = this.userInfo[this.userId];
                         subscriptionParams.unsubscribe();
                         this.open = true;
