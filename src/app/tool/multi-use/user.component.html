@@ -1,5 +1,7 @@
 <div class="grid" *ngIf="name && screenName && image">
     <img [src]="image">
     <h3 class="name">{{name}}</h3>
-    <p class="screen-name">@{{screenName}}</p>
+    <p class="screen-name">@
+        <a [href]="'https://twitter.com/' + screenName" target="_blank">{{screenName}}</a>
+    </p>
 </div>

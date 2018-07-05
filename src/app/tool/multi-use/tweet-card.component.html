@@ -1,4 +1,6 @@
-<div class="content">
+<div 
+class="content"
+[ngClass]="{'rendered':cardRendered}">
     <div class="tweet-container" *ngIf="tweetId">
         <tweet (rendered)="tweetRendered(tweetId)" class="tweet" [tweetId]="tweetId" [cards]="false"></tweet>
     </div>
@@ -12,6 +14,7 @@
         <p>{{retweetCount}}</p>
         <button 
         class="button purple-button"
+        [disabled]="disabled"
         [routerLink]="['/tool', tweetId]">
             Show Tracemap
             <div class="circle">

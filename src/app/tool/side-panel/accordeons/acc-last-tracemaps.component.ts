@@ -22,54 +22,50 @@ export class AccLastTracemapsComponent {
     constructor(
         private localStorageService: LocalStorageService,
         private route: ActivatedRoute
-    ){
-        let settings = this.localStorageService.getSettings()
-        if( settings && settings["cookie"] && settings["lastTracemaps"]) {
+    ) {
+        const settings = this.localStorageService.getSettings();
+        if ( settings && settings['cookie'] && settings['lastTracemaps']) {
             this.cookieEnabled = true;
         }
         this.route.params.subscribe( (params: Params) => {
-            if( this.tweetId != params["tid"]) {
-                this.tweetId = params["tid"];
+            if ( this.tweetId !== params['tid']) {
+                this.tweetId = params['tid'];
 
-                if( !this.fullHistory) {
-                    let lastTracemaps = this.localStorageService.getLastTracemaps();
-                    if( lastTracemaps) {
-                        this.fullHistory = lastTracemaps["ids"];
+                if ( !this.fullHistory) {
+                    const lastTracemaps = this.localStorageService.getLastTracemaps();
+                    if ( lastTracemaps) {
+                        this.fullHistory = lastTracemaps['ids'];
                     } else {
                         this.fullHistory = [];
                     }
                 }
 
-                if( this.fullHistory) {
-                    let validHistory = this.fullHistory.filter( (id) => id != this.tweetId);
-                    if( validHistory.length > 10) {
+                if ( this.fullHistory) {
+                    let validHistory = this.fullHistory.filter( (id) => id !== this.tweetId);
+                    if ( validHistory.length > 10) {
                         validHistory = validHistory.slice(10);
                     }
                     this.history = validHistory;
                 }
 
                 this.fullHistory = [this.tweetId].concat(this.history);
-                let storageObject = {'ids': this.fullHistory};
+                this.fullHistory = this.fullHistory.filter( (id, index) => {
+                    return this.fullHistory.indexOf(id) === index;
+                });
+                const storageObject = {'ids': this.fullHistory};
                 this.localStorageService.setLastTracemaps(storageObject);
-                if( this.history.length == 0 || !this.history) {
-                    setTimeout( () => {
-                        this.rendered.next(true);
-                    }, 1000);
-                }
+                setTimeout( () => {
+                    this.rendered.next(true);
+                }, 1000);
             }
         });
-    } 
+    }
 
     openCookiePolicy() {
         this.localStorageService.showPolicy.next(true);
     }
 
-    addRenderedCard(tweetId: string) {
-        if( tweetId) {
-            this.historyRendered.push(tweetId)
-        }
-        if( this.historyRendered.length == this.history.length) {
-            this.rendered.next(true);
-        }
+    setTweetRendered(event, tweet: object) {
+        tweet['rendered'] = true;
     }
 }

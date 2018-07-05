@@ -33,5 +33,13 @@
         color: $color-paragraph;
         overflow: hidden;
         white-space: nowrap;
+
+        a {
+            text-decoration: none;
+            color: $color-paragraph;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }

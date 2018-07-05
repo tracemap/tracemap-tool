@@ -23,18 +23,18 @@ export class AccSourceComponent {
         private route: ActivatedRoute
     ) {
         this.route.params.subscribe( (params: Params) => {
-            if( this.tweetId != params["tid"]){
+            if ( this.tweetId !== params['tid']) {
                 this.rendered.next(false);
             }
-            this.tweetId = params["tid"];
-        })
+            this.tweetId = params['tid'];
+        });
         this.communicationService.retweetCount.subscribe( retweetCount => {
-            if( retweetCount) {
+            if ( retweetCount) {
                 this.retweetCount = retweetCount;
                 this.rendered.next(true);
             }
-        })
+        });
     }
 
-    
+
 }

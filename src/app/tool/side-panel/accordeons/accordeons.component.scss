@@ -54,7 +54,7 @@
             overflow: hidden;
             max-height: 0px;
             &.rendered.open {
-                max-height: 2000px;
+                max-height: 10000px;
                 transition: max-height 0.5s;
             }
         }

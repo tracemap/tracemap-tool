@@ -16,27 +16,64 @@ class="content"
         <user
         *ngIf="userId"
         [userId]="userId"></user>
-    </div>
-    <div class="user-description">
-        <p class="description"
-        *ngIf="activeUserInfo" [innerHTML]="activeUserInfo.description | linkedString"></p>
-        <div class="numbers" *ngIf="activeUserInfo">
-            <div class="item">
-                <p class="number">{{activeUserInfo.statuses_count | shortNumber}}</p>
-                <p class="unit">Tweets</p>
-            </div>
-            <div class="item">
-                <p class="number">{{activeUserInfo.followers_count | shortNumber}}</p>
-                <p class="unit">Followers</p>
-            </div>
-            <div class="item">
-                <p class="number">{{activeUserInfo.friends_count | shortNumber}}</p>
-                <p class="unit">Following</p>
-            </div>
-
+        <div 
+        class="settings-button"
+        (click)="toggleSettingsMenu()">
+            <img *ngIf="!settingsOpen"
+            srcset="
+            ../../../../assets/images/settings-gear_128.png 4x,
+            ../../../../assets/images/settings-gear_64.png 2x,
+            ../../../../assets/images/settings-gear_32.png 1x,
+            "
+            src="../../../../assets/images/settings-gear_32.png">
+            <img *ngIf="settingsOpen"
+            srcset="
+            ../../../assets/images/settings-gear-purple_128.png 4x,
+            ../../../assets/images/settings-gear-purple_64.png 2x,
+            ../../../assets/images/settings-gear-purple_32.png 1x,
+            "
+            src="../../../assets/images/settings-gear-purple_32.png">
         </div>
     </div>
-    <div class="timeline">
-        <timeline [userId]="userId"></timeline>
+    <div 
+    class="scroll-container"
+    (scroll)="onTimelineScroll($event)">
+        <div class="user-description">
+            <p class="description"
+            *ngIf="activeUserInfo" [innerHTML]="activeUserInfo['description'] | linkedString"></p>
+            <div class="numbers" *ngIf="activeUserInfo">
+                <div class="item">
+                    <p class="number">{{activeUserInfo['statuses_count'] | shortNumber}}</p>
+                    <p class="unit">Tweets</p>
+                </div>
+                <div class="item">
+                    <p class="number">{{activeUserInfo['followers_count'] | shortNumber}}</p>
+                    <p class="unit">Followers</p>
+                </div>
+                <div class="item">
+                    <p class="number">{{activeUserInfo['friends_count'] | shortNumber}}</p>
+                    <p class="unit">Following</p>
+                </div>
+
+            </div>
+        </div>
+        <div
+        class="spinner"
+        *ngIf="!timelineRendered">
+        <mat-spinner
+            class="spinner"
+            [diameter]="56"
+            [color]="primary"
+            [strokeWidth]="5">
+        </mat-spinner>
+    
+        </div>
+        <div 
+        class="timeline"
+        [ngClass]="{'rendered': timelineRendered}">
+            <timeline 
+            [userId]="userId"
+            (rendered)="setTimelineRendered()"></timeline>
+        </div>
     </div>
 </div>

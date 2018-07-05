@@ -53,6 +53,9 @@ p {
 .purple-button {
     background-color: $color-purple-dark;
     color: #FFF;
+    &:disabled {
+        visibility: hidden;
+    }
 }
     
 .social-links-light {

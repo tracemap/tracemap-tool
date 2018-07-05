@@ -12,8 +12,12 @@ export class TweetCardComponent implements OnChanges {
     tweetId: string;
     @Input()
     retweetCount: number;
+    @Input()
+    disabled: boolean;
     @Output()
     rendered = new EventEmitter();
+
+    cardRendered = false;
 
     constructor(
         private apiService: ApiService
@@ -28,6 +32,7 @@ export class TweetCardComponent implements OnChanges {
     }
 
     tweetRendered( tweetId: string) {
+        this.cardRendered = true;
         this.rendered.next(tweetId);
     }
 

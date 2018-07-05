@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router, NavigationEnd } from '@angular/router';
     styleUrls: ['./tweet.component.scss']
 })
 
-export class TweetComponent implements OnChanges{
+export class TweetComponent implements OnChanges {
     @Output()
     rendered = new EventEmitter();
     @Input('tweetId')
@@ -15,12 +15,14 @@ export class TweetComponent implements OnChanges{
     @Input('cards')
     cards = true;
 
+    @ViewChild('tweetElement') tweetElement: ElementRef;
+
     ngOnChanges() {
         if ( this.tweetId) {
             window['twttr'].ready( twttr => {
-                const domTweet = document.getElementsByClassName(this.tweetId)[0];
+                const domTweet = this.tweetElement.nativeElement;
                 // Remove old tweet if present
-                if ( domTweet.firstChild) {
+                if (domTweet.firstChild) {
                     domTweet.removeChild( domTweet.firstChild);
                 }
                 if ( this.cards) {
@@ -48,7 +50,7 @@ export class TweetComponent implements OnChanges{
                         }
                     ).then(() => {
                         // Callback to parent for timeline loading animation
-                        this.rendered.emit(this.tweetId);
+                        this.rendered.next(this.tweetId);
                     });
                 }
             });

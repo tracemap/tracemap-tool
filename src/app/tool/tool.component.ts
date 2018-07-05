@@ -33,41 +33,41 @@ export class ToolComponent implements OnInit {
     ) {
         this.loadTwitterWidgetScript();
         this.graphService.graphData.subscribe( graphData => {
-            if( graphData) {
-                let nodeIds = graphData["nodes"].map( node => {
+            if ( graphData) {
+                const nodeIds = graphData['nodes'].map( node => {
                     return node.id_str;
                 }).toString();
             }
-        })
+        });
 
-        let cookieSettings = this.localStorageService.getSettings();
-        if( !cookieSettings) {
+        const cookieSettings = this.localStorageService.getSettings();
+        if ( !cookieSettings) {
             this.localStorageService.showPolicy.next(true);
         }
         this.localStorageService.showPolicy.subscribe( showPolicy => {
-            if( !showPolicy) {
+            if ( !showPolicy) {
                 this.cookiePolicyOpen = false;
             } else {
                 this.cookiePolicyOpen = true;
             }
-        })
+        });
         this.graphService.activeNode.subscribe( userId => {
-            if( userId &&
-                this.userId != userId) {
+            if ( userId &&
+                this.userId !== userId) {
                 this.userId = userId;
                 this.router.navigate(['details', userId], {relativeTo: this.route});
-            } else if( !userId && this.userId) {
+            } else if ( !userId && this.userId) {
                 this.userId = undefined;
                 setTimeout( () => {
                     this.router.navigate(['./'], {relativeTo: this.route});
                 }, 400);
             }
-        })
+        });
     }
 
     createSubDict(sourceDict: object, keys: string[]): Promise<object> {
         return new Promise( (resolve, reject) => {
-            let subDict = {};
+            const subDict = {};
             keys.map( key => {
                 subDict[key] = sourceDict[key];
             });
@@ -76,18 +76,19 @@ export class ToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe( (params:Params) => {
-            if(this.tweetId != params["tid"]) {
-                this.tweetId = params["tid"];
+        this.route.params.subscribe( (params: Params) => {
+            if (this.tweetId !== params['tid']) {
+                this.tweetId = params['tid'];
                 this.communicationService.resetData.next(true);
+                this.communicationService.tweetId.next(params['tid']);
             }
-            if( params["uid"]) {
-                this.graphService.activeNode.next(params["uid"]);
+            if ( params['uid']) {
+                this.graphService.activeNode.next(params['uid']);
             }
 
             this.apiService.getTracemapData( this.tweetId)
                 .then( tracemapData => {
-                    let authorKeys = [
+                    const authorKeys = [
                         'id_str',
                         'favourites_count',
                         'followers_count',
@@ -96,10 +97,10 @@ export class ToolComponent implements OnInit {
 
                     this.tracemapData = tracemapData;
 
-                    let retweets = this.tracemapData['tweet_data']['tweet_info']['retweet_count'];
+                    const retweets = this.tracemapData['tweet_data']['tweet_info']['retweet_count'];
                     this.communicationService.retweetCount.next(retweets);
 
-                    let authorInfo = this.tracemapData['tweet_data']['tweet_info']['user'];
+                    const authorInfo = this.tracemapData['tweet_data']['tweet_info']['user'];
                     this.userInfos[authorInfo['id_str']] = authorInfo;
                     return this.createSubDict(authorInfo, authorKeys);
                 }).then( graphAuthorInfo => {
@@ -107,12 +108,12 @@ export class ToolComponent implements OnInit {
                     this.graphData['author_info'] = graphAuthorInfo;
                     this.graphData['author_info']['group'] = 0;
                     this.graphData['author_info']['retweet_created_at'] = this.tracemapData['tweet_data']['tweet_info']['created_at'];
-                    let retweetersInfo = this.tracemapData['tweet_data']['retweet_info']
+                    const retweetersInfo = this.tracemapData['tweet_data']['retweet_info'];
                     this.graphData['retweet_info'] = {};
-                    let promiseArray:Array<any> = [];
+                    const promiseArray: Array<any> = [];
                     this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeterId => {
-                        let retweeterInfo = retweetersInfo[retweeterId]['user'];
-                        let tmp = {};
+                        const retweeterInfo = retweetersInfo[retweeterId]['user'];
+                        const tmp = {};
                         tmp['favourites_count'] = retweeterInfo['favourites_count'];
                         tmp['followers_count'] = retweeterInfo['followers_count'];
                         tmp['friends_count'] = retweeterInfo['friends_count'];
@@ -122,62 +123,62 @@ export class ToolComponent implements OnInit {
                     });
                     this.communicationService.userInfo.next(this.userInfos);
                     this.addGraphData();
-                })
-        })
+                });
+        });
     }
 
     addGraphData(): void {
-        let graphElements = {
-            "nodes": [],
-            "links": []
-        }
+        const graphElements = {
+            'nodes': [],
+            'links': []
+        };
 
         // Necessary because the twitter api sometimes returns users multiple times
-        let nodesChecked = [];
+        const nodesChecked = [];
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
-            if( nodesChecked.indexOf(retweeter) < 0) {
+            if ( nodesChecked.indexOf(retweeter) < 0) {
                 nodesChecked.push(retweeter);
-                let node = this.graphData['retweet_info'][retweeter];
+                const node = this.graphData['retweet_info'][retweeter];
                 node['id_str'] = retweeter;
-                node['group'] = 1
+                node['group'] = 1;
                 graphElements['nodes'].push(node);
             }
         });
 
-        let authorId = this.graphData['author_info']['id_str'];
-        let followers = this.tracemapData['followers'];
+        const authorId = this.graphData['author_info']['id_str'];
+        const followers = this.tracemapData['followers'];
 
-        let retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
+        const retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
         this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
-            console.log("Unknown users are crawled live."); //TODO: return number of unknown users
-        })
+            console.log('Unknown users are crawled live.'); // TODO: return number of unknown users
+        });
 
-        if(authorId in followers && this.newMode) {
+        if (authorId in followers && this.newMode) {
             // New mechanic if author is in our database
             let connectedUsers = [];
-            let checkedUsers = [];
+            const checkedUsers = [];
 
             followers[authorId].forEach( targetId => {
                 connectedUsers.push(targetId);
                 checkedUsers.push(targetId);
                 graphElements['links'].push({
-                    'source':authorId,
-                    'target':targetId
+                    'source': authorId,
+                    'target': targetId
                 });
             });
 
             let oldLinkNum = graphElements['links'].length;
             let newLinkNum = oldLinkNum + 1;
 
-            while( oldLinkNum !== newLinkNum) {
-                let tmpConnectedUsers = [];
+            while ( oldLinkNum !== newLinkNum) {
+                const tmpConnectedUsers = [];
                 oldLinkNum = newLinkNum;
                 connectedUsers.forEach( sourceId => {
-                    if( sourceId in followers) {
+                    if ( sourceId in followers) {
                         followers[sourceId].forEach( targetId => {
-                            if( targetId !== authorId) {
-                                if( this.targetTweetNewer(sourceId, targetId)) {
-                                    if( checkedUsers.indexOf(targetId) < 0){
+                            if ( targetId !== authorId) {
+                                if ( this.targetTweetNewer(sourceId, targetId)) {
+                                    if ( checkedUsers.indexOf(targetId) < 0){
                                         tmpConnectedUsers.push(targetId);
                                         checkedUsers.push(targetId);
                                     }
@@ -196,26 +197,26 @@ export class ToolComponent implements OnInit {
             graphElements['nodes'].push(this.graphData['author_info']);
         } else {
             // Old mechanic for tweets where the author isnt in our database
-            if(authorId in followers){
-                console.log("THE APP IS RUNNING WITH OLD GRAPH LOGIC");
+            if (authorId in followers){
+                console.log('THE APP IS RUNNING WITH OLD GRAPH LOGIC');
                 followers[authorId].forEach( targetId => {
                     graphElements['links'].push({
-                        'source':authorId,
-                        'target':targetId
+                        'source': authorId,
+                        'target': targetId
                     });
                 });
             } else {
                 this.graphData['auther_unknown'] = true;
-                console.log("THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE");
+                console.log('THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE');
             }
 
             graphElements['nodes'].push(this.graphData['author_info']);
             graphElements['nodes'].forEach( source => {
-                let sourceId = source['id_str'];
-                if( sourceId in followers) {
+                const sourceId = source['id_str'];
+                if ( sourceId in followers) {
                     followers[sourceId].forEach( targetId => {
-                        if( !(targetId === authorId || sourceId === authorId)) {
-                            if( this.targetTweetNewer(sourceId, targetId)) {
+                        if ( !(targetId === authorId || sourceId === authorId)) {
+                            if ( this.targetTweetNewer(sourceId, targetId)) {
                                 graphElements['links'].push({
                                     'source': sourceId,
                                     'target': targetId
@@ -226,16 +227,16 @@ export class ToolComponent implements OnInit {
                 }
             });
         }
-        let linkSources = graphElements['links'].map( link => {
+        const linkSources = graphElements['links'].map( link => {
             return link['source'];
         });
-        let linkTargets = graphElements['links'].map( link => {
+        const linkTargets = graphElements['links'].map( link => {
             return link['target'];
         });
         this.graphData['nodes'] = [];
         // just return nodes with connected links
         graphElements['nodes'].forEach( (node) => {
-            if( linkSources.indexOf(node['id_str']) >= 0 ||
+            if ( linkSources.indexOf(node['id_str']) >= 0 ||
                 linkTargets.indexOf(node['id_str']) >= 0) {
                 this.graphData['nodes'].push(node);
             }
@@ -245,13 +246,13 @@ export class ToolComponent implements OnInit {
         this.graphService.graphData.next(this.graphData);
     }
     targetTweetNewer( sourceId: string, targetId: string): boolean {
-        let sourceTimestamp = Date.parse(this.graphData['retweet_info']
+        const sourceTimestamp = Date.parse(this.graphData['retweet_info']
                                        [sourceId]
                                        ['retweet_created_at']);
-        let targetTimestamp = Date.parse(this.graphData['retweet_info']
+        const targetTimestamp = Date.parse(this.graphData['retweet_info']
                                        [targetId]
                                        ['retweet_created_at']);
-        if( sourceTimestamp < targetTimestamp) {
+        if ( sourceTimestamp < targetTimestamp) {
             return true;
         } else {
             return false;
@@ -260,14 +261,14 @@ export class ToolComponent implements OnInit {
 
     loadTwitterWidgetScript(): void {
         window['twttr'] = (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0],
+            let js, fjs = d.getElementsByTagName(s)[0],
             t = window['twttr'] || {};
             if (d.getElementById(id)){
                 return t;
-            };
+            }
             js = d.createElement(s);
             js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
+            js.src = 'https://platform.twitter.com/widgets.js';
             fjs.parentNode.insertBefore(js, fjs);
 
             t._e = [];
@@ -276,6 +277,6 @@ export class ToolComponent implements OnInit {
             };
 
             return t;
-        })(document, "script", "twitter-wjs");
+        })(document, 'script', 'twitter-wjs');
     }
 }

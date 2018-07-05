@@ -8,6 +8,10 @@
     grid-template-areas:
         "tweet_container"
         "tweet_info";
+    visibility: hidden;
+    &.rendered {
+        visibility: visible;
+    }
     .tweet-container {
         grid-area: tweet_container;
         width: 308px;

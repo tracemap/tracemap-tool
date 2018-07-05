@@ -22,7 +22,7 @@ export class UserComponent implements OnChanges{
 
     constructor(
         private communicationService: CommunicationService
-    ){}
+    ) {}
 
     ngOnChanges() {
         if ( this.userId) {

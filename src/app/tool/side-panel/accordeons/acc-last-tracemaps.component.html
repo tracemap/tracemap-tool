@@ -6,7 +6,6 @@
         You can change this by checking the <span (click)="openCookiePolicy()">Last Tracemaps Cookie.</span></p>
     </div>
     <tweet-card 
-    (rendered)="addRenderedCard(tweetId)"
     class="tweet-card"
     *ngFor="let tweet of history"
     [tweetId]="tweet">

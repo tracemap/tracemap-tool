@@ -177,7 +177,9 @@ export class GraphComponent {
             this.simulation.force('link').links([]);
         }
         if ( this.context) {
-            this.context.clearRect(0, 0, this.width, this.height);
+            this.renderedNodes = [];
+            this.renderedLinks = [];
+            this.ticked();
         }
         this.graphService.activeNode.next(undefined);
         this.graphService.userNodeHighlight.next(undefined);
