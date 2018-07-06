@@ -4,11 +4,10 @@
     display: grid;
     width: 100%;
     grid-template-columns: 38px 9px 1fr;
-    grid-template-rows: 19px 19px;
+    grid-template-rows: 38px;
     background-color: #fff;
     grid-template-areas:
-        "image . name"
-        "image . screen_name";
+        "image . name-box";
 
     img {
         grid-area: image;
@@ -16,29 +15,32 @@
         border-radius: 50%;
     }
 
-    h3 {
-        grid-area: name;
-        line-height: 19px;
-        font-size: 14px;
-        font-weight: bold;
-        overflow: hidden;
-        white-space: nowrap;
-        color: $color-gray-font-blackish;
-    }
-
-    p {
-        grid-area: screen_name;
-        line-height: 19px;
-        font-size: 14px;
-        color: $color-paragraph;
-        overflow: hidden;
-        white-space: nowrap;
-
+    .name-box {
+        grid-area: name-box;
         a {
             text-decoration: none;
-            color: $color-paragraph;
+            h3 {
+                line-height: 19px;
+                font-size: 14px;
+                font-weight: bold;
+                overflow: hidden;
+                white-space: nowrap;
+                color: $color-gray-font-blackish;
+            }
+
+            p {
+                line-height: 19px;
+                font-size: 14px;
+                color: $color-paragraph;
+                overflow: hidden;
+                white-space: nowrap;
+
+            }
             &:hover {
-                text-decoration: underline;
+                h3 {
+                    color: $color-purple-dark;
+                }
+
             }
         }
     }

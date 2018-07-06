@@ -56,15 +56,10 @@
         display: grid;
         grid-template-columns: 1fr 40px;
 
-        .settings-button {
-            cursor: pointer;
+        app-user-settings {
             align-self: center;
-            margin-left: 20px;
-            border-radius: 50%;
-            img {
-                width: 20px;
-            }
         }
+
     }
     .scroll-container {
         grid-area: scroll_container;
@@ -86,9 +81,8 @@
                 padding-bottom: 15px;
 
                 a {
-
                     text-decoration: none;
-                    color: $color-blue-link;
+                    color: $color-purple-dark;
                     &:hover {
                         border-bottom: 1px solid $color-blue-link;
                     }

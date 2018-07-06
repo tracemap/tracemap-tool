@@ -11,14 +11,15 @@ export class LocalStorageService {
         cookie: false,
         graph: false,
         lastTracemaps: false,
-    }
+        timeline: false
+    };
 
     constructor(){
-        let settings = this.retrieve("cookie");
-        if( settings) {
+        const settings = this.retrieve('cookie');
+        if ( settings) {
             Object.keys(settings).forEach( key => {
                 this.settings[key] = settings[key];
-            })
+            });
         }
     }
 
@@ -26,17 +27,15 @@ export class LocalStorageService {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
-    private retrieve(key):object {
-        let stringDict = localStorage.getItem(key);
-        if( stringDict == null) {
+    private retrieve(key): object {
+        const stringDict = localStorage.getItem(key);
+        if ( stringDict == null) {
             return undefined;
-        }
-        else {
+        } else {
             try {
                 return JSON.parse(stringDict);
-            }
-            catch (e) {
-                console.log("Destroying corrupt browser storage...")
+            } catch (e) {
+                console.log('Destroying corrupt browser storage...');
                 this.remove(key);
                 return {};
             }
@@ -47,41 +46,63 @@ export class LocalStorageService {
         localStorage.removeItem(key);
     }
 
-    setSettings(settings:object) {
+    setSettings(settings: object) {
         Object.keys(settings).forEach( key => {
             this.settings[key] = settings[key];
-        })
-        if( this.settings.cookie) {
-            this.store("cookie", this.settings);
+        });
+        if ( this.settings.cookie) {
+            this.store('cookie', this.settings);
         }
         Object.keys(this.settings).forEach( key => {
-            if (this.settings[key] == false) {
+            if (this.settings[key] === false) {
                 this.remove(key);
             }
-        })
+        });
     }
 
     getSettings(): object {
-        return this.retrieve("cookie");
+        const userSettings = this.retrieve('cookie');
+        // Check if the cookie policy changed since
+        // the user accepted last time
+        let missingSetting = false;
+        Object.keys(this.settings).forEach( key => {
+            if (userSettings[key] === undefined) {
+                missingSetting = true;
+            }
+        });
+        // If not return cookie settings
+        return missingSetting ? undefined : userSettings;
     }
 
-    setGraphSettings(config:object) {
-        if( this.settings.graph) {
-            this.store("graph", config);
+    setGraphSettings(config: object) {
+        if ( this.settings.graph) {
+            this.store('graph', config);
         }
     }
 
-    getGraphSettings() {
-        return this.retrieve("graph");
+    getGraphSettings(): object {
+        return this.retrieve('graph');
     }
 
     setLastTracemaps( tracemapList: object) {
-        if( this.settings.lastTracemaps) {
-            this.store("lastTracemaps", tracemapList);
+        if ( this.settings.lastTracemaps) {
+            this.store('lastTracemaps', tracemapList);
         }
     }
 
-    getLastTracemaps() {
-        return this.retrieve("lastTracemaps");
+    getLastTracemaps(): object {
+        return this.retrieve('lastTracemaps');
+    }
+
+    setTimelineSettings( config: object) {
+        console.log('starting setTimelineSettings');
+        if (this.settings.timeline) {
+            console.log('right cookie is set');
+            this.store('timeline', config);
+        }
+    }
+
+    getTimelineSettings(): object {
+        return this.retrieve('timeline');
     }
 }

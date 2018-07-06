@@ -1,0 +1,72 @@
+<div class="content">
+    <div 
+    class="settings-button"
+    (click)="toggleMenu()">
+        <img *ngIf="!open"
+        srcset="
+        ../../../../assets/images/settings-gear_128.png 4x,
+        ../../../../assets/images/settings-gear_64.png 2x,
+        ../../../../assets/images/settings-gear_32.png 1x,
+        "
+        src="../../../../assets/images/settings-gear_32.png">
+        <img *ngIf="open"
+        srcset="
+        ../../../assets/images/settings-gear-purple_128.png 4x,
+        ../../../assets/images/settings-gear-purple_64.png 2x,
+        ../../../assets/images/settings-gear-purple_32.png 1x,
+        "
+        src="../../../assets/images/settings-gear-purple_32.png">
+    </div>
+    <div class="overlay" (click)="toggleMenu()" *ngIf="open"></div>
+    <div class="wrapper" *ngIf="open">
+        <div class="settings tooltip">
+            <div class="shadow"></div>
+            <div class="arrow"></div>
+            <div class="head">
+                <h2>Timeline Settings</h2>
+                <div 
+                class="close-button"
+                (click)="toggleMenu()">
+                    <img srcset="
+                    ../../../assets/images/close-white_128.png 4x,
+                    ../../../assets/images/close-white_64.png 2x,
+                    ../../../assets/images/close-white_32.png 1x
+                    "
+                    src="../../../assets/images/close-white_32.png">
+                </div>
+            </div>
+            <div class="body">
+                <div class="radio-group setting">
+                    <h2>Sort by:</h2>
+                    <mat-radio-group
+                    name="sort_by"
+                    (change)="updateTimelineSorting($event)">
+                        <div class="option">
+                            <mat-radio-button 
+                            color="primary"
+                            value="time" 
+                            [checked]="settings.sort_by === 'time'"></mat-radio-button>
+                            <p>time</p>
+                        </div>
+                        <div class="option">
+                            <mat-radio-button 
+                            color="primary"
+                            value="retweets" 
+                            [checked]="settings.sort_by === 'retweets'"></mat-radio-button>
+                            <p>retweets</p>
+                        </div>
+                    </mat-radio-group>
+                </div>
+                <div class="checkbox setting">
+                    <h2>Show Retweets</h2>
+                    <mat-checkbox
+                    color="primary"
+                    [(ngModel)]="settings.retweets"
+                    (change)="updateTimelineSettings()"></mat-checkbox>
+                    <p *ngIf="settings.retweets">include retweets</p>
+                    <p *ngIf="!settings.retweets">just authored tweets</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

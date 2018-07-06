@@ -17,6 +17,11 @@ export class TimelineComponent implements OnChanges {
     userId: string;
     tweetId: string;
 
+    settings = {
+        sort_by: 'time',
+        retweets: true
+    };
+
     timeline: object[]; // complete tweet list from backend
     timelineSorted: object[] = []; // timeline sorted by user settings
     timelineShowed: object[] = []; // subset of timelineSorted loaded in batches
@@ -32,10 +37,7 @@ export class TimelineComponent implements OnChanges {
 
     ngOnChanges() {
         if ( this.userId) {
-            this.timeline = undefined;
-            this.timelineSorted = [];
-            this.timelineShowed = [];
-            this.timelineRendered = [];
+            this.reset();
             this.apiService.getTimeline(this.userId).subscribe( (timeline: object[]) => {
                 timeline.forEach( tweet => {
                     if (tweet['retweeted_status']) {
@@ -49,16 +51,51 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.timeline = timeline;
-                this.timelineSorted = timeline;
-                this.addShowedTweets();
+                this.communicationService.timelineSettings.subscribe( settings => {
+                    if (settings) {
+                        let changed = false;
+                        Object.keys(settings).forEach( key => {
+                            if (this.settings[key] !== settings[key]) {
+                                this.settings[key] = settings[key];
+                                changed = true;
+                            }
+                        });
+                        if (changed) {
+                            console.log('resorting');
+                            this.resort();
+                        }
+                    }
+                });
+                this.resort();
             });
         }
     }
 
+    reset(): void {
+        this.timelineShowed = [];
+        this.timelineSorted = undefined;
+        this.timelineRendered = [];
+        this.rendered.next(false);
+    }
+
+    resort(): void {
+        this.reset();
+        this.timelineSorted = this.timeline.slice();
+        if (this.settings.sort_by === 'retweets') {
+            this.timelineSorted.sort( (a, b) => {
+                return b['retweet_count'] - a['retweet_count'];
+            });
+        }
+        if (this.settings.retweets) {
+            this.timelineSorted = this.timelineSorted.filter( tweet => tweet['retweeted_status']);
+        }
+        this.addShowedTweets();
+    }
+
     addShowedTweets(): void {
-        const renderedLength = this.timelineShowed.length;
+        const showedLength = this.timelineShowed.length;
         const timelineLength = this.timelineSorted.length;
-        const newLength = renderedLength + 10 >= timelineLength ? timelineLength : renderedLength + 10;
+        const newLength = showedLength + 10 >= timelineLength ? timelineLength : showedLength + 10;
         this.timelineShowed = this.timelineSorted.slice( 0, newLength);
     }
 

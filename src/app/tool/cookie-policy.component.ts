@@ -13,19 +13,22 @@ export class CookiePolicyComponent {
     settings = {
         cookie: true,
         graph: true,
-        lastTracemaps: true
-    }
+        lastTracemaps: true,
+        timeline: true
+    };
 
     applied = false;
 
     constructor(
         private localStorageService: LocalStorageService
     ) {
-        let settings = this.localStorageService.getSettings();
-        if( settings) {
-            this.settings.cookie = settings["cookie"];
-            this.settings.graph = settings["graph"];
-            this.settings.lastTracemaps = settings["lastTracemaps"];
+        const settings = this.localStorageService.getSettings();
+        if (settings) {
+            Object.keys(this.settings).forEach( key => {
+                if ( settings[key]) {
+                    this.settings[key] = settings[key];
+                }
+            });
         }
     }
 

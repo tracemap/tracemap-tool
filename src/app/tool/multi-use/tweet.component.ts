@@ -32,7 +32,7 @@ export class TweetComponent implements OnChanges {
                         domTweet,
                         {
                             width: '308px',
-                            linkColor: '#9729ff'
+                            linkColor: '#7F25E6'
                         }
                     ).then(() => {
                         // Callback to parent for timeline loading animation
@@ -44,7 +44,7 @@ export class TweetComponent implements OnChanges {
                         this.tweetId,
                         domTweet,
                         {
-                            linkColor: '#9729ff',
+                            linkColor: '#7F25E6',
                             cards: 'hidden',
                             width: '308px'
                         }

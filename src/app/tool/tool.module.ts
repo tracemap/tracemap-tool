@@ -8,8 +8,8 @@ import { MultiUseModule } from './../multi-use/multi-use.module';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
-import { GestureConfig } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { ToolComponent } from './tool.component';
 import { CookiePolicyComponent } from './cookie-policy.component';
@@ -36,6 +36,7 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
         import { AccLastTracemapsComponent } from './side-panel/accordeons/acc-last-tracemaps.component';
     import { UserDetailsComponent } from './side-panel/user/user-details.component';
+        import { UserSettingsComponent } from './side-panel/user/user-settings.component';
         import { TimelineComponent } from './side-panel/user/timeline.component';
 
 import { CommunicationService } from './services/communication.service';
@@ -57,9 +58,10 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
         MatCheckboxModule,
         MatSliderModule,
         MatProgressSpinnerModule,
+        MatRadioModule,
         FormsModule
     ],
-    providers: [ 
+    providers: [
       GraphService,
       CommunicationService,
       LocalStorageService,
@@ -91,6 +93,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
                 AccLineChartComponent,
                 AccLastTracemapsComponent,
             UserDetailsComponent,
+                UserSettingsComponent,
                 TimelineComponent,
         TimeLabelPipe,
         ToYearPipe,

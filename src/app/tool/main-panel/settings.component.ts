@@ -21,14 +21,14 @@ export class SettingsComponent {
         nextHighlight: true,
         fixedDrag: true,
         fixedAuthor: true
-    }
+    };
 
     constructor(
         private graphService: GraphService,
         private localStorageService: LocalStorageService
-    ){
-        let settings = this.localStorageService.getGraphSettings();
-        if( settings) {
+    ) {
+        const settings = this.localStorageService.getGraphSettings();
+        if ( settings) {
             Object.keys(settings).forEach( key => {
                 this.settings[key] = settings[key];
             });

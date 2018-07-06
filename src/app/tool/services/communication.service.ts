@@ -17,6 +17,8 @@ export class CommunicationService {
 
     userInfo = new BehaviorSubject<object>(undefined);
     oldUserInfo = {};
+    timelineSettings = new BehaviorSubject<object>(undefined);
+
     getUserInfo(userIds): Promise<object> {
         return new Promise( (resolve) => {
             let input = [];

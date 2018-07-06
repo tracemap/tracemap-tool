@@ -16,24 +16,7 @@ class="content"
         <user
         *ngIf="userId"
         [userId]="userId"></user>
-        <div 
-        class="settings-button"
-        (click)="toggleSettingsMenu()">
-            <img *ngIf="!settingsOpen"
-            srcset="
-            ../../../../assets/images/settings-gear_128.png 4x,
-            ../../../../assets/images/settings-gear_64.png 2x,
-            ../../../../assets/images/settings-gear_32.png 1x,
-            "
-            src="../../../../assets/images/settings-gear_32.png">
-            <img *ngIf="settingsOpen"
-            srcset="
-            ../../../assets/images/settings-gear-purple_128.png 4x,
-            ../../../assets/images/settings-gear-purple_64.png 2x,
-            ../../../assets/images/settings-gear-purple_32.png 1x,
-            "
-            src="../../../assets/images/settings-gear-purple_32.png">
-        </div>
+        <app-user-settings></app-user-settings>
     </div>
     <div 
     class="scroll-container"
