@@ -86,8 +86,8 @@ export class TimelineComponent implements OnChanges {
                 return b['retweet_count'] - a['retweet_count'];
             });
         }
-        if (this.settings.retweets) {
-            this.timelineSorted = this.timelineSorted.filter( tweet => tweet['retweeted_status']);
+        if ( !this.settings.retweets) {
+            this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
         }
         this.addShowedTweets();
     }

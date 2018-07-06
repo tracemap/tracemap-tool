@@ -69,8 +69,8 @@ export class UserDetailsComponent {
         }
     }
 
-    setTimelineRendered(): void {
-        this.timelineRendered = true;
+    changeTimelineRendered(event): void {
+        this.timelineRendered = event;
     }
 
     toggleSettingsMenu(): void {

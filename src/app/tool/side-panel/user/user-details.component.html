@@ -56,7 +56,7 @@ class="content"
         [ngClass]="{'rendered': timelineRendered}">
             <timeline 
             [userId]="userId"
-            (rendered)="setTimelineRendered()"></timeline>
+            (rendered)="changeTimelineRendered($event)"></timeline>
         </div>
     </div>
 </div>
