@@ -178,7 +178,7 @@ export class ToolComponent implements OnInit {
                         followers[sourceId].forEach( targetId => {
                             if ( targetId !== authorId) {
                                 if ( this.targetTweetNewer(sourceId, targetId)) {
-                                    if ( checkedUsers.indexOf(targetId) < 0){
+                                    if ( checkedUsers.indexOf(targetId) < 0) {
                                         tmpConnectedUsers.push(targetId);
                                         checkedUsers.push(targetId);
                                     }
@@ -197,7 +197,7 @@ export class ToolComponent implements OnInit {
             graphElements['nodes'].push(this.graphData['author_info']);
         } else {
             // Old mechanic for tweets where the author isnt in our database
-            if (authorId in followers){
+            if (authorId in followers) {
                 console.log('THE APP IS RUNNING WITH OLD GRAPH LOGIC');
                 followers[authorId].forEach( targetId => {
                     graphElements['links'].push({
@@ -261,14 +261,15 @@ export class ToolComponent implements OnInit {
 
     loadTwitterWidgetScript(): void {
         window['twttr'] = (function(d, s, id) {
-            let js, fjs = d.getElementsByTagName(s)[0],
+            let js = d.getElementsByTagName(s)[0];
+            const fjs = d.getElementsByTagName(s)[0],
             t = window['twttr'] || {};
-            if (d.getElementById(id)){
+            if (d.getElementById(id)) {
                 return t;
             }
             js = d.createElement(s);
             js.id = id;
-            js.src = 'https://platform.twitter.com/widgets.js';
+            js['src'] = 'https://platform.twitter.com/widgets.js';
             fjs.parentNode.insertBefore(js, fjs);
 
             t._e = [];

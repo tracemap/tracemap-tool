@@ -14,7 +14,7 @@ export class LocalStorageService {
         timeline: false
     };
 
-    constructor(){
+    constructor() {
         const settings = this.retrieve('cookie');
         if ( settings) {
             Object.keys(settings).forEach( key => {
