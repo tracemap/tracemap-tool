@@ -66,7 +66,7 @@ export class LocalStorageService {
         // the user accepted last time
         let missingSetting = false;
         Object.keys(this.settings).forEach( key => {
-            if (userSettings[key] === undefined) {
+            if ( !userSettings || userSettings[key] === undefined) {
                 missingSetting = true;
             }
         });
