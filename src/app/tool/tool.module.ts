@@ -14,6 +14,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ToolComponent } from './tool.component';
 import { CookiePolicyComponent } from './cookie-policy.component';
 import { HintComponent } from './multi-use/hint.component';
+import { OverlayComponent } from './multi-use/overlay.component';
 import { TweetComponent } from './multi-use/tweet.component';
 import { TweetCardComponent } from './multi-use/tweet-card.component';
 import { UserComponent } from './multi-use/user.component';
@@ -71,6 +72,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
         ToolComponent,
         CookiePolicyComponent,
         HintComponent,
+        OverlayComponent,
         TweetComponent,
         TweetCardComponent,
         UserComponent,

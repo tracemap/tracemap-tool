@@ -22,6 +22,8 @@ export class ToolComponent implements OnInit {
     userInfos: object = {};
     newMode = false;
     cookiePolicyOpen = false;
+    // Show if more than 100 retweets
+    extendOverlayOpen = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -88,6 +90,12 @@ export class ToolComponent implements OnInit {
 
             this.apiService.getTracemapData( this.tweetId)
                 .then( tracemapData => {
+                    // show extends overlay if more than 100 retweets
+                    const retweetCount = tracemapData['tweet_data']['tweet_info']['retweet_count'];
+                    if (retweetCount > 100) {
+                        this.extendOverlayOpen = true;
+                    }
+
                     const authorKeys = [
                         'id_str',
                         'favourites_count',
@@ -245,6 +253,7 @@ export class ToolComponent implements OnInit {
 
         this.graphService.graphData.next(this.graphData);
     }
+
     targetTweetNewer( sourceId: string, targetId: string): boolean {
         const sourceTimestamp = Date.parse(this.graphData['retweet_info']
                                        [sourceId]
@@ -257,6 +266,10 @@ export class ToolComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    closeExtendOverlay(): void {
+        this.extendOverlayOpen = false;
     }
 
     loadTwitterWidgetScript(): void {
