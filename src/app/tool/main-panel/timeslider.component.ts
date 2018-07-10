@@ -23,7 +23,7 @@ export class TimesliderComponent {
     stepSize;
     moving;
     hintConfig = {
-        text: "test",
+        text: '',
         x: 0,
         y: 0
     };
@@ -42,73 +42,73 @@ export class TimesliderComponent {
             this.value = 0;
             this.graphService.timesliderPosition.next(0);
 
-        })
+        });
         this.graphService.relTimestampList.subscribe( relTimestampList => {
             this.relTimestampList = relTimestampList;
-        })
+        });
         this.graphService.rendered.subscribe( rendered => {
-            if( rendered) {
+            if ( rendered) {
                 this.autoSlide();
             }
-        })
+        });
         this.communicationService.resetData.subscribe( reset => {
-            if( reset) {
-                if(this.autoSlideSubscription) {
+            if ( reset) {
+                if (this.autoSlideSubscription) {
                     this.autoSlideSubscription.unsubscribe();
                     this.value = 0;
                 }
             }
-        })
+        });
     }
 
     getLabelFormat( value) {
-        let minutes = value / 60;
-        let hours = minutes / 60;
-        let days = hours / 24;
+        const minutes = value / 60;
+        const hours = minutes / 60;
+        const days = hours / 24;
 
-        let result = {
+        const result = {
             value: 0,
-            unit: "",
-        }
-        if( hours > 100) {
+            unit: '',
+        };
+        if ( hours > 100) {
             result.value = Math.floor(hours / 24);
-            result.unit = "DAYS";
-        } else if ( minutes > 120){
+            result.unit = 'DAYS';
+        } else if ( minutes > 120) {
             result.value = Math.floor(hours);
-            result.unit = "HOURS";
-        } else if ( value > 59){
+            result.unit = 'HOURS';
+        } else if ( value > 59) {
             result.value = Math.floor(minutes);
-            result.unit = "MINUTES";
+            result.unit = 'MINUTES';
         } else {
             result.value = Math.floor(value);
-            result.unit = "SECONDS";
+            result.unit = 'SECONDS';
         }
         return result;
     }
 
     changeValue(slider) {
-        if( this.autoSlideSubscription) {
+        if ( this.autoSlideSubscription) {
             this.autoSlideSubscription.unsubscribe();
         }
-        let value = slider._value;
+        const value = slider._value;
         this.value = value;
         this.graphService.timesliderPosition.next(this.value);
         this.addLabel();
     }
 
     addLabel() {
-        let slider = $('.slider');
-        let position = slider.position();
-        let x = position.left;
-        let y = position.top;
-        let width = slider.width();
-        let thumbPosition = x + (width * (this.value / this.range));
-        let labelTextDict = this.getLabelFormat(this.value);
+        const slider = $('.slider');
+        const position = slider.position();
+        const x = position.left;
+        const y = position.top;
+        const width = slider.width();
+        const thumbPosition = x + (width * (this.value / this.range));
+        const labelTextDict = this.getLabelFormat(this.value);
         this.hintConfig.x = thumbPosition;
         this.hintConfig.y = y;
-        this.hintConfig.text =  labelTextDict.value + " " + labelTextDict.unit.toLowerCase();
+        this.hintConfig.text =  labelTextDict.value + ' ' + labelTextDict.unit.toLowerCase();
         this.moving = true;
-        if(this.timer) {
+        if (this.timer) {
             clearTimeout(this.timer);
         }
         this.timer = setTimeout( () => {
@@ -117,13 +117,15 @@ export class TimesliderComponent {
     }
 
     autoSlide() {
-        this.autoSlideSubscription = Observable.interval(100).subscribe( i => {
-            this.value = this.relTimestampList[i];
-            this.graphService.timesliderPosition.next(this.value);
-            this.addLabel();
-            if( this.relTimestampList.length == i + 1) {
-                this.autoSlideSubscription.unsubscribe();
-            }
+        this.communicationService.noOverlayOpen().then( () => {
+            this.autoSlideSubscription = Observable.interval(100).subscribe( i => {
+                this.value = this.relTimestampList[i];
+                this.graphService.timesliderPosition.next(this.value);
+                this.addLabel();
+                if ( this.relTimestampList.length === i + 1) {
+                    this.autoSlideSubscription.unsubscribe();
+                }
+            });
         });
     }
 }

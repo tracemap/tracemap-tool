@@ -23,7 +23,7 @@ export class ToolComponent implements OnInit {
     newMode = false;
     cookiePolicyOpen = false;
     // Show if more than 100 retweets
-    extendOverlayOpen = false;
+    exceedOverlayOpen = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -45,10 +45,13 @@ export class ToolComponent implements OnInit {
         const cookieSettings = this.localStorageService.getSettings();
         if ( !cookieSettings) {
             this.localStorageService.showPolicy.next(true);
+        } else {
+            this.communicationService.cookieOverlayClosed.next(true);
         }
         this.localStorageService.showPolicy.subscribe( showPolicy => {
             if ( !showPolicy) {
                 this.cookiePolicyOpen = false;
+                this.communicationService.cookieOverlayClosed.next(true);
             } else {
                 this.cookiePolicyOpen = true;
             }
@@ -93,7 +96,9 @@ export class ToolComponent implements OnInit {
                     // show extends overlay if more than 100 retweets
                     const retweetCount = tracemapData['tweet_data']['tweet_info']['retweet_count'];
                     if (retweetCount > 100) {
-                        this.extendOverlayOpen = true;
+                        this.exceedOverlayOpen = true;
+                    } else {
+                        this.communicationService.exceedOverlayClosed.next(true);
                     }
 
                     const authorKeys = [
@@ -268,8 +273,10 @@ export class ToolComponent implements OnInit {
         }
     }
 
-    closeExtendOverlay(): void {
-        this.extendOverlayOpen = false;
+    closeExceedOverlay(): void {
+        console.log('im heeeere');
+        this.exceedOverlayOpen = false;
+        this.communicationService.exceedOverlayClosed.next(true);
     }
 
     loadTwitterWidgetScript(): void {

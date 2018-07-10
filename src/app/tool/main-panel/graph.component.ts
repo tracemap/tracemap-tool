@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { GraphService } from './../services/graph.service';
 import { CommunicationService } from './../services/communication.service';
 
-import { ActivatedRoute, Params } from '@angular/router';
-
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 
@@ -56,17 +54,17 @@ export class GraphComponent {
 
     constructor(
         private graphService: GraphService,
-        private communicationService: CommunicationService,
-        private route: ActivatedRoute,
+        private communicationService: CommunicationService
     ) {
-        this.route.params.subscribe( (params: Params) => {
-            if ( params['tid'] !== this.tracemapId) {
+        this.communicationService.tweetId.subscribe( tweetId => {
+            if ( tweetId !== this.tracemapId) {
                 this.resetGraph();
-                this.tracemapId = params['tid'];
+                this.tracemapId = tweetId;
             }
         });
         this.graphService.graphData.subscribe( graphData => {
             if ( graphData) {
+
                 this.graphData.nodes = graphData['nodes'];
                 this.graphData.links = graphData['links'];
                 this.graphData.author_info = graphData['author_info'];

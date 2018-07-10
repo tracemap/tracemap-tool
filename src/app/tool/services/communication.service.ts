@@ -9,11 +9,13 @@ export class CommunicationService {
 
     constructor(
         private apiService: ApiService
-    ){}
+    ) {}
     retweetCount = new BehaviorSubject<number>(undefined);
     resetData = new BehaviorSubject<boolean>(undefined);
     userId = new BehaviorSubject<string>(undefined);
     tweetId = new BehaviorSubject<string>(undefined);
+    cookieOverlayClosed = new BehaviorSubject<boolean>(undefined);
+    exceedOverlayClosed = new BehaviorSubject<boolean>(undefined);
 
     userInfo = new BehaviorSubject<object>(undefined);
     oldUserInfo = {};
@@ -49,6 +51,22 @@ export class CommunicationService {
                     resolve(userInfos);
                 });
             }
+        });
+    }
+
+    noOverlayOpen(): Promise<void> {
+        return new Promise( res => {
+            this.cookieOverlayClosed.subscribe( cookieOverlayClosed => {
+                if (cookieOverlayClosed) {
+                    console.log('cookieOverlayClosed');
+                    this.exceedOverlayClosed.subscribe( exceedOverlayClosed => {
+                        if ( exceedOverlayClosed) {
+                            console.log('exceedOverlayClosed');
+                            res();
+                        }
+                    });
+                }
+            });
         });
     }
 }
