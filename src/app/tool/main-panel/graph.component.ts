@@ -32,6 +32,9 @@ export class GraphComponent {
     width;
     height;
 
+    factor = 1;
+    minus = 0;
+
     canvas;
     context;
     simulation;
@@ -232,14 +235,14 @@ export class GraphComponent {
             d3.select(this.canvas)
                 .call( d3.drag()
                     .container( this.canvas)
-                    .subject( () => nodeHovered(this.canvas))
+                    .subject( () => this.getHoveredNode())
                     .on('start', () => this.dragstarted())
                     .on('drag', () => this.dragged())
                     .on('end', () => this.dragended()));
             // Hover behavior
             d3.select(this.canvas)
                 .on('mousemove', () => {
-                    const node = nodeHovered(this.canvas);
+                    const node = this.getHoveredNode();
                     if ( node && !this.hoveredNode) {
                         this.hoveredNode = node;
                         this.graphService.userNodeHighlight.next(node.id_str);
@@ -255,22 +258,22 @@ export class GraphComponent {
                     }
                 })
                 .on('click', () => {
-                    const node = nodeHovered(this.canvas);
+                    const node = this.getHoveredNode();
                     if ( node) {
                         this.graphService.activeNode.next(node.id_str);
                     } else {
                         this.graphService.activeNode.next(undefined);
                     }
                 });
-
-            function nodeHovered(canvas) {
-                const mouse = d3.mouse(canvas);
-                const x = mouse[0];
-                const y = mouse[1];
-                const node = simulation.find( x, y);
-                return simulation.find( x, y, node.r + (node.r / 7));
-            }
         });
+    }
+
+    getHoveredNode() {
+        const mouse = d3.mouse(this.canvas);
+        const x = mouse[0] / this.factor - this.minus;
+        const y = mouse[1] / this.factor - this.minus;
+        const node = this.simulation.find( x, y);
+        return this.simulation.find( x, y, node.r + (node.r / 7));
     }
 
     setSimulation(): Promise<d3.forceSimulation> {
@@ -309,21 +312,28 @@ export class GraphComponent {
     }
 
     ticked() {
+        const sortedX = this.renderedNodes
+                            .map( node => node.x)
+                            .sort( (a, b) => a - b);
+        const sortedY = this.renderedNodes
+                            .map( node => node.y)
+                            .sort( (a, b) => a - b);
+        const minX = sortedX[0];
+        const minY = sortedY[0];
+        const maxX = sortedX[sortedX.length - 1];
+        const maxY = sortedY[sortedY.length - 1];
+        const minusX = minX < 0 ? -minX : 0;
+        const minusY = minY < 0 ? -minY : 0;
+        this.minus = minusX > minusY ? minusX : minusY;
+        const factorX = this.canvas.width / (maxX + this.minus);
+        const factorY = this.canvas.width / (maxY + this.minus);
+
+        this.factor = factorX < factorY ? factorX : factorY;
         this.renderedNodes.forEach( node => {
-            const x = node.x;
-            const y = node.y;
-            const r = node.r;
-            if ( x < (0 + r + 5)) {
-                node.x = (0 + r + 5);
-            } else if ( x > this.canvas.width - r) {
-                node.x = this.canvas.width - r;
-            }
-            if ( y < 0 + r) {
-                node.y = 0 + r;
-            } else if ( y > this.canvas.height - r) {
-                node.y = this.canvas.height - r;
-            }
+            node['cx'] = (node.x + this.minus) * this.factor;
+            node['cy'] = (node.y + this.minus) * this.factor;
         });
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.renderedLinks.filter( link => link.opacity !== 1).forEach( link => {
@@ -352,12 +362,12 @@ export class GraphComponent {
     }
 
     drawLink(d) {
-        const angle = Math.atan2( d.target.y - d.source.y,
-                                d.target.x - d.source.x);
-        const xPos = d.target.x - d.target.r * Math.cos(angle);
-        const yPos = d.target.y - d.target.r * Math.sin(angle);
+        const angle = Math.atan2( d.target.cy - d.source.cy,
+                                d.target.cx - d.source.cx);
+        const xPos = d.target.cx - d.target.r * Math.cos(angle);
+        const yPos = d.target.cy - d.target.r * Math.sin(angle);
         this.context.beginPath();
-        this.context.moveTo(d.source.x, d.source.y);
+        this.context.moveTo(d.source.cx, d.source.cy);
         this.context.lineTo( xPos, yPos);
         this.context.strokeStyle = 'rgba(' + this.linkColors[d.color] + ',' + d.opacity + ')';
         this.context.lineWidth = 0.8;
@@ -387,8 +397,8 @@ export class GraphComponent {
         const lineWidth = 2;
         const radius = d.r - lineWidth;
         this.context.beginPath();
-        this.context.moveTo( d.x + radius, d.y);
-        this.context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
+        this.context.moveTo( d.cx + radius, d.cy);
+        this.context.arc(d.cx, d.cy, radius, 0, 2 * Math.PI);
         this.context.lineWidth = lineWidth;
         this.context.fillStyle = 'rgba(' + this.colors[d.color] + ',' + d.opacity + ')';
         this.context.strokeStyle = '#F5F6F7';
@@ -401,8 +411,8 @@ export class GraphComponent {
         const lineWidth = d.r / 2.2;
         const radius = d.r - lineWidth;
         this.context.beginPath();
-        this.context.moveTo( d.x + radius, d.y);
-        this.context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
+        this.context.moveTo( d.cx + radius, d.cy);
+        this.context.arc(d.cx, d.cy, radius, 0, 2 * Math.PI);
         this.context.lineWidth = lineWidth;
         this.context.fillStyle = '#fff';
         this.context.strokeStyle = 'rgba(' + this.colors[d.color] + ',' + d.opacity + ')';
