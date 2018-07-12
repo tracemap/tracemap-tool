@@ -25,6 +25,9 @@ export class GraphComponent {
     renderedNodes = [];
     renderedLinks = [];
 
+    connectedNodes = [];
+    centeredNode;
+
     hoveredNode;
     activeNode;
     userPreviewRendered;
@@ -33,7 +36,8 @@ export class GraphComponent {
     height;
 
     factor = 1;
-    minus = 0;
+    shiftX;
+    shiftY;
 
     canvas;
     context;
@@ -53,7 +57,7 @@ export class GraphComponent {
 
     colors = ['110,113,122', '127,37,230', '76,80,89'];
     linkColors = ['204,208,217', '142,146,153'];
-    scale = d3.scaleLinear().domain([2, 30]).range([6, 18]);
+    scale = d3.scaleLinear().domain([2, 30]).range([8, 25]);
 
     constructor(
         private graphService: GraphService,
@@ -113,6 +117,7 @@ export class GraphComponent {
                 }
             }
         });
+
         this.graphService.settings.subscribe( settings => {
             if ( settings) {
                 if ( settings['arrows'] !== this.settings.arrows) {
@@ -224,6 +229,8 @@ export class GraphComponent {
             node.opacity = 1.0;
             node.color = 0;
         });
+        this.setCenteredNode();
+        this.setConnectedNodes();
         // update graphService.nodeList with out_degree for
         // acc-influential.component
         this.graphService.nodeList.next(this.graphData.nodes);
@@ -270,8 +277,8 @@ export class GraphComponent {
 
     getHoveredNode() {
         const mouse = d3.mouse(this.canvas);
-        const x = mouse[0] / this.factor - this.minus;
-        const y = mouse[1] / this.factor - this.minus;
+        const x = this.getOriginalXPosition(mouse[0]);
+        const y = this.getOriginalYPosition(mouse[1]);
         const node = this.simulation.find( x, y);
         return this.simulation.find( x, y, node.r + (node.r / 7));
     }
@@ -279,9 +286,9 @@ export class GraphComponent {
     setSimulation(): Promise<d3.forceSimulation> {
         return new Promise( (resolve, reject) => {
             this.renderedNodes.forEach( node => {
-                if ( this.settings.fixedAuthor && node.group === 0) {
-                    node.fx = this.width / 2;
-                    node.fy = this.height / 2;
+                if ( node.group === 0) {
+                    node.fx = 0;
+                    node.fy = 0;
                 }
             });
 
@@ -298,8 +305,8 @@ export class GraphComponent {
                 }))
                 .force('collide', d3.forceCollide().radius( function(d) {
                     return d.r * 1.5;
-                }))
-                .force('center', d3.forceCenter(this.width / 2, this.height / 2));
+                }));
+                // .force('center', d3.forceCenter(0, 0));
 
             simulation
                 .nodes( this.graphData.nodes)
@@ -311,27 +318,119 @@ export class GraphComponent {
         });
     }
 
-    ticked() {
-        const sortedX = this.renderedNodes
-                            .map( node => node.x)
-                            .sort( (a, b) => a - b);
-        const sortedY = this.renderedNodes
-                            .map( node => node.y)
-                            .sort( (a, b) => a - b);
-        const minX = sortedX[0];
-        const minY = sortedY[0];
-        const maxX = sortedX[sortedX.length - 1];
-        const maxY = sortedY[sortedY.length - 1];
-        const minusX = minX < 0 ? -minX : 0;
-        const minusY = minY < 0 ? -minY : 0;
-        this.minus = minusX > minusY ? minusX : minusY;
-        const factorX = this.canvas.width / (maxX + this.minus);
-        const factorY = this.canvas.width / (maxY + this.minus);
+    setCenteredNode() {
+        const source = this.graphData.nodes.filter( node => node['group'] === 0);
+        if (source.length === 0) {
+            source.push(this.graphData.nodes.sort( node => node['out_degree'])[0]);
+        }
+        this.centeredNode = source[0];
+    }
 
-        this.factor = factorX < factorY ? factorX : factorY;
+    getShiftX(): number {
+        const sortByX = this.connectedNodes
+                            .map(node => node.x)
+                            .sort( (a, b) => a - b);
+        const xMin = sortByX[0];
+        const xMax = sortByX[sortByX.length - 1];
+        const shiftX = -((xMin + xMax) / 2);
+        return shiftX;
+    }
+    getShiftY(): number {
+        const sortByY = this.connectedNodes
+                            .map(node => node.y)
+                            .sort( (a, b) => a - b);
+        const yMin = sortByY[0];
+        const yMax = sortByY[sortByY.length - 1];
+        const shiftY = -((yMin + yMax) / 2);
+        return shiftY;
+    }
+
+    getFactor(): number {
+        const xSpace = this.canvas.width;
+        const ySpace = this.canvas.height;
+        const sortByX = this.connectedNodes
+                            .map(node => {
+                                if (node.x < 0) {
+                                    return node.x - node.r;
+                                } else {
+                                    return node.x + node.r;
+                                }
+                            })
+                            .sort( (a, b) => a - b);
+        const sortByY = this.connectedNodes
+                            .map(node => {
+                                if (node.y < 0) {
+                                    return node.y - node.r;
+                                } else {
+                                    return node.y + node.r;
+                                }
+                            })
+                            .sort( (a, b) => a - b);
+        const xMin = sortByX[0];
+        const xMax = sortByX[sortByX.length - 1];
+        const yMin = sortByY[0];
+        const yMax = sortByY[sortByY.length - 1];
+        const x = xMax - xMin;
+        const y = yMax - yMin;
+        const xFactor = xSpace / x;
+        const yFactor = ySpace / y;
+        const factor = Math.min(xFactor, yFactor);
+        if (factor < 1) {
+            return factor;
+        } else {
+            return this.factor;
+        }
+    }
+
+    getCanvasXPosition(x: number): number {
+        return ((x + this.shiftX) * this.factor) + (this.canvas.width / 2);
+    }
+
+    getCanvasYPosition(y: number): number {
+        return ((y + this.shiftY) * this.factor) + (this.canvas.height / 2);
+    }
+
+    getOriginalXPosition(cx: number): number {
+        return ((cx - (this.canvas.width / 2)) / this.factor) - this.shiftX;
+    }
+
+    getOriginalYPosition(cy: number): number {
+        return ((cy - (this.canvas.height / 2)) / this.factor) - this.shiftY;
+    }
+
+    setConnectedNodes(): void {
+        if (this.centeredNode) {
+            const connectedIds = new Set();
+            const checkedIds = new Set();
+            connectedIds.add(this.centeredNode['id_str']);
+            const loop = setInterval( () => {
+                connectedIds.forEach( id => {
+                    if (!checkedIds.has(id)) {
+                        checkedIds.add(id);
+                        const neighbours = this.getNeighbourIds(id);
+                        neighbours.forEach( neighbourId => {
+                            connectedIds.add(neighbourId);
+                        });
+                    }
+                }, 100);
+                if (checkedIds.size === connectedIds.size) {
+                    clearInterval(loop);
+                    this.connectedNodes = this.graphData.nodes.filter( node => connectedIds.has(node.id_str));
+                }
+            });
+        }
+    }
+
+    ticked() {
+        if (!this.dragging) {
+            this.shiftX = this.getShiftX();
+            this.shiftY = this.getShiftY();
+        }
+        this.factor = this.getFactor();
+
         this.renderedNodes.forEach( node => {
-            node['cx'] = (node.x + this.minus) * this.factor;
-            node['cy'] = (node.y + this.minus) * this.factor;
+            node['cx'] = this.getCanvasXPosition(node.x);
+            node['cy'] = this.getCanvasYPosition(node.y);
         });
 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -362,10 +461,11 @@ export class GraphComponent {
     }
 
     drawLink(d) {
+        const targetRadius = d.target.r * this.factor;
         const angle = Math.atan2( d.target.cy - d.source.cy,
                                 d.target.cx - d.source.cx);
-        const xPos = d.target.cx - d.target.r * Math.cos(angle);
-        const yPos = d.target.cy - d.target.r * Math.sin(angle);
+        const xPos = d.target.cx - targetRadius * Math.cos(angle);
+        const yPos = d.target.cy - targetRadius * Math.sin(angle);
         this.context.beginPath();
         this.context.moveTo(d.source.cx, d.source.cy);
         this.context.lineTo( xPos, yPos);
@@ -389,13 +489,13 @@ export class GraphComponent {
         const headLeftY = yPos - headlen * Math.sin(angle + Math.PI / 6);
         this.context.lineTo( headLeftX, headLeftY);
         this.context.strokeStyle = 'rgba(' + this.linkColors[1] + ',' + node.opacity + ')';
-        this.context.lineWidth = 1.5;
+        this.context.lineWbidth = 1.5;
         this.context.stroke();
     }
 
     drawNode(d) {
-        const lineWidth = 2;
-        const radius = d.r - lineWidth;
+        const lineWidth = 2 * this.factor;
+        const radius = (d.r * this.factor) - lineWidth;
         this.context.beginPath();
         this.context.moveTo( d.cx + radius, d.cy);
         this.context.arc(d.cx, d.cy, radius, 0, 2 * Math.PI);
@@ -408,8 +508,8 @@ export class GraphComponent {
 
     drawAuthor(d) {
         d.color = 1;
-        const lineWidth = d.r / 2.2;
-        const radius = d.r - lineWidth;
+        const lineWidth = (d.r / 2.2) * this.factor;
+        const radius = (d.r * this.factor) - lineWidth;
         this.context.beginPath();
         this.context.moveTo( d.cx + radius, d.cy);
         this.context.arc(d.cx, d.cy, radius, 0, 2 * Math.PI);
@@ -455,6 +555,19 @@ export class GraphComponent {
             }
         });
         return matches.length;
+    }
+
+    getNeighbourIds(id): number[] {
+        const matches = [];
+        this.graphData.links.forEach( link => {
+            if (link.target_id === id) {
+                matches.push(link.source_id);
+            }
+            if (link.source_id === id) {
+                matches.push(link.target_id);
+            }
+        });
+        return matches;
     }
 
     highlightNeighbours( inputNode) {
