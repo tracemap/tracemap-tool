@@ -124,16 +124,17 @@ export class ToolComponent implements OnInit {
                     const retweetersInfo = this.tracemapData['tweet_data']['retweet_info'];
                     this.graphData['retweet_info'] = {};
                     const promiseArray: Array<any> = [];
-                    this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeterId => {
-                        const retweeterInfo = retweetersInfo[retweeterId]['user'];
-                        const tmp = {};
-                        tmp['favourites_count'] = retweeterInfo['favourites_count'];
-                        tmp['followers_count'] = retweeterInfo['followers_count'];
-                        tmp['friends_count'] = retweeterInfo['friends_count'];
-                        tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
-                        this.graphData['retweet_info'][retweeterId] = tmp;
-                        this.userInfos[retweeterId] = retweeterInfo;
-                    });
+                    this.tracemapData['tweet_data']['retweeter_ids']
+                        .forEach( retweeterId => {
+                            const retweeterInfo = retweetersInfo[retweeterId]['user'];
+                            const tmp = {};
+                            tmp['favourites_count'] = retweeterInfo['favourites_count'];
+                            tmp['followers_count'] = retweeterInfo['followers_count'];
+                            tmp['friends_count'] = retweeterInfo['friends_count'];
+                            tmp['retweet_created_at'] = retweetersInfo[retweeterId]['created_at'];
+                            this.graphData['retweet_info'][retweeterId] = tmp;
+                            this.userInfos[retweeterId] = retweeterInfo;
+                        });
                     this.communicationService.userInfo.next(this.userInfos);
                     this.addGraphData();
                 });
@@ -146,18 +147,6 @@ export class ToolComponent implements OnInit {
             'links': []
         };
 
-        // Necessary because the twitter api sometimes returns users multiple times
-        const nodesChecked = [];
-        this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
-            if ( nodesChecked.indexOf(retweeter) < 0) {
-                nodesChecked.push(retweeter);
-                const node = this.graphData['retweet_info'][retweeter];
-                node['id_str'] = retweeter;
-                node['group'] = 1;
-                graphElements['nodes'].push(node);
-            }
-        });
-
         const authorId = this.graphData['author_info']['id_str'];
         const followers = this.tracemapData['followers'];
 
@@ -165,6 +154,21 @@ export class ToolComponent implements OnInit {
         this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
             console.log('Unknown users are crawled live.'); // TODO: return number of unknown users
         });
+
+        // Necessary because the twitter api sometimes returns users multiple times
+        const nodesChecked = [];
+        this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
+            if ( nodesChecked.indexOf(retweeter) < 0) {
+                nodesChecked.push(retweeter);
+                if (retweeter !== authorId) {
+                    const node = this.graphData['retweet_info'][retweeter];
+                    node['id_str'] = retweeter;
+                    node['group'] = 1;
+                    graphElements['nodes'].push(node);
+                }
+            }
+        });
+
 
         if (authorId in followers && this.newMode) {
             // New mechanic if author is in our database

@@ -89,7 +89,7 @@ export class GraphComponent {
                 this.graphData.nodes.forEach( node => {
                     if ( node.rel_timestamp <= time) {
                         if ( this.settings.leafs
-                            || node.out_degree !== 0) {
+                            || (node.out_degree !== 0 && node.degree > 1)) {
                             renderedNodes.push(node);
                             renderedNodeIds.push(node.id_str);
                         }
@@ -134,6 +134,7 @@ export class GraphComponent {
                 }
                 if ( settings['leafs'] !== this.settings.leafs) {
                     this.settings.leafs = settings['leafs'];
+                    this.setConnectedNodes();
                     this.graphService.timesliderPosition.next(this.timesliderPosition);
                 }
                 if ( this.settings.lastHighlight !== settings['lastHighlight']) {
@@ -225,6 +226,7 @@ export class GraphComponent {
         });
         this.graphData.nodes.forEach( node => {
             node.out_degree = this.getNeighbours(node, 'out');
+            node.degree = this.getNeighbours(node);
             node.r = this.scale(node.out_degree) * 1.6;
             node.opacity = 1.0;
             node.color = 0;
@@ -350,19 +352,21 @@ export class GraphComponent {
         const ySpace = this.canvas.height;
         const sortByX = this.connectedNodes
                             .map(node => {
-                                if (node.x < 0) {
-                                    return node.x - node.r;
+                                const nodeX = node.fx ? node.fx : node.x;
+                                if (nodeX < 0) {
+                                    return nodeX - node.r;
                                 } else {
-                                    return node.x + node.r;
+                                    return nodeX + node.r;
                                 }
                             })
                             .sort( (a, b) => a - b);
         const sortByY = this.connectedNodes
                             .map(node => {
-                                if (node.y < 0) {
-                                    return node.y - node.r;
+                                const nodeY = node.fy ? node.fy : node.y;
+                                if (nodeY < 0) {
+                                    return nodeY - node.r;
                                 } else {
-                                    return node.y + node.r;
+                                    return nodeY + node.r;
                                 }
                             })
                             .sort( (a, b) => a - b);
@@ -415,7 +419,9 @@ export class GraphComponent {
                 }, 100);
                 if (checkedIds.size === connectedIds.size) {
                     clearInterval(loop);
-                    this.connectedNodes = this.graphData.nodes.filter( node => connectedIds.has(node.id_str));
+                    this.connectedNodes = this.graphData.nodes.filter( node => {
+                        return connectedIds.has(node.id_str);
+                    });
                 }
             });
         }
