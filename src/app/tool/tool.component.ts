@@ -97,6 +97,7 @@ export class ToolComponent implements OnInit {
                     const retweetCount = tracemapData['tweet_data']['tweet_info']['retweet_count'];
                     if (retweetCount > 100) {
                         this.exceedOverlayOpen = true;
+                        this.communicationService.exceedOverlayClosed.next(false);
                     } else {
                         this.communicationService.exceedOverlayClosed.next(true);
                     }

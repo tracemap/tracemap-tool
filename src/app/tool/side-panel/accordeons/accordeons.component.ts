@@ -9,35 +9,35 @@ import { Component } from '@angular/core';
 export class AccordeonsComponent {
     accordeons = [
         {
-            name: "Source Tweet",
-            selector: "acc-source",
+            name: 'Source Tweet',
+            selector: 'acc-source',
             open: false,
             rendered: false
-        },{
-            name: "Most Influential Users",
-            selector: "acc-influential",
+        }, {
+            name: 'Most Influential Users',
+            selector: 'acc-influential',
             open: false,
             rendered: false
-        },{
-            name: "Metrics",
-            selector: "acc-metrics",
+        }, {
+            name: 'Metrics',
+            selector: 'acc-metrics',
             open: false,
             rendered: false
-        },{
-            name: "Enhanced Metrics",
-            selector: "acc-enhanced-metrics",
-            open: false,
-            rendered: false
-        },{
-            name: "Last TraceMaps",
-            selector: "acc-last-tracemaps",
+        }, {
+            name: 'Enhanced Metrics',
+            selector: 'acc-enhanced-metrics',
             open: true,
+            rendered: false
+        }, {
+            name: 'Last TraceMaps',
+            selector: 'acc-last-tracemaps',
+            open: false,
             rendered: false
         }
     ];
 
     toggle(accordeon) {
-        if( accordeon.open) {
+        if ( accordeon.open) {
             accordeon.open = false;
         } else {
             accordeon.open = true;

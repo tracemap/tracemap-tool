@@ -613,11 +613,11 @@ export class GraphComponent {
     }
 
     resetHighlightNeighbours() {
-        this.renderedLinks.forEach( link => {
+        this.graphData.links.forEach( link => {
             link.color = 0;
             link.opacity = 1;
         });
-        this.renderedNodes.forEach( node => {
+        this.graphData.nodes.forEach( node => {
             node.color = 0;
             node.opacity = 1;
         });

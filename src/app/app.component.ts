@@ -10,12 +10,12 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent implements OnInit{
     title = 'TraceMap';
-    searchClasses = {}
+    searchClasses = {};
 
     constructor(
         private router: Router,
         private apiService: ApiService
-    ){}
+    ) {}
 
     ngOnInit() {
         this.router.events.subscribe( (evt) => {
