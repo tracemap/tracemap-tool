@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
-import { CommunicationService } from './../services/communication.service';
+import { CommunicationService } from '../services/communication.service';
 
 @Component({
     selector: 'user',

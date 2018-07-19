@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CommunicationService } from './../../services/communication.service';
+import { CommunicationService } from '../../services/communication.service';
 
 @Component({
     selector: 'acc-source',

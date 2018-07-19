@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { ApiService } from './../services/api.service';
+import { ApiService } from '../services/api.service';
 import { GraphService } from './services/graph.service';
 import { CommunicationService } from './services/communication.service';
 import { LocalStorageService } from './services/local-storage.service';
@@ -154,6 +154,7 @@ export class ToolComponent implements OnInit {
         const retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
         this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
             console.log('Unknown users are crawled live.'); // TODO: return number of unknown users
+            console.log(answer);
         });
 
         // Necessary because the twitter api sometimes returns users multiple times
@@ -279,7 +280,6 @@ export class ToolComponent implements OnInit {
     }
 
     closeExceedOverlay(): void {
-        console.log('im heeeere');
         this.exceedOverlayOpen = false;
         this.communicationService.exceedOverlayClosed.next(true);
     }

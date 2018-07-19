@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { GraphService } from './../../services/graph.service';
-import { CommunicationService } from './../../services/communication.service';
+import { GraphService } from '../../services/graph.service';
+import { CommunicationService } from '../../services/communication.service';
 import { TimelineComponent } from './timeline.component';
 
 @Component({

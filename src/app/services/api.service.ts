@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { environment } from './../../environments/environment';
+import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -107,7 +107,7 @@ export class ApiService {
         return this.http
             .get(this.url + '/neo4j/label_unknown_users/' + retweetersString)
             .map( response => {
-                return '' + response;
+                return response.json();
             });
     }
 

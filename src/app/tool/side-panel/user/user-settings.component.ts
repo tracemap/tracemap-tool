@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatRadioChange } from '@angular/material';
 
-import { LocalStorageService } from './../../services/local-storage.service';
-import { CommunicationService } from './../../services/communication.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { CommunicationService } from '../../services/communication.service';
 
 @Component({
     selector: 'app-user-settings',

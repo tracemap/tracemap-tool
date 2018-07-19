@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { GraphService } from './../services/graph.service';
-import { CommunicationService } from './../services/communication.service';
+import { GraphService } from '../services/graph.service';
+import { CommunicationService } from '../services/communication.service';
 
 import * as d3 from 'd3';
 import * as $ from 'jquery';
@@ -486,7 +486,7 @@ export class GraphComponent {
     drawHead(node, xPos, yPos, angle) {
         this.context.beginPath();
         this.context.moveTo(xPos, yPos);
-        const headlen = 3;
+        const headlen = 4;
         const headRightX = xPos - headlen * Math.cos(angle - Math.PI / 6);
         const headRightY = yPos - headlen * Math.sin(angle - Math.PI / 6);
         this.context.lineTo( headRightX, headRightY);

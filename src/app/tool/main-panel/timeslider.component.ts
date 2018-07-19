@@ -1,8 +1,8 @@
 import { Component, NgModule } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
-import { GraphService } from './../services/graph.service';
-import { CommunicationService } from './../services/communication.service';
+import { GraphService } from '../services/graph.service';
+import { CommunicationService } from '../services/communication.service';
 
 import * as $ from 'jquery';
 

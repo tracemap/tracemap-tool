@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
-import { GraphService } from './../../services/graph.service';
-import { CommunicationService } from './../../services/communication.service';
-import { ApiService } from './../../../services/api.service';
+import { GraphService } from '../../services/graph.service';
+import { CommunicationService } from '../../services/communication.service';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
     selector: 'acc-influential',

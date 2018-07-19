@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ToolRoutingModule } from './tool-routing.module';
-import { MultiUseModule } from './../multi-use/multi-use.module';
+import { MultiUseModule } from '../multi-use/multi-use.module';
 
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatCheckboxModule} from '@angular/material/checkbox';
@@ -33,8 +33,9 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { AccSourceComponent } from './side-panel/accordeons/acc-source.component';
         import { AccInfluentialComponent } from './side-panel/accordeons/acc-influential.component';
         import { AccMetricsComponent } from './side-panel/accordeons/acc-metrics.component';
-        import { AccEnhancedMetricsComponent } from './side-panel/accordeons/acc-enhanced-metrics.component';
-        import { AccLineChartComponent } from './side-panel/accordeons/acc-line-chart.component';
+        import { AccEnhancedMetricsComponent } from './side-panel/accordeons/enhanced-metrics/acc-enhanced-metrics.component';
+            import { EnhancedBarChartComponent } from './side-panel/accordeons/enhanced-metrics/acc-bar-chart.component';
+            import { AccLineChartComponent } from './side-panel/accordeons/enhanced-metrics/acc-line-chart.component';
         import { AccLastTracemapsComponent } from './side-panel/accordeons/acc-last-tracemaps.component';
     import { UserDetailsComponent } from './side-panel/user/user-details.component';
         import { UserSettingsComponent } from './side-panel/user/user-settings.component';
@@ -92,6 +93,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
                 AccInfluentialComponent,
                 AccMetricsComponent,
                 AccEnhancedMetricsComponent,
+                    EnhancedBarChartComponent,
                 AccLineChartComponent,
                 AccLastTracemapsComponent,
             UserDetailsComponent,

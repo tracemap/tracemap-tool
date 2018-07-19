@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
-import { ApiService } from './../../../services/api.service';
-import { GraphService } from './../../services/graph.service';
-import { CommunicationService } from './../../services/communication.service';
+import { ApiService } from '../../../services/api.service';
+import { GraphService } from '../../services/graph.service';
+import { CommunicationService } from '../../services/communication.service';
 
 @Component({
     selector: 'timeline',

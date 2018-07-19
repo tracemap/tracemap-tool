@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { GraphService } from './../services/graph.service';
-import { LocalStorageService } from './../services/local-storage.service';
+import { GraphService } from '../services/graph.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
     selector: 'settings',

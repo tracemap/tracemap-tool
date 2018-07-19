@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 
-import { LocalStorageService } from './../../services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
     selector: 'acc-last-tracemaps',
