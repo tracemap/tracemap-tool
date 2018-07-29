@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class GraphService {
     graphData = new BehaviorSubject<object>(undefined);
     nodeList = new BehaviorSubject<object[]>(undefined);
-    userInfo = new BehaviorSubject<object>(undefined);
     timeRange = new BehaviorSubject<number>(undefined);
     relTimestampList = new BehaviorSubject<number[]>(undefined);
     timesliderPosition = new BehaviorSubject<number>(undefined);

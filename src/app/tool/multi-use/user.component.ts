@@ -8,7 +8,7 @@ import { CommunicationService } from '../services/communication.service';
     styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnChanges{
+export class UserComponent implements OnChanges {
     @Input('name')
     name: string;
     @Input('screenName')
@@ -26,15 +26,12 @@ export class UserComponent implements OnChanges{
 
     ngOnChanges() {
         if ( this.userId) {
-            const userIdList = [];
-            userIdList.push( this.userId);
-            this.communicationService.getUserInfo(userIdList).then( userInfo => {
-                const info = userInfo[this.userId];
-                this.name = info.name;
-                this.screenName = info.screen_name;
-                this.image = 'https://twitter.com/' + info.screen_name + '/profile_image';
+            this.communicationService.getUserInfo(this.userId).then( info => {
+                this.name = info['name'];
+                this.screenName = info['screen_name'];
+                this.image = 'https://twitter.com/' + info['screen_name'] + '/profile_image';
                 this.rendered.next(true);
-            });
+            }).catch(() => { console.log('user info not present'); });
         }
     }
 }

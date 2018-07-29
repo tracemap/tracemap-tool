@@ -193,20 +193,24 @@ export class GraphComponent {
     }
 
     resizeCanvas() {
-        this.canvas.width = 0;
-        this.canvas.height = 0;
-        this.width = $('.d3-graph').width();
-        this.height = $('.d3-graph').height();
-        this.canvas = document.querySelector('.d3-graph');
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
-        this.context = this.canvas.getContext('2d');
-        this.simulation.stop();
-        this.simulation.stop();
-        this.setSimulation().then( (simulation) => {
-            this.context.beginPath();
-            this.simulation = simulation;
-        });
+        if (this.canvas) {
+            this.canvas.width = 0;
+            this.canvas.height = 0;
+            this.width = $('.d3-graph').width();
+            this.height = $('.d3-graph').height();
+            this.canvas = document.querySelector('.d3-graph');
+            this.canvas.width = this.width;
+            this.canvas.height = this.height;
+            this.context = this.canvas.getContext('2d');
+        }
+        if (this.simulation) {
+            this.simulation.stop();
+            this.simulation.stop();
+            this.setSimulation().then( (simulation) => {
+                this.context.beginPath();
+                this.simulation = simulation;
+            });
+        }
     }
 
     init() {

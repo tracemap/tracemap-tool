@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 import { CommunicationService } from '../../../services/communication.service';
 import { GraphService } from '../../../services/graph.service';
-import { _MatTabHeaderMixinBase } from '@angular/material/tabs/typings/tab-header';
 
 @Component({
     selector: 'acc-enhanced-metrics',
@@ -25,6 +24,9 @@ export class AccEnhancedMetricsComponent {
     usersByFollowersData: object;
     usersByFollowersRendered = false;
 
+    usersByTweetsData: object;
+    usersByTweetsDataRendered = false;
+
     constructor(
         private communicationService: CommunicationService,
         private graphService: GraphService
@@ -39,6 +41,7 @@ export class AccEnhancedMetricsComponent {
                 this.setRetweetsToTimeData();
                 this.getUserInfos().then( userInfos => {
                     this.setFollowersByUserData(userInfos);
+                    this.setTweetsByUserData(userInfos);
                 });
             }
         });
@@ -51,12 +54,14 @@ export class AccEnhancedMetricsComponent {
 
     getUserInfos(): Promise<object[]> {
         return new Promise( (res) => {
-            const userInfos = [];
-            userInfos.push(this.graphData['author_info']);
-            Object.keys(this.graphData['retweet_info']).forEach( key => {
-                userInfos.push(this.graphData['retweet_info'][key]);
+            this.communicationService.userInfo.subscribe( (info: object[]) => {
+                if (info) {
+                    const userInfoList = Object.keys(info).map( key => {
+                        return info[key];
+                    });
+                    res(userInfoList);
+                }
             });
-            res(userInfos);
         });
     }
 
@@ -94,11 +99,31 @@ export class AccEnhancedMetricsComponent {
 
     setFollowersByUserData(userInfos: object[]) {
         const followersData = {};
-        followersData['data'] = userInfos.map( user => user['followers_count']);
+        followersData['data'] = userInfos
+            .map( user => {
+            return {
+                uid: user['id_str'],
+                value: user['followers_count']
+            };
+        }).sort( (a, b) => b.value - a.value);
         followersData['headline'] = 'Users sorted by followers';
         followersData['info_text'] = 'Here you can see the users sorted by the amount of followers they got.<br>' +
             'You can check if the influential Users have many followers or if they are just well connected in this network.';
         this.usersByFollowersData = followersData;
     }
 
+    setTweetsByUserData(userInfos: object[]) {
+        const tweetsData = {};
+        tweetsData['data'] = userInfos
+            .map( user => {
+            return {
+                uid: user['id_str'],
+                value: user['statuses_count']
+            };
+        }).sort( (a, b) => b.value - a.value);
+        tweetsData['headline'] = 'Users sorted by authored tweets';
+        tweetsData['info_text'] = 'Here you can see the users sorted by the amount of tweets they authored.<br>' +
+            'You can check who is tweeting a lot compared to the outreach the user got.';
+        this.usersByTweetsData = tweetsData;
+    }
 }

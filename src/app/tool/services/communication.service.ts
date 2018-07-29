@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ApiService } from '../../services/api.service';
+import { reject } from 'q';
 
 @Injectable( )
 
@@ -16,41 +17,22 @@ export class CommunicationService {
     tweetId = new BehaviorSubject<string>(undefined);
     cookieOverlayClosed = new BehaviorSubject<boolean>(undefined);
     exceedOverlayClosed = new BehaviorSubject<boolean>(undefined);
+    userInfosLoaded = new BehaviorSubject<boolean>(false);
 
     userInfo = new BehaviorSubject<object>(undefined);
-    oldUserInfo = {};
     timelineSettings = new BehaviorSubject<object>(undefined);
 
-    getUserInfo(userIds): Promise<object> {
-        return new Promise( (resolve) => {
-            let input = [];
-            if ( typeof userIds === 'string' || userIds instanceof String) {
-                input.push(userIds);
-            } else {
-                input = userIds;
-            }
-            const userInfos = {};
-            const unknown = [];
-            input.forEach( userId => {
-                const userInfo = this.oldUserInfo[userId];
-                if ( userInfo) {
-                    userInfos[userId] = userInfo;
-                } else {
-                    unknown.push(userId);
+    getUserInfo(userId): Promise<object> {
+        return new Promise( (res, rej) => {
+            this.userInfo.subscribe( info => {
+                if (info) {
+                    try {
+                        res(info[userId]);
+                    } catch {
+                        rej();
+                    }
                 }
             });
-            if ( unknown.length === 0) {
-                resolve( userInfos);
-            } else {
-                this.apiService.getUserInfo(unknown.toString()).subscribe( apiUserInfos => {
-                    Object.keys(apiUserInfos).forEach( key => {
-                        const userInfo = apiUserInfos[key];
-                        this.oldUserInfo[key] = userInfo;
-                        userInfos[key] = userInfo;
-                    });
-                    resolve(userInfos);
-                });
-            }
         });
     }
 
@@ -58,10 +40,8 @@ export class CommunicationService {
         return new Promise( res => {
             this.cookieOverlayClosed.subscribe( cookieOverlayClosed => {
                 if (cookieOverlayClosed) {
-                    console.log('cookieOverlayClosed');
                     this.exceedOverlayClosed.subscribe( exceedOverlayClosed => {
                         if ( exceedOverlayClosed) {
-                            console.log('exceedOverlayClosed');
                             res();
                         }
                     });

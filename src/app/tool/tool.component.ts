@@ -93,6 +93,9 @@ export class ToolComponent implements OnInit {
 
             this.apiService.getTracemapData( this.tweetId)
                 .then( tracemapData => {
+                    // clear old userInfos
+                    this.userInfos = {};
+
                     // show extends overlay if more than 100 retweets
                     const retweetCount = tracemapData['tweet_data']['tweet_info']['retweet_count'];
                     if (retweetCount > 100) {
@@ -152,9 +155,9 @@ export class ToolComponent implements OnInit {
         const followers = this.tracemapData['followers'];
 
         const retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
-        this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (answer) => {
+        this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (response) => {
             console.log('Unknown users are crawled live.'); // TODO: return number of unknown users
-            console.log(answer);
+            console.log(response);
         });
 
         // Necessary because the twitter api sometimes returns users multiple times
@@ -172,80 +175,36 @@ export class ToolComponent implements OnInit {
         });
 
 
-        if (authorId in followers && this.newMode) {
-            // New mechanic if author is in our database
-            let connectedUsers = [];
-            const checkedUsers = [];
-
+        // Old mechanic for tweets where the author isnt in our database
+        if (authorId in followers) {
             followers[authorId].forEach( targetId => {
-                connectedUsers.push(targetId);
-                checkedUsers.push(targetId);
                 graphElements['links'].push({
                     'source': authorId,
                     'target': targetId
                 });
             });
+        } else {
+            this.graphData['auther_unknown'] = true;
+            console.log('author missing');
+        }
 
-            let oldLinkNum = graphElements['links'].length;
-            let newLinkNum = oldLinkNum + 1;
-
-            while ( oldLinkNum !== newLinkNum) {
-                const tmpConnectedUsers = [];
-                oldLinkNum = newLinkNum;
-                connectedUsers.forEach( sourceId => {
-                    if ( sourceId in followers) {
-                        followers[sourceId].forEach( targetId => {
-                            if ( targetId !== authorId) {
-                                if ( this.targetTweetNewer(sourceId, targetId)) {
-                                    if ( checkedUsers.indexOf(targetId) < 0) {
-                                        tmpConnectedUsers.push(targetId);
-                                        checkedUsers.push(targetId);
-                                    }
-                                    graphElements['links'].push({
-                                        'source': sourceId,
-                                        'target': targetId,
-                                    });
-                                }
-                            }
-                        });
+        graphElements['nodes'].push(this.graphData['author_info']);
+        graphElements['nodes'].forEach( source => {
+            const sourceId = source['id_str'];
+            if ( sourceId in followers) {
+                followers[sourceId].forEach( targetId => {
+                    if ( !(targetId === authorId || sourceId === authorId)) {
+                        if ( this.targetTweetNewer(sourceId, targetId)) {
+                            graphElements['links'].push({
+                                'source': sourceId,
+                                'target': targetId
+                            });
+                        }
                     }
                 });
-                connectedUsers = tmpConnectedUsers;
-                newLinkNum = graphElements['links'].length;
             }
-            graphElements['nodes'].push(this.graphData['author_info']);
-        } else {
-            // Old mechanic for tweets where the author isnt in our database
-            if (authorId in followers) {
-                console.log('THE APP IS RUNNING WITH OLD GRAPH LOGIC');
-                followers[authorId].forEach( targetId => {
-                    graphElements['links'].push({
-                        'source': authorId,
-                        'target': targetId
-                    });
-                });
-            } else {
-                this.graphData['auther_unknown'] = true;
-                console.log('THE AUTHOR OF THE TWEET IS NOT IN OUR DATABASE');
-            }
+        });
 
-            graphElements['nodes'].push(this.graphData['author_info']);
-            graphElements['nodes'].forEach( source => {
-                const sourceId = source['id_str'];
-                if ( sourceId in followers) {
-                    followers[sourceId].forEach( targetId => {
-                        if ( !(targetId === authorId || sourceId === authorId)) {
-                            if ( this.targetTweetNewer(sourceId, targetId)) {
-                                graphElements['links'].push({
-                                    'source': sourceId,
-                                    'target': targetId
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        }
         const linkSources = graphElements['links'].map( link => {
             return link['source'];
         });

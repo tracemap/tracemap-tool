@@ -102,7 +102,7 @@ export class AccLineChartComponent implements OnChanges {
 
             this.svg.append('g')
                 .attr('transform', `translate(0, ${height - margin})`)
-                .attr('stroke-width', '2px')
+                .attr('stroke-width', '0.2px')
                 .call(xAxis);
             this.svg.append('g').attr('stroke-width', '0.2px')
                 .classed('grid', true).call(yAxis);

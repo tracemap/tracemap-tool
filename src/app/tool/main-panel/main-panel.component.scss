@@ -2,16 +2,16 @@
 
 .grid {
     height: 100%;
+    max-height: 100%;
     width: 100%;
     background-color: $color-gray-bg-light;
     display: grid;
-    overflow: scroll;
+    overflow: hidden;
     grid-template-columns: 1fr 45px 30px;
-    grid-template-rows:  1fr 36px 30px;
+    grid-template-rows:  1fr 72px;
     grid-template-areas:
         "graph side_controls ."
-        "timeslider side_controls ."
-        ". . .";
+        "timeslider timeslider .";
 
     .graph {
         grid-area: graph;
@@ -23,14 +23,12 @@
         align-content: end;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 45px 10px 45px 10px 45px 45px;
+        grid-template-rows: 45px 10px 45px 20px;
         grid-template-areas:
             "settings"
             "."
             "tour"
-            "."
-            "zoom"
-            "zoom";
+            ".";
 
         .settings {
             grid-area: settings;
@@ -40,11 +38,6 @@
             border-radius: 50%;
             background-color: #fff;
         }
-        .zoom {
-            grid-area: zoom;
-            background-color: #fff;
-        }
- 
    }
 
     .timeslider {

@@ -13,7 +13,34 @@
         "
         src="../../../assets/images/arrows-up-down-white_16.png">
     </div>
- -->    <svg class="svg small"></svg>
-    <svg 
-    class="svg full-screen"></svg>
+ -->    
+    <div class="scroll-container">
+        <div class="user-infos">
+            <div class="user-wrapper"
+            *ngFor="let user of data['data']"
+            (mouseenter)="setHovered(uid)"
+            (mouseleave)="setHovered(undefined)">
+                <user
+                [userId]="user.uid"></user>
+            </div>
+        </div>
+        <svg #barChart class="bar-chart"></svg>
+        <div class="follower-number-wrapper">
+            <p class="follower-number"
+            *ngFor="let user of data['data']"
+            [ngClass]="{'first': user == data['data'][0]}">
+                {{user.value | shortNumber}}
+            </p>
+        </div>
+        <div class="hoverlay-wrapper">
+            <div
+            class="hoverlay"
+            *ngFor="let user of data['data']"
+            [ngClass]="{'opac':user.opac}"
+            (mouseenter)="setHovered(user.uid)"
+            (mouseleave)="setHovered(undefined)"
+            (click)="setActiveNode(user.uid)"></div>
+        </div>
+    </div>
+    <svg #xAxis class="x-axis"></svg>
 </div>

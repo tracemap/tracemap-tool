@@ -1,22 +1,20 @@
 <div class="content">
     <ng-container
-    *ngFor="let user of influentialUsers">
+    *ngFor="let node of sortedNodes">
         <div 
         class="user-card"
-        (mouseenter)="setHovered(user.id_str)"
+        (mouseenter)="setHovered(node.id_str)"
         (mouseleave)="setHovered(undefined)"
-        (click)="setActive(user.id_str)">
+        (click)="setActive(node.id_str)">
             <user 
             class="user" 
-            [name]="user.name"
-            [screenName]="user.screen_name"
-            [image]="user.profile_image_url">
+            [userId]="node.id_str">
             </user>
             <div 
             class="user-button"
-            [ngClass]="{'highlight': hovered == user.id_str}">
+            [ngClass]="{'highlight': hovered == node.id_str}">
                 <img
-                *ngIf="hovered != user.id_str"
+                *ngIf="hovered != node.id_str"
                 srcset="
                 ../../../assets/images/arrow-right_128.png 4x,
                 ../../../assets/images/arrow-right_64.png 2x,
@@ -24,7 +22,7 @@
                 "
                 src="../../../assets/images/arrow-right_32.png">
                 <img
-                *ngIf="hovered == user.id_str"
+                *ngIf="hovered == node.id_str"
                 srcset="
                 ../../../assets/images/arrow-right-white_128.png 4x,
                 ../../../assets/images/arrow-right-white_64.png 2x,
@@ -40,7 +38,7 @@
             ../../../assets/images/retweet_16.png 1x
             "
             src="../../../assets/images/retweet_16.png">
-            <p>Up to <span>{{user.out_degree}}</span> Users retweetet from this source</p>
+            <p>Up to <span>{{node.out_degree}}</span> users retweetet from this source</p>
         </div>
     </ng-container>
 </div>
