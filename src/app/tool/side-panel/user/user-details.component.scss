@@ -15,7 +15,7 @@
     grid-template-rows: 72px auto 1fr;
     grid-template-areas:
         "go_back"
-        "user"
+        "user_base"
         "scroll_container";
     transition: margin 0.4s;
     &.open {
@@ -24,6 +24,7 @@
     }
     .go-back {
         grid-area: go_back;
+        position: relative;
         background-color: $color-gray-font-dark;
         padding-left: 20px;
         align-items: center;
@@ -44,10 +45,11 @@
         }
     }
     .user-base {
-        grid-area: user;
+        grid-area: user_base;
         position: relative;
         z-index: 3;
         background-color: #fff;
+        width: 360px;
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 20px;
@@ -55,8 +57,18 @@
         box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
         display: grid;
         grid-template-columns: 1fr 40px;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "user settings";
 
+        .user {
+            grid-area: user;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
         app-user-settings {
+            grid-area: settings;
             align-self: center;
         }
 
