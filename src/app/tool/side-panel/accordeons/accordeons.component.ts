@@ -11,7 +11,7 @@ export class AccordeonsComponent {
         {
             name: 'Source Tweet',
             selector: 'acc-source',
-            open: false,
+            open: true,
             rendered: false
         }, {
             name: 'Most Influential Users',
@@ -21,12 +21,12 @@ export class AccordeonsComponent {
         }, {
             name: 'Metrics',
             selector: 'acc-metrics',
-            open: false,
+            open: true,
             rendered: false
         }, {
-            name: 'Enhanced Metrics',
+            name: 'Charts',
             selector: 'acc-enhanced-metrics',
-            open: true,
+            open: false,
             rendered: false
         }, {
             name: 'Last TraceMaps',
