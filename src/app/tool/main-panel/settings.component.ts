@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 
 import { GraphService } from '../services/graph.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { TourService } from '../services/tour.service';
 
 @Component({
     selector: 'settings',
     templateUrl: './settings.component.html',
-    styleUrls: [
-        './../multi-use/tooltip.component.scss',
-        './settings.component.scss']
+    styleUrls: ['./../multi-use/tooltip.scss', './settings.component.scss']
 })
 
 export class SettingsComponent {
@@ -25,7 +24,8 @@ export class SettingsComponent {
 
     constructor(
         private graphService: GraphService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private tourService: TourService
     ) {
         const settings = this.localStorageService.getGraphSettings();
         if ( settings) {
@@ -34,6 +34,16 @@ export class SettingsComponent {
             });
             this.updateSettings();
         }
+
+        this.tourService.graphSettingsOpen.subscribe( (open) => {
+            if (open !== undefined) {
+                if (open) {
+                    this.openSettings();
+                } else {
+                    this.closeSettings();
+                }
+            }
+        });
     }
 
     openSettings() {

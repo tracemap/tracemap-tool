@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { TourService } from './../../services/tour.service';
+
 @Component({
     selector: 'accordeons',
     templateUrl: './accordeons.component.html',
@@ -36,12 +38,33 @@ export class AccordeonsComponent {
         }
     ];
 
+    constructor(
+        private tourService: TourService
+    ) {
+        this.tourService.openAccordeon.subscribe( selector => {
+            if (selector) {
+                this.closeAll();
+                this.openBySelector(selector);
+            }
+        });
+    }
+
     toggle(accordeon) {
         if ( accordeon.open) {
             accordeon.open = false;
         } else {
             accordeon.open = true;
         }
+    }
+
+    closeAll() {
+        this.accordeons.forEach( accordeon => {
+            accordeon.open = false;
+        });
+    }
+
+    openBySelector(selector: string): void {
+        this.accordeons.filter( accordeon => accordeon.selector === selector)[0].open = true;
     }
 
     toggleRendered(rendered, element) {

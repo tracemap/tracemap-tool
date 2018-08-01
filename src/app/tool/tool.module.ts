@@ -45,6 +45,7 @@ import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TweetService } from './services/tweet.service';
+import { TourService } from './services/tour.service';
 
 import { TimeLabelPipe } from './pipes/time-label.pipe';
 import { ToYearPipe } from './pipes/to-year.pipe';
@@ -67,7 +68,8 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
       GraphService,
       CommunicationService,
       LocalStorageService,
-      TweetService
+      TweetService,
+      TourService
     ],
     declarations: [
         ToolComponent,

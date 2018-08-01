@@ -1,7 +1,7 @@
 <div class="accordeons">
     <div 
     *ngFor="let accordeon of accordeons"
-    class="accordeon">
+    class="accordeon {{accordeon.selector}}">
         <div 
         class="label"
         (click)="toggle(accordeon)"

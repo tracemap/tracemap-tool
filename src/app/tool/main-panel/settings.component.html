@@ -1,5 +1,6 @@
 <div 
 class="settings-button"
+[ngClass]="{'open': open}"
 (click)="openSettings()">
     <img *ngIf="!open"
     srcset="
@@ -15,7 +16,6 @@ class="settings-button"
     ../../../assets/images/settings-gear-purple_32.png 1x,
     "
     src="../../../assets/images/settings-gear-purple_32.png">
-
 </div>
 <div class="overlay" (click)="closeSettings()" [ngClass]="{'open': open}"></div>
 <div class="settings tooltip" [ngClass]="{'open': open}">

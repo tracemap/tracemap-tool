@@ -1,0 +1,79 @@
+@import "../../../styles.scss";
+.tooltip {
+    position: fixed;
+    z-index: 11;
+    right: 100px;
+    bottom: 80px;
+    width: 0px;
+    height: 480px;
+    opacity: 0;
+    overflow: hidden;
+    box-shadow: 0 3px 5px 0 rgba(15,19,26,0.1), 0 9px 11px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
+    border-radius: 6px;
+    transition: opacity 0.1s ease-in-out;
+    &.open {
+        transition: opacity 0.1s ease-in-out;
+        width: 320px;
+        opacity: 1;
+    }
+
+    .shadow {
+        position: fixed;
+        z-index: 9;
+        right: 80px;
+        bottom: 145px;
+        width: 0;
+        height: 0;
+        border-top: 19px solid transparent;
+        border-bottom: 19px solid transparent;
+        border-left: 19px solid rgba(15,19,26,0.1);
+        filter: blur(0.2px);
+    }
+    .arrow {
+        position: fixed;
+        z-index: 12;
+        right: 82px;
+        bottom: 146px;
+        width: 0;
+        height: 0;
+        border-top: 18px solid transparent;
+        border-bottom: 18px solid transparent;
+        border-left: 18px solid white;
+    }
+
+    .head {
+        background-color: $color-black-bg;
+        height: 72px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "header close";
+
+        h2 {
+            grid-area: header;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 28px;
+            color: #fff;
+            margin-top: 22px;
+            margin-left: 20px;
+        }
+        div {
+            grid-area: close;
+            justify-self: right;
+            cursor: pointer;
+
+            img {
+                width: 15px;
+                margin-right: 20px;
+                margin-top: 27px;
+            }
+        }
+    }
+    .body {
+        background-color: white;
+        height: 100%;
+    }
+}

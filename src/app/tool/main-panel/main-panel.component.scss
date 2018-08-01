@@ -15,6 +15,7 @@
 
     .graph {
         grid-area: graph;
+        position: relative;
     }
 
     .side-controls {
@@ -35,8 +36,6 @@
         }
         .tour {
             grid-area: tour;
-            border-radius: 50%;
-            background-color: #fff;
         }
    }
 

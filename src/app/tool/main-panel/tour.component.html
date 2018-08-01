@@ -1,0 +1,80 @@
+<div
+class="tour-button"
+[ngClass]="{'open': introOpen}"
+(click)="openIntro()">
+    <img *ngIf="!introOpen"
+    srcset="
+    ../../../assets/images/info-black_128.png 4x,
+    ../../../assets/images/info-black_64.png 2x,
+    ../../../assets/images/info-black_32.png 1x,
+    "
+    src="../../../assets/images/info-black_32.png">
+    <img *ngIf="introOpen"
+    srcset="
+    ../../../assets/images/info-purple_128.png 4x,
+    ../../../assets/images/info-purple_64.png 2x,
+    ../../../assets/images/info-purple_32.png 1x,
+    "
+    src="../../../assets/images/info-purple_32.png">
+</div>
+<div 
+class="overlay" 
+(click)="closeIntro()" 
+[ngClass]="{'open': introOpen}" 
+*ngIf="!activeItem"></div>
+<div class="tour-intro tooltip" [ngClass]="{'open': introOpen}">
+    <div class="shadow"></div>
+    <div class="arrow"></div>
+    <div class="head">
+        <h2>Guided Tour</h2>
+        <div class="close-button" (click)="closeIntro()">
+            <img srcset="
+            ../../assets/images/close-white_128.png 4x,
+            ../../assets/images/close-white_64.png 2x,
+            ../../assets/images/close-white_32.png 1x
+            "
+            src="../../assets/images/close-white_32.png">
+        </div>
+    </div>
+    <div class="body">
+        <p class="text"> This guide will help you to get started with using TraceMap</p>
+        <button
+        class="button purple-button"
+        (click)="startTour()">
+            Start the Tour
+        </button>
+    </div>
+</div>
+<div class="tour-overlay" *ngIf="tourOpen"></div>
+<div 
+class="tour tooltip" 
+*ngIf="tourOpen"
+[ngClass]="{'open':tourOpen}"
+[ngStyle]="data[activeItem]['styles']">
+    <div class="head">
+        <h2>{{data[activeItem]['head']}}</h2>
+        <div class="close-button" (click)="closeTour()">
+            <img srcset="
+            ../../assets/images/close-white_128.png 4x,
+            ../../assets/images/close-white_64.png 2x,
+            ../../assets/images/close-white_32.png 1x
+            "
+            src="../../assets/images/close-white_32.png">
+        </div>
+    </div>
+    <div class="body">
+        <p class="text" [innerHtml]="data[activeItem]['text']"></p>
+        <button 
+        class="button back"
+        [disabled]="activeItem === 0"
+        (click)="lastItem()">
+            &lt; Back
+        </button>
+        <button
+        class="button forward"
+        [disabled]="activeItem === data.length - 1"
+        (click)="nextItem()">
+            Next &gt;
+        </button>
+    </div>
+</div>
