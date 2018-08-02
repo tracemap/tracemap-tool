@@ -29,6 +29,7 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
     import { SearchbarComponent } from './side-panel/searchbar.component';
     import { ShareComponent } from './side-panel/share.component';
+    import { FeedbackComponent } from './side-panel/feedback.component';
     import { AccordeonsComponent } from './side-panel/accordeons/accordeons.component';
         import { AccSourceComponent } from './side-panel/accordeons/acc-source.component';
         import { AccInfluentialComponent } from './side-panel/accordeons/acc-influential.component';
@@ -90,6 +91,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
         SidePanelComponent,
             SearchbarComponent,
             ShareComponent,
+            FeedbackComponent,
             AccordeonsComponent,
                 AccSourceComponent,
                 AccInfluentialComponent,

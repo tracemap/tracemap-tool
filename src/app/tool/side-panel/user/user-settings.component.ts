@@ -3,6 +3,7 @@ import { MatRadioChange } from '@angular/material';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CommunicationService } from '../../services/communication.service';
+import { TourService } from '../../services/tour.service';
 
 @Component({
     selector: 'app-user-settings',
@@ -20,7 +21,8 @@ export class UserSettingsComponent {
 
     constructor(
         private localStorageService: LocalStorageService,
-        private communicationService: CommunicationService
+        private communicationService: CommunicationService,
+        private tourService: TourService
     ) {
         const settings = this.localStorageService.getTimelineSettings();
         console.log('timeline settings: ' + settings);
@@ -31,6 +33,13 @@ export class UserSettingsComponent {
             this.updateTimelineSettings();
         }
 
+        this.tourService.userSettingsOpen.subscribe( open => {
+            if (open) {
+                this.open = true;
+            } else {
+                this.open = false;
+            }
+        });
     }
     toggleMenu(): void {
         this.open ? this.open = false : this.open = true;

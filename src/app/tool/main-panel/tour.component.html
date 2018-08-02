@@ -45,7 +45,7 @@ class="overlay"
         </button>
     </div>
 </div>
-<div class="tour-overlay" *ngIf="tourOpen"></div>
+<div class="tour-overlay" *ngIf="tourOpen && !tourOverlayHidden"></div>
 <div 
 class="tour tooltip" 
 *ngIf="tourOpen"
@@ -72,7 +72,7 @@ class="tour tooltip"
         </button>
         <button
         class="button forward"
-        [disabled]="activeItem === data.length - 1"
+        [disabled]="activeItem === data.length - 1 || data[activeItem]['service_action'] === 'openUserInfo'"
         (click)="nextItem()">
             Next &gt;
         </button>

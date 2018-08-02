@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { Observable } from 'rxjs';
+import { interval } from 'rxjs/observable/interval';
 
 import { GraphService } from '../services/graph.service';
 import { CommunicationService } from '../services/communication.service';
@@ -99,7 +99,7 @@ export class TimesliderComponent {
     addLabel() {
         const slider = $('.slider');
         const position = slider.position();
-        const x = position.left;
+        const x = position.left + 360;
         const y = position.top;
         const width = slider.width();
         const thumbPosition = x + (width * (this.value / this.range));
@@ -118,7 +118,7 @@ export class TimesliderComponent {
 
     autoSlide() {
         this.communicationService.noOverlayOpen().then( () => {
-            this.autoSlideSubscription = Observable.interval(100).subscribe( i => {
+            this.autoSlideSubscription = interval(100).subscribe( i => {
                 this.value = this.relTimestampList[i];
                 this.graphService.timesliderPosition.next(this.value);
                 this.addLabel();

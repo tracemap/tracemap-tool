@@ -1,5 +1,4 @@
 <div class="grid">
-    <menu [color]="'black'"></menu>
     <side-panel class="side-panel"></side-panel>
     <main-panel class="main-panel"></main-panel>
     <cookie-policy *ngIf="cookiePolicyOpen"></cookie-policy>
@@ -9,3 +8,4 @@
     [text]="'This Tweet has more than 100 Retweets.<br>At the moment TraceMap is restricted by Twitter to only display the latest 100 retweets.'"></app-overlay>
     <router-outlet></router-outlet>
 </div>
+<menu [color]="'black'"></menu>

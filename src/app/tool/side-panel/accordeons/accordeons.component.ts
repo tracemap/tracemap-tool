@@ -43,8 +43,9 @@ export class AccordeonsComponent {
     ) {
         this.tourService.openAccordeon.subscribe( selector => {
             if (selector) {
-                this.closeAll();
                 this.openBySelector(selector);
+            } else {
+                this.closeAll();
             }
         });
     }

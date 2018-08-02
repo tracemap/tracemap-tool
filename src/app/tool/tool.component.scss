@@ -5,7 +5,7 @@
     min-height: 600px;
     overflow: hidden;
     grid-template-columns: 360px 1fr;
-    grid-template-rows: minmax(200px, 1fr);
+    grid-template-rows: minmax(600px, 1fr);
     grid-template-areas:
         "side_panel main_panel";
 
@@ -18,5 +18,6 @@
     }
     .main-panel {
         grid-area: main_panel;
+        position: relative;
     }
 }

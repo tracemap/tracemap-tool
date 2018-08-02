@@ -8,9 +8,6 @@ import { reject } from 'q';
 
 export class CommunicationService {
 
-    constructor(
-        private apiService: ApiService
-    ) {}
     retweetCount = new BehaviorSubject<number>(undefined);
     resetData = new BehaviorSubject<boolean>(undefined);
     userId = new BehaviorSubject<string>(undefined);
@@ -21,6 +18,10 @@ export class CommunicationService {
 
     userInfo = new BehaviorSubject<object>(undefined);
     timelineSettings = new BehaviorSubject<object>(undefined);
+
+    constructor(
+        private apiService: ApiService
+    ) {}
 
     getUserInfo(userId): Promise<object> {
         return new Promise( (res, rej) => {

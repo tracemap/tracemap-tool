@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
+import { TimelineComponent } from './timeline.component';
+
 import { GraphService } from '../../services/graph.service';
 import { CommunicationService } from '../../services/communication.service';
-import { TimelineComponent } from './timeline.component';
 
 @Component({
     selector: 'app-user-details',
@@ -27,7 +28,7 @@ export class UserDetailsComponent {
     constructor(
         private route: ActivatedRoute,
         private graphService: GraphService,
-        private communicationService: CommunicationService
+        private communicationService: CommunicationService,
     ) {
         const subscriptionParams = this.route.params.subscribe( (params: Params) => {
             if ( params['uid'] && params['uid'] !== this.userId) {
@@ -71,9 +72,5 @@ export class UserDetailsComponent {
 
     changeTimelineRendered(event): void {
         this.timelineRendered = event;
-    }
-
-    toggleSettingsMenu(): void {
-        this.settingsOpen ? this.settingsOpen = false : this.settingsOpen = true;
     }
 }

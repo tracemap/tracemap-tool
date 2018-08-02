@@ -7,7 +7,7 @@ import { Router, RouterLinkActive } from '@angular/router';
     styleUrls: ['./menu.component.scss']
 })
 
-export class MenuComponent{
+export class MenuComponent {
 
     @Input('color')
     color: string;
@@ -16,30 +16,30 @@ export class MenuComponent{
 
     navItems = [
         {
-            label: "Home",
-            path: "/home"
+            label: 'Home',
+            path: '/home'
         },
         {
-            label: "About Us",
-            path: "/about"
+            label: 'About Us',
+            path: '/about'
         },
         {
-            label: "Information",
-            path: "/information"
+            label: 'Information',
+            path: '/information'
         },
         {
-            label: "Help Us",
-            path: "/helpus"
+            label: 'Help Us',
+            path: '/helpus'
         },
         {
-            label: "Imprint",
-            path: "/imprint"
+            label: 'Imprint',
+            path: '/imprint'
         }
     ];
 
     constructor(
         private router: Router,
-    ){}
+    ) {}
 
     closeMenu(): void {
         this.open = false;
@@ -49,7 +49,7 @@ export class MenuComponent{
         this.open = true;
     }
 
-    navigate(location:string):void {
+    navigate(location: string): void {
         this.router.navigate([location]);
     }
 }

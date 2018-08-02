@@ -9,8 +9,8 @@
         cursor: pointer;
     }
     align-items: center;
-    grid-area-columns: 1fr 28px;
-    grid-area-rows: 1fr;
+    grid-template-columns: 1fr 28px;
+    grid-template-rows: 1fr;
     grid-template-areas:
         "text_line image";
 

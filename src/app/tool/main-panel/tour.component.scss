@@ -48,7 +48,7 @@
         padding: 20px;
         .text {
             font-size: 18px;
-            color: $color-paragraph;
+            color: $color-tour-text;
             line-height: 28px;
             padding-top: 10px;
             
@@ -92,6 +92,10 @@
                 grid-area: text;
                 padding: 30px 20px;
                 border-bottom: 1px solid #C0C4CC;
+
+                span {
+                    color: $color-gray-font-dark;
+                }
             }
             .button {
                 background-color: $color-gray-bg-light;
