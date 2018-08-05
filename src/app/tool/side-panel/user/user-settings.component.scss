@@ -122,6 +122,23 @@
                         margin-left: 10px;
                     }
                 }
+                .checkbox.setting {
+                    margin-top: 20px;
+                    display: grid;
+                    grid-template-columns: 1fr 20px;
+                    grid-template-rows: 20px;
+                    grid-template-areas:
+                        "text checkbox";
+
+                    h2 {
+                        grid-area: text;
+                        line-height: 20px;
+                    }
+
+                    mat-checkbox {
+                        grid-area: checkbox;
+                    }
+                }
             }
         }
     }

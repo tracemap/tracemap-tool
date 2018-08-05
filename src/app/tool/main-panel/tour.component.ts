@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { TourService } from './../services/tour.service';
 import { GraphService } from './../services/graph.service';
+import { CommunicationService } from './../services/communication.service';
 
 import * as $ from 'jquery';
 
@@ -23,11 +24,12 @@ export class TourComponent {
 
     activeItem: number;
 
+
     data = [
         {
             head: 'The Network Graph',
-            text: 'You can see how the information got to each users by looking at the connections between them.<br>' +
-                'Bigger nodes indicate more influential users',
+            text: 'You can see how the tweet reached each user by looking at the connections between them.<br>' +
+            'Bigger nodes indicate more influential users.',
             selectors: ['.graph'],
             styles: {
                 top: '100px',
@@ -40,7 +42,7 @@ export class TourComponent {
             }
         }, {
             head: 'The Time-Slider',
-            text: 'Use this Slider to view the Network of any moment of time after the creation of the tweet.',
+            text: 'Use this slider to see the network at any point of time between its creation and the present.',
             selectors: ['.timeslider', '.graph'],
             styles: {
                 bottom: '90px',
@@ -49,7 +51,7 @@ export class TourComponent {
             service_action: undefined
         }, {
             head: 'Graph Settings',
-            text: 'In the settings of a graph you can change the appearence of the network or the behavior of dragged nodes.',
+            text: 'In the settings you can change the appearance of the network or the behaviour of the dragged nodes.',
             selectors: ['.graph', '.settings'],
             styles: {
                 bottom: '100px',
@@ -62,7 +64,7 @@ export class TourComponent {
             }
         }, {
             head: 'The Source Tweet',
-            text: 'This is the Tweet on which everything is based and the amount of users which retweeted it.',
+            text: 'This is the source tweet whose tracemap is being shown. Under it, you can see how many retweets it has so far.',
             selectors: ['.acc-source'],
             styles: {
                 top: '200px',
@@ -75,7 +77,8 @@ export class TourComponent {
             }
         }, {
             head: 'Influential Users',
-            text: 'Here we simply give you a list of the users, from which the most people potentially retweeted.',
+            text: 'Here we show a list of users sorted by degree of influence within this tracemap.<br>' +
+            'That is, how much each user has contributed to spreading this tweet.',
             selectors: ['.acc-source', '.acc-influential'],
             styles: {
                 top: '200px',
@@ -88,7 +91,7 @@ export class TourComponent {
             }
         }, {
             head: 'Metrics',
-            text: 'These are some basic metrics we calculate from the network graph or user data we receive from twitter.',
+            text: 'These are some relevant metrics calculated from Twitter\'s data that might be useful to you.',
             selectors: ['.acc-source', '.acc-influential', '.acc-metrics'],
             styles: {
                 top: '200px',
@@ -101,8 +104,27 @@ export class TourComponent {
             }
         }, {
             head: 'Charts',
-            text: 'With these charts you can analyse e.g. how many followers each user has compared to their tweets authored.<br>' +
-                'You can also move the slider to see the retweets by time changing accordingly.',
+            text: 'With the first chart you can see how the number of retweets changed over time.<br>' +
+            'Moving the time slider also instantaneously affects this chart.',
+            selectors: [
+                '.acc-source',
+                '.acc-influential',
+                '.acc-metrics',
+                '.acc-enhanced-metrics'
+            ],
+            styles: {
+                top: '200px',
+                left: '400px'
+            },
+            service_action: {
+                subject: 'openAccordeon',
+                pre_value: 'acc-enhanced-metrics',
+                post_value: undefined
+            }
+        }, {
+            head: 'Charts',
+            // tslint:disable-next-line:max-line-length
+            text: 'With the following charts, you can also cross compare how many followers each user has and how many tweets they have authored.',
             selectors: [
                 '.acc-source',
                 '.acc-influential',
@@ -120,7 +142,8 @@ export class TourComponent {
             }
         }, {
             head: 'Last TraceMaps',
-            text: 'Wanna go back?<br>Just click on the button next to a Tweet in your history to regenerate its tracemap.',
+            // tslint:disable-next-line:max-line-length
+            text: 'Do you want to go back to your previous tracemaps? Just click on the "show tracemap" button inside this menu and it will be generated again.',
             selectors: [
                 '.acc-source',
                 '.acc-influential',
@@ -139,8 +162,8 @@ export class TourComponent {
             }
         }, {
             head: 'User Details',
-            text: 'If you click on a user node in the network graph, you can see this users details.<br><br>' +
-                '<span>Now, click on a user.</span>',
+            text: 'If you click on a node in the tracemap, you can see the corresponding user\'s details.<br><br>' +
+            'Try it now!',
             selectors: ['tool'],
             styles: {
                 top: '100px',
@@ -149,7 +172,7 @@ export class TourComponent {
             service_action: 'openUserInfo',
         }, {
             head: 'User Info',
-            text: 'Here you can see general information about a user, including its profile text and some metrics.',
+            text: 'Here you can see general information about the user you clicked, including their profile and timeline.',
             selectors: ['tool'],
             styles: {
                 top: '50px',
@@ -158,7 +181,7 @@ export class TourComponent {
             service_action: undefined
         }, {
             head: 'User Timeline',
-            text: 'You can generate new tracemaps from all the tweets on a users timeline.',
+            text: 'You can also generate new tracemaps from any of the tweets in their timeline.',
             selectors: ['tool'],
             styles: {
                 top: '400px',
@@ -167,7 +190,8 @@ export class TourComponent {
             service_action: undefined
         }, {
             head: 'User Info',
-            text: 'Resort or filter the tweets shown with these settings.',
+            text: 'Resort the timeline by number of retweets to see the most viral on top.<br>' +
+            'The checkbox controls if only self-authored tweets are shown or if retweets are also included.',
             selectors: ['tool'],
             styles: {
                 top: '50px',
@@ -183,8 +207,33 @@ export class TourComponent {
 
     constructor(
         private tourService: TourService,
-        private graphService: GraphService
+        private graphService: GraphService,
+        private communicationService: CommunicationService
     ) {
+        this.communicationService.firstTimeVisitor.subscribe( firstTime => {
+            if (firstTime) {
+                this.openIntro();
+            }
+        });
+    }
+
+    keyListener = (event) => {
+        const key = event.key;
+        if (key === 'ArrowRight' || key === 'Enter') {
+            this.nextItem();
+        } else if (key === 'ArrowLeft') {
+            this.lastItem();
+        } else if (key === 'Escape') {
+            this.closeTour();
+        }
+    }
+
+    addKeyListener(): void {
+        document.addEventListener( 'keydown', this.keyListener);
+    }
+
+    removeKeyListener(): void {
+        document.removeEventListener( 'keydown', this.keyListener);
     }
 
     openIntro() {
@@ -200,6 +249,7 @@ export class TourComponent {
         this.activeItem = 0;
         this.tourOpen = true;
         this.preAction();
+        this.addKeyListener();
 
         this.activeNodeSubscription = this.graphService.activeNode.subscribe( userId => {
             if (userId && !this.userDetailsOpen) {
@@ -225,6 +275,7 @@ export class TourComponent {
     }
 
     closeTour() {
+        this.removeKeyListener();
         this.tourOpen = false;
         this.chosenUserId = undefined;
         this.userDetailsOpen = false;
@@ -268,14 +319,19 @@ export class TourComponent {
     }
 
     lastItem() {
-        this.postAction();
-        this.activeItem--;
-        this.preAction();
+        if (this.activeItem !== 0) {
+            this.postAction();
+            this.activeItem--;
+            this.preAction();
+        }
     }
 
     nextItem() {
-        this.postAction();
-        this.activeItem++;
-        this.preAction();
+        if (this.activeItem !== this.data.length - 1 &&
+                this.data[this.activeItem]['service_action'] !== 'openUserInfo') {
+            this.postAction();
+            this.activeItem++;
+            this.preAction();
+        }
     }
 }

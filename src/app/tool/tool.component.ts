@@ -45,6 +45,7 @@ export class ToolComponent implements OnInit {
         const cookieSettings = this.localStorageService.getSettings();
         if ( !cookieSettings) {
             this.localStorageService.showPolicy.next(true);
+            this.communicationService.firstTimeVisitor.next(true);
         } else {
             this.communicationService.cookieOverlayClosed.next(true);
         }

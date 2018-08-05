@@ -91,7 +91,11 @@ export class TimesliderComponent {
             this.autoSlideSubscription.unsubscribe();
         }
         const value = slider._value;
-        this.value = value;
+        if (slider._percent >= 0.99) {
+            this.value = this.range;
+        } else {
+            this.value = value;
+        }
         this.graphService.timesliderPosition.next(this.value);
         this.addLabel();
     }

@@ -3,11 +3,11 @@
     width: 100%;
     height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: 72px minmax(100px,1fr) 72px;
+    grid-template-rows: 72px minmax(300px,1fr);
     grid-template-areas:
         "searchbar"
-        "accordeons"
-        "share";
+        "accordeons";
+        // "share";
 
     .searchbar {
         grid-area: searchbar;
@@ -20,7 +20,7 @@
         max-height: 100%;
     }
 
-    .share {
-        grid-area: share;
-    }
+    // .share {
+    //     grid-area: share;
+    // }
 }

@@ -45,14 +45,14 @@ class="settings-button"
             </div>
         </div>
         <div class="slider-toggle setting">
-            <h2>Show Leafs</h2>
+            <h2>Show Leaves</h2>
             <div class="control">
                 <mat-slide-toggle 
                 color="primary" 
                 [(ngModel)]="settings.leafs"
                 (change)="updateSettings()"></mat-slide-toggle>
-                <p *ngIf="settings.leafs">Leafs visible</p>
-                <p *ngIf="!settings.leafs">Leafs hidden</p>
+                <p *ngIf="settings.leafs">Leaves visible</p>
+                <p *ngIf="!settings.leafs">Leaves hidden</p>
             </div>
         </div>
         <div class="checkbox setting">

@@ -53,18 +53,18 @@
                             color="primary"
                             value="retweets" 
                             [checked]="settings.sort_by === 'retweets'"></mat-radio-button>
-                            <p>retweets</p>
+                            <p>virality</p>
                         </div>
                     </mat-radio-group>
                 </div>
                 <div class="checkbox setting">
-                    <h2>Show Retweets</h2>
+                    <h2>show retweets</h2>
                     <mat-checkbox
                     color="primary"
                     [(ngModel)]="settings.retweets"
                     (change)="updateTimelineSettings()"></mat-checkbox>
-                    <p *ngIf="settings.retweets">include retweets</p>
-                    <p *ngIf="!settings.retweets">just authored tweets</p>
+                    <!-- <p *ngIf="settings.retweets">include retweets</p>
+                    <p *ngIf="!settings.retweets">just authored tweets</p> -->
                 </div>
             </div>
         </div>

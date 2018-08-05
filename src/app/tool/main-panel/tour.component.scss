@@ -108,6 +108,7 @@
                 padding: 0px 20px;
                 &:disabled {
                     cursor: default;
+                    color: transparent;
                 }
             }
             .back {

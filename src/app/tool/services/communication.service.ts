@@ -8,6 +8,7 @@ import { reject } from 'q';
 
 export class CommunicationService {
 
+    firstTimeVisitor = new BehaviorSubject<boolean>(false);
     retweetCount = new BehaviorSubject<number>(undefined);
     resetData = new BehaviorSubject<boolean>(undefined);
     userId = new BehaviorSubject<string>(undefined);
