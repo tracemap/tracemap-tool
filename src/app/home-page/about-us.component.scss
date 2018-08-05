@@ -5,17 +5,14 @@
         color: $color-purple-dark;
     }
     .box-content.team {
-        display: grid;
-        justify-items: left;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
-        grid-column-gap: 30px;
-        grid-row-gap: 50px; 
-
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
         .small-img-box {
             display: grid;
-            grid-template-rows: 165px 20px auto auto;
+            padding: 15px;
+            grid-template-rows: 165px 10px 40px 25px;
             grid-template-columns: 150px;
             grid-template-areas:
                 "image"
@@ -29,22 +26,19 @@
             }
 
             h4 {
-                justify-self: center;
                 grid-area: header;
+                justify-self: center;
                 font-size: 16px;
                 font-weight: 300;
             }
-
             p {
                 text-align: center;
                 grid-area: paragraph;
                 font-size: 14px;
                 font-weight: 400;
             }
-
             .social-links-light {
                 grid-area: social_links;
-                margin-top: 5px;
                 text-align: center;
                 a {
                     width: 20px;
@@ -55,6 +49,7 @@
                 }
             }
         }
+
     }
     .content-box.partners, .content-box.sponsors {
         a {

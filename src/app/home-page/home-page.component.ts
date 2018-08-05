@@ -12,9 +12,9 @@ import { ApiService } from '../services/api.service';
 
 export class HomePageComponent {
 
-    errorMsg:string[];
+    errorMsg: string[];
 
-    placeholder = "Your Url";
+    placeholder = 'Your Url';
     disabled = false;
     subscriptionResponse = undefined;
     wrongEmail = false;
@@ -25,18 +25,18 @@ export class HomePageComponent {
     ){}
 
     scrollToID(id_name: string) {
-        let id = "#" + id_name;
-        let target = document.querySelector(id);
-        window.scrollTo( 0, target['offsetTop']); 
+        const id = '#' + id_name;
+        const target = document.querySelector(id);
+        window.scrollTo( 0, target['offsetTop']);
     }
 
     processUrl( searchField): void {
-    let input = String(searchField.value);
-    searchField.value = "";
+    const input = String(searchField.value);
+    searchField.value = '';
     this.getNewRoute(input)
-        .then( 
+        .then(
             response => {
-                document.getElementById("search").blur();
+                document.getElementById('search').blur();
                 this.navigate(response);
             },
         reject => this.placeholder = reject);
@@ -46,52 +46,52 @@ export class HomePageComponent {
         let dirtyId;
         let id;
 
-        if( url.indexOf("twitter.com/") >= 0) {
-            if( url.indexOf("/status/") >= 0) {
-                dirtyId = url.slice( url.indexOf("/status/") + 8);
-                if( dirtyId.indexOf("/") >= 0) {
-                    id = dirtyId.slice(0, dirtyId.indexOf("/"));
+        if ( url.indexOf('twitter.com/') >= 0) {
+            if ( url.indexOf('/status/') >= 0) {
+                dirtyId = url.slice( url.indexOf('/status/') + 8);
+                if ( dirtyId.indexOf('/') >= 0) {
+                    id = dirtyId.slice(0, dirtyId.indexOf('/'));
                 } else {
                     id = dirtyId;
                 }
-                return Promise.resolve("tool/" + id);
+                return Promise.resolve('tool/' + id);
             }
-            return Promise.reject("invalid twitter Url");
+            return Promise.reject('invalid twitter Url');
         }
-        return Promise.reject("Please enter a valid Url");
+        return Promise.reject('Please enter a valid Url');
     }
 
     removePlaceholder(): void {
-        this.placeholder = "";
+        this.placeholder = '';
     }
 
     setPlaceholder(): void {
-        this.placeholder = "Your Url";
+        this.placeholder = 'Your Url';
     }
 
     addToNewsletter( emailAdress): void {
         this.subscriptionResponse = undefined;
-        if( emailAdress && 
-                emailAdress !== "" && 
+        if ( emailAdress &&
+                emailAdress !== '' &&
                 this.isValidEmail(emailAdress)) {
             this.wrongEmail = false;
             this.apiService.addToNewsletter(emailAdress).subscribe( answer => {
                 console.log(answer);
                 this.subscriptionResponse = answer;
-            })
+            });
         } else {
-            console.log("invalid");
+            console.log('invalid');
             this.wrongEmail = true;
         }
     }
 
     isValidEmail(email) {
         console.log(email);
-        var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         return re.test(String(email).toLowerCase());
     }
 
-    navigate(location:string):void {
+    navigate(location: string): void {
         this.router.navigate([location]);
-    }  
+    }
 }

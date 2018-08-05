@@ -7,10 +7,11 @@
             background-color: transparent;
             display: grid;
             grid-template-columns: 500px 1fr;
-            grid-template-rows: 1fr 1fr 100px;
+            grid-template-rows: 200px 120px 35px 1fr;
             grid-template-areas:
-                "basic_desc basic_desc"
+                "slogan slogan"
                 "searchbar searchbar"
+                "search_hint search_hint"
                 "anchors anchors"; 
 
             .bg {
@@ -27,46 +28,39 @@
             .bg-outer {
                 position: absolute;
                 z-index: -1;
-                width: 50vw;
-                height: 50vw;
+                width: 70vh;
+                height: 70vh;
                 border-radius: 50%;
                 left: 50%;
-                margin-left: -25vw;
+                margin-left: -35vh;
                 top: 50%;
-                margin-top: -25vw;
+                margin-top: -35vh;
                 background-color: $color-purple-light;
 
                 .bg-inner {
-                    width: 20vw;
-                    height: 20vw;
+                    width: 30vh;
+                    height: 30vh;
                     border-radius: 50%;
-                    margin-left: 15vw;
-                    margin-top: 15vw;
+                    margin-left: 20vh;
+                    margin-top: 20vh;
                     background-color: $color-purple-dark;
                 }
             }
 
-            .basic-desc {
-                grid-area: basic_desc;
-                margin-bottom: 50px;
+            .slogan {
+                grid-area: slogan;
                 align-self: center;
                 p {
-                    color: #FFF;
+                    color: #fff;
                     line-height: 68px;
                     font-weight: 300;
                     font-size: 42.64px;
-
-                    a {
-                        color: #FFF;
-                        text-decoration: none;
-                        border-bottom: 2px solid #FFF;
-                        cursor: pointer;
-                    }
                 }
             }
+
             .searchbar {
                 grid-area: searchbar;
-                width: 400px;
+                max-width: 400px;
                 height: 60px;
                 margin-top: 30px;
                 border-bottom: 2px solid #FFF;
@@ -79,6 +73,7 @@
                 &.disabled {
                     opacity: 0.2;
                 }
+
 
                 input[type=text] {
                     grid-area: input;
@@ -106,6 +101,23 @@
                 }
 
             }
+
+            .search-hint {
+                grid-area: search_hint;
+                align-self: center;
+                color: #FFF;
+                line-height: 30px;
+                font-weight: 300;
+                font-size: 30px;
+
+                a {
+                    color: #FFF;
+                    text-decoration: none;
+                    border-bottom: 2px solid #FFF;
+                    cursor: pointer;
+                }
+            }
+
             .anchors {
                 grid-area: anchors;
                 font-size: 18px;
@@ -154,7 +166,7 @@
                 }
                 
                 display: grid;
-                grid-template-rows: 277px 90px;
+                grid-template-rows: 277px auto;
                 grid-template-columns: 330px;
                 grid-template-areas:
                     "image"
@@ -178,7 +190,7 @@
             display: grid;
             width: 100%;
             grid-template-columns: 100%;
-            grid-tmplate-rows: auto auto auto;
+            grid-template-rows: auto auto auto;
             grid-template-areas:
                 "text"
                 "newsletter_area"
@@ -263,18 +275,12 @@
     }
 }
 
-@media only screen and (max-width: 1049px) {
+@media only screen and (max-width: 1200px) {
     .content {
 
         .content-box {
             .box-content {
                 .img-box {
-                    padding-top: 30px;
-                    &.first {
-                        padding-right: 0px;
-                        padding-top: 0px;
-                    }
-
                     grid-template-rows: 277px auto;
 
                     p {
@@ -312,36 +318,47 @@
     }
 }
 
-@media only screen and (max-width: 749px) {
+@media only screen and (max-width: 930px) {
     .content {
         .full-screen {
             &.start {
                 height: 100vh;
                 min-height: 600px;
                 grid-template-columns: 1fr;
-                grid-template-rows: 40vw auto 1fr;
+                grid-template-rows: 120px 120px auto 1fr;
                 grid-template-areas:
-                    "basic_desc"
-                    "basic_desc"
+                    "slogan"
+                    "searchbar"
+                    "search_hint"
                     "anchors";
 
-                .basic-desc {
-                    grid-area: basic_desc;
+                .slogan {
+                    grid-area: slogan;
                     p {
                         font-size: 32px;
-                        line-height: 45px;
-
-                        span {
-                            border-bottom: 1.5px solid #FFF;
-                        }
+                        line-height: 40px;
                     }
+                }
+
+                .searchbar {
+                    grid-area: searchbar;
+                    min-width: 280px;
+                    max-width: 400px;
+                    margin-top: 20px;
+                }
+
+                .search-hint {
+                    grid-area: search_hint;
+                    font-size: 26px;
+                    line-height: 32px;
                 }
 
                 .anchors {
                     grid-area: anchors;
-                    margin-right: 0px;
+                    margin-right: 20px;
                     font-size: 15px;
                     line-height: 28px;
+                    align-self: end;
                 }
            }
 
@@ -368,9 +385,8 @@
         .content-box {
             .box-content {
                .img-box {
-                    grid-template-columns: minmax(1fr, 330px);
+                    grid-template-columns: 280px;
                     grid-template-rows: auto auto;
-                    width: 100%;
 
                     p {
                         font-size: 18px;
