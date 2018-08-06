@@ -76,14 +76,14 @@
     }
 }
 
-@media only screen and (max-width: 749px) {
+@media only screen and (max-width: 930px) {
     .content {
         .content-box.partners, .content-box.sponsors {
-            a {
-                img {
-                    width: 280px;
+            .box-content {
+                a {
+                    font-size: 33px;
+
                 }
-                font-size: 35px;
             }
         }
     }

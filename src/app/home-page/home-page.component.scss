@@ -102,7 +102,7 @@
 
             }
 
-            .search-hint {
+            .search-hint, .no-search-hint {
                 grid-area: search_hint;
                 align-self: center;
                 color: #FFF;
@@ -116,6 +116,10 @@
                     border-bottom: 2px solid #FFF;
                     cursor: pointer;
                 }
+            }
+
+            .no-search-hint {
+                display: none;
             }
 
             .anchors {
@@ -328,8 +332,8 @@
                 grid-template-rows: 120px 120px auto 1fr;
                 grid-template-areas:
                     "slogan"
-                    "searchbar"
-                    "search_hint"
+                    "."
+                    "no_search_hint"
                     "anchors";
 
                 .slogan {
@@ -341,16 +345,18 @@
                 }
 
                 .searchbar {
-                    grid-area: searchbar;
-                    min-width: 280px;
-                    max-width: 400px;
-                    margin-top: 20px;
+                    display: none;
+                }
+                .search-hint {
+                    display: none;
                 }
 
-                .search-hint {
-                    grid-area: search_hint;
+                .no-search-hint {
+                    display: block;
+                    grid-area: no_search_hint;
                     font-size: 26px;
                     line-height: 32px;
+                    color: #fff;
                 }
 
                 .anchors {
