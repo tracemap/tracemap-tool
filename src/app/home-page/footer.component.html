@@ -1,45 +1,47 @@
-<div class="content">
-    <h3 class="logo-text">TRACEMAP</h3>
-    <div class="links row1">
-        <a
-        *ngFor="let item of navItems1"
-        routerLink={{item.path}}
-        routerLinkActive="active">
-            {{item.label}}
-        </a>
-    </div> 
-    <div class="links row2">
-        <a
-        *ngFor="let item of navItems2"
-        routerLink={{item.path}}
-        routerLinkActive="active">
-            {{item.label}}
-        </a>
-    </div>
-    <div class="social-links-light">
-        <a href="https://twitter.com/trace_map" target="_blank">
-            <img srcset="
-            ../../assets/images/twitter_128.png 4x,
-            ../../assets/images/twitter_64.png 2x,
-            ../../assets/images/twitter_32.png 1x
-            "
-            src="../../assets/images/twitter_64.png">
-        </a>
-        <a href="https://www.linkedin.com/company/trace-map" target="_blank">
-            <img srcset="
-            ../../assets/images/linkedin_128.png 4x,
-            ../../assets/images/linkedin_64.png 2x,
-            ../../assets/images/linkedin_32.png 1x
-            "
-            src="../../assets/images/linkedin_64.png">
-        </a>
-        <a href="https://github.com/tracemap/" target="_blank">
-            <img srcset="
-            ../../assets/images/github_128.png 4x,
-            ../../assets/images/github_64.png 2x,
-            ../../assets/images/github_32.png 1x
-            "
-            src="../../assets/images/github_64.png">
-        </a>
+<div class="content-wrapper">
+    <div class="content">
+        <h3 class="logo-text">TRACEMAP</h3>
+        <div class="links row1">
+            <a
+            *ngFor="let item of navItems1"
+            routerLink={{item.path}}
+            routerLinkActive="active">
+                {{item.label}}
+            </a>
+        </div> 
+        <div class="links row2">
+            <a
+            *ngFor="let item of navItems2"
+            routerLink={{item.path}}
+            routerLinkActive="active">
+                {{item.label}}
+            </a>
+        </div>
+        <div class="social-links-light">
+            <a href="https://twitter.com/trace_map" target="_blank">
+                <img srcset="
+                ../../assets/images/twitter_128.png 4x,
+                ../../assets/images/twitter_64.png 2x,
+                ../../assets/images/twitter_32.png 1x
+                "
+                src="../../assets/images/twitter_64.png">
+            </a>
+            <a href="https://www.linkedin.com/company/trace-map" target="_blank">
+                <img srcset="
+                ../../assets/images/linkedin_128.png 4x,
+                ../../assets/images/linkedin_64.png 2x,
+                ../../assets/images/linkedin_32.png 1x
+                "
+                src="../../assets/images/linkedin_64.png">
+            </a>
+            <a href="https://github.com/tracemap/" target="_blank">
+                <img srcset="
+                ../../assets/images/github_128.png 4x,
+                ../../assets/images/github_64.png 2x,
+                ../../assets/images/github_32.png 1x
+                "
+                src="../../assets/images/github_64.png">
+            </a>
+        </div>
     </div>
 </div>

@@ -52,29 +52,32 @@
 
     }
     .content-box.partners, .content-box.sponsors {
-        a {
-            display: block;
-            margin-top: 50px;
-            &.first {
-                margin-top: 0px;
+        .box-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            a {
+                display: inline-block;
+                width: 280px;
+                margin-top: 50px;
+                &.first {
+                    margin-top: 0px;
+                    justify-self: start;
+                }
+                font-size: 40px;
+                font-weight: 800;
+                text-decoration: none;
+                color: $color-header;
+                img {
+                    width: 100%;
+                }
             }
-
-            font-size: 40px;
-            font-weight: 800;
-            text-decoration: none;
-            color: $color-header;
         }
     }
 }
 
 @media only screen and (max-width: 749px) {
     .content {
-        .box-content.team {
-            .small-img-box {
-                grid-template-columns: 125px;
-                grid-template-rows: 140px 20px auto auto;
-            }
-        }
         .content-box.partners, .content-box.sponsors {
             a {
                 img {
