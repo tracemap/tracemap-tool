@@ -145,11 +145,15 @@
             "header button";
 
         h2 {
+            position: relative;
             grid-area: header;
+            z-index: 2
         }
 
         p {
+            position: relative;
             grid-area: paragraph;
+            z-index: 2;
         }
 
         button {
@@ -157,6 +161,19 @@
             grid-area: button;
             width: 147px;
             height: 46px;
+        }
+        .text-bg {
+            position: absolute;
+            opacity: 0.7;
+            z-index: 1;
+            &.visualization {
+                opacity: 0.5;
+                width: 370px;
+            }
+            &.analysis {
+                width: 300px;
+                margin-top: 150px;
+            }
         }
     }
 

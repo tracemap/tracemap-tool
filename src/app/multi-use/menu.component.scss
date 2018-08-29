@@ -1,6 +1,7 @@
 @import "../../styles.scss";
 .menu-button {
     position: fixed;
+    z-index: 3;
     top: 30px;
     right: 30px;
     background-color: #fff;
