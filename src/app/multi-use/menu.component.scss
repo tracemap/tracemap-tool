@@ -124,6 +124,21 @@
             margin-top: 8px;
         }
     }
+
+    .menu {
+        .close-button {
+            margin-top: 16px;
+            margin-right: 16px;
+            width: 36px;
+            height: 36px;
+            
+            img {
+                width: 14px;
+                margin-top: 11px;
+                margin-left: 11px;
+            }
+        }
+    }
 }
 
 @media only screen and (max-height: 349px) {

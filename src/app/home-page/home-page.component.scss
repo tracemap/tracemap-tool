@@ -222,22 +222,19 @@
                 }
 
                 .newsletter-form {
-                    margin-bottom: 40px;
-                    display: grid;
-                    grid-template-columns: 370px 142px;
-                    grid-template-rows: 46px;
-                    grid-template-areas:
-                        "input button";
+                    margin-bottom: 25px;
+                    display: flex;
+                    flex-wrap: wrap;
 
                     input {
-                        grid-area: input;
                         border: 1.5px solid #C0C4CC;
-                        width: 100%;
+                        width: 380px;
                         height: 43px;
                         border-radius: 4px;
                         font-size: 18px;
                         line-height: 28px;
                         padding-left: 15px;
+                        margin-bottom: 15px;
                         &::placeholder {
                             color: #A8ABB3;
                             opacity: 1;
@@ -245,10 +242,9 @@
                     }
 
                     .purple-button {
-                        grid-area: button;
                         height: 42px;
                         width: 142px;
-                        margin-left: 15px;
+                        margin-bottom: 15px;
                         vertical-align: top;
                     }
                 }
@@ -288,7 +284,7 @@
                     grid-template-rows: 277px auto;
 
                     p {
-                        padding-top: 10px;
+                        padding-top: 20px;
                     }
                 }
             }
@@ -298,24 +294,24 @@
                 p {
                     width: 100%;
                 }     
-                .newsletter-area .newsletter-form {
-                    grid-template-columns: 100%;
-                    grid-template-rows: 46px 46px;
-                    grid-template-areas: 
-                        "input"
-                        "button";
+                // .newsletter-area .newsletter-form {
+                //     grid-template-columns:  142px;
+                //     grid-template-rows: 46px;
+                //     grid-template-areas: 
+                //         "input button";
 
-                    input {
-                        grid-area: input;
-                        width: 350px;
-                    }
+                //     input {
+                //         grid-area: input;
+                //         width: 100%;
+                //         max-width: 350px;
+                //     }
 
-                    .purple-button {
-                        grid-area: button;
-                        margin-left: 0px;
-                        margin-top: 10px;
-                    }
-                }
+                //     .purple-button {
+                //         grid-area: button;
+                //         margin-left: 0px;
+                //         margin-top: 10px;
+                //     }
+                // }
             }
 
        }
@@ -326,10 +322,10 @@
     .content {
         .full-screen {
             &.start {
-                height: 100vh;
-                min-height: 600px;
+                padding-bottom: 20px;
+                min-height: 100vh;
                 grid-template-columns: 1fr;
-                grid-template-rows: 120px 120px auto 1fr;
+                grid-template-rows: 100px 60px auto 1fr;
                 grid-template-areas:
                     "slogan"
                     "."
@@ -353,6 +349,7 @@
 
                 .no-search-hint {
                     display: block;
+                    margin-right: 20px;
                     grid-area: no_search_hint;
                     font-size: 26px;
                     line-height: 32px;
@@ -362,9 +359,10 @@
                 .anchors {
                     grid-area: anchors;
                     margin-right: 20px;
+                    margin-bottom: 20px;
                     font-size: 15px;
                     line-height: 28px;
-                    align-self: end;
+                    align-self: center;
                 }
            }
 
@@ -404,14 +402,11 @@
                     }
                 } 
             }
-            .newsletter-box {
-                .newsletter-area .newsletter-form {
-                    input {
-                        width: 280px;
-                    }
-                }
+        }
+        .newsletter-box {
+            input {
+                width: 280px;
             }
         }
-
     }
 }
