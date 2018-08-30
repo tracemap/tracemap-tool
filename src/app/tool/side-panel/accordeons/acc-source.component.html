@@ -1,0 +1,14 @@
+<div class="grid">
+    <div class="tweet-container">
+        <tweet class="tweet" [tweetId]="tweetId" [cards]="true"></tweet>
+    </div>
+    <div class="tweet-info">
+        <img srcset="
+        ../../../assets/images/retweet_64.png 4x,
+        ../../../assets/images/retweet_32.png 2x,
+        ../../../assets/images/retweet_16.png 1x
+        "
+        src="../../../assets/images/retweet_16.png">
+        <p>{{retweetCount}}</p>
+    </div>
+</div>

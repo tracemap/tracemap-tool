@@ -1,0 +1,80 @@
+@import "../../../../styles.scss";
+
+.content {
+    margin-top: 20px;
+    margin-bottom: 6px;
+    margin-left: 20px;
+
+    .user-card {
+        display: grid;
+        height: 66px;
+        width: 308px;
+        overflow: hidden;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+        grid-template-columns: 260px 48px;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "user button";
+
+        .user {
+            grid-area: user;
+            padding-left: 14px;
+            padding-top: 14px;
+            border-right: 1px solid #DFE1E6;
+        }
+
+        .user-button {
+            grid-area: button;
+            background-color: #fff;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            transition: background-color 0.2s linear;
+
+
+            img {
+                width: 12px;
+                opacity: 0.3;
+                margin-left: 18px;
+                margin-top: 27px;
+            }
+            &.highlight {
+                box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+                background-color: $color-purple-dark;
+                transition: background-color 0.2s linear;
+                img {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .retweet-count {
+        width: 309px;
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 14px;
+        display: grid;
+        grid-template-columns: 16px auto;
+        grid-template-areas:
+            "image text";
+
+        img {
+            grid-area: image;
+            width: 16px;
+        }
+        p {
+            grid-area: text;
+            font-size: 11px;
+            margin-left: 10px;
+            margin-top: 3px;
+            color: $color-paragraph;
+            line-height: 11px;
+
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+}

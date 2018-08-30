@@ -1,0 +1,17 @@
+<div class="searchbar">
+    <input class="searchfield" id="search" type="text"
+    #searchField
+    (keydown.enter)="processUrl(searchField)"
+    [placeholder]="placeholder"
+    (focus)="removePlaceholder()"
+    (focusout)="setPlaceholder()">
+    <div class="search-button"
+    (click)="processUrl( searchField)">
+        <img srcset="
+        ../../../assets/images/loupe-fat_128.png 4x,
+        ../../../assets/images/loupe-fat_64.png 2x,
+        ../../../assets/images/loupe-fat_32.png 1x,
+        "
+        src="../../../assets/images/loupe_32.png">
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="content">
+    <tweet-card
+    class="tweet-card"
+    *ngFor="let tweet of timelineShowed"
+    [tweetId]="tweet['valid_id_str']"
+    [retweetCount]="tweet['retweet_count']"
+    [disabled]="tweet['disabled']"
+    (rendered)="setTweetRendered( tweet)"
+    [ngClass]="{'rendered': tweet['rendered']}"></tweet-card>
+</div>

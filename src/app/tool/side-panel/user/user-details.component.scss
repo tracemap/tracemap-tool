@@ -1,0 +1,137 @@
+@import "../../../../styles.scss";
+
+.content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    min-height: 600px;
+    margin-left: -600px;
+    overflow: hidden;
+    width: 360px;
+    background-color: $color-gray-bg-light;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 72px auto 1fr;
+    grid-template-areas:
+        "go_back"
+        "user_base"
+        "scroll_container";
+    transition: margin 0.4s;
+    &.open {
+        transition: margin 0.4s;
+        margin-left: 0px;
+    }
+    .go-back {
+        grid-area: go_back;
+        position: relative;
+        background-color: $color-gray-font-dark;
+        padding-left: 20px;
+        align-items: center;
+        display: grid;
+        grid-template-columns: 20px auto;
+        grid-template-rows: 1fr;
+        cursor: pointer;
+
+        img {
+            width: 20px;
+            transform: rotate(180deg);
+        }
+        p {
+            margin-left: 10px;
+            color: #fff;
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+    .user-base {
+        grid-area: user_base;
+        position: relative;
+        z-index: 3;
+        background-color: #fff;
+        width: 360px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        padding-bottom: 15px;
+        box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+        display: grid;
+        grid-template-columns: 1fr 40px;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "user settings";
+
+        .user {
+            grid-area: user;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        app-user-settings {
+            grid-area: settings;
+            align-self: center;
+        }
+
+    }
+    .scroll-container {
+        grid-area: scroll_container;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        .user-description {
+            position: relative;
+            z-index: 4;
+            background-color: #fff;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 22px;
+            box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+            p.description::ng-deep {
+                font-size: 14px;
+                color: $color-black-bg;
+                line-height: 20px;
+                padding-bottom: 15px;
+
+                a {
+                    text-decoration: none;
+                    color: $color-purple-dark;
+                    &:hover {
+                        border-bottom: 1px solid $color-blue-link;
+                    }
+                }
+            }
+            .numbers {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 20px;
+                align-items: center;
+
+                .item {
+                    height: 11px;
+                    p {
+                        float: left;
+                        font-size: 11px;
+                        color: $color-paragraph;
+                        font-weight: bold;
+                    }
+                    .unit {
+                        margin-left: 3px;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+        .timeline {
+            position: relative;
+            z-index: 2;
+            visibility: hidden;
+            &.rendered {
+                visibility: visible;
+            }
+        }
+
+        .spinner {
+            margin: 100px auto 0px auto;
+        }
+    }
+}

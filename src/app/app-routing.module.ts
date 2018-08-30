@@ -3,13 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomePageComponent} from './home-page/home-page.component';
 
-import { MainComponent } from './tool-main-panel/main.component';
-import { UserComponent } from './tool-side-panel/user.component';
-import { InfoComponent } from './tool-side-panel/info.component';
 import { AboutUsComponent } from './home-page/about-us.component';
-import { HelpUsComponent } from './home-page/help-us.component';
-import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
-import { InformationComponent } from './home-page/information.component';
+import { LearnMoreComponent } from './home-page/learn-more.component';
+import { AboutDataComponent } from './home-page/about-data.component';
 import { SitemapComponent } from './home-page/sitemap.component';
 
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -17,15 +13,12 @@ import { PageNotFoundComponent } from './page-not-found.component';
 const routes: Routes = [
 	{ path: 'home', component: HomePageComponent},
     { path: '', redirectTo: 'home', pathMatch: 'full'},
-    { path: 'about', component: AboutUsComponent},
-    { path: 'helpus', component: HelpUsComponent},
+    { path: 'about-us', component: AboutUsComponent},
     // { path: 'codeofconduct', component: CodeOfConductComponent},
-    { path: 'information', component: InformationComponent},
+    { path: 'about-data', component: AboutDataComponent},
+    { path: 'learn-more', component: LearnMoreComponent},
     { path: 'imprint', component: SitemapComponent},
-    // { path: 'twitter/:pid', component: MainComponent, children: [
-    	// {path: 'details/:uid', component: UserComponent},
-        // {path: '**', component: InfoComponent}
-    // ]},
+    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule'},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 

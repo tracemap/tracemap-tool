@@ -1,0 +1,112 @@
+@import "../../../styles.scss";
+@import '~@angular/material/theming';
+.settings-button {
+    height: 100%;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #DFE1E6;
+    &.open {
+        border: 1px solid #fff;
+        box-shadow: 0 1px 0 0 rgba(15,19,26,0.15), 0 1px 2px 0 rgba(15,19,26,0.1);
+    }
+
+    img {
+        width: 21px;
+        margin-top: 11px;
+        margin-left: 11px;
+    }
+}
+
+.overlay {
+    position: fixed;
+    z-index: 10;
+    height: 100vh;
+    width: 0px;
+    top: 0px;
+    left: 0px;
+    background-color: $color-gray-bg-light;
+    opacity: 0;
+    &.open {
+        width: 100vw;
+    }
+}
+
+.tooltip {
+    .body {
+        .setting {
+            margin-left: 20px;
+
+            h2 {
+                padding-top: 20px;
+                padding-bottom: 16px;
+                color: $color-black-bg;
+                font-size: 18px;
+            }
+
+            .control {
+                padding-bottom: 10px;
+                p {
+                    font-size: 13.5px;
+                    line-height: 20px;
+                    color: $color-gray-font-dark;
+                }
+            }
+        }
+        .slider-toggle {
+            .control {
+                display: grid;
+                grid-template-columns: 40px auto;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "slider label";
+
+                mat-slide-toggle {
+                    grid-area: slider;
+                }
+                p {
+                    grid-area: label;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+        .checkbox {
+            .control {
+                display: grid;
+                grid-template-columns: 100px 100px;
+                .option {
+                    width: 100px;
+                    display: grid;
+                    grid-template-columns: 22px auto;
+                    grid-template-areas:
+                        "checkbox label";
+                    mat-checkbox {
+                        grid-area: checkbox;
+                    }
+                    p {
+                        grid-area: label;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+        .footer {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 20px;
+            font-size: 12px;
+            padding: 4px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            text-align: center;
+            background-color: $color-black-bg;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 3px 5px 0 rgba(15,19,26,0.1), 0 9px 11px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
+            &:hover {
+                text-decoration: underline;
+            } 
+        }
+    }
+}

@@ -1,79 +1,48 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig } from '@angular/material';
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MultiUseModule } from './multi-use/multi-use.module';
 
 import { AppComponent } from './app.component';
-import { MainComponent } from './tool-main-panel/main.component';
-import { HeaderComponent } from './multi-use/header.component';
-import { MenuComponent } from './multi-use/menu.component';
-import { UserComponent } from './tool-side-panel/user.component';
-import { UserTimelineComponent } from './tool-side-panel/user.timeline.component';
-import { InfoComponent } from './tool-side-panel/info.component';
-import { D3Component } from './tool-main-panel/d3.component';
-import { SearchComponent } from './multi-use/search.component';
-import { TweetComponent } from './multi-use/tweet.component';
 import { PageNotFoundComponent } from './page-not-found.component';
-import { LoadingComponent } from './multi-use/loading.component';
-import { ShareComponent } from './tool-main-panel/share.component';
-import { HelpComponent } from './tool-main-panel/help.component';
 import { AboutUsComponent } from './home-page/about-us.component';
 import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
-import { InformationComponent } from './home-page/information.component';
-import { HelpUsComponent } from './home-page/help-us.component';
+import { AboutDataComponent } from './home-page/about-data.component';
+import { LearnMoreComponent } from './home-page/learn-more.component';
 import { FooterComponent } from './home-page/footer.component';
 import { SitemapComponent } from './home-page/sitemap.component';
-
 import { HomePageComponent } from './home-page/home-page.component';
 
 import { ApiService } from './services/api.service';
-import { MainCommunicationService } from './services/main.communication.service';
-import { HighlightService } from './services/highlight.service';
-import { LocalStorageService } from './services/local-storage.service';
 
-import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
-    HeaderComponent,
-    MenuComponent,
-    UserComponent,
-    UserTimelineComponent,
-    InfoComponent,
-    D3Component,
-    SearchComponent,
-    TweetComponent,
     PageNotFoundComponent,
-    LoadingComponent,
-    ShareComponent,
-    HelpComponent,
     HomePageComponent,
     AboutUsComponent,
     CodeOfConductComponent,
-    InformationComponent,
+    AboutDataComponent,
     SitemapComponent,
-    HelpUsComponent,
+    LearnMoreComponent,
     FooterComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule,
-    FormsModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MatTabsModule,
-    RouterModule
+    HttpModule,
+    AppRoutingModule,
+    RouterModule,
+    MultiUseModule
   ],
-  providers: [ 
+  providers: [
     ApiService,
-    MainCommunicationService,
-    HighlightService,
-    LocalStorageService
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]
 })

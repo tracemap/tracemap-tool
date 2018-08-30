@@ -23,6 +23,7 @@
         "sass/_colors.scss",
         "sass/_reset.scss",
         "styles.scss",
+        "themes.scss",
         "../node_modules/@ibm/plex/css/ibm-plex.css"
       ],
       "stylePreprocessorOptions": {

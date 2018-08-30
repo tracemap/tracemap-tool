@@ -1,0 +1,23 @@
+<div  
+*ngIf="!config.arrowPos"
+class="hint-container" 
+[style.left]="config.x + 'px'" 
+[style.top]="config.y + 'px'">
+    <div class="hint">
+        <div class="shadow"></div>
+        <div class="arrow"></div>
+        <p [innerHtml]="config.text"></p>
+    </div>
+</div>
+<div  
+*ngIf="config.arrowPos"
+class="hint-container" 
+[ngClass]="config.arrowPos"
+[style.left]="config.x + 'px'" 
+[style.top]="config.y + 'px'">
+    <div class="hint">
+        <div class="shadow"></div>
+        <div class="arrow"></div>
+        <p [innerHtml]="config.text"></p>
+    </div>
+</div>

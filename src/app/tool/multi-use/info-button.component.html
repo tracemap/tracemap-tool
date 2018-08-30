@@ -1,0 +1,15 @@
+<p class="info-button"
+(mouseenter)="openHint()"
+(mouseleave)="closeHint()">
+    <img
+    srcset="
+    ../../../assets/images/info-white_128.png 4x,
+    ../../../assets/images/info-white_64.png 2x,
+    ../../../assets/images/info-white_32.png 1x
+    "
+    src="../../../assets/images/info-white_32.png">
+</p>
+<hint
+*ngIf="config"
+[config]="config">
+</hint>

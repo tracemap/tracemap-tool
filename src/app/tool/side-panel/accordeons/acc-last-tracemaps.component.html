@@ -1,0 +1,13 @@
+<div class="content">
+    <div 
+    class="cookie-remainder"
+    *ngIf="!cookieEnabled">
+        <p>Your history is not saved if you leave this page.<br>
+        You can change this by checking the <span (click)="openCookiePolicy()">Last Tracemaps Cookie.</span></p>
+    </div>
+    <tweet-card 
+    class="tweet-card"
+    *ngFor="let tweet of history"
+    [tweetId]="tweet">
+    </tweet-card>
+</div>
