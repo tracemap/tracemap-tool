@@ -11,48 +11,61 @@
         margin-left: auto;
         margin-right: auto;
 
+        h3 {
+            color: $color-gray-icons;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: $color-paragraph;
+            &.active {
+                color: $color-gray-icons;
+                cursor: default;
+            }
+        }
+
         display: grid;
-        grid-template-columns: 350px 320px 320px;
-        grid-template-rows: 50px 50px 50px;
+        grid-template-columns: 320px 320px 320px;
+        grid-template-rows: auto;
         grid-template-areas: 
-            "logo_text row_1 row_2"
-            "logo_text row_1 row_2"
-            "logo_text row_1 social_links";
+            "row_1 row_2 row_3";
 
-        .logo-text {
-            grid-area: logo_text;
-        }
-        .links.row1 {
+        .row1 {
             grid-area: row_1;
-        }
-        .links.row2 {
-            grid-area: row_2;
-        }
-        .social-links-light {
-            grid-area: social_links;
-            a {
-                width: 20px;
-                height: 20px;
-                margin-right: 10px;
-            }
-            img {
-                width: 20px;
-            }
-        }
-
-        .links {
-            a {
-                display: block;
-                text-decoration: none;
-                font-size: 18px;
-                margin-bottom: 32px;
-                color: $color-paragraph;
-                &.active {
-                    color: $color-gray-icons;
-                    cursor: default;
+            .social-links-light {
+                a {
+                    display: inline;
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 20px;
+                }
+                img {
+                    width: 20px;
                 }
             }
         }
+        .row2 {
+            grid-area: row_2;
+
+            button {
+                width: 132px;
+                height: 36px;
+                font-size: 18px;
+            }
+        }
+        .row3 {
+            grid-area: row_3;
+            .company-copyright {
+                font-size: 14px;
+            }
+        }
+
     }
 }
 
@@ -60,7 +73,7 @@
     .content-wrapper {
         padding-left: 60px;
         .content {
-            grid-template-columns: 300px 200px 200px; 
+            grid-template-columns: 250px 250px 250px; 
         }
     }
 }
@@ -70,28 +83,24 @@
         width: 100vw;
         padding: 60px 20px;
         .content {
-            grid-template-columns: 160px 160px;
-            grid-template-rows: 60px 50px 50px 50px;
+            grid-template-columns: 280px;
+            grid-template-rows: auto auto auto;
+            grid-row-gap: 30px;
             grid-template-areas:
-                "logo_text logo_text"
-                "row_1 row_2"
-                "row_1 row_2"
-                "row_1 social_links";
+                "row_1"
+                "row_2"
+                "row_3";
 
-            .logo-text {
-                grid-area: logo_text;
-            }
-
-            .links.row1 {
+            .row1 {
                 grid-area: row_1;
             }
-            .links.row2 {
+            .row2 {
                 grid-area: row_2;
             }
-            .social-links-light {
-                grid-area: social_links;
-
+            .row3 {
+                grid-area: row_3;
             }
+
         }
     }
 }

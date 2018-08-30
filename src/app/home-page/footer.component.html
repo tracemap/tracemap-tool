@@ -1,47 +1,46 @@
 <div class="content-wrapper">
     <div class="content">
-        <h3 class="logo-text">TRACEMAP</h3>
-        <div class="links row1">
-            <a
-            *ngFor="let item of navItems1"
-            routerLink={{item.path}}
-            routerLinkActive="active">
-                {{item.label}}
-            </a>
+        <div class="contact row1">
+            <h3>Contact</h3>
+            <a href="mailto(contact@tracemap.info)">contact@tracemap.info</a>
+            <div class="social-links-light">
+                <a href="https://twitter.com/trace_map" target="_blank">
+                    <img srcset="
+                    ../../assets/images/twitter_128.png 4x,
+                    ../../assets/images/twitter_64.png 2x,
+                    ../../assets/images/twitter_32.png 1x
+                    "
+                    src="../../assets/images/twitter_64.png">
+                </a>
+                <a href="https://www.linkedin.com/company/trace-map" target="_blank">
+                    <img srcset="
+                    ../../assets/images/linkedin_128.png 4x,
+                    ../../assets/images/linkedin_64.png 2x,
+                    ../../assets/images/linkedin_32.png 1x
+                    "
+                    src="../../assets/images/linkedin_64.png">
+                </a>
+                <a href="https://github.com/tracemap/" target="_blank">
+                    <img srcset="
+                    ../../assets/images/github_128.png 4x,
+                    ../../assets/images/github_64.png 2x,
+                    ../../assets/images/github_32.png 1x
+                    "
+                    src="../../assets/images/github_64.png">
+                </a>
+            </div>
         </div> 
-        <div class="links row2">
-            <a
-            *ngFor="let item of navItems2"
-            routerLink={{item.path}}
-            routerLinkActive="active">
-                {{item.label}}
+        <div class="row2">
+            <h3>Donate a Token</h3>
+            <a href="/about-data">About the Token</a>
+            <a href="https://twitter.tracemap.info/" target="_blank">
+                Donate
             </a>
         </div>
-        <div class="social-links-light">
-            <a href="https://twitter.com/trace_map" target="_blank">
-                <img srcset="
-                ../../assets/images/twitter_128.png 4x,
-                ../../assets/images/twitter_64.png 2x,
-                ../../assets/images/twitter_32.png 1x
-                "
-                src="../../assets/images/twitter_64.png">
-            </a>
-            <a href="https://www.linkedin.com/company/trace-map" target="_blank">
-                <img srcset="
-                ../../assets/images/linkedin_128.png 4x,
-                ../../assets/images/linkedin_64.png 2x,
-                ../../assets/images/linkedin_32.png 1x
-                "
-                src="../../assets/images/linkedin_64.png">
-            </a>
-            <a href="https://github.com/tracemap/" target="_blank">
-                <img srcset="
-                ../../assets/images/github_128.png 4x,
-                ../../assets/images/github_64.png 2x,
-                ../../assets/images/github_32.png 1x
-                "
-                src="../../assets/images/github_64.png">
-            </a>
+        <div class="row3">
+            <h3>Credits</h3>
+            <a href="/imprint">Imprint</a>
+            <a class="company-copyright" href="https://www.handelsregister.de/rp_web/search.do;jsessionid=ED2B82B32D78D16F8C03DBCE98D5CB92-n1.tc030n02" target="_blank">© 2018 TraceMap gemeinnützige UG</a>
         </div>
     </div>
 </div>
