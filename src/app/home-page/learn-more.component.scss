@@ -59,6 +59,32 @@
                     width: 100%;
                 }
             }
+            .studie-box {
+                margin-top: 40px;
+                &.first {
+                    margin-top: 0px;
+                }
+                a {
+                    text-decoration: none;
+
+                     h3 {
+                        font-size: 20px;
+                        font-weight: 400;
+                        line-height: 28px;
+                        color: $color-purple-dark;
+                     }
+                }
+                 p {
+                    margin-bottom: 0px;
+                    font-size: 16px;
+                    font-weight: 300;
+                    line-height: 22px;
+                 }
+
+                 p.date {
+                    font-weight: 400;
+                 }
+            }
         }
     }
 }

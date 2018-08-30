@@ -21,15 +21,15 @@ export class MenuComponent {
         },
         {
             label: 'About Us',
-            path: '/about'
+            path: '/about-us'
         },
         {
-            label: 'Information',
-            path: '/information'
+            label: 'About Data',
+            path: '/about-data'
         },
         {
-            label: 'Help Us',
-            path: '/helpus'
+            label: 'Learn More',
+            path: '/learn-more'
         },
         {
             label: 'Imprint',

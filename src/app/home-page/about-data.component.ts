@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
-    selector: 'information',
-    templateUrl: 'information.component.html',
-    styleUrls: ['home-page.scss',
-                'information.component.scss']
+    selector: 'app-about-data',
+    templateUrl: './about-data.component.html',
+    styleUrls: ['./home-page.scss',
+                './about-data.component.scss']
 })
 
-export class InformationComponent implements OnInit {
+export class AboutDataComponent implements OnInit {
 
     constructor (
         private router: Router
     ) {}
-    
+
     ngOnInit() {
         this.router.events.subscribe((evt) => {
             if (!(evt instanceof NavigationEnd)) {

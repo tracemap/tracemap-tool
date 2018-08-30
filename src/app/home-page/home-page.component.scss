@@ -51,7 +51,7 @@
                 grid-area: slogan;
                 align-self: center;
                 p {
-                    color: #fff;
+                    color: #f5f6f7;
                     line-height: 68px;
                     font-weight: 300;
                     font-size: 42.64px;
@@ -63,7 +63,7 @@
                 max-width: 400px;
                 height: 60px;
                 margin-top: 30px;
-                border-bottom: 2px solid #FFF;
+                border-bottom: 2px solid #f5f6f7;
                 display: grid;
                 grid-template-columns: 1fr 50px;
                 grid-template-rows: 52px;
@@ -85,7 +85,7 @@
                     color: #FFF;
                     line-height: 40px;
                     &::placeholder {
-                        color: #FFF;
+                        color: #f5f6f7;
                         opacity: 1;
                     }
                 }
@@ -105,15 +105,15 @@
             .search-hint, .no-search-hint {
                 grid-area: search_hint;
                 align-self: center;
-                color: #FFF;
+                color: #f5f6f7;
                 line-height: 30px;
                 font-weight: 300;
                 font-size: 30px;
 
                 a {
-                    color: #FFF;
+                    color: #f5f6f7;
                     text-decoration: none;
-                    border-bottom: 2px solid #FFF;
+                    border-bottom: 2px solid #f5f6f7;
                     cursor: pointer;
                 }
             }
@@ -130,7 +130,7 @@
                 margin-right: 60px;
                 align-self: end;
                 p {
-                    color: #FFF;
+                    color: #f5f6f7;
                     &:hover {
                         cursor: pointer;
                     }
@@ -375,8 +375,6 @@
 
                 .anchors {
                     grid-area: anchors;
-                    margin-right: 20px;
-                    margin-bottom: 20px;
                     font-size: 15px;
                     line-height: 28px;
                     align-self: center;
