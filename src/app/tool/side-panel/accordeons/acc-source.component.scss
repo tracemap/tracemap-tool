@@ -1,0 +1,41 @@
+@import "../../../../styles.scss";
+.grid {
+    display: grid;
+    justify-items: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 16px;
+    grid-template-areas:
+        "tweet_container"
+        "tweet_info";
+    .tweet-container {
+        grid-area: tweet_container; 
+        width: 309px;
+    }
+
+    .tweet-info {
+        grid-area: tweet_info;
+        width: 309px;
+        margin-left: 10px;
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 16px auto;
+        grid-template-areas:
+            "image text";
+
+        img {
+            grid-area: image;
+            width: 16px;
+        }
+        p {
+            grid-area: text;
+            font-size: 11px;
+            margin-left: 10px;
+            margin-top: 3px;
+            color: $color-paragraph;
+            font-weight: 600;
+            line-height: 11px;
+        }
+    }
+}

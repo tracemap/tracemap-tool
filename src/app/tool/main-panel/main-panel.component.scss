@@ -1,0 +1,46 @@
+@import "../../../styles.scss";
+
+.grid {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    background-color: $color-gray-bg-light;
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: 1fr 45px 30px;
+    grid-template-rows:  1fr 72px;
+    grid-template-areas:
+        "graph side_controls ."
+        "timeslider timeslider .";
+
+    .graph {
+        grid-area: graph;
+        position: relative;
+    }
+
+    .side-controls {
+        grid-area: side_controls;
+        background-color: transparent;
+        align-content: end;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 45px 10px 45px 20px;
+        grid-template-areas:
+            "settings"
+            "."
+            "tour"
+            ".";
+
+        .settings {
+            grid-area: settings;
+        }
+        .tour {
+            grid-area: tour;
+        }
+   }
+
+    .timeslider {
+        grid-area: timeslider;
+        background-color: transparent;
+    }
+}

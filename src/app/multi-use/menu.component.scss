@@ -1,6 +1,7 @@
 @import "../../styles.scss";
 .menu-button {
     position: fixed;
+    z-index: 3;
     top: 30px;
     right: 30px;
     background-color: #fff;
@@ -14,7 +15,7 @@
         background-color: $color-purple-dark;
     }
     &.black {
-        background-color: #000;
+        background-color: #242933;
     }
     &:hover {
         cursor: pointer;
@@ -122,6 +123,21 @@
             width: 20px;
             margin-left: 8px;
             margin-top: 8px;
+        }
+    }
+
+    .menu {
+        .close-button {
+            margin-top: 16px;
+            margin-right: 16px;
+            width: 36px;
+            height: 36px;
+            
+            img {
+                width: 14px;
+                margin-top: 11px;
+                margin-left: 11px;
+            }
         }
     }
 }

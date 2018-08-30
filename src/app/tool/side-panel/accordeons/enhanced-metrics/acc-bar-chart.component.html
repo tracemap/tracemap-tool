@@ -1,0 +1,46 @@
+<div class="content">
+    <h2>{{data.headline}}</h2>
+    <info-button 
+    [arrowPos]="'left'"
+    [text]="data.info_text"></info-button>
+<!--     <div 
+    class="enlarge-button"
+    (click)="openFullScreen()">
+        <img srcset="
+        ../../../assets/images/arrows-up-down-white_64.png 4x,
+        ../../../assets/images/arrows-up-down-white_32.png 2x,
+        ../../../assets/images/arrows-up-down-white_16.png 1x
+        "
+        src="../../../assets/images/arrows-up-down-white_16.png">
+    </div>
+ -->    
+    <div class="scroll-container">
+        <div class="user-infos">
+            <div class="user-wrapper"
+            *ngFor="let user of data['data']"
+            (mouseenter)="setHovered(uid)"
+            (mouseleave)="setHovered(undefined)">
+                <user
+                [userId]="user.uid"></user>
+            </div>
+        </div>
+        <svg #barChart class="bar-chart"></svg>
+        <div class="follower-number-wrapper">
+            <p class="follower-number"
+            *ngFor="let user of data['data']"
+            [ngClass]="{'first': user == data['data'][0]}">
+                {{user.value | shortNumber}}
+            </p>
+        </div>
+        <div class="hoverlay-wrapper">
+            <div
+            class="hoverlay"
+            *ngFor="let user of data['data']"
+            [ngClass]="{'opac':user.opac}"
+            (mouseenter)="setHovered(user.uid)"
+            (mouseleave)="setHovered(undefined)"
+            (click)="setActiveNode(user.uid)"></div>
+        </div>
+    </div>
+    <svg #xAxis class="x-axis"></svg>
+</div>

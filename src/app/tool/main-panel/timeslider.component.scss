@@ -1,0 +1,41 @@
+
+@import "../../../styles.scss";
+
+.grid {
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    overflow: default;
+    grid-template-columns: 20px auto 15px 1fr 15px auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+        ". start_label . slider . end_label";
+
+    .label {
+        font-size: 10.13px;
+        font-weight: 600;
+        line-height: 36px;
+        letter-spacing: 0.5px;
+        color: $color-black-bg;
+    }
+    .start {
+        grid-area: start_label;
+        display: inline-block;
+        align-self: center;
+    }
+    .end {
+        grid-area: end_label;
+        display: inline-block;
+        align-self: center;
+    }
+    .slider {
+        grid-area: slider;
+        width: 100%;
+        align-self: center;
+    }
+}

@@ -1,0 +1,80 @@
+.content {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    grid-template-rows: 24px 20px auto 20px;
+    overflow-x: visible;
+    grid-template-areas:
+        "headline info_button"
+        ". ."
+        "chart chart"
+        "x_axis x_axis";
+
+    h2 {
+        grid-area: headline;
+    }
+
+    .info-button {
+        grid-area: info_button;
+    }
+
+    .loading {
+        grid-area: chart;
+    }
+
+    .scroll-container {
+        grid-area: chart;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: grid;
+        grid-template-columns: 0px 40px 1fr 0px;
+        grid-template-areas: 
+            "hoverlays user_infos bar_chart follower_numbers";
+
+        .user-infos {
+            grid-area: user_infos;
+            .user-wrapper {
+                background-color: #fff;
+                overflow-x: hidden;
+                margin: 2px 0px;
+            }
+        }
+        .bar-chart {
+            grid-area: bar_chart;
+        }
+        .follower-number-wrapper {
+            grid-area: follower_numbers;
+            margin-left: -100px;
+            width: 85px;
+            .follower-number {
+                height: 40px;
+                text-align: end;
+                font-weight: 500;
+                font-size: 11px;
+                line-height: 40px;
+                &.first {
+                    color: #fff;
+                }
+            }
+        }
+        .hoverlay-wrapper {
+            grid-area: hoverlays;
+            width: 300px;
+            .hoverlay {
+                display: relative;
+                height: 40px;
+                background-color: #fff;
+                opacity: 0;
+                transition: opacity 0.2s;
+                &.opac {
+                    opacity: 0.8;
+                    transition: opacity 0.2s;
+                }
+            }
+        }
+    }
+
+    .x-axis {
+        grid-area: x_axis;
+    }
+}

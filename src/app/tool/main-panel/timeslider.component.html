@@ -1,0 +1,14 @@
+<div class="grid">
+    <p class="label start" *ngIf="endLabel.value">CREATION</p>
+        <mat-slider
+        #slider
+        class="slider" 
+        color="primary"
+        [step]="stepSize"
+        [max]="range"
+        [disabled]="!range"
+        [(ngModel)]="value"
+        (input)="changeValue(slider)"></mat-slider>
+    <p class="label end" *ngIf="endLabel.value">{{endLabel.value}} {{endLabel.unit}}</p>
+    <hint *ngIf="moving" [config]="hintConfig"></hint>    
+</div>

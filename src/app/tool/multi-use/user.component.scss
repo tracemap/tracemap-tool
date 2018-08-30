@@ -1,0 +1,47 @@
+@import "../../../styles.scss";
+
+.grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 38px 9px 1fr;
+    grid-template-rows: 38px;
+    background-color: #fff;
+    grid-template-areas:
+        "image . name-box";
+
+    img {
+        grid-area: image;
+        width: 100%;
+        border-radius: 50%;
+    }
+
+    .name-box {
+        grid-area: name-box;
+        a {
+            text-decoration: none;
+            h3 {
+                line-height: 19px;
+                font-size: 14px;
+                font-weight: bold;
+                overflow: hidden;
+                white-space: nowrap;
+                color: $color-gray-font-blackish;
+            }
+
+            p {
+                line-height: 19px;
+                font-size: 14px;
+                color: $color-paragraph;
+                overflow: hidden;
+                white-space: nowrap;
+
+            }
+            &:hover {
+                h3 {
+                    color: $color-purple-dark;
+                }
+
+            }
+        }
+    }
+}

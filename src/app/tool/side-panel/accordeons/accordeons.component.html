@@ -1,0 +1,51 @@
+<div class="accordeons">
+    <div 
+    *ngFor="let accordeon of accordeons"
+    class="accordeon {{accordeon.selector}}">
+        <div 
+        class="label"
+        (click)="toggle(accordeon)"
+        [ngClass]="{'open': accordeon.open && accordeon.rendered}">
+            <h2>{{accordeon.name}}</h2>
+            <mat-spinner
+            class="spinner"
+            [diameter]="18"
+            [color]="primary"
+            [strokeWidth]="3"
+            *ngIf="!accordeon.rendered"></mat-spinner>
+            <img
+            *ngIf="accordeon.rendered"
+            [ngClass]="{'open': accordeon.open}"
+            srcset="
+            ../../../assets/images/arrow-right_128.png 4x,
+            ../../../assets/images/arrow-right_64.png 2x,
+            ../../../assets/images/arrow-right_32.png 1x
+            "
+            src="../../../assets/images/arrow-right_32.png">
+        </div>
+        <div 
+        class="content"
+        [ngClass]="{'open': accordeon.open, 'rendered': accordeon.rendered}">
+            <acc-source
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-source'">
+            </acc-source>
+            <acc-influential
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-influential'">
+            </acc-influential>
+            <acc-metrics
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-metrics'">
+            </acc-metrics>
+            <acc-enhanced-metrics
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-enhanced-metrics'">
+            </acc-enhanced-metrics>
+            <acc-last-tracemaps
+            (rendered)="toggleRendered($event, accordeon)"
+            *ngIf="accordeon.selector == 'acc-last-tracemaps'">
+            </acc-last-tracemaps>
+        </div>
+    </div>
+</div>

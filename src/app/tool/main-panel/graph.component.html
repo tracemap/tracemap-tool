@@ -1,0 +1,9 @@
+<canvas class="d3-graph" (window:resize)="resizeCanvas()"></canvas>
+<user 
+class="user"
+[ngClass]="{'rendered':userPreviewRendered}" 
+[userId]="hoveredNode.id_str" 
+(rendered)="setUserPreviewRendered($event)"
+*ngIf="hoveredNode"
+[style.top]="(hoveredNode.cy - hoveredNode.r - 50) + 'px'"
+[style.left]="(hoveredNode.cx + 365) + 'px'"></user>

@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./sass/fonts";
 @import "./sass/colors";
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 * {
     box-sizing: border-box;
@@ -9,6 +8,7 @@
     padding: 0px;
     transition: box-shadow 0.5s linear;
     outline: none;
+    -webkit-user-drag: none;
 
     &::-moz-focus-inner {
         border: none;
@@ -54,6 +54,9 @@ p {
 .purple-button {
     background-color: $color-purple-dark;
     color: #FFF;
+    &:disabled {
+        visibility: hidden;
+    }
 }
     
 .social-links-light {
@@ -71,7 +74,6 @@ p {
     }
 }
 
-
 .logo-text {
     font-size: 14px;
     font-weight: 600;
@@ -79,59 +81,17 @@ p {
     letter-spacing: 3px;
 }
 
-//OLD
-main {
-    display: block;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
+.tour-highlight {
+    z-index: 10;
 }
 
-router-outlet {
-    display: none;
+a {
+    color: $color-purple-dark;
+    font-weight: 400;
+    display: inline-block;
 }
 
-.highlight {
-    box-shadow:inset 0px 0px 5em 0px #9729ff;
-}
-
-//used in child components
-.info-block {
-    justify-self: center;
-    text-align: center;
-    
-    h3 {
-        margin: 0px;
-        font-size: 12px;
-    }
-    p {
-        font-size: 18px;
-        color: $color-paragraph;
-        font-weight: 600;
-    }
-}
-
-.user-names {
-    p:nth-child(1) {
-        grid-area: name;
-        font-size: 19px;
-        font-weight: bold;
-        overflow: hidden;
-    }
-    p:nth-child(2) {
-        grid-area: screen_name;
-        font-size: 16px;
-        color: #657786;
-    }
-    &.small {
-        p:nth-child(1) {
-            font-size: 15px;
-        }
-        p:nth-child(2) {
-            font-size: 13px;
-        }
-    }
+b {
+    font-weight: 400;
+    display: inline-block;
 }
