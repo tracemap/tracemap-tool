@@ -246,15 +246,14 @@ export class ToolComponent implements OnInit {
 
     loadTwitterWidgetScript(): void {
         window['twttr'] = (function(d, s, id) {
-            let js = d.getElementsByTagName(s)[0];
-            const fjs = d.getElementsByTagName(s)[0],
-            t = window['twttr'] || {};
+            let js, fjs = d.getElementsByTagName(s)[0],
+                t = window['twttr'] || {};
             if (d.getElementById(id)) {
                 return t;
             }
             js = d.createElement(s);
             js.id = id;
-            js['src'] = 'https://platform.twitter.com/widgets.js';
+            js.src = 'https://platform.twitter.com/widgets.js';
             fjs.parentNode.insertBefore(js, fjs);
 
             t._e = [];
@@ -263,6 +262,6 @@ export class ToolComponent implements OnInit {
             };
 
             return t;
-        })(document, 'script', 'twitter-wjs');
+        }(document, 'script', 'twitter-wjs'));
     }
 }

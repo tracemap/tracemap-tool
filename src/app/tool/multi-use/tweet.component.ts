@@ -31,7 +31,7 @@ export class TweetComponent implements OnChanges {
                         this.tweetId,
                         domTweet,
                         {
-                            width: '308px',
+                            width: '309px',
                             linkColor: '#7F25E6'
                         }
                     ).then(() => {
