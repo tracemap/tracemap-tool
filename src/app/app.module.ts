@@ -11,7 +11,6 @@ import { MultiUseModule } from './multi-use/multi-use.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AboutUsComponent } from './home-page/about-us.component';
-import { CodeOfConductComponent } from './home-page/code-of-conduct.component';
 import { AboutDataComponent } from './home-page/about-data.component';
 import { LearnMoreComponent } from './home-page/learn-more.component';
 import { FooterComponent } from './home-page/footer.component';
@@ -26,7 +25,6 @@ import { ApiService } from './services/api.service';
     PageNotFoundComponent,
     HomePageComponent,
     AboutUsComponent,
-    CodeOfConductComponent,
     AboutDataComponent,
     SitemapComponent,
     LearnMoreComponent,
