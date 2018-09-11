@@ -6,6 +6,7 @@
     height: 100%;
     max-height: 100%;
     overflow-y: auto;
+    overflow-x: visible;
     .accordeon{
         position: relative;
         .label {
@@ -57,6 +58,7 @@
             max-height: 0px;
             &.rendered.open {
                 max-height: 10000px;
+                overflow-x: visible;
                 transition: max-height 0.5s;
             }
         }
