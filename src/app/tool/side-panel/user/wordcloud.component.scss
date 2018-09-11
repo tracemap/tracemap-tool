@@ -1,0 +1,34 @@
+@import "../../../../styles.scss";
+.content {
+    width: 308px;
+    padding: 9px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+    border-radius: 0px 0px 6px 6px;
+    display: grid;
+    overflow: visible;
+    grid-template-columns: 1fr 24px;
+    grid-template-rows: 24px auto;
+    grid-template-areas:
+        "headline info_button"
+        "cloud cloud";
+
+    h2 {
+        grid-area: headline;
+        color: $color-header;
+        font-size: 13.5px;
+        font-weight: 600;
+        align-self: center;
+        margin-left: 5px;
+    }
+
+    info-button {
+        grid-area: info_button;
+    }
+
+    .wordcloud-canvas {
+        grid-area: cloud;
+        width: 290px;
+        height: 290px;
+    }
+}
