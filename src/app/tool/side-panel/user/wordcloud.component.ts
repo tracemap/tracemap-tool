@@ -71,6 +71,7 @@ export class WordcloudComponent {
             fontFamily: 'IBM Plex',
             weightFactor: (size) => Math.sqrt(size * 50),
             drawOutOfBound: false,
+            shuffle: true
         });
     }
 }
