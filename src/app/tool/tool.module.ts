@@ -41,12 +41,14 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
     import { UserDetailsComponent } from './side-panel/user/user-details.component';
         import { UserSettingsComponent } from './side-panel/user/user-settings.component';
         import { TimelineComponent } from './side-panel/user/timeline.component';
+        import { WordcloudComponent } from './side-panel/user/wordcloud.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TweetService } from './services/tweet.service';
 import { TourService } from './services/tour.service';
+import { WordcloudService } from './services/wordcloud.service';
 
 import { TimeLabelPipe } from './pipes/time-label.pipe';
 import { ToYearPipe } from './pipes/to-year.pipe';
@@ -70,7 +72,8 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
       CommunicationService,
       LocalStorageService,
       TweetService,
-      TourService
+      TourService,
+      WordcloudService
     ],
     declarations: [
         ToolComponent,
@@ -103,6 +106,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
             UserDetailsComponent,
                 UserSettingsComponent,
                 TimelineComponent,
+                WordcloudComponent,
         TimeLabelPipe,
         ToYearPipe,
         ShortNumberPipe,

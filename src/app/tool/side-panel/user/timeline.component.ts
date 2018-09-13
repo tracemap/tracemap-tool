@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
 import { ApiService } from '../../../services/api.service';
-import { GraphService } from '../../services/graph.service';
+import { WordcloudService } from '../../services/wordcloud.service';
 import { CommunicationService } from '../../services/communication.service';
 
 @Component({
@@ -28,7 +28,8 @@ export class TimelineComponent implements OnChanges {
     timelineRendered: string[] = [];
     constructor(
         private apiService: ApiService,
-        private communicationService: CommunicationService
+        private communicationService: CommunicationService,
+        private wordcloudService: WordcloudService,
     ) {
         this.communicationService.tweetId.subscribe( tweetId => {
             this.tweetId = tweetId;
@@ -51,6 +52,7 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.timeline = timeline;
+                this.wordcloudService.timelineTexts.next( this.timeline.map((d) => d['text']));
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
                         let changed = false;
