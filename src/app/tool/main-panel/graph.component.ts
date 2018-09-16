@@ -34,6 +34,7 @@ export class GraphComponent {
 
     width;
     height;
+    dpr = 1;
 
     factor = 1;
     shiftX;
@@ -198,9 +199,10 @@ export class GraphComponent {
             this.canvas.height = 0;
             this.width = $('.d3-graph').width();
             this.height = $('.d3-graph').height();
+            this.dpr = window.devicePixelRatio;
             this.canvas = document.querySelector('.d3-graph');
-            this.canvas.width = this.width;
-            this.canvas.height = this.height;
+            this.canvas.width = this.width * this.dpr;
+            this.canvas.height = this.height * this.dpr;
             this.context = this.canvas.getContext('2d');
         }
         if (this.simulation) {
@@ -216,9 +218,11 @@ export class GraphComponent {
     init() {
         this.width = $('.d3-graph').width();
         this.height = $('.d3-graph').height();
+        this.dpr = window.devicePixelRatio || 1;
+        console.log('dpr: ' + this.dpr);
         this.canvas = document.querySelector('.d3-graph');
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
+        this.canvas.width = this.width * this.dpr;
+        this.canvas.height = this.height * this.dpr;
         this.context = this.canvas.getContext('2d');
         this.context.translate(0.5, 0.5);
         this.context.imageSmoothingEnabled = true;
@@ -283,8 +287,8 @@ export class GraphComponent {
 
     getHoveredNode() {
         const mouse = d3.mouse(this.canvas);
-        const x = this.getOriginalXPosition(mouse[0]);
-        const y = this.getOriginalYPosition(mouse[1]);
+        const x = this.getOriginalXPosition(mouse[0] * this.dpr);
+        const y = this.getOriginalYPosition(mouse[1] * this.dpr);
         const node = this.simulation.find( x, y);
         return this.simulation.find( x, y, node.r + (node.r / 7));
     }

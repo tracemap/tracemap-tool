@@ -52,7 +52,8 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.timeline = timeline;
-                this.wordcloudService.timelineTexts.next( this.timeline.map((d) => d['text']));
+                const timelineTexts = this.timeline.map( (d) => d['text']);
+                this.wordcloudService.timelineTexts.next( timelineTexts);
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
                         let changed = false;

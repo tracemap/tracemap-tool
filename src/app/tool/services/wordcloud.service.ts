@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable( )
 
 export class WordcloudService {
-    timelineTexts = new BehaviorSubject<string[]>(undefined);
+    timelineTexts = new ReplaySubject<string[]>(1);
 }
