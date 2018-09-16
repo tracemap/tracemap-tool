@@ -220,7 +220,9 @@ export class TourComponent {
     keyListener = (event) => {
         const key = event.key;
         if (key === 'ArrowRight' || key === 'Enter') {
-            this.nextItem();
+            if (this.activeItem['service_action'] !== 'openUserInfo') {
+                this.nextItem();
+            }
         } else if (key === 'ArrowLeft') {
             this.lastItem();
         } else if (key === 'Escape') {
@@ -327,8 +329,8 @@ export class TourComponent {
     }
 
     nextItem() {
-        if (this.activeItem !== this.data.length - 1 &&
-                this.data[this.activeItem]['service_action'] !== 'openUserInfo') {
+        if (this.activeItem !== this.data.length - 1 ) {
+                // this.data[this.activeItem]['service_action'] !== 'openUserInfo') {
             this.postAction();
             this.activeItem++;
             this.preAction();

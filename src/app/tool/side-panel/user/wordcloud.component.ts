@@ -19,7 +19,8 @@ export class WordcloudComponent {
     ) {
         this.wordcloudService.timelineTexts.subscribe( texts => {
             if (texts) {
-                console.log('twice?');
+                console.log(texts.length);
+                console.log(texts);
                 this.createWordList(texts);
             }
         });
@@ -62,16 +63,17 @@ export class WordcloudComponent {
     }
 
     initCloud(wordList) {
+        const dpr = window.devicePixelRatio || 1;
         const canvas = document.querySelector('.wordcloud-canvas');
-        canvas['width'] = 290;
-        canvas['height'] = 290;
+        canvas['width'] = 290 * dpr;
+        canvas['height'] = 290 * dpr;
         wc(document.querySelector('.wordcloud-canvas'), {
             list: wordList,
             backgroundColor: '#fff',
             fontFamily: 'IBM Plex',
-            weightFactor: (size) => Math.sqrt(size * 50),
+            weightFactor: (size) => Math.sqrt(size * 50) * dpr,
             drawOutOfBound: false,
-            shuffle: true
+            shuffle: true,
         });
     }
 }
