@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { WordcloudService } from '../../services/wordcloud.service';
 
 import * as wc from '../../../../assets/javascript/wordcloud2.js';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
     selector: 'app-wordcloud',
@@ -113,7 +114,16 @@ export class WordcloudComponent {
     }
 
     highlightWord(item) {
-        this.initCloud(item[0]);
+        const word = item[0];
+        this.wordcloudService.selectedWord.next(word);
+        this.initCloud(word);
+    }
+
+    unhighlight() {
+        if (!this.hovered) {
+            this.wordcloudService.selectedWord.next(undefined);
+            this.initCloud();
+        }
     }
 
     changePointer(item) {
