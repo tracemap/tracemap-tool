@@ -13,6 +13,16 @@ import * as wc from '../../../../assets/javascript/wordcloud2.js';
 
 export class WordcloudComponent {
 
+    hovered = false;
+    wordList;
+    colors = {
+        handles: 'rgba(98, 101, 112,', // light purple for words
+        words: 'rgba(141, 41, 255,', // purple for words
+        hashtags: 'rgba(36, 41, 51,', // blackish for hashtags
+        noopac: ' 1)',
+        opac: ' 0.2)',
+    };
+
     constructor(
         private wordcloudService: WordcloudService,
         private http: Http
@@ -37,14 +47,14 @@ export class WordcloudComponent {
             });
         });
         this.getStopwordLists().then( stopwords => {
-            let wordList = [];
+            const wordList = [];
             Object.keys(wordDict).forEach( key => {
                 if (stopwords.indexOf(key.toLowerCase()) === -1) {
                     wordList.push([key, wordDict[key]]);
                 }
             });
-            wordList = wordList.sort( (a, b) => b[1] - a[1]).splice(0, 30);
-            this.initCloud(wordList);
+            this.wordList = wordList.sort( (a, b) => b[1] - a[1]).splice(0, 30);
+            this.initCloud();
         });
     }
 
@@ -62,18 +72,55 @@ export class WordcloudComponent {
         });
     }
 
-    initCloud(wordList) {
-        const dpr = window.devicePixelRatio || 1;
-        const canvas = document.querySelector('.wordcloud-canvas');
-        canvas['width'] = 290 * dpr;
-        canvas['height'] = 290 * dpr;
-        wc(document.querySelector('.wordcloud-canvas'), {
-            list: wordList,
-            backgroundColor: '#fff',
-            fontFamily: 'IBM Plex',
-            weightFactor: (size) => Math.sqrt(size * 50) * dpr,
-            drawOutOfBound: false,
-            shuffle: true,
+    initCloud(hover?: string): Promise<void> {
+        return new Promise( (res) => {
+            const dpr = window.devicePixelRatio || 1;
+            const canvas = document.querySelector('.wordcloud-canvas');
+            canvas['width'] = 290 * dpr;
+            canvas['height'] = 290 * dpr;
+            wc(document.querySelector('.wordcloud-canvas'), {
+                list: this.wordList,
+                backgroundColor: '#fff',
+                color: (word) => {
+                    if (!hover || word === hover) {
+                        if (word.indexOf('#') === 0) {
+                            return this.colors.hashtags + this.colors.noopac;
+                        } else if (word.indexOf('@') === 0) {
+                            return this.colors.handles + this.colors.noopac;
+                        } else {
+                            return this.colors.words + this.colors.noopac;
+                        }
+                    } else {
+                        if (word.indexOf('#') === 0) {
+                            return this.colors.hashtags + this.colors.opac;
+                        } else if (word.indexOf('@') === 0) {
+                            return this.colors.handles + this.colors.opac;
+                        } else {
+                            return this.colors.words + this.colors.opac;
+                        }
+                    }
+                },
+                fontFamily: 'IBM Plex',
+                weightFactor: (size) => Math.sqrt(size * 50) * dpr,
+                drawOutOfBound: false,
+                shuffle: false,
+                rotateRatio: 0,
+                click: (item) => {this.highlightWord(item); },
+                hover: (item) => {this.changePointer(item); }
+            });
+            res();
         });
+    }
+
+    highlightWord(item) {
+        this.initCloud(item[0]);
+    }
+
+    changePointer(item) {
+        if (item) {
+            this.hovered = true;
+        } else {
+            this.hovered = false;
+        }
     }
 }
