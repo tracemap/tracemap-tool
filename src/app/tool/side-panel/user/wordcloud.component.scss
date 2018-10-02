@@ -27,8 +27,12 @@
     }
 
     .wordcloud-canvas {
+        cursor: default;
         grid-area: cloud;
         width: 290px;
         height: 290px;
+        &.hovered {
+            cursor: pointer;
+        }
     }
 }
