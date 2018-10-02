@@ -4,68 +4,128 @@
     padding-left: 80px;
     padding-right: 80px;
     padding-top: 60px;
-    padding-bottom: 120px;
+    padding-bottom: 60px;
     background-color: $color-black-bg;
     .content {
         max-width: 1050px;
         margin-left: auto;
         margin-right: auto;
 
-        h3 {
-            color: $color-gray-icons;
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 24px;
-        }
-
-        a {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: $color-paragraph;
-            &.active {
+        .main-section {
+            h3 {
                 color: $color-gray-icons;
-                cursor: default;
+                font-size: 18px;
+                font-weight: 400;
+                margin-bottom: 10px;
+            }
+
+            a {
+                display: block;
+                font-size: 18px;
+                line-height: 30px;
+                margin-bottom: 20px;
+                text-decoration: none;
+                color: $color-paragraph;
+                &.active {
+                    color: $color-gray-icons;
+                    cursor: default;
+                }
+                &:hover {
+                    color: #fff;
+                }
+            }
+
+            display: grid;
+            grid-template-columns: 320px auto auto;
+            grid-template-rows: auto;
+            grid-column-gap: 30px;
+            grid-template-areas: 
+                "contact donate donate";
+
+            .contact {
+                grid-area: contact;
+                .social-links-light {
+                    a {
+                        display: inline;
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 20px;
+                    }
+                    img {
+                        width: 20px;
+                    }
+                }
+            }
+            .donate {
+                grid-area: donate;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows:
+                    "auto auto auto";
+                grid-template-areas:
+                    "headline"
+                    "paragraph"
+                    "button";
+
+                h3 {
+                    grid-area: headline;
+                    color: #fff;
+                }
+
+                p {
+                    grid-area: paragraph;
+                    color: $color-gray-icons;
+                    font-size: 18px;
+                    line-height: 30px;
+                }
+
+                a {
+                    grid-area: button;
+                    margin-top: 20px;
+                    button {
+                        width: 147px;
+                        height: 46px;
+                    }
+                }
             }
         }
+        .sublinks {
+            margin-top: 50px;
+            height: 28px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: 28px;
+            grid-template-areas:
+                "left right";
 
-        display: grid;
-        grid-template-columns: 320px 320px 320px;
-        grid-template-rows: auto;
-        grid-template-areas: 
-            "row_1 row_2 row_3";
-
-        .row1 {
-            grid-area: row_1;
-            .social-links-light {
+            .left {
+                grid-area: left;
                 a {
                     display: inline;
-                    width: 20px;
-                    height: 20px;
-                    margin-right: 20px;
-                }
-                img {
-                    width: 20px;
+                    margin-left: 20px;
+                    &.first {
+                        margin-left: 0px;
+                    }
                 }
             }
-        }
-        .row2 {
-            grid-area: row_2;
+            .right {
+                grid-area: right;
+                p {
+                    display: inline;
+                    font-size: 18px;
+                }
+            }
 
-            button {
-                width: 132px;
-                height: 36px;
+            a {
+                text-decoration: none;
                 font-size: 18px;
+                color: $color-paragraph;
+                &:hover {
+                    color: #fff;
+                }
             }
         }
-        .row3 {
-            grid-area: row_3;
-            .company-copyright {
-                font-size: 14px;
-            }
-        }
-
     }
 }
 
@@ -73,7 +133,9 @@
     .content-wrapper {
         padding-left: 60px;
         .content {
-            grid-template-columns: 250px 250px 250px; 
+            .main-section {
+                grid-template-columns: 320px auto auto;
+            }
         }
     }
 }
@@ -83,24 +145,39 @@
         width: 100vw;
         padding: 60px 20px;
         .content {
-            grid-template-columns: 280px;
-            grid-template-rows: auto auto auto;
-            grid-row-gap: 30px;
-            grid-template-areas:
-                "row_1"
-                "row_2"
-                "row_3";
+            .main-section {
+                grid-template-columns: 280px;
+                grid-template-rows: auto auto;
+                grid-row-gap: 30px;
+                grid-template-areas:
+                    "contact"
+                    "donate";
+            
+                .contact {
+                    grid-area: contact;
+                }
 
-            .row1 {
-                grid-area: row_1;
-            }
-            .row2 {
-                grid-area: row_2;
-            }
-            .row3 {
-                grid-area: row_3;
-            }
+                .donate {
+                    grid-area: donate
+                }
 
+            }
+            .sublinks {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 28px 20px 28px;
+                grid-template-areas:
+                    "left"
+                    "."
+                    "right";
+
+                .left {
+                    grid-area: left;
+                }
+                .right {
+                    grid-area: right;
+                }
+            }
         }
     }
 }

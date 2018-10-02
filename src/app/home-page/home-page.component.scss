@@ -7,7 +7,7 @@
             background-color: transparent;
             display: grid;
             grid-template-columns: 500px 1fr;
-            grid-template-rows: 200px 120px 35px 1fr;
+            grid-template-rows: 200px 120px 60px 1fr;
             grid-template-areas:
                 "slogan slogan"
                 "searchbar searchbar"
@@ -28,28 +28,28 @@
             .bg-outer {
                 position: absolute;
                 z-index: -1;
-                width: 70vh;
-                height: 70vh;
+                width: 60vh;
+                height: 60vh;
                 border-radius: 50%;
                 left: 50%;
-                margin-left: -35vh;
+                margin-left: -27.5vh;
                 top: 50%;
-                margin-top: -35vh;
+                margin-top: -27.5vh;
                 background-color: $color-purple-light;
 
                 .bg-inner {
-                    width: 30vh;
-                    height: 30vh;
+                    width: 26vh;
+                    height: 26vh;
                     border-radius: 50%;
-                    margin-left: 20vh;
-                    margin-top: 20vh;
+                    margin-left: 17vh;
+                    margin-top: 17vh;
                     background-color: $color-purple-dark;
                 }
             }
 
             .slogan {
                 grid-area: slogan;
-                align-self: center;
+                align-self: end;
                 p {
                     color: #f5f6f7;
                     line-height: 68px;
@@ -60,6 +60,7 @@
 
             .searchbar {
                 grid-area: searchbar;
+                align-self: end;
                 max-width: 400px;
                 height: 60px;
                 margin-top: 30px;
@@ -104,7 +105,7 @@
 
             .search-hint, .no-search-hint {
                 grid-area: search_hint;
-                align-self: center;
+                align-self: end;
                 color: #f5f6f7;
                 line-height: 30px;
                 font-weight: 300;
@@ -142,7 +143,7 @@
     .text-box {
         grid-template-areas: 
             "header paragraph"
-            "header button";
+            "image paragraph";
 
         h2 {
             position: relative;
@@ -163,17 +164,10 @@
             height: 46px;
         }
         .text-bg {
-            position: absolute;
-            opacity: 0.7;
-            z-index: 1;
-            &.visualization {
-                opacity: 0.5;
-                width: 370px;
-            }
-            &.analysis {
-                width: 300px;
-                margin-top: 150px;
-            }
+            justify-self: start;
+            grid-area: image;
+            width: 300px;
+            height: 300px;
         }
     }
 
@@ -295,6 +289,15 @@
 @media only screen and (max-width: 1200px) {
     .content {
 
+        .text-box {
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: auto auto;
+
+            .text-bg {
+                width: 250px;
+                height: 250px;
+            }
+        }
         .content-box {
             .box-content {
                 .img-box {
@@ -311,24 +314,6 @@
                 p {
                     width: 100%;
                 }     
-                // .newsletter-area .newsletter-form {
-                //     grid-template-columns:  142px;
-                //     grid-template-rows: 46px;
-                //     grid-template-areas: 
-                //         "input button";
-
-                //     input {
-                //         grid-area: input;
-                //         width: 100%;
-                //         max-width: 350px;
-                //     }
-
-                //     .purple-button {
-                //         grid-area: button;
-                //         margin-left: 0px;
-                //         margin-top: 10px;
-                //     }
-                // }
             }
 
        }
@@ -384,11 +369,12 @@
         }
 
         .text-box {
-            grid-template-rows: 70px auto auto;
+            grid-template-rows: 40px auto auto;
+            grid-template-columns: auto;
             grid-template-areas:
                 "header"
-                "paragraph"
-                "button";
+                "image"
+                "paragraph";
 
             h2 {
                 grid-area: header;
@@ -396,8 +382,10 @@
             p {
                 grid-area: paragraph;
             }
-            button {
-                grid-area: button;
+            .text-bg {
+                grid-area: image;
+                width: 300px;
+                height: 300px;
             }
         }
 

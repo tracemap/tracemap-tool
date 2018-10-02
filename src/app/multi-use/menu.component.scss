@@ -69,7 +69,7 @@
         ". close_button"
         ". menu_links"
         ". menu_social"
-        ". .";
+        ". sublinks";
 
     .close-button {
         grid-area: close_button;
@@ -109,6 +109,24 @@
 
     .social-links-light {
         grid-area: menu_social;
+    }
+    .sublinks {
+        align-self: end;
+        grid-area: sublinks;
+        color: $color-gray-font-dark;
+        letter-spacing: 10px;
+        margin-bottom: 45px;
+        a {
+            letter-spacing: 1px;
+            font-size: 16px;
+            display: inline;
+            text-decoration: none;
+            color: $color-gray-font-dark;
+            font-weight: 300;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }
 
