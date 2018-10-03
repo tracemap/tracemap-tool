@@ -1,0 +1,111 @@
+@import "../../styles.scss";
+.login-button {
+    position: fixed;
+    z-index: 3;
+    top: 30px;
+    right: 108px;
+    background-color: #fff;
+    color: $color-purple-dark;
+    border: 2px solid $color-purple-dark;
+    transition: border 0.3s linear;
+    width: 250px;
+    height: 48px;
+    &.black {
+        border-color: #000;
+        color: #000;
+    }
+    &.open {
+        border: 2px solid #fff;
+        transition: none;
+    }
+}
+.login-menu {
+    position: fixed;
+    overflow: hidden;
+    z-index: 2;
+    top: 30px;
+    right: 108px;
+    width: 250px;
+    height: 48px;
+    background-color: #fff;
+    border: 2px solid $color-purple-dark;
+    border-radius: 5px;
+    transition: none;
+    &.open {
+        top: 28px;
+        right: 106px;
+        width: 254px;
+        height: 470px;
+        transition: height 0.2s linear;
+        padding-top: 42px;
+    }
+    display: grid;
+    padding: 0px 12px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 40px;
+    grid-template-areas:
+        "form"
+        "register"
+        "links"
+        "policy";
+
+    .button {
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-size: 18px;
+        width: 70px;
+        height: 32px;
+        line-height: 30px;
+        &.register {
+            width: 90px;
+        }
+        &.contact {
+            width: 110px;
+        }
+    }
+
+    .form {
+        grid-area: form;
+        input {
+            width: 226px;
+            height: 36px;
+            border: none;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 400;
+            &::placeholder {
+                color: #A8ABB3;
+                opacity: 1;
+            }
+        }
+    }
+    .register {
+        grid-area: register;
+
+        p {
+            line-height: 22px;
+        }
+    }
+    .links {
+        grid-area: links;
+
+        p {
+            line-height: 22px;
+        }        
+    }
+
+    .policy {
+        grid-area: policy;
+        align-self: end;
+        justify-self: right;
+        display: inline;
+        margin-bottom: 8px; 
+        a {
+            font-size: 14px;
+            color: $color-paragraph;
+            &:hover {
+                color: $color-header;
+            }
+        }
+    }
+}

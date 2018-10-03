@@ -34,7 +34,7 @@
         </p>
         <div class="anchors">
             <p (click)="scrollToID('how')">↳ How It Works</p>
-            <p (click)="scrollToID('visualizaion')">↳ Visualization</p>
+            <p (click)="scrollToID('visualization')">↳ Visualization</p>
             <p (click)="scrollToID('analysis')">↳ Analysis</p>
             <p (click)="scrollToID('collective')">↳ Collective Fact Checking</p>
             <p (click)="scrollToID('newsletter')">↳ Stay Up To Date</p>
@@ -44,8 +44,8 @@
         <span *ngFor="let line of errorMsg">{{line}}</span>
         <img src="/assets/images/sad_cloud800.png" alt="">
     </p>
-    <div class="section-wrapper white-bg">
-        <div class="section content-box white-bg" id="how">
+    <div class="section-wrapper white-bg" id="how">
+        <div class="section content-box white-bg">
             <h2>How it works</h2>
             <div class="box-content">
                 <p>TraceMap is an open source web tool that allows you to visualize the spread of a Tweet, analyze its trustworthiness and to engage with others in fighting misinformation.</p>
@@ -70,8 +70,8 @@
             </div>
         </div>
     </div>
-    <div class="section-wrapper gray-bg">
-        <div class="section text-box" id="visualizaion">
+    <div class="section-wrapper gray-bg" id="visualization">
+        <div class="section text-box">
             <h2>Visualization</h2>
             <img class="text-bg visualization" srcset="
             ../../assets/images/start/start_visualization_1200.png 4x,
@@ -83,8 +83,8 @@
             TraceMap exposes implicit and hidden diffusion mechanisms. Interactive graphs - tracemaps - will allow you to track the spreading of tweets. For example, you will be able to spot the users who are more influential and more densely connected.</p>
         </div>
     </div>
-    <div class="section-wrapper white-bg">
-        <div class="section text-box" id="analysis">
+    <div class="section-wrapper white-bg" id="analysis">
+        <div class="section text-box">
             <h2>Analysis</h2>
             <img class="text-bg analysis" srcset="
             ../../assets/images/start/start_analysis_1200.png 4x,
@@ -96,8 +96,8 @@
             After generating a tweet’s tracemap, you can obtain informative statistics and analyze the most influential profiles who contribute to the diffusion of a tweet. With more information at hand, you will be able to form a more solid opinion about the trustworthiness of news you are reading.</p>
         </div>
     </div>
-    <div class="section-wrapper gray-bg">
-        <div class="section text-box" id="collective">
+    <div class="section-wrapper gray-bg" id="collective">
+        <div class="section text-box">
             <h2>Collective Fact Checking</h2>
             <img class="text-bg collective" srcset="
             ../../assets/images/start/start_collective_1200.png 4x,
@@ -109,8 +109,8 @@
                 In order to create a platform on which people can trust each other, we intend to provide a cross-checking mechanism, that is, a system of fact-checking badges for users that correctly classify content (e.g. satire, sarcasm, fake, wrong context, etc). This way, we want to make sure that the tags shown are all valid and that our platform is protected against bots and trolls.</p>
         </div>
     </div>
-    <div class="section-wrapper white-bg">
-        <div class="section content-box" id="newsletter">
+    <div class="section-wrapper white-bg" id="newsletter">
+        <div class="section content-box">
             <h2>Stay up to date</h2>
             <div class="box-content newsletter-box">
                 <p>TraceMap is still in closed beta, but we are constantly pushing things forward. Be one of the first to know about new features and releases of TraceMap.</p>

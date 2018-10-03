@@ -1,21 +1,12 @@
+<app-login [color]="color"></app-login>
 <div 
 class="menu-button" 
 (click)="openMenu()"
 [ngClass]="color">
     <img *ngIf="color == 'white'"
-    srcset="
-    ../../assets/images/menu-purple_128.png 4x,
-    ../../assets/images/menu-purple_64.png 2x,
-    ../../assets/images/menu-purple_32.png 1x
-    " 
-    src="../../assets/images/menu-purple_32.png">
+    src="../../assets/images/menu-purple.svg">
     <img *ngIf="color != 'white'"
-    srcset="
-    ../../assets/images/menu-white_128.png 4x,
-    ../../assets/images/menu-white_64.png 2x,
-    ../../assets/images/menu-white_32.png 1x
-    " 
-    src="../../assets/images/menu-white_32.png">
+    src="../../assets/images/menu-white.svg">
 </div>
 <div class="overlay" (click)="closeMenu()" [ngClass]="{'open': open}">
 </div>
