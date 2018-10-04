@@ -3,5 +3,5 @@
     <info-button 
     [arrowPos]="'left'"
     [text]="'These are the words which appear often in the last 200 tweets & retweets of this user.'"></info-button>
-    <canvas class="wordcloud-canvas"></canvas>
+    <canvas class="wordcloud-canvas" [ngClass]="{'hovered': hovered}" (click)="unhighlight()"></canvas>
 </div>

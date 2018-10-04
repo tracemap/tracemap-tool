@@ -32,8 +32,8 @@ export class MenuComponent {
             path: '/learn-more'
         },
         {
-            label: 'Imprint',
-            path: '/imprint'
+            label: 'Donate A Token',
+            path: '/donate-token'
         }
     ];
 

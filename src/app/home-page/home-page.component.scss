@@ -7,7 +7,7 @@
             background-color: transparent;
             display: grid;
             grid-template-columns: 500px 1fr;
-            grid-template-rows: 200px 120px 35px 1fr;
+            grid-template-rows: 200px 120px 60px 1fr;
             grid-template-areas:
                 "slogan slogan"
                 "searchbar searchbar"
@@ -20,7 +20,7 @@
                 left: 0px;
                 width: 100vw;
                 height: 100vh;
-                min-height: 600px;
+                min-height: 450px;
                 min-width: 320px;
                 z-index: -2;
                 background-color: $color-purple-dark;
@@ -28,28 +28,28 @@
             .bg-outer {
                 position: absolute;
                 z-index: -1;
-                width: 70vh;
-                height: 70vh;
+                width: 60vh;
+                height: 60vh;
                 border-radius: 50%;
                 left: 50%;
-                margin-left: -35vh;
+                margin-left: -27.5vh;
                 top: 50%;
-                margin-top: -35vh;
+                margin-top: -27.5vh;
                 background-color: $color-purple-light;
 
                 .bg-inner {
-                    width: 30vh;
-                    height: 30vh;
+                    width: 26vh;
+                    height: 26vh;
                     border-radius: 50%;
-                    margin-left: 20vh;
-                    margin-top: 20vh;
+                    margin-left: 17vh;
+                    margin-top: 17vh;
                     background-color: $color-purple-dark;
                 }
             }
 
             .slogan {
                 grid-area: slogan;
-                align-self: center;
+                align-self: end;
                 p {
                     color: #f5f6f7;
                     line-height: 68px;
@@ -60,6 +60,7 @@
 
             .searchbar {
                 grid-area: searchbar;
+                align-self: end;
                 max-width: 400px;
                 height: 60px;
                 margin-top: 30px;
@@ -104,9 +105,9 @@
 
             .search-hint, .no-search-hint {
                 grid-area: search_hint;
-                align-self: center;
+                align-self: end;
                 color: #f5f6f7;
-                line-height: 30px;
+                line-height: 40px;
                 font-weight: 300;
                 font-size: 30px;
 
@@ -142,18 +143,16 @@
     .text-box {
         grid-template-areas: 
             "header paragraph"
-            "header button";
+            "image paragraph";
 
         h2 {
             position: relative;
             grid-area: header;
-            z-index: 2
         }
 
         p {
             position: relative;
             grid-area: paragraph;
-            z-index: 2;
         }
 
         button {
@@ -163,17 +162,10 @@
             height: 46px;
         }
         .text-bg {
-            position: absolute;
-            opacity: 0.7;
-            z-index: 1;
-            &.visualization {
-                opacity: 0.5;
-                width: 370px;
-            }
-            &.analysis {
-                width: 300px;
-                margin-top: 150px;
-            }
+            justify-self: start;
+            grid-area: image;
+            width: 300px;
+            height: 300px;
         }
     }
 
@@ -264,6 +256,13 @@
                         margin-bottom: 15px;
                         vertical-align: top;
                     }
+                    p {
+                        font-size: 11px;
+                        font-weight: 400;
+                        margin: 0px;
+                        padding: 0px;
+                        margin-top: -15px;
+                    }
                 }
             }
 
@@ -295,6 +294,15 @@
 @media only screen and (max-width: 1200px) {
     .content {
 
+        .text-box {
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: auto auto;
+
+            .text-bg {
+                width: 250px;
+                height: 250px;
+            }
+        }
         .content-box {
             .box-content {
                 .img-box {
@@ -311,24 +319,6 @@
                 p {
                     width: 100%;
                 }     
-                // .newsletter-area .newsletter-form {
-                //     grid-template-columns:  142px;
-                //     grid-template-rows: 46px;
-                //     grid-template-areas: 
-                //         "input button";
-
-                //     input {
-                //         grid-area: input;
-                //         width: 100%;
-                //         max-width: 350px;
-                //     }
-
-                //     .purple-button {
-                //         grid-area: button;
-                //         margin-left: 0px;
-                //         margin-top: 10px;
-                //     }
-                // }
             }
 
        }
@@ -342,7 +332,7 @@
                 padding-bottom: 20px;
                 min-height: 100vh;
                 grid-template-columns: 1fr;
-                grid-template-rows: 100px 60px auto 1fr;
+                grid-template-rows: 100px 30px auto 1fr;
                 grid-template-areas:
                     "slogan"
                     "."
@@ -368,7 +358,8 @@
                     display: block;
                     margin-right: 20px;
                     grid-area: no_search_hint;
-                    font-size: 26px;
+                    font-size: 20px;
+                    font-weight: 400;
                     line-height: 32px;
                     color: #fff;
                 }
@@ -377,18 +368,22 @@
                     grid-area: anchors;
                     font-size: 15px;
                     line-height: 28px;
-                    align-self: center;
+                    align-self: start;
+                    justify-self: top;
+                    margin-right: 20px;
+                    margin-top: 30px;
                 }
            }
 
         }
 
         .text-box {
-            grid-template-rows: 70px auto auto;
+            grid-template-rows: 40px auto auto;
+            grid-template-columns: auto;
             grid-template-areas:
                 "header"
-                "paragraph"
-                "button";
+                "image"
+                "paragraph";
 
             h2 {
                 grid-area: header;
@@ -396,8 +391,10 @@
             p {
                 grid-area: paragraph;
             }
-            button {
-                grid-area: button;
+            .text-bg {
+                grid-area: image;
+                width: 280px;
+                height: 280px;
             }
         }
 
@@ -418,10 +415,10 @@
                 } 
             }
         }
-        .newsletter-box {
-            input {
-                width: 280px;
-            }
+    }
+    .newsletter-form {
+        input {
+            width: 280px;
         }
     }
 }

@@ -16,6 +16,7 @@ export class TimelineComponent implements OnChanges {
     @Input('userId')
     userId: string;
     tweetId: string;
+    filterWord: string;
 
     settings = {
         sort_by: 'time',
@@ -34,12 +35,22 @@ export class TimelineComponent implements OnChanges {
         this.communicationService.tweetId.subscribe( tweetId => {
             this.tweetId = tweetId;
         });
+        this.wordcloudService.selectedWord.subscribe( word => {
+            if (this.filterWord && !word) {
+                this.filterWord = undefined;
+                this.resort();
+            } else if (word && this.filterWord !== word) {
+                this.filterWord = word;
+                this.resort();
+            }
+        });
     }
 
     ngOnChanges() {
         if ( this.userId) {
             this.reset();
             this.apiService.getTimeline(this.userId).subscribe( (timeline: object[]) => {
+                // unify tweet_ids for twitter widget script
                 timeline.forEach( tweet => {
                     if (tweet['retweeted_status']) {
                         tweet['valid_id_str'] = tweet['retweeted_status']['id_str'];
@@ -51,8 +62,17 @@ export class TimelineComponent implements OnChanges {
                         tweet['disabled'] = true;
                     }
                 });
+                // filter retweets of own tweets
+                timeline = timeline.filter( tweet => {
+                    if ( !tweet['retweeted_status'] ||
+                    tweet['user']['id_str'] !== tweet['retweeted_status']['user']['id_str']) {
+                        return tweet;
+                    }
+                });
                 this.timeline = timeline;
-                this.wordcloudService.timelineTexts.next( this.timeline.map((d) => d['text']));
+                const timelineTexts = this.timeline.map( (d) => d['text']);
+                console.log('is this called multiple times?');
+                this.wordcloudService.timelineTexts.next( timelineTexts);
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
                         let changed = false;
@@ -90,6 +110,12 @@ export class TimelineComponent implements OnChanges {
         }
         if ( !this.settings.retweets) {
             this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
+        }
+        if (this.filterWord) {
+            this.timelineSorted = this.timelineSorted.filter( (tweet) => {
+                const text = tweet['text'];
+                return text.indexOf(this.filterWord) >= 0;
+            });
         }
         this.addShowedTweets();
     }

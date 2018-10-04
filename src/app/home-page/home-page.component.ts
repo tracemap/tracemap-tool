@@ -16,13 +16,14 @@ export class HomePageComponent {
 
     placeholder = 'Your Url';
     disabled = false;
+    loggedIn = false;
     subscriptionResponse = undefined;
     wrongEmail = false;
 
     constructor(
         private apiService: ApiService,
         private router: Router
-    ){}
+    ) {}
 
     scrollToID(id_name: string) {
         const id = '#' + id_name;
