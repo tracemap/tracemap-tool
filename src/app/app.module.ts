@@ -17,8 +17,10 @@ import { DonateTokenComponent } from './home-page/donate-token.component';
 import { FooterComponent } from './home-page/footer.component';
 import { SitemapComponent } from './home-page/sitemap.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { PrivacyComponent } from './home-page/privacy.component';
 
 import { ApiService } from './services/api.service';
+import { GuardService } from './services/guard.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { ApiService } from './services/api.service';
     DonateTokenComponent,
     SitemapComponent,
     LearnMoreComponent,
-    FooterComponent
+    FooterComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { ApiService } from './services/api.service';
   ],
   providers: [
     ApiService,
+    GuardService,
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]

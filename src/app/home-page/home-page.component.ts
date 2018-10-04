@@ -16,6 +16,7 @@ export class HomePageComponent {
 
     placeholder = 'Your Url';
     disabled = false;
+    loggedIn = false;
     subscriptionResponse = undefined;
     wrongEmail = false;
 

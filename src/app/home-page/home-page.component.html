@@ -9,7 +9,9 @@
         <div class="slogan">
             <p>Fact checking how it's supposed to be.</p>
         </div>
-        <div class="searchbar" [ngClass]="classes">
+        <div class="searchbar" 
+        [ngClass]="classes"
+        *ngIf="loggedIn">
             <input id="search" [ngClass]="classes" type="text" 
               #searchField
               (keydown.enter)="processUrl( searchField)"
@@ -25,9 +27,15 @@
                 "
                 src="../../assets/images/loupe_64.png">
             </div>
-        </div>        
-        <p class="search-hint">
+        </div>
+        <p class="search-hint"
+        *ngIf="loggedIn">
             Enter a tweets Url from <a href="https://twitter.com" target="_blank">Twitter</a>.
+        </p>
+        <p class="search-hint"
+        *ngIf="!loggedIn">
+            The public beta will be online soon.<br>
+            Subscribe to the <a (click)="scrollToID('newsletter')">newsletter</a> and stay up to date.
         </p>
         <p class="no-search-hint">
             To use the tool, please switch to a bigger screen.
