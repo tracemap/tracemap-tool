@@ -20,7 +20,7 @@
                 left: 0px;
                 width: 100vw;
                 height: 100vh;
-                min-height: 600px;
+                min-height: 450px;
                 min-width: 320px;
                 z-index: -2;
                 background-color: $color-purple-dark;
@@ -325,7 +325,7 @@
                 padding-bottom: 20px;
                 min-height: 100vh;
                 grid-template-columns: 1fr;
-                grid-template-rows: 100px 60px auto 1fr;
+                grid-template-rows: 100px 30px auto 1fr;
                 grid-template-areas:
                     "slogan"
                     "."
@@ -351,7 +351,8 @@
                     display: block;
                     margin-right: 20px;
                     grid-area: no_search_hint;
-                    font-size: 26px;
+                    font-size: 20px;
+                    font-weight: 400;
                     line-height: 32px;
                     color: #fff;
                 }
@@ -360,7 +361,10 @@
                     grid-area: anchors;
                     font-size: 15px;
                     line-height: 28px;
-                    align-self: center;
+                    align-self: start;
+                    justify-self: top;
+                    margin-right: 20px;
+                    margin-top: 30px;
                 }
            }
 
@@ -382,8 +386,8 @@
             }
             .text-bg {
                 grid-area: image;
-                width: 300px;
-                height: 300px;
+                width: 280px;
+                height: 280px;
             }
         }
 
@@ -404,10 +408,10 @@
                 } 
             }
         }
-        .newsletter-box {
-            input {
-                width: 280px;
-            }
+    }
+    .newsletter-form {
+        input {
+            width: 280px;
         }
     }
 }

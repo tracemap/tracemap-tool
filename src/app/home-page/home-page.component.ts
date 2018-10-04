@@ -22,7 +22,7 @@ export class HomePageComponent {
     constructor(
         private apiService: ApiService,
         private router: Router
-    ){}
+    ) {}
 
     scrollToID(id_name: string) {
         const id = '#' + id_name;

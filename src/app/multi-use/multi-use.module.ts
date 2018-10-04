@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu.component';
 import { LoginComponent } from './login.component';
 
-
 @NgModule({
     imports: [ CommonModule, RouterModule ],
     declarations: [

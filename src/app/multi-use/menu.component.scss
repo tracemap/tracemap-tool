@@ -64,7 +64,7 @@
     box-shadow: 0 0 5px 0 rgba(15,19,26,0.1) 0 0 11px 0 rgba(15,19,26,0.1), 0 0 2px 0 rgba(15,19,26,0.1);
     transition: width 0.5s ease-in-out;
     &.open {
-        width: 350px;
+        width: 320px;
     }
 
     display: grid;
@@ -135,7 +135,10 @@
     }
 }
 
-@media only screen and (max-width: 749px) {
+@media only screen and (max-width: 930px) {
+    .app-login {
+        display: none;
+    }
     .menu-button {
         top: 16px;
         right: 16px;
@@ -148,6 +151,12 @@
     }
 
     .menu {
+        .links {
+            a  {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+        }
         .close-button {
             margin-top: 16px;
             margin-right: 16px;
