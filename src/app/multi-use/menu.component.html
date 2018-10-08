@@ -1,4 +1,11 @@
-<!-- <app-login class="app-login" [color]="color"></app-login> -->
+<app-login 
+class="app-login" 
+[color]="color"
+*ngIf="!loggedIn"></app-login>
+<app-user-menu
+class="app-user-menu"
+*ngIf="loggedIn"
+[color]="color"></app-user-menu>
 <div 
 class="menu-button" 
 (click)="openMenu()"

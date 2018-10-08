@@ -1,0 +1,65 @@
+@import "../../styles.scss";
+.user-menu-button {
+    position: fixed;
+    z-index: 3;
+    top: 30px;
+    right: 108px;
+    border: 2px solid $color-purple-dark;
+    border-radius: 50%;
+    background-color: #fff;
+    width: 48px;
+    height: 48px;
+
+    img {
+        width: 32px;
+        height: 32px;
+        margin-top: 5px;
+        margin-left: 6px;
+    }
+    &.purple {
+        background-color: $color-purple-dark;
+    }
+    &.black {
+        background-color: #242933;
+        border: 2px solid #242933;
+    }
+}
+.overlay {
+    position: fixed;
+    z-index: 10;
+    height: 100vh;
+    width: 0px;
+    top: 0px;
+    left: 0px;
+    background-color: $color-gray-bg-light;
+    opacity: 0;
+    &.open {
+        width: 100vw;
+    }
+}
+.tooltip {
+    top: 20px;
+    right: 180px;
+    height: 150px;
+    &.open {
+        width: 200px;
+    }
+
+    .shadow {
+        right: 160px;
+        top: 35px;
+    }
+    .arrow {
+        right: 162px;
+        top: 36px;
+        border-left: 18px solid $color-black-bg;
+    }
+    .body {
+        padding: 20px;
+        text-align: center;
+        .logout {
+            width: 70px;
+            height: 32px;
+        }
+    }
+}

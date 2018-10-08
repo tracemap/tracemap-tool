@@ -121,4 +121,24 @@ export class ApiService {
             });
     }
 
+    authCheckPassword( email: string, password: string): Observable<string> {
+        console.log('#apiService#: authCheckPassword()');
+        return this.http
+            .get( this.url + '/auth/check_password/' + email + '/' + password)
+            .map( response => response.json() );
+    }
+
+    authCheckSession( email: string, sessionToken: string): Observable<string> {
+        console.log('#apiService#: authCheckSession()');
+        return this.http
+            .get( this.url + '/auth/check_session/' + email + '/' + sessionToken)
+            .map( response => response.json() );
+    }
+
+    authGetUserData( email: string, sessionToken: string): Observable<object> {
+        console.log('#apiService#: authGetUserData()');
+        return this.http
+            .get( this.url + '/auth/get_user_data/' + email + '/' + sessionToken)
+            .map( response => response.json());
+    }
 }

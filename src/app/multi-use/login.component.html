@@ -15,7 +15,14 @@ class="button purple-button login-button"
             #password
             (keydown.enter)="login(emailAdress.value, password.value)"
             placeholder="Password">
-            <button class="button purple-button login">Login</button>
+            <button class="button purple-button login"
+            (click)="login(emailAdress.value, password.value)">
+                Login
+            </button>
+            <p class="error"
+            *ngIf="error">
+                {{error}}
+            </p>
         </div>
         <div class="register-form"
         *ngIf="register">

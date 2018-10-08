@@ -1,0 +1,41 @@
+<div 
+class="user-menu-button" 
+(click)="toggleMenu()"
+[ngClass]="color">
+    <img *ngIf="color == 'white'"
+    srcset="
+    ../../assets/images/user-menu-purple_128.png 4x,
+    ../../assets/images/user-menu-purple_64.png 2x,
+    ../../assets/images/user-menu-purple_32.png 1x
+    "
+    src="../../assets/images/user-menu-purple_32.png">
+    <img *ngIf="color == 'purple' || color == 'black'"
+    srcset="
+    ../../assets/images/user-menu-white_128.png 4x,
+    ../../assets/images/user-menu-white_64.png 2x,
+    ../../assets/images/user-menu-white_32.png 1x
+    "
+    src="../../assets/images/user-menu-white_32.png">
+</div>
+<div class="overlay" (click)="toggleMenu()" [ngClass]="{'open': menuOpen}"></div>
+<div class="user-menu tooltip" [ngClass]="{'open': menuOpen}">
+    <div class="shadow"></div>
+    <div class="arrow"></div>
+    <div class="head">
+        <h2>Hi {{username}}</h2>
+        <div class="close-button" (click)="toggleMenu()">
+            <img srcset="
+            ../../assets/images/close-white_128.png 4x,
+            ../../assets/images/close-white_64.png 2x,
+            ../../assets/images/close-white_32.png 1x
+            "
+            src="../../assets/images/close-white_32.png">
+        </div>
+    </div>
+    <div class="body">
+        <button class="button purple-button logout"
+        (click)="logout()">
+            Logout
+        </button>
+    </div>
+</div>
