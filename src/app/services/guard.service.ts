@@ -51,7 +51,7 @@ export class GuardService implements CanActivate {
     canActivate(): Promise<boolean> {
         if (!this.loggedIn && !localStorage.getItem('session_token')) {
             alert('You are not allowed to view this page. You are redirected to the Home Page.');
-            this.router.navigate(['home']);
+            this.router.navigate(['/home']);
         }
         return this.getLastSession();
     }
