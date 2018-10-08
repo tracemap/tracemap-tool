@@ -14,7 +14,7 @@ export class LoginComponent {
     @Input('color')
     color: string;
     menuOpen = false;
-    register = false;
+    registerOpen = false;
     error: string;
     loggedIn: boolean;
     // user data
@@ -37,7 +37,7 @@ export class LoginComponent {
     }
 
     toggleRegister(): void {
-        this.register ? this.register = false : this.register = true;
+        this.registerOpen ? this.registerOpen = false : this.registerOpen = true;
     }
 
     login(email: string, password: string): void {
@@ -60,6 +60,20 @@ export class LoginComponent {
             });
         } else {
             this.error = 'Please enter a valid email and password.';
+        }
+    }
+
+    register(username: string, email: string): void {
+        if (username && email) {
+            this.apiService.authAddUser(username, email).subscribe( response => {
+                if (response['error']) {
+                    this.error = response['error'];
+                } else {
+                    this.error = 'We sent a password to your mail account.';
+                }
+            });
+        } else {
+            this.error = 'Please enter a username and a valid email.';
         }
     }
 }

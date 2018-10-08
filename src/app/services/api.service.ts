@@ -121,6 +121,13 @@ export class ApiService {
             });
     }
 
+    authAddUser( username: string, email: string): Observable<object> {
+        console.log('#apiService#: authAddUser');
+        return this.http
+            .get( this.url + '/auth/add_user/' + username + '/' + email)
+            .map( response => response.json());
+    }
+
     authCheckPassword( email: string, password: string): Observable<string> {
         console.log('#apiService#: authCheckPassword()');
         return this.http

@@ -6,7 +6,7 @@ class="button purple-button login-button"
 <div class="login-menu" [ngClass]="{'open': menuOpen}">
     <div class="form">
         <div class="login-form"
-        *ngIf="!register">
+        *ngIf="!registerOpen">
             <input type="text"
             #emailAdress
             (keydown.enter)="login(emailAdress.value, password.value)"
@@ -25,24 +25,29 @@ class="button purple-button login-button"
             </p>
         </div>
         <div class="register-form"
-        *ngIf="register">
+        *ngIf="registerOpen">
             <input type="text"
             #emailAdress
-            (keydown.enter)="register(emailAdress.value, username.value)"
+            (keydown.enter)="register(username.value, emailAdress.value)"
             placeholder="Your E-Mail">
             <input type="text"
             #username
-            (keydown.enter)="register(emailAdress.value, username.value)"
+            (keydown.enter)="register(username.value, emailAdress.value)"
             placeholder="Username">
-            <button class="button purple-button register">Register</button>
-            <p>By creating an account, you accept our <a href="./privacy">Terms</a>.</p>
+            <p class="term-hint">By creating an account, you accept our <a href="./privacy">Terms</a>.</p>
+            <button class="button purple-button register"
+            (click)="register(username.value, emailAdress.value)">Register</button>
+            <p class="error"
+            *ngIf="error">
+                {{error}}
+            </p>
         </div>
     </div>
     <div class="register">
-        <p *ngIf="!register">Or create an Account if you received an invitation by us.</p>
-        <p *ngIf="register">You can also Login, if you already have an account.</p>
-        <button *ngIf="!register" class="button light-button register" (click)="toggleRegister()">Register</button>
-        <button *ngIf="register" class="button light-button login" (click)="toggleRegister()">Login</button>
+        <p *ngIf="!registerOpen">Or create an Account if you received an invitation by us.</p>
+        <p *ngIf="registerOpen">You can also Login, if you already have an account.</p>
+        <button *ngIf="!registerOpen" class="button light-button register" (click)="toggleRegister()">Register</button>
+        <button *ngIf="registerOpen" class="button light-button login" (click)="toggleRegister()">Login</button>
     </div>
     <div class="links">
         <p>You received no Invitation?</p>

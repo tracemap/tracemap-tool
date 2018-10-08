@@ -35,7 +35,7 @@
         top: 28px;
         right: 106px;
         width: 254px;
-        height: 470px;
+        height: auto;
         transition: height 0.2s linear;
         padding-top: 42px;
     }
@@ -78,11 +78,15 @@
                 opacity: 1;
             }
         }
-        p {
+        .term-hint {
             font-size: 10.5px;
             font-weight: 400;
-            margin-top: -25px;
+        }
+        .error {
+            margin-top: -23px;
             margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 500;
         }
     }
     .hint {
