@@ -1,24 +1,49 @@
 <button 
 (click)="openMenu()"
 type="button" 
-class="button purple-button login-button"
+class="button purple-button login-menu-button"
 [ngClass]="{'black': color === black, 'white': color === white, 'purple': color === purple, 'open': menuOpen}">Closed Beta Login</button>
 <div class="login-menu" [ngClass]="{'open': menuOpen}">
     <div class="form">
         <div class="login-form"
         *ngIf="!registerOpen">
-            <input type="text"
-            #emailAdress
-            (keydown.enter)="login(emailAdress.value, password.value)"
-            placeholder="enter your e-mail">
-            <input type="password"
-            #password
-            (keydown.enter)="login(emailAdress.value, password.value)"
-            placeholder="enter your password">
-            <button class="button purple-button login"
-            (click)="login(emailAdress.value, password.value)">
-                Login
-            </button>
+            <div class="login"
+            *ngIf="!forgotOpen">
+                <input type="text"
+                #emailAdress
+                placeholder="enter your e-mail">
+                <input type="password"
+                #password
+                (keydown.enter)="login(emailAdress.value, password.value)"
+                placeholder="enter your password">
+                <button class="button purple-button login"
+                *ngIf="!forgotOpen"
+                (click)="login(emailAdress.value, password.value)">
+                    Login
+                </button>
+                <p class="forgot-toggle"
+                (click)="toggleForgot()">
+                    Forgot your password?
+                </p>
+            </div>
+            <div class="forgot"
+            *ngIf="forgotOpen">
+                <input type="text"
+                #emailAdress
+                (keydown.enter)="sendResetMail(emailAdress.value)"
+                placeholder="enter your e-mail">
+                <p class="hint forgot-hint">
+                    We will send you an email with further instructions on how to reset your password.
+                </p>
+                <button class="button purple-button forgot"
+                (click)="sendResetMail(emailAdress.value)">
+                    Reset Password
+                </button>
+                <p class="forgot-toggle"
+                (click)="toggleForgot()">
+                    Back to login
+                </p>
+            </div>
             <p class="error"
             *ngIf="error">
                 {{error}}
@@ -34,7 +59,7 @@ class="button purple-button login-button"
             #username
             (keydown.enter)="register(username.value, emailAdress.value)"
             placeholder="enter a username">
-            <p class="term-hint">By creating an account, you accept our <a href="./privacy">Terms</a>.</p>
+            <p class="hint">By creating an account, you accept our <a href="./privacy">Terms</a>.</p>
             <button class="button purple-button register"
             (click)="register(username.value, emailAdress.value)">Register</button>
             <p class="error"

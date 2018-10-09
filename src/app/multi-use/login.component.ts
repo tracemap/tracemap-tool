@@ -15,6 +15,7 @@ export class LoginComponent {
     color: string;
     menuOpen = false;
     registerOpen = false;
+    forgotOpen = false;
     error: string;
     loggedIn: boolean;
     // user data
@@ -33,11 +34,25 @@ export class LoginComponent {
     }
 
     openMenu(): void {
-        this.menuOpen ? this.menuOpen = false : this.menuOpen = true;
+        this.error = '';
+        if (this.menuOpen) {
+            this.menuOpen = false;
+            this.registerOpen = false;
+            this.forgotOpen = false;
+        } else {
+            this.menuOpen = true;
+        }
     }
 
     toggleRegister(): void {
+        this.error = '';
         this.registerOpen ? this.registerOpen = false : this.registerOpen = true;
+        this.forgotOpen = false;
+    }
+
+    toggleForgot(): void {
+        this.error = '';
+        this.forgotOpen ? this.forgotOpen = false : this.forgotOpen = true;
     }
 
     login(email: string, password: string): void {
@@ -71,10 +86,25 @@ export class LoginComponent {
                     this.error = response['error'];
                 } else {
                     this.error = 'We sent a password to your mail account.';
+                    this.registerOpen = false;
                 }
             });
         } else {
             this.error = 'Please enter a username and a valid email.';
+        }
+    }
+
+    sendResetMail(email: string) {
+        if (email) {
+            this.apiService.authRequestReset(email).subscribe( response => {
+                if (response['error']) {
+                    this.error = response['error'];
+                } else {
+                    this.error = 'The e-mail was successfully sent.';
+                }
+            });
+        } else {
+            this.error = 'Please enter a valid email.';
         }
     }
 }

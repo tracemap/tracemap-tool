@@ -17,7 +17,7 @@ export class UserMenuComponent {
     menuOpen = false;
     username = '';
     email = '';
-    passwordChangeOpen = false;
+    formOpen = '';
     errorMsg = '';
 
     constructor(
@@ -38,16 +38,17 @@ export class UserMenuComponent {
     }
 
     togglePasswordChange(): void {
-        this.passwordChangeOpen ? this.passwordChangeOpen = false : this.passwordChangeOpen = true;
+        this.formOpen === 'passwordChange' ? this.formOpen = '' : this.formOpen = 'passwordChange';
+    }
+
+    toggleDelete(): void {
+        this.formOpen === 'deleteAccount' ? this.formOpen = '' : this.formOpen = 'deleteAccount';
     }
 
     toggleMenu(): void {
-        if (this.menuOpen) {
-            this.menuOpen = false;
-            this.passwordChangeOpen = false;
-        } else {
-            this.menuOpen = true;
-        }
+        this.formOpen = '';
+        this.errorMsg = '';
+        this.menuOpen ? this.menuOpen = false : this.menuOpen = true;
     }
 
     logout(): void {
@@ -62,7 +63,7 @@ export class UserMenuComponent {
                         this.errorMsg = response['error'];
                     } else {
                         this.errorMsg = 'your password has been changed.';
-                        this.passwordChangeOpen = false;
+                        this.formOpen = '';
                         window.setTimeout( () => {
                             this.guardService.logout();
                         }, 2000);
@@ -75,6 +76,23 @@ export class UserMenuComponent {
 
         } else {
             this.errorMsg = 'please fill out all input fields.';
+        }
+    }
+
+    deleteAccount( password: string) {
+        if (password) {
+            this.apiService.authDeleteUser(this.email, password).subscribe( response => {
+                if (response['error']) {
+                    this.errorMsg = response['error'];
+                } else {
+                    this.errorMsg = 'Your account has been deleted';
+                    window.setTimeout(() => {
+                        this.guardService.logout();
+                    }, 2000);
+                }
+            });
+        } else {
+            this.errorMsg = 'Please enter your password.';
         }
     }
 

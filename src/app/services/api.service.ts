@@ -155,4 +155,18 @@ export class ApiService {
             .get( this.url + '/auth/change_password/' + email + '/' + oldPassword + '/' + newPassword)
             .map( response => response.json());
     }
+
+    authRequestReset( email: string): Observable<object> {
+        console.log('#apiService#: authRequestReset()');
+        return this.http
+            .get( this.url + '/auth/request_reset_password/' + email)
+            .map( response => response.json());
+    }
+
+    authDeleteUser( email: string, password: string): Observable<object> {
+        console.log('#apiService#: authDeleteUser()');
+        return this.http
+            .get( this.url + '/auth/delete_user/' + email + '/' + password)
+            .map( response => response.json());
+    }
 }

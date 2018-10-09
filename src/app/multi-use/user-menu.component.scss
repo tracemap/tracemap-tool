@@ -66,6 +66,13 @@
         .password-change-button {
             width: 165px;
             height: 32px;
+            line-height: 30px;
+            margin-bottom: 20px;
+        }
+        .delete-button {
+            width: 150px;
+            height: 32px;
+            line-height: 30px;
         }
         .error {
             margin-top: 5px;
@@ -73,7 +80,7 @@
             font-weight: 500;
             color: red;
         }
-        .password-change-form {
+        .form {
             input {
                 width: 226px;
                 height: 30px;
@@ -85,6 +92,11 @@
                     color: #A8ABB3;
                     opacity: 1;
                 }
+            }
+            .hint {
+                font-size: 13px;
+                font-weight: 400;
+                margin-bottom: 5px;
             }
         }
     }
