@@ -148,4 +148,11 @@ export class ApiService {
             .get( this.url + '/auth/get_user_data/' + email + '/' + sessionToken)
             .map( response => response.json());
     }
+
+    authChangePassword( email: string, oldPassword: string, newPassword: string): Observable<object> {
+        console.log('#apiService#: authChangePassword()');
+        return this.http
+            .get( this.url + '/auth/change_password/' + email + '/' + oldPassword + '/' + newPassword)
+            .map( response => response.json());
+    }
 }

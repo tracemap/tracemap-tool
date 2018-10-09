@@ -37,5 +37,30 @@ class="user-menu-button"
         (click)="logout()">
             Logout
         </button>
+        <div class="password-change-form"
+        *ngIf="passwordChangeOpen">
+            <input type="password"
+            #oldPassword
+            placeholder="old password">
+            <input type="password"
+            #newPassword1
+            placeholder="new password">
+            <input type="password"
+            #newPassword2
+            (keydown.enter)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)"
+            placeholder="confirm new password">
+            <button class="button purple-button password-change-button"
+            (click)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)">
+                Change Password
+            </button>
+        </div>
+        <button class="button light-button password-change-button"
+        (click)="togglePasswordChange()"
+        *ngIf="!passwordChangeOpen">
+            Change Password
+        </button>
+        <p class="error">
+            {{errorMsg}}
+        </p>
     </div>
 </div>

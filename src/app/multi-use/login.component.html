@@ -10,11 +10,11 @@ class="button purple-button login-button"
             <input type="text"
             #emailAdress
             (keydown.enter)="login(emailAdress.value, password.value)"
-            placeholder="Your E-Mail">
+            placeholder="enter your e-mail">
             <input type="password"
             #password
             (keydown.enter)="login(emailAdress.value, password.value)"
-            placeholder="Password">
+            placeholder="enter your password">
             <button class="button purple-button login"
             (click)="login(emailAdress.value, password.value)">
                 Login
@@ -29,11 +29,11 @@ class="button purple-button login-button"
             <input type="text"
             #emailAdress
             (keydown.enter)="register(username.value, emailAdress.value)"
-            placeholder="Your E-Mail">
+            placeholder="enter your e-mail">
             <input type="text"
             #username
             (keydown.enter)="register(username.value, emailAdress.value)"
-            placeholder="Username">
+            placeholder="enter a username">
             <p class="term-hint">By creating an account, you accept our <a href="./privacy">Terms</a>.</p>
             <button class="button purple-button register"
             (click)="register(username.value, emailAdress.value)">Register</button>

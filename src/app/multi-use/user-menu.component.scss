@@ -38,11 +38,12 @@
     }
 }
 .tooltip {
+    bottom: auto;
     top: 20px;
     right: 180px;
-    height: 150px;
     &.open {
-        width: 200px;
+        width: 250px;
+        height: auto;
     }
 
     .shadow {
@@ -56,10 +57,35 @@
     }
     .body {
         padding: 20px;
-        text-align: center;
+        height: auto;
         .logout {
             width: 70px;
             height: 32px;
+            margin-bottom: 20px;
+        }
+        .password-change-button {
+            width: 165px;
+            height: 32px;
+        }
+        .error {
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: red;
+        }
+        .password-change-form {
+            input {
+                width: 226px;
+                height: 30px;
+                border: none;
+                margin-bottom: 10px;
+                font-size: 20px;
+                font-weight: 400;
+                &::placeholder {
+                    color: #A8ABB3;
+                    opacity: 1;
+                }
+            }
         }
     }
 }

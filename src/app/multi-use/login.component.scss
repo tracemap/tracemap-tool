@@ -68,10 +68,10 @@
         grid-area: form;
         input {
             width: 226px;
-            height: 36px;
+            height: 30px;
             border: none;
             margin-top: 10px;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 400;
             &::placeholder {
                 color: #A8ABB3;
@@ -87,6 +87,7 @@
             margin-bottom: 25px;
             font-size: 14px;
             font-weight: 500;
+            color: red;
         }
     }
     .hint {

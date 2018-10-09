@@ -22,6 +22,7 @@ export class GuardService implements CanActivate {
 
     logout() {
         this.loggedIn.next(false);
+        this.redirect();
         localStorage.removeItem('session_token');
         localStorage.removeItem('session_email');
     }
@@ -48,8 +49,12 @@ export class GuardService implements CanActivate {
         });
     }
 
+    redirect(): void {
+        this.router.navigate(['/home']);
+    }
+
     canActivate(): Promise<boolean> {
-        if (!this.loggedIn && !localStorage.getItem('session_token')) {
+        if (!this.loggedIn.value && !localStorage.getItem('session_token')) {
             alert('You are not allowed to view this page. You are redirected to the Home Page.');
             this.router.navigate(['/home']);
         }
