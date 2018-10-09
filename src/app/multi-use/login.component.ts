@@ -61,7 +61,6 @@ export class LoginComponent {
                 const passwordCheck = response['password_check'];
                 if (passwordCheck) {
                     const sessionToken = response['session_token'];
-                    console.log(sessionToken);
                     localStorage.setItem('session_token', sessionToken);
                     localStorage.setItem('session_email', email);
                     this.userService.credentials.next({
