@@ -121,4 +121,52 @@ export class ApiService {
             });
     }
 
+    authAddUser( username: string, email: string): Observable<object> {
+        console.log('#apiService#: authAddUser');
+        return this.http
+            .get( this.url + '/auth/add_user/' + username + '/' + email)
+            .map( response => response.json());
+    }
+
+    authCheckPassword( email: string, password: string): Observable<string> {
+        console.log('#apiService#: authCheckPassword()');
+        return this.http
+            .get( this.url + '/auth/check_password/' + email + '/' + password)
+            .map( response => response.json() );
+    }
+
+    authCheckSession( email: string, sessionToken: string): Observable<string> {
+        console.log('#apiService#: authCheckSession()');
+        return this.http
+            .get( this.url + '/auth/check_session/' + email + '/' + sessionToken)
+            .map( response => response.json() );
+    }
+
+    authGetUserData( email: string, sessionToken: string): Observable<object> {
+        console.log('#apiService#: authGetUserData()');
+        return this.http
+            .get( this.url + '/auth/get_user_data/' + email + '/' + sessionToken)
+            .map( response => response.json());
+    }
+
+    authChangePassword( email: string, oldPassword: string, newPassword: string): Observable<object> {
+        console.log('#apiService#: authChangePassword()');
+        return this.http
+            .get( this.url + '/auth/change_password/' + email + '/' + oldPassword + '/' + newPassword)
+            .map( response => response.json());
+    }
+
+    authRequestReset( email: string): Observable<object> {
+        console.log('#apiService#: authRequestReset()');
+        return this.http
+            .get( this.url + '/auth/request_reset_password/' + email)
+            .map( response => response.json());
+    }
+
+    authDeleteUser( email: string, password: string): Observable<object> {
+        console.log('#apiService#: authDeleteUser()');
+        return this.http
+            .get( this.url + '/auth/delete_user/' + email + '/' + password)
+            .map( response => response.json());
+    }
 }

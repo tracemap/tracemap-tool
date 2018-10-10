@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router, RouterLinkActive } from '@angular/router';
+import { GuardService } from '../services/guard.service';
 
 @Component({
     selector: 'menu',
@@ -13,6 +14,7 @@ export class MenuComponent {
     color: string;
 
     open = false;
+    loggedIn = false;
 
     navItems = [
         {
@@ -39,7 +41,12 @@ export class MenuComponent {
 
     constructor(
         private router: Router,
-    ) {}
+        private guardService: GuardService
+    ) {
+        this.guardService.loggedIn.subscribe( loggedIn => {
+            this.loggedIn = loggedIn;
+        });
+    }
 
     closeMenu(): void {
         this.open = false;
