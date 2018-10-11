@@ -11,6 +11,7 @@ class="button purple-button login-menu-button"
             *ngIf="!forgotOpen">
                 <input type="text"
                 #emailAdress
+                (keydown.enter)="login(emailAdress.value, password.value)"
                 placeholder="enter your e-mail">
                 <input type="password"
                 #password

@@ -41,6 +41,8 @@ export class GuardService implements CanActivate {
                         });
                         this.loggedIn.next(true);
                         res(true);
+                    } else if (response['error']) {
+                        res(false);
                     }
                 });
             } else {
@@ -54,10 +56,14 @@ export class GuardService implements CanActivate {
     }
 
     canActivate(): Promise<boolean> {
-        if (!this.loggedIn.value && !localStorage.getItem('session_token')) {
-            alert('You are not allowed to view this page. You are redirected to the Home Page.');
-            this.router.navigate(['/home']);
-        }
-        return this.getLastSession();
+        return new Promise( res => {
+            this.getLastSession().then( response => {
+                if (response === false) {
+                    alert('You are not allowed to view this page. You are redirected to the Home Page.');
+                    this.router.navigate(['/home']);
+                }
+                res(response);
+            });
+        });
     }
 }

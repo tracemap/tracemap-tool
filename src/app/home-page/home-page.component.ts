@@ -19,7 +19,7 @@ export class HomePageComponent {
     disabled = false;
     loggedIn = false;
     subscriptionResponse = undefined;
-    wrongEmail = false;
+    emailResponse = '';
 
     constructor(
         private apiService: ApiService,
@@ -81,14 +81,16 @@ export class HomePageComponent {
         if ( emailAdress &&
                 emailAdress !== '' &&
                 this.isValidEmail(emailAdress)) {
-            this.wrongEmail = false;
-            this.apiService.addToNewsletter(emailAdress).subscribe( answer => {
-                console.log(answer);
-                this.subscriptionResponse = answer;
+            this.apiService.addToNewsletter(emailAdress).subscribe( response => {
+                if (response['error']) {
+                    this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
+                } else {
+                    this.emailResponse = 'Tanks for your interest.<br>Your subscription was successful.';
+                }
             });
         } else {
             console.log('invalid');
-            this.wrongEmail = true;
+            this.emailResponse = 'Please enter a valid email.';
         }
     }
 
