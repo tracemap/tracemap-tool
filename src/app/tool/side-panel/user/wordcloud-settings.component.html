@@ -1,0 +1,56 @@
+<div class="content">
+    <div class="settings-button"
+    [ngClass]="{'open': open}"
+    (click)="toggleMenu()">
+        <img srcset="
+        ../../../assets/images/settings-gear-white_64.png 4x,
+        ../../../assets/images/settings-gear-white_32.png 2x,
+        ../../../assets/images/settings-gear-white_16.png 1x
+        "
+        src="../../../assets/images/settings-gear-white_16.png">
+    </div>
+    <div class="overlay" (click)="toggleMenu()" *ngIf="open"></div>
+    <div class="wrapper" *ngIf="open">
+        <div class="settings tooltip">
+            <div class="shadow"></div>
+            <div class="arrow"></div>
+            <div class="head">
+                <h2>Wordloud Settings</h2>
+                <div 
+                class="close-button"
+                (click)="toggleMenu()">
+                    <img srcset="
+                    ../../../assets/images/close-white_128.png 4x,
+                    ../../../assets/images/close-white_64.png 2x,
+                    ../../../assets/images/close-white_32.png 1x
+                    "
+                    src="../../../assets/images/close-white_32.png">
+                </div>
+            </div>
+            <div class="body">
+                <h2>Show In Wordcloud:</h2>
+                <div class="checkbox setting">
+                    <mat-checkbox
+                    color="primary"
+                    [(ngModel)]="settings.words"
+                    (change)="updateWordcloudSettings()"></mat-checkbox>
+                    <h3>words</h3>
+                </div>
+                <div class="checkbox setting">
+                    <mat-checkbox
+                    color="primary"
+                    [(ngModel)]="settings.handles"
+                    (change)="updateWordcloudSettings()"></mat-checkbox>
+                    <h3>handles</h3>
+                </div>
+                <div class="checkbox setting">
+                    <mat-checkbox
+                    color="primary"
+                    [(ngModel)]="settings.hashtags"
+                    (change)="updateWordcloudSettings()"></mat-checkbox>
+                    <h3>hashtags</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -36,6 +36,7 @@ export class TimelineComponent implements OnChanges {
             this.tweetId = tweetId;
         });
         this.wordcloudService.selectedWord.subscribe( word => {
+                console.log('called ngOnChanges');
             if (this.filterWord && !word) {
                 this.filterWord = undefined;
                 this.resort();
@@ -71,7 +72,6 @@ export class TimelineComponent implements OnChanges {
                 });
                 this.timeline = timeline;
                 const timelineTexts = this.timeline.map( (d) => d['text']);
-                console.log('is this called multiple times?');
                 this.wordcloudService.timelineTexts.next( timelineTexts);
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
@@ -101,23 +101,25 @@ export class TimelineComponent implements OnChanges {
     }
 
     resort(): void {
-        this.reset();
-        this.timelineSorted = this.timeline.slice();
-        if (this.settings.sort_by === 'retweets') {
-            this.timelineSorted.sort( (a, b) => {
-                return b['retweet_count'] - a['retweet_count'];
-            });
+        if (this.timeline) {
+            this.reset();
+            this.timelineSorted = this.timeline.slice();
+            if (this.settings.sort_by === 'retweets') {
+                this.timelineSorted.sort( (a, b) => {
+                    return b['retweet_count'] - a['retweet_count'];
+                });
+            }
+            if ( !this.settings.retweets) {
+                this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
+            }
+            if (this.filterWord) {
+                this.timelineSorted = this.timelineSorted.filter( (tweet) => {
+                    const text = tweet['text'];
+                    return text.indexOf(this.filterWord) >= 0;
+                });
+            }
+            this.addShowedTweets();
         }
-        if ( !this.settings.retweets) {
-            this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
-        }
-        if (this.filterWord) {
-            this.timelineSorted = this.timelineSorted.filter( (tweet) => {
-                const text = tweet['text'];
-                return text.indexOf(this.filterWord) >= 0;
-            });
-        }
-        this.addShowedTweets();
     }
 
     addShowedTweets(): void {
