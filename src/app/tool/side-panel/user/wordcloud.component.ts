@@ -4,7 +4,6 @@ import { Http } from '@angular/http';
 import { WordcloudService } from '../../services/wordcloud.service';
 
 import * as wc from '../../../../assets/javascript/wordcloud2.js';
-import { TouchSequence } from 'selenium-webdriver';
 import { CommunicationService } from '../../services/communication.service';
 
 @Component({
@@ -98,7 +97,7 @@ export class WordcloudComponent {
         });
         if (this.filteredWordlist.length > 0) {
             this.filteredWordlist = this.filteredWordlist.splice(0, 30);
-            this.weightFactor = 600 / this.filteredWordlist[0][1];
+            this.weightFactor =  1000 / this.filteredWordlist[0][1];
             this.initCloud();
         } else {
             if (this.canvas) {
@@ -111,7 +110,8 @@ export class WordcloudComponent {
         return new Promise( (res) => {
             const english = this.http.get('assets/stopwords/english.txt').toPromise();
             const german = this.http.get('assets/stopwords/german.txt').toPromise();
-            Promise.all([english, german]).then( results => {
+            const custom = this.http.get('assets/stopwords/custom.txt').toPromise();
+            Promise.all([english, german, custom]).then( results => {
                 let fullList = [];
                 results.forEach( result => {
                     fullList = fullList.concat(result.text().split(/\s+/g));
@@ -151,7 +151,7 @@ export class WordcloudComponent {
                     }
                 },
                 fontFamily: 'IBM Plex Sans',
-                weightFactor: (size) => Math.sqrt(size * this.weightFactor) * dpr,
+                weightFactor: (size) => (Math.sqrt((size) * this.weightFactor) + 2) * dpr,
                 drawOutOfBound: false,
                 shuffle: false,
                 rotateRatio: 0,
