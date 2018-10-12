@@ -150,7 +150,7 @@ export class WordcloudComponent {
                         }
                     }
                 },
-                fontFamily: 'IBM Plex',
+                fontFamily: 'IBM Plex Sans',
                 weightFactor: (size) => Math.sqrt(size * this.weightFactor) * dpr,
                 drawOutOfBound: false,
                 shuffle: false,
