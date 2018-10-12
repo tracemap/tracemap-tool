@@ -129,7 +129,7 @@ export class ApiService {
 
     authAddUser( username: string, email: string): Observable<object> {
         console.log('#apiService#: authAddUser');
-        const url = this.url + '/auth/add_user/';
+        const url = this.url + '/auth/add_user';
         const body = JSON.stringify({
             username: username,
             email: email
