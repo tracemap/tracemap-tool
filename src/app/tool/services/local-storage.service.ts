@@ -11,7 +11,8 @@ export class LocalStorageService {
         cookie: false,
         graph: false,
         lastTracemaps: false,
-        timeline: false
+        timeline: false,
+        wordcloud: false
     };
 
     constructor() {
@@ -95,14 +96,22 @@ export class LocalStorageService {
     }
 
     setTimelineSettings( config: object) {
-        console.log('starting setTimelineSettings');
         if (this.settings.timeline) {
-            console.log('right cookie is set');
             this.store('timeline', config);
         }
     }
 
     getTimelineSettings(): object {
         return this.retrieve('timeline');
+    }
+
+    setWordcloudSettings( config: object) {
+        if (this.settings.wordcloud) {
+            this.store('wordcloud', config);
+        }
+    }
+
+    getWordcloudSettings(): object {
+        return this.retrieve('wordcloud');
     }
 }
