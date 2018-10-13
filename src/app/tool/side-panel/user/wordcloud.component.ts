@@ -45,17 +45,6 @@ export class WordcloudComponent {
                 this.createWordList(texts);
             }
         });
-        this.communicationService.wordcloudSettings.subscribe( settings => {
-            if (settings) {
-                Object.keys(settings).forEach( key => {
-                    this.settings[key] = settings[key];
-                });
-                if (this.filteredWordlist) {
-                    this.filterWordlist();
-                }
-
-            }
-        });
     }
 
     createWordList(texts: string[]) {
@@ -78,6 +67,14 @@ export class WordcloudComponent {
             });
             this.wordList = wordList.sort( (a, b) => b[1] - a[1]);
             this.filterWordlist();
+            this.communicationService.wordcloudSettings.subscribe( settings => {
+                if (settings) {
+                    Object.keys(settings).forEach( key => {
+                        this.settings[key] = settings[key];
+                    });
+                    this.filterWordlist();
+                }
+            });
         });
     }
 
