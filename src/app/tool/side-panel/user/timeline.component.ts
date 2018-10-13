@@ -35,20 +35,11 @@ export class TimelineComponent implements OnChanges {
         this.communicationService.tweetId.subscribe( tweetId => {
             this.tweetId = tweetId;
         });
-        this.wordcloudService.selectedWord.subscribe( word => {
-                console.log('called ngOnChanges');
-            if (this.filterWord && !word) {
-                this.filterWord = undefined;
-                this.resort();
-            } else if (word && this.filterWord !== word) {
-                this.filterWord = word;
-                this.resort();
-            }
-        });
     }
 
     ngOnChanges() {
         if ( this.userId) {
+            this.rendered.next(false);
             this.reset();
             this.apiService.getTimeline(this.userId).subscribe( (timeline: object[]) => {
                 // unify tweet_ids for twitter widget script
@@ -88,6 +79,16 @@ export class TimelineComponent implements OnChanges {
                         }
                     }
                 });
+                this.wordcloudService.selectedWord.subscribe( word => {
+                        console.log('called ngOnChanges');
+                    if (this.filterWord && !word) {
+                        this.filterWord = undefined;
+                        this.resort();
+                    } else if (word && this.filterWord !== word) {
+                        this.filterWord = word;
+                        this.resort();
+                    }
+                });
                 this.resort();
             });
         }
@@ -97,7 +98,6 @@ export class TimelineComponent implements OnChanges {
         this.timelineShowed = [];
         this.timelineSorted = undefined;
         this.timelineRendered = [];
-        this.rendered.next(false);
     }
 
     resort(): void {
