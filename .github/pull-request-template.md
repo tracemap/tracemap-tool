@@ -1,5 +1,7 @@
 Resolves #ISSUE_NUMBER
 
+**Don't merge before #PULL_REQUEST_NUMBER_1, #PULL_REQUEST_NUMBER_2, [...]**
+
 # Important changes
 
 - [...] implemented
