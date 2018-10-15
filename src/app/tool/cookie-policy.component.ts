@@ -14,7 +14,8 @@ export class CookiePolicyComponent {
         cookie: true,
         graph: true,
         lastTracemaps: true,
-        timeline: true
+        timeline: true,
+        wordcloud: true
     };
 
     applied = false;
