@@ -1,4 +1,5 @@
-Resolves #ISSUE_NUMBER
+Resolves #ISSUE_NUMBER  
+Epic: #EPIC_NUMBER
 
 **Don't merge before #PULL_REQUEST_NUMBER_1, #PULL_REQUEST_NUMBER_2, [...]**
 
