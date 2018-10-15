@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { WordcloudService } from '../../services/wordcloud.service';
+import { CommunicationService } from '../../services/communication.service';
 
 import * as wc from '../../../../assets/javascript/wordcloud2.js';
-import { CommunicationService } from '../../services/communication.service';
 
 @Component({
     selector: 'app-wordcloud',
@@ -13,11 +13,11 @@ import { CommunicationService } from '../../services/communication.service';
 })
 
 export class WordcloudComponent {
-
+    @ViewChild('canvasElement') canvasElement;
+    canvas;
     hovered = false;
     wordList;
     filteredWordlist;
-    canvas;
     weightFactor;
     settings = {
         words: true,
@@ -119,10 +119,9 @@ export class WordcloudComponent {
     }
 
     initCloud(hover?: string): Promise<void> {
-        console.log('init cloud');
         return new Promise( (res) => {
             const dpr = window.devicePixelRatio || 1;
-            this.canvas = document.querySelector('.wordcloud-canvas');
+            this.canvas = this.canvasElement.nativeElement;
             this.canvas['width'] = 328 * dpr;
             this.canvas['height'] = 250 * dpr;
             wc(this.canvas, {
