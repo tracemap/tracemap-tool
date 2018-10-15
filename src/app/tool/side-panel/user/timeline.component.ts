@@ -17,6 +17,7 @@ export class TimelineComponent implements OnChanges {
     userId: string;
     tweetId: string;
     filterWord: string;
+    emptyTimeline = false;
 
     settings = {
         sort_by: 'time',
@@ -98,6 +99,7 @@ export class TimelineComponent implements OnChanges {
         this.timelineShowed = [];
         this.timelineSorted = undefined;
         this.timelineRendered = [];
+        this.emptyTimeline = false;
     }
 
     resort(): void {
@@ -127,6 +129,10 @@ export class TimelineComponent implements OnChanges {
         const timelineLength = this.timelineSorted.length;
         const newLength = showedLength + 10 >= timelineLength ? timelineLength : showedLength + 10;
         this.timelineShowed = this.timelineSorted.slice( 0, newLength);
+        if (this.timelineShowed.length === 0) {
+            this.rendered.next(true);
+            this.emptyTimeline = true;
+        }
     }
 
     setTweetRendered( tweet: object): void {
