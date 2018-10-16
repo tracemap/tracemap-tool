@@ -24,12 +24,14 @@
         position: fixed;
         z-index: 11;
         margin-left: 10px;
+        display: inline-block;
 
         .settings.tooltip {
-            position: relative;
             display: block;
+            position: relative;
             margin-top: -80px;
             margin-left: 55px;
+            height: 200px;
             width: 169px;
             background-color: white;
             border-radius: 6px;
@@ -94,7 +96,7 @@
 
                 .setting {
 
-                    h3 {
+                    h2 {
                         padding-bottom: 10px;
                         color: $color-black-bg;
                         font-size: 15px;
@@ -117,24 +119,24 @@
                     grid-template-columns: 22px auto;
 
                     p {
-                        margin-left: 12px;
+                        margin-left: 10px;
                     }
                 }
                 .checkbox.setting {
                     margin-top: 20px;
                     display: grid;
-                    grid-template-columns: 20px 1fr;
-                    grid-column-gap: 10px;
+                    grid-template-columns: 1fr 20px;
                     grid-template-rows: 20px;
                     grid-template-areas:
-                        "checkbox text";
+                        "text checkbox";
+
+                    h2 {
+                        grid-area: text;
+                        line-height: 20px;
+                    }
 
                     mat-checkbox {
                         grid-area: checkbox;
-                    }
-                    h3 {
-                        grid-area: text;
-                        line-height: 20px;
                     }
                 }
             }

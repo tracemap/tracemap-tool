@@ -1,29 +1,7 @@
-@import "../../../../styles.scss";
 .content {
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
-
-    .empty-card {
-        margin-top: 2px;
-        width: 308px;
-        display: grid;
-        background-color: #fff;
-        border-radius: 0px 0px 6px 6px;
-        box-shadow: 0 1px 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
-        padding: 20px;
-        text-align: center;
-        h3 {
-            font-size: 13px;
-            font-weight: 400;
-            margin: 12px 0px;
-            
-        }
-
-        p {
-            font-size: 12px;
-        }
-    }
 
     .tweet-card {
         display: none;

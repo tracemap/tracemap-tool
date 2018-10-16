@@ -42,7 +42,6 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
         import { UserSettingsComponent } from './side-panel/user/user-settings.component';
         import { TimelineComponent } from './side-panel/user/timeline.component';
         import { WordcloudComponent } from './side-panel/user/wordcloud.component';
-        import { WordcloudSettingsComponent } from './side-panel/user/wordcloud-settings.component';
 
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
@@ -108,7 +107,6 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
                 UserSettingsComponent,
                 TimelineComponent,
                 WordcloudComponent,
-                WordcloudSettingsComponent,
         TimeLabelPipe,
         ToYearPipe,
         ShortNumberPipe,

@@ -4,7 +4,7 @@
         <div class="bg-outer">
             <div class="bg-inner"></div>
         </div>
-        <a href="/home"><h3 class="logo-text top">TRACEMAP</h3></a>
+        <h3 class="logo-text top">TRACEMAP</h3>
         <menu [color]="'white'"></menu>
         <div class="slogan">
             <p>Fact checking how it's supposed to be.</p>
@@ -134,7 +134,16 @@
                         </button>
                         <p>By subscribing to our newsletter, you accept our <a href="./privacy">Terms</a>.</p>
                     </div>
-                    <p *ngIf="emailResponse" [innerHTML]="emailResponse">
+                    <p *ngIf="wrongEmail">
+                        You entered an invalid E-Mail.
+                    </p>
+                    <p *ngIf="subscriptionResponse == 'success'"
+                    class="subscription-answer">
+                        Thanks for your interest.<br>Your subscription was successful.
+                    </p>
+                    <p *ngIf="subscriptionResponse == 'exists'"
+                    class="subscription-answer">
+                        Thanks for insisting.<br>You have already subscribed.
                     </p>
                 </div>
                 <div class="follow-us">

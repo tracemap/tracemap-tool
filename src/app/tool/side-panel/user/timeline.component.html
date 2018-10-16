@@ -1,9 +1,5 @@
 <div class="content">
-    <div class="empty-card"
-    *ngIf="emptyTimeline">
-        <h3>This users timeline is empty for your selection.</h3>
-        <p>Please change your timeline settings or select a different word in the wordcloud.</p>
-    </div>
+    <app-wordcloud></app-wordcloud>
     <tweet-card
     class="tweet-card"
     *ngFor="let tweet of timelineShowed"
