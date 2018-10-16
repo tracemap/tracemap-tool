@@ -21,7 +21,6 @@ import { PrivacyComponent } from './home-page/privacy.component';
 
 import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
-import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { UserService } from './services/user.service';
   providers: [
     ApiService,
     GuardService,
-    UserService,
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent]

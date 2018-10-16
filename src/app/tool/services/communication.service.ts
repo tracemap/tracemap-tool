@@ -19,7 +19,6 @@ export class CommunicationService {
 
     userInfo = new BehaviorSubject<object>(undefined);
     timelineSettings = new BehaviorSubject<object>(undefined);
-    wordcloudSettings = new BehaviorSubject<object>(undefined);
 
     constructor(
         private apiService: ApiService

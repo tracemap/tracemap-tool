@@ -25,6 +25,7 @@ export class UserSettingsComponent {
         private tourService: TourService
     ) {
         const settings = this.localStorageService.getTimelineSettings();
+        console.log('timeline settings: ' + settings);
         if (settings) {
             Object.keys(settings).forEach( key => {
                 this.settings[key] = settings[key];

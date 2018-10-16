@@ -41,16 +41,16 @@ class="content"
 
             </div>
         </div>
-        <app-wordcloud class="wordcloud"></app-wordcloud>
         <div
         class="spinner"
         *ngIf="!timelineRendered">
-            <mat-spinner
-                class="spinner"
-                [diameter]="56"
-                [color]="primary"
-                [strokeWidth]="5">
-            </mat-spinner>
+        <mat-spinner
+            class="spinner"
+            [diameter]="56"
+            [color]="primary"
+            [strokeWidth]="5">
+        </mat-spinner>
+    
         </div>
         <div 
         class="timeline"
