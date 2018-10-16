@@ -37,7 +37,7 @@
             </div>
             <div class="body">
                 <div class="radio-group setting">
-                    <h2>Sort by:</h2>
+                    <h3>sort by:</h3>
                     <mat-radio-group
                     name="sort_by"
                     (change)="updateTimelineSorting($event)">
@@ -58,13 +58,11 @@
                     </mat-radio-group>
                 </div>
                 <div class="checkbox setting">
-                    <h2>show retweets</h2>
                     <mat-checkbox
                     color="primary"
                     [(ngModel)]="settings.retweets"
                     (change)="updateTimelineSettings()"></mat-checkbox>
-                    <!-- <p *ngIf="settings.retweets">include retweets</p>
-                    <p *ngIf="!settings.retweets">just authored tweets</p> -->
+                    <h3>show retweets</h3>
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ export class TimelineComponent implements OnChanges {
     userId: string;
     tweetId: string;
     filterWord: string;
+    emptyTimeline = false;
 
     settings = {
         sort_by: 'time',
@@ -35,19 +36,11 @@ export class TimelineComponent implements OnChanges {
         this.communicationService.tweetId.subscribe( tweetId => {
             this.tweetId = tweetId;
         });
-        this.wordcloudService.selectedWord.subscribe( word => {
-            if (this.filterWord && !word) {
-                this.filterWord = undefined;
-                this.resort();
-            } else if (word && this.filterWord !== word) {
-                this.filterWord = word;
-                this.resort();
-            }
-        });
     }
 
     ngOnChanges() {
         if ( this.userId) {
+            this.rendered.next(false);
             this.reset();
             this.apiService.getTimeline(this.userId).subscribe( (timeline: object[]) => {
                 // unify tweet_ids for twitter widget script
@@ -70,25 +63,40 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.timeline = timeline;
-                const timelineTexts = this.timeline.map( (d) => d['text']);
-                console.log('is this called multiple times?');
-                this.wordcloudService.timelineTexts.next( timelineTexts);
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
-                        let changed = false;
+                        let sortChanged = false;
+                        let filterChanged = false;
+
                         Object.keys(settings).forEach( key => {
                             if (this.settings[key] !== settings[key]) {
                                 this.settings[key] = settings[key];
-                                changed = true;
+                                if (key === 'sort_by') {
+                                    sortChanged = true;
+                                } else if (key === 'retweets') {
+                                    filterChanged = true;
+                                }
                             }
                         });
-                        if (changed) {
-                            console.log('resorting');
+                        if (filterChanged) {
+                            this.resort(true);
+                        } else if (sortChanged) {
                             this.resort();
                         }
                     }
                 });
-                this.resort();
+                this.wordcloudService.selectedWord.subscribe( word => {
+                        console.log('called ngOnChanges');
+                    if (this.filterWord && !word) {
+                        this.filterWord = undefined;
+                        this.resort();
+                    } else if (word && this.filterWord !== word) {
+                        this.filterWord = word;
+                        this.resort();
+                    }
+                });
+                console.log('initial resort called');
+                this.resort(true);
             });
         }
     }
@@ -97,27 +105,32 @@ export class TimelineComponent implements OnChanges {
         this.timelineShowed = [];
         this.timelineSorted = undefined;
         this.timelineRendered = [];
-        this.rendered.next(false);
+        this.emptyTimeline = false;
     }
 
-    resort(): void {
-        this.reset();
-        this.timelineSorted = this.timeline.slice();
-        if (this.settings.sort_by === 'retweets') {
-            this.timelineSorted.sort( (a, b) => {
-                return b['retweet_count'] - a['retweet_count'];
-            });
+    resort(updateWordcloud = false): void {
+        if (this.timeline) {
+            this.reset();
+            this.timelineSorted = this.timeline.slice();
+            if (this.settings.sort_by === 'retweets') {
+                this.timelineSorted.sort( (a, b) => {
+                    return b['retweet_count'] - a['retweet_count'];
+                });
+            }
+            if ( !this.settings.retweets) {
+                this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
+            }
+            if (updateWordcloud) {
+                this.sendWordcloudTexts(this.timelineSorted);
+            }
+            if (this.filterWord) {
+                this.timelineSorted = this.timelineSorted.filter( (tweet) => {
+                    const text = tweet['text'];
+                    return text.indexOf(this.filterWord) >= 0;
+                });
+            }
+            this.addShowedTweets();
         }
-        if ( !this.settings.retweets) {
-            this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
-        }
-        if (this.filterWord) {
-            this.timelineSorted = this.timelineSorted.filter( (tweet) => {
-                const text = tweet['text'];
-                return text.indexOf(this.filterWord) >= 0;
-            });
-        }
-        this.addShowedTweets();
     }
 
     addShowedTweets(): void {
@@ -125,6 +138,16 @@ export class TimelineComponent implements OnChanges {
         const timelineLength = this.timelineSorted.length;
         const newLength = showedLength + 10 >= timelineLength ? timelineLength : showedLength + 10;
         this.timelineShowed = this.timelineSorted.slice( 0, newLength);
+        if (this.timelineShowed.length === 0) {
+            this.rendered.next(true);
+            this.emptyTimeline = true;
+        }
+    }
+
+    sendWordcloudTexts(timeline): void {
+        const timelineTexts = timeline.map( (d) => d['text']);
+        this.wordcloudService.timelineTexts.next( timelineTexts);
+
     }
 
     setTweetRendered( tweet: object): void {

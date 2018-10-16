@@ -1,0 +1,85 @@
+<div 
+class="user-menu-button" 
+(click)="toggleMenu()"
+[ngClass]="color">
+    <img *ngIf="color == 'white'"
+    srcset="
+    ../../assets/images/user-menu-purple_128.png 4x,
+    ../../assets/images/user-menu-purple_64.png 2x,
+    ../../assets/images/user-menu-purple_32.png 1x
+    "
+    src="../../assets/images/user-menu-purple_32.png">
+    <img *ngIf="color == 'purple' || color == 'black'"
+    srcset="
+    ../../assets/images/user-menu-white_128.png 4x,
+    ../../assets/images/user-menu-white_64.png 2x,
+    ../../assets/images/user-menu-white_32.png 1x
+    "
+    src="../../assets/images/user-menu-white_32.png">
+</div>
+<div class="overlay" (click)="toggleMenu()" [ngClass]="{'open': menuOpen}"></div>
+<div class="user-menu tooltip" [ngClass]="{'open': menuOpen}">
+    <div class="shadow"></div>
+    <div class="arrow"></div>
+    <div class="head">
+        <h2>Hi {{username}}</h2>
+        <div class="close-button" (click)="toggleMenu()">
+            <img srcset="
+            ../../assets/images/close-white_128.png 4x,
+            ../../assets/images/close-white_64.png 2x,
+            ../../assets/images/close-white_32.png 1x
+            "
+            src="../../assets/images/close-white_32.png">
+        </div>
+    </div>
+    <div class="body">
+        <button class="button purple-button logout"
+        (click)="logout()">
+            Logout
+        </button>
+        <div class="form"
+        *ngIf="formOpen === 'passwordChange'">
+            <input type="password"
+            #oldPassword
+            placeholder="old password">
+            <input type="password"
+            #newPassword1
+            placeholder="new password">
+            <input type="password"
+            #newPassword2
+            (keydown.enter)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)"
+            placeholder="confirm new password">
+            <button class="button purple-button password-change-button"
+            (click)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)">
+                Change Password
+            </button>
+        </div>
+        <button class="button light-button password-change-button"
+        (click)="togglePasswordChange()"
+        *ngIf="formOpen !== 'passwordChange'">
+            Change Password
+        </button>
+        <div class="form"
+        *ngIf="formOpen === 'deleteAccount'">
+            <p class="hint">
+                We will miss you! You can register again, whenever you want to.
+            </p>
+            <input type="password"
+            #password
+            (keydown.enter)="deleteAccount(password.value)"
+            placeholder='enter your password'>
+            <button class="button red-button delete-button"
+            (click)="deleteAccount(password.value)">
+                Delete Account
+            </button>
+        </div>
+        <button class="button light-button delete-button"
+        (click)="toggleDelete()"
+        *ngIf="formOpen !== 'deleteAccount'">
+            Delete Account
+        </button>
+        <p class="error">
+            {{errorMsg}}
+        </p>
+    </div>
+</div>

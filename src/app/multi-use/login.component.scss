@@ -1,5 +1,5 @@
 @import "../../styles.scss";
-.login-button {
+.login-menu-button {
     position: fixed;
     z-index: 3;
     top: 30px;
@@ -35,7 +35,7 @@
         top: 28px;
         right: 106px;
         width: 254px;
-        height: 470px;
+        height: auto;
         transition: height 0.2s linear;
         padding-top: 42px;
     }
@@ -43,6 +43,7 @@
     padding: 0px 12px;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto 40px;
+    grid-row-gap: 40px;
     grid-template-areas:
         "form"
         "register"
@@ -51,16 +52,19 @@
 
     .button {
         margin-top: 10px;
-        margin-bottom: 30px;
+        margin-right: 20px;
         font-size: 18px;
+        line-height: 30px;
         width: 70px;
         height: 32px;
-        line-height: 30px;
         &.register {
             width: 90px;
         }
         &.contact {
             width: 110px;
+        }
+        &.forgot {
+            width: 150px;
         }
     }
 
@@ -68,27 +72,39 @@
         grid-area: form;
         input {
             width: 226px;
-            height: 36px;
+            height: 30px;
             border: none;
             margin-top: 10px;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 400;
             &::placeholder {
                 color: #A8ABB3;
                 opacity: 1;
             }
         }
-        p {
+        .error {
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: red;
+        }
+        .forgot-toggle {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .hint {
             font-size: 10.5px;
             font-weight: 400;
-            margin-top: -25px;
-            margin-bottom: 25px;
-        }
-    }
-    .hint {
-        grid-area: hint;
-        p {
-            font-size: 10px;
+            &.forgot-hint {
+                margin-top: 15px;
+                margin-bottom: 5px;
+                font-size: 11.5px;
+            }
         }
     }
     .register {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -17,6 +17,10 @@ export class ApiService {
 
     tracemapData = new BehaviorSubject<object>(undefined);
     graphData = new BehaviorSubject<object>(undefined);
+
+    jsonHeader = new Headers({
+        'Content-Type': 'application/json'
+    });
 
     constructor(
         private http: Http
@@ -112,13 +116,98 @@ export class ApiService {
             });
     }
 
-    addToNewsletter( emailAdress: string): Observable<string> {
+    addToNewsletter( email: string): Observable<string> {
         console.log('#apiService#: addToNewsletter()');
+        const url = this.url + '/newsletter/save_subscriber';
+        const body = JSON.stringify({
+            email: email
+        });
         return this.http
-            .get( this.url + '/newsletter/save_subscriber/' + emailAdress)
-            .map( response => {
-                return response.text();
-            });
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
     }
 
+    authAddUser( username: string, email: string): Observable<object> {
+        console.log('#apiService#: authAddUser');
+        const url = this.url + '/auth/add_user';
+        const body = JSON.stringify({
+            username: username,
+            email: email
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
+
+    authCheckPassword( email: string, password: string): Observable<string> {
+        console.log('#apiService#: authCheckPassword()');
+        const url = this.url + '/auth/check_password';
+        const body = JSON.stringify({
+            email: email,
+            password: password
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json() );
+    }
+
+    authCheckSession( email: string, sessionToken: string): Observable<string> {
+        console.log('#apiService#: authCheckSession()');
+        const url = this.url + '/auth/check_session';
+        const body = JSON.stringify({
+            email: email,
+            session_token: sessionToken
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json() );
+    }
+
+    authGetUserData( email: string, sessionToken: string): Observable<object> {
+        console.log('#apiService#: authGetUserData()');
+        const url = this.url + '/auth/get_user_data';
+        const body = JSON.stringify({
+            email: email,
+            session_token: sessionToken
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
+
+    authChangePassword( email: string, oldPassword: string, newPassword: string): Observable<object> {
+        console.log('#apiService#: authChangePassword()');
+        const url = this.url + '/auth/change_password';
+        const body = JSON.stringify({
+            email: email,
+            old_password: oldPassword,
+            new_password: newPassword
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
+
+    authRequestReset( email: string): Observable<object> {
+        console.log('#apiService#: authRequestReset()');
+        const url = this.url + '/auth/request_reset_password';
+        const body = JSON.stringify({
+            email: email
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
+
+    authDeleteUser( email: string, password: string): Observable<object> {
+        console.log('#apiService#: authDeleteUser()');
+        const url = this.url + '/auth/delete_user';
+        const body = JSON.stringify({
+            email: email,
+            password: password
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
 }
