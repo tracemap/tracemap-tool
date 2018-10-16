@@ -63,19 +63,24 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.timeline = timeline;
-                const timelineTexts = this.timeline.map( (d) => d['text']);
-                this.wordcloudService.timelineTexts.next( timelineTexts);
                 this.communicationService.timelineSettings.subscribe( settings => {
                     if (settings) {
-                        let changed = false;
+                        let sortChanged = false;
+                        let filterChanged = false;
+
                         Object.keys(settings).forEach( key => {
                             if (this.settings[key] !== settings[key]) {
                                 this.settings[key] = settings[key];
-                                changed = true;
+                                if (key === 'sort_by') {
+                                    sortChanged = true;
+                                } else if (key === 'retweets') {
+                                    filterChanged = true;
+                                }
                             }
                         });
-                        if (changed) {
-                            console.log('resorting');
+                        if (filterChanged) {
+                            this.resort(true);
+                        } else if (sortChanged) {
                             this.resort();
                         }
                     }
@@ -90,7 +95,8 @@ export class TimelineComponent implements OnChanges {
                         this.resort();
                     }
                 });
-                this.resort();
+                console.log('initial resort called');
+                this.resort(true);
             });
         }
     }
@@ -102,7 +108,7 @@ export class TimelineComponent implements OnChanges {
         this.emptyTimeline = false;
     }
 
-    resort(): void {
+    resort(updateWordcloud = false): void {
         if (this.timeline) {
             this.reset();
             this.timelineSorted = this.timeline.slice();
@@ -113,6 +119,9 @@ export class TimelineComponent implements OnChanges {
             }
             if ( !this.settings.retweets) {
                 this.timelineSorted = this.timelineSorted.filter( tweet => !tweet['retweeted_status']);
+            }
+            if (updateWordcloud) {
+                this.sendWordcloudTexts(this.timelineSorted);
             }
             if (this.filterWord) {
                 this.timelineSorted = this.timelineSorted.filter( (tweet) => {
@@ -133,6 +142,12 @@ export class TimelineComponent implements OnChanges {
             this.rendered.next(true);
             this.emptyTimeline = true;
         }
+    }
+
+    sendWordcloudTexts(timeline): void {
+        const timelineTexts = timeline.map( (d) => d['text']);
+        this.wordcloudService.timelineTexts.next( timelineTexts);
+
     }
 
     setTweetRendered( tweet: object): void {

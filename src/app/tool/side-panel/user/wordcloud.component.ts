@@ -48,6 +48,7 @@ export class WordcloudComponent {
     }
 
     createWordList(texts: string[]) {
+        this.wordcloudService.selectedWord.next(undefined);
         this.canvas = undefined;
         const wordDict = {};
         texts.forEach(text => {
