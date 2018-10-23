@@ -85,7 +85,6 @@
             padding-left: 20px;
             padding-right: 20px;
             padding-bottom: 22px;
-            box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
             p.description::ng-deep {
                 font-size: 14px;
                 color: $color-black-bg;
@@ -120,6 +119,9 @@
                     }
                 }
             }
+        }
+        .wordcloud {
+            z-index: 4;
         }
         .timeline {
             position: relative;
