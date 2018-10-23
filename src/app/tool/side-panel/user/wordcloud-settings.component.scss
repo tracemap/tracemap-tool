@@ -1,0 +1,38 @@
+@import "./../styles.scss";
+.content {
+    width: 24px;
+    height: 24px;
+    .settings-button {
+        height: 24px;
+        width: 24px;
+        margin-left: 0px;
+        background-color: $color-gray-placeholder;
+        border-radius: 50%;
+        transition: background-color 0.2s linear;
+        &.open {
+            background-color: $color-purple-dark;
+        }
+        &:hover {
+            background-color: $color-purple-dark;
+            transition: background-color 0.2s linear;
+        }
+        img {
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+    }
+    .wrapper {
+        .settings.tooltip {
+            margin-left: 40px;
+            width: 200px;
+            .body {
+                .checkbox.setting {
+                    margin-top: 10px;
+                }
+            }
+            
+        }
+    }
+}

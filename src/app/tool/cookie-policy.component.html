@@ -41,6 +41,15 @@
                 [arrowPos]="'left'"
                 [text]="'If you unselect this checkbox, we will not save how user timelines should be sorted.'"></info-button>
             </div>
+            <div class="option">
+                <mat-checkbox
+                color="primary"
+                [(ngModel)]="settings.wordcloud"></mat-checkbox>
+                <p>Wordcloud Settings</p>
+                <info-button
+                [arrowPos]="'left'"
+                [text]="'If you unselect this checkbox, we will not save your prefered elements in the user wordcloud.'"></info-button>
+            </div>
         </div>
         <button class="purple-button button"
         (click)="saveSettings()">

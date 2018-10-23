@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiService } from '../services/api.service';
+import { ApiService } from './../services/api.service';
+import { GuardService } from './../services/guard.service';
 
 @Component({
 	selector: 'home-page',
@@ -18,12 +19,17 @@ export class HomePageComponent {
     disabled = false;
     loggedIn = false;
     subscriptionResponse = undefined;
-    wrongEmail = false;
+    emailResponse = '';
 
     constructor(
         private apiService: ApiService,
+        private guardService: GuardService,
         private router: Router
-    ) {}
+    ) {
+        this.guardService.loggedIn.subscribe( value => {
+            this.loggedIn = value;
+        });
+    }
 
     scrollToID(id_name: string) {
         const id = '#' + id_name;
@@ -75,14 +81,16 @@ export class HomePageComponent {
         if ( emailAdress &&
                 emailAdress !== '' &&
                 this.isValidEmail(emailAdress)) {
-            this.wrongEmail = false;
-            this.apiService.addToNewsletter(emailAdress).subscribe( answer => {
-                console.log(answer);
-                this.subscriptionResponse = answer;
+            this.apiService.addToNewsletter(emailAdress).subscribe( response => {
+                if (response['error']) {
+                    this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
+                } else {
+                    this.emailResponse = 'Tanks for your interest.<br>Your subscription was successful.';
+                }
             });
         } else {
             console.log('invalid');
-            this.wrongEmail = true;
+            this.emailResponse = 'Please enter a valid email.';
         }
     }
 
