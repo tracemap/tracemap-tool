@@ -105,10 +105,9 @@ export class ApiService {
         });
     }
 
-    labelUnknownUsers( retweeterIds: string[], authorId: string): Observable<string> {
+    labelUnknownUsers( retweeterIds: string[]): Observable<string[]> {
         console.log('#apiService#: labelUnknownUsers');
-        const retweetersString = authorId + ',' + retweeterIds.toString();
-        console.log(retweetersString);
+        const retweetersString = retweeterIds.toString();
         return this.http
             .get(this.url + '/neo4j/label_unknown_users/' + retweetersString)
             .map( response => {

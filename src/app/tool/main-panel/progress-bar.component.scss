@@ -1,0 +1,49 @@
+.content {
+    position: fixed;
+    z-index: 4;
+    top: 10px;
+    left: 379px;
+    width: 360px;
+    padding-top: 8px;
+    background-color: white;
+    box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+    display: grid;
+    grid-template-rows: auto auto 32px auto;
+    grid-template-columns: 1fr 40px;
+    grid-template-areas:
+        "crawled_head crawled_head"
+        "written_head written_head"
+        "paragraph icon"
+        "progress_bar progress_bar";
+
+    h3 {
+        margin: 0px 8px;
+        margin-bottom: 2px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .uncrawled-header {
+        grid-area: crawled_head;
+    }
+    .unwritten-header {
+        grid-area: written_head;
+    }
+    p {
+        margin: 0px 8px;
+        margin-bottom: 2px;
+        grid-area: paragraph;
+        line-height: 14px;
+        font-size: 13px;
+    }
+    .icon {
+        grid-area: icon;
+        width: 28px;
+        height: 28px;
+        margin-bottom: 3px;
+        align-self: end;
+        justify-self: center;
+    }
+    .progress-bar {
+        grid-area: progress_bar;
+    }
+}

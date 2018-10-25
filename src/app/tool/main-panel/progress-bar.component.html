@@ -1,0 +1,13 @@
+<div class="content"
+*ngIf="active">
+    <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} users still need to be crawled.</h3>
+    <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0">{{unwrittenUsers.length}} crawled users still need to be saved to our database.</h3>
+    <p>You can already use the tool, but keep in mind that some information may be incomplete or distorted.</p>
+    <img class="icon" src="../../../assets/images/danger-red_32.png">
+    <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    color="primary"
+    [value]="users.length - (uncrawledUsers.length + unwrittenUsers.length)"
+    [bufferValue]="users.length"></mat-progress-bar>
+</div>

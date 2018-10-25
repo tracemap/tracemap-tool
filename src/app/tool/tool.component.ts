@@ -154,15 +154,13 @@ export class ToolComponent implements OnInit {
 
         const authorId = this.graphData['author_info']['id_str'];
         const followers = this.tracemapData['followers'];
-
         const retweeterIds = this.tracemapData['tweet_data']['retweeter_ids'];
-        this.apiService.labelUnknownUsers( retweeterIds, authorId).subscribe( (response) => {
-            console.log('Unknown users are crawled live.'); // TODO: return number of unknown users
-            console.log(response);
-        });
+
+        this.communicationService.userIds.next(retweeterIds.concat([authorId]));
 
         // Necessary because the twitter api sometimes returns users multiple times
         const nodesChecked = [];
+        console.log(this.tracemapData);
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
             if ( nodesChecked.indexOf(retweeter) < 0) {
                 nodesChecked.push(retweeter);
@@ -174,7 +172,6 @@ export class ToolComponent implements OnInit {
                 }
             }
         });
-
 
         // Old mechanic for tweets where the author isnt in our database
         if (authorId in followers) {
