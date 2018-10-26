@@ -290,7 +290,11 @@ export class GraphComponent {
         const x = this.getOriginalXPosition(mouse[0] * this.dpr);
         const y = this.getOriginalYPosition(mouse[1] * this.dpr);
         const node = this.simulation.find( x, y);
-        return this.simulation.find( x, y, node.r + (node.r / 7));
+        if (node) {
+            return this.simulation.find( x, y, node.r + (node.r / 7));
+        } else {
+            return undefined;
+        }
     }
 
     setSimulation(): Promise<d3.forceSimulation> {
