@@ -5,7 +5,14 @@
         <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} users still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
         <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0">{{unwrittenUsers.length}} crawled users still need<span *ngIf="unwrittenUsers.length === 1">s</span> to be saved to our database.</h3>
         <p>You can already use the tool, but keep in mind that some information may be incomplete or distorted.</p>
-        <img class="icon" src="../../../assets/images/danger-red_32.png">
+        <img 
+        class="icon" 
+        srcset="
+        ../../../assets/images/danger-red_128.png 4x,
+        ../../../assets/images/danger-red_64.png 2x,
+        ../../../assets/images/danger-red_32.png 1x
+        "
+        src="../../../assets/images/danger-red_32.png">
     </div>
     <div class="wrapper finished"
     *ngIf="finished">
