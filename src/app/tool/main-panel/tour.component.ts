@@ -28,8 +28,9 @@ export class TourComponent {
     data = [
         {
             head: 'The Network Graph',
-            text: 'You can see how the tweet reached each user by looking at the connections between them.<br>' +
-            'Bigger nodes indicate more influential users.',
+            text: 'You can see how the tweet reached each retweeting user by looking at the connections between them.<br>' +
+            'Bigger nodes indicate more influential users.<br><br>' +
+            'By Hovering a user node, the ingoing connections (friends) and outgoing connections (followers) are highlighted.',
             selectors: ['.graph'],
             styles: {
                 top: '100px',
@@ -110,7 +111,8 @@ export class TourComponent {
                 '.acc-source',
                 '.acc-influential',
                 '.acc-metrics',
-                '.acc-enhanced-metrics'
+                '.acc-enhanced-metrics',
+                '.timeslider'
             ],
             styles: {
                 top: '200px',
@@ -132,7 +134,7 @@ export class TourComponent {
                 '.acc-enhanced-metrics'
             ],
             styles: {
-                top: '200px',
+                bottom: '100px',
                 left: '400px'
             },
             service_action: {
@@ -180,16 +182,40 @@ export class TourComponent {
             },
             service_action: undefined
         }, {
-            head: 'User Timeline',
-            text: 'You can also generate new tracemaps from any of the tweets in their timeline.',
+            head: 'Semantic Cloud',
+            text: 'The Semantic Cloud displays the words, hashtags and handles used most frequently in the last 200 tweets' +
+            ' & retweets of this user.<br> Click on a word to display the according tweets, click the free space around the words' +
+            ' to reset your selection.',
             selectors: ['tool'],
             styles: {
-                top: '400px',
+                top: '200px',
                 left: '400px'
             },
             service_action: undefined
         }, {
-            head: 'User Info',
+            head: 'Cloud Settings',
+            text: 'In the cloud settings you can choose which content is shown in the cloud.',
+            selectors: ['tool'],
+            styles: {
+                top: '200px',
+                left: '600px'
+            },
+            service_action: {
+                subject: 'cloudSettingsOpen',
+                pre_value: true,
+                post_value: false
+            }
+        }, {
+            head: 'User Timeline',
+            text: 'You can also generate new tracemaps from any of the tweets in their timeline.',
+            selectors: ['tool'],
+            styles: {
+                bottom: '100px',
+                left: '400px'
+            },
+            service_action: undefined
+        }, {
+            head: 'User Settings',
             text: 'Resort the timeline by number of retweets to see the most viral on top.<br>' +
             'The checkbox controls if only self-authored tweets are shown or if retweets are also included.',
             selectors: ['tool'],
@@ -296,8 +322,8 @@ export class TourComponent {
         });
         const serviceAction = this.data[this.activeItem].service_action;
         if (serviceAction && serviceAction !== 'openUserInfo') {
-            const subject = serviceAction.subject;
-            const post = serviceAction.post_value;
+            const subject = serviceAction['subject'];
+            const post = serviceAction['post_value'];
             this.tourService[subject].next(post);
         }
     }
@@ -314,8 +340,8 @@ export class TourComponent {
         if (serviceAction === 'openUserInfo') {
             this.userDetailsOpen = true;
         } else if (serviceAction) {
-            const subject = serviceAction.subject;
-            const pre = serviceAction.pre_value;
+            const subject = serviceAction['subject'];
+            const pre = serviceAction['pre_value'];
             this.tourService[subject].next(pre);
         }
     }
