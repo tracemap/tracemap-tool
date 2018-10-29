@@ -2,8 +2,8 @@
 *ngIf="active">
     <div class="wrapper unfinished"
     *ngIf="!finished">
-        <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} users still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
-        <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0">{{unwrittenUsers.length}} crawled users still need<span *ngIf="unwrittenUsers.length === 1">s</span> to be saved to our database.</h3>
+        <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} user<span *ngIf="uncrawledUsers.length > 1">s</span> still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
+        <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0">{{unwrittenUsers.length}} crawled user<span *ngIf="unwrittenUsers.length > 1">s</span> still need<span *ngIf="unwrittenUsers.length === 1">s</span> to be saved to our database.</h3>
         <p>You can already use the tool, but keep in mind that some information may be incomplete or distorted.</p>
         <img 
         class="icon" 
