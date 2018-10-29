@@ -15,10 +15,13 @@ export class TweetComponent implements OnChanges {
     @Input('cards')
     cards = true;
 
+    lastTweetId;
+
     @ViewChild('tweetElement') tweetElement: ElementRef;
 
     ngOnChanges() {
-        if ( this.tweetId) {
+        if ( this.tweetId && this.tweetId !== this.lastTweetId) {
+            this.lastTweetId = this.tweetId;
             window['twttr'].ready( twttr => {
                 const domTweet = this.tweetElement.nativeElement;
                 // Remove old tweet if present
@@ -37,6 +40,8 @@ export class TweetComponent implements OnChanges {
                     ).then(() => {
                         // Callback to parent for timeline loading animation
                         this.rendered.emit(this.tweetId);
+                    }).catch( () => {
+                        console.log('createTweet() Promise has been rejected by reload.');
                     });
                 } else {
                     // Create tweet from tweetId
@@ -51,6 +56,8 @@ export class TweetComponent implements OnChanges {
                     ).then(() => {
                         // Callback to parent for timeline loading animation
                         this.rendered.next(this.tweetId);
+                    }).catch( () => {
+                        console.log('createTweet() Promise has been rejected by reload.');
                     });
                 }
             });
