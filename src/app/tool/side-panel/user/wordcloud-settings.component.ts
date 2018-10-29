@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CommunicationService } from '../../services/communication.service';
+import { TourService } from '../../services/tour.service';
 
 @Component({
     selector: 'app-wordcloud-settings',
@@ -20,6 +21,7 @@ export class WordcloudSettingsComponent {
     constructor(
         private localStorageService: LocalStorageService,
         private communicationService: CommunicationService,
+        private tourService: TourService
     ) {
         const settings = this.localStorageService.getWordcloudSettings();
         if (settings) {
@@ -28,6 +30,13 @@ export class WordcloudSettingsComponent {
             });
             this.updateWordcloudSettings();
         }
+        this.tourService.cloudSettingsOpen.subscribe( open => {
+            if (open) {
+                this.open = true;
+            } else {
+                this.open = false;
+            }
+        });
     }
 
     toggleMenu(): void {
