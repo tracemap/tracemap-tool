@@ -20,6 +20,7 @@ export class CommunicationService {
     userInfo = new BehaviorSubject<object>(undefined);
     timelineSettings = new BehaviorSubject<object>(undefined);
     wordcloudSettings = new BehaviorSubject<object>(undefined);
+    userIds = new BehaviorSubject<string[]>(undefined);
 
     constructor(
         private apiService: ApiService

@@ -10,6 +10,7 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressBarModule } from '@angular/material';
 
 import { ToolComponent } from './tool.component';
 import { CookiePolicyComponent } from './cookie-policy.component';
@@ -26,6 +27,7 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
     import { TourComponent } from './main-panel/tour.component';
     import { ZoomComponent } from './main-panel/zoom.component';
     import { TimesliderComponent } from './main-panel/timeslider.component';
+    import { ProgressBarComponent } from './main-panel/progress-bar.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
     import { SearchbarComponent } from './side-panel/searchbar.component';
     import { ShareComponent } from './side-panel/share.component';
@@ -65,6 +67,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
         MatCheckboxModule,
         MatSliderModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
         MatRadioModule,
         FormsModule
     ],
@@ -92,6 +95,7 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
             TourComponent,
             ZoomComponent,
             TimesliderComponent,
+            ProgressBarComponent,
         SidePanelComponent,
             SearchbarComponent,
             ShareComponent,

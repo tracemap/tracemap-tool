@@ -1,0 +1,74 @@
+.content {
+    position: fixed;
+    z-index: 4;
+    top: 10px;
+    left: 379px;
+    width: 360px;
+    padding-top: 8px;
+    background-color: white;
+    box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "wrapper"
+        "progress_bar";
+
+    .wrapper {
+        grid-area: wrapper;
+        display: grid;
+        &.unfinished {
+            grid-template-columns: auto 36px;
+            grid-template-rows: auto auto 32px;
+            grid-template-areas:
+                "uncrawled_header uncrawled_header"
+                "unwritten_header unwritten_header"
+                "paragraph icon";
+        }
+        &.finished {
+            grid-template-columns: auto 88px;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                "finished_header finished_header"
+                "paragraph button";
+        }
+        h3 {
+            margin: 0px 8px;
+            margin-bottom: 2px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .uncrawled-header {
+            grid-area: uncrawled_header;
+        }
+        .unwritten-header {
+            grid-area: unwritten_header;
+        }
+        .finished-header {
+            grid-area: finished_header;
+        }
+        p {
+            margin: 0px 8px;
+            margin-bottom: 2px;
+            grid-area: paragraph;
+            line-height: 14px;
+            font-size: 13px;
+        }
+        .icon {
+            grid-area: icon;
+            width: 28px;
+            height: 28px;
+            margin-bottom: 3px;
+        }
+        button {
+            grid-area: button;
+            width: 80px;
+            margin: 0px 8px 8px 0px;
+            height: 28px;
+            font-size: 15px;
+        }
+    }
+    .progress-bar {
+        grid-area: progress_bar;
+    }
+}
