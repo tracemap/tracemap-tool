@@ -1,0 +1,28 @@
+<div class="content"
+*ngIf="active">
+    <div class="wrapper unfinished"
+    *ngIf="!finished">
+        <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} user<span *ngIf="uncrawledUsers.length > 1">s</span> still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
+        <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0">{{unwrittenUsers.length}} crawled user<span *ngIf="unwrittenUsers.length > 1">s</span> still need<span *ngIf="unwrittenUsers.length === 1">s</span> to be saved to our database.</h3>
+        <p>You can already use the tool, but keep in mind that some information may be incomplete or distorted.</p>
+        <img 
+        class="icon" 
+        srcset="
+        ../../../assets/images/danger-red_128.png 4x,
+        ../../../assets/images/danger-red_64.png 2x,
+        ../../../assets/images/danger-red_32.png 1x
+        "
+        src="../../../assets/images/danger-red_32.png">
+    </div>
+    <div class="wrapper finished"
+    *ngIf="finished">
+        <h3 class="finished-header">Your TraceMap is up to date.</h3>
+        <p>Please reload this page to see the updated tracemap & metrics.</p>
+        <button class="button purple-button" (click)="reload()">Reload</button>
+    </div>
+    <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    color="primary"
+    [value]="100 - ((( (uncrawledUsers.length * 2) + unwrittenUsers.length) / (users.length * 2)) * 100)"></mat-progress-bar>
+</div>
