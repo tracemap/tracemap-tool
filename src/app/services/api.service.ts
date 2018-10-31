@@ -99,12 +99,12 @@ export class ApiService {
 
     getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
         console.log('#apiService#: getFollowers');
-        const userIds = retweeterIds.concat([authorId]);
+        retweeterIds.push(authorId);
         const url = this.url + '/neo4j/get_followers';
         const body = JSON.stringify({
             email: this.email,
             session_token: this.sessionToken,
-            user_ids: userIds
+            user_ids: retweeterIds
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -124,6 +124,7 @@ export class ApiService {
                 }).subscribe( followersList => {
                     tracemapData['followers'] = followersList;
                     this.tracemapData.next(tracemapData);
+                    console.log(tracemapData);
                     resolve( tracemapData);
             });
         });
