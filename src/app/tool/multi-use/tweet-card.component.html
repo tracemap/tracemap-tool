@@ -1,6 +1,6 @@
 <div 
 class="content"
-[ngClass]="{'rendered':cardRendered && retweetCount}">
+[ngClass]="{'rendered':cardRendered}">
     <div class="tweet-container" *ngIf="tweetId">
         <tweet (rendered)="tweetRendered(tweetId)" class="tweet" [tweetId]="tweetId" [cards]="false"></tweet>
     </div>
