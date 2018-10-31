@@ -2,6 +2,7 @@
 .content {
     width: 308px;
     margin-top: 20px;
+    visibility: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 50px;

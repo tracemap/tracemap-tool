@@ -25,8 +25,12 @@ export class TweetCardComponent implements OnChanges {
 
     ngOnChanges() {
         if ( this.tweetId && !this.retweetCount) {
-            this.apiService.getTweetInfo(this.tweetId).subscribe( tweetInfo => {
-                this.retweetCount = tweetInfo[this.tweetId]['retweet_count'];
+            this.apiService.getTweetInfo(this.tweetId).subscribe( response => {
+                if (response) {
+                    // retweetCount is checked in template before rendered holds true
+                    // as a workaround to not show tweets which are not existing (anymore)
+                    this.retweetCount = response[this.tweetId]['retweet_count'];
+                }
             });
         }
     }
