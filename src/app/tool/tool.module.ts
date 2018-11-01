@@ -49,7 +49,6 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
 import { CommunicationService } from './services/communication.service';
 import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
-import { TweetService } from './services/tweet.service';
 import { TourService } from './services/tour.service';
 import { WordcloudService } from './services/wordcloud.service';
 
@@ -75,7 +74,6 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
       GraphService,
       CommunicationService,
       LocalStorageService,
-      TweetService,
       TourService,
       WordcloudService
     ],

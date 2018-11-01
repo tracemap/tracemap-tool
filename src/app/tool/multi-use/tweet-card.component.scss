@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 .content {
     width: 308px;
-    margin-top: 20px;
+    height: 0px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 50px;
@@ -11,6 +11,8 @@
     visibility: hidden;
     &.rendered {
         visibility: visible;
+        margin-top: 20px;
+        height: auto;
     }
     .tweet-container {
         grid-area: tweet_container;
