@@ -131,7 +131,6 @@ export class ToolComponent implements OnInit {
                     const promiseArray: Array<any> = [];
                     this.tracemapData['tweet_data']['retweeter_ids']
                         .forEach( retweeterId => {
-                            console.log(retweeterId);
                             const retweeterInfo = retweetersInfo[retweeterId]['user'];
                             const tmp = {};
                             tmp['favourites_count'] = retweeterInfo['favourites_count'];

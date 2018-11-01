@@ -99,12 +99,12 @@ export class ApiService {
 
     getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
         console.log('#apiService#: getFollowers');
-        retweeterIds.push(authorId);
+        const userIds = retweeterIds.concat([authorId]);
         const url = this.url + '/neo4j/get_followers';
         const body = JSON.stringify({
             email: this.email,
             session_token: this.sessionToken,
-            user_ids: retweeterIds
+            user_ids: userIds
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
