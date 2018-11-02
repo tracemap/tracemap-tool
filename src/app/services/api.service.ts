@@ -124,7 +124,6 @@ export class ApiService {
                 }).subscribe( followersList => {
                     tracemapData['followers'] = followersList;
                     this.tracemapData.next(tracemapData);
-                    console.log(tracemapData);
                     resolve( tracemapData);
             });
         });

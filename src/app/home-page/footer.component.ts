@@ -10,16 +10,16 @@ import { Router, RouterLinkActive } from '@angular/router';
 export class FooterComponent{
     navItems1 = [
         {
-            label: "Home",
-            path: "/home"
+            label: 'Home',
+            path: '/home'
         },
         {
-            label: "About Us",
-            path: "/about"
+            label: 'About Us',
+            path: '/about'
         },
         {
-            label: "Information",
-            path: "/information"
+            label: 'Information',
+            path: '/information'
         }
     ];
 
@@ -29,12 +29,12 @@ export class FooterComponent{
         //     path: "/codeofconduct"
         // },
         {
-            label: "Help Us",
-            path: "/helpus"
+            label: 'Help Us',
+            path: '/helpus'
         },
         {
-            label: "Imprint",
-            path: "/imprint"
+            label: 'Imprint',
+            path: '/imprint'
         }
     ];
 
@@ -42,8 +42,7 @@ export class FooterComponent{
         private router: Router
     ){}
 
-    navigate(location:string):void {
-        console.log("hit it!");
+    navigate(location: string): void {
         this.router.navigate([location]);
     }
 }

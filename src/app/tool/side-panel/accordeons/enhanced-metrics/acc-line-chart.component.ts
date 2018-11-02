@@ -136,7 +136,6 @@ export class AccLineChartComponent implements OnChanges {
     }
 
     openFullScreen() {
-        console.log('open full-screen');
         this.fullScreen = true;
     }
 

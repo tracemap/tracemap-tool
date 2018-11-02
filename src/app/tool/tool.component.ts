@@ -160,7 +160,6 @@ export class ToolComponent implements OnInit {
 
         // Necessary because the twitter api sometimes returns users multiple times
         const nodesChecked = [];
-        console.log(this.tracemapData);
         this.tracemapData['tweet_data']['retweeter_ids'].forEach( retweeter => {
             if ( nodesChecked.indexOf(retweeter) < 0) {
                 nodesChecked.push(retweeter);
@@ -183,7 +182,6 @@ export class ToolComponent implements OnInit {
             });
         } else {
             this.graphData['auther_unknown'] = true;
-            console.log('author missing');
         }
 
         graphElements['nodes'].push(this.graphData['author_info']);

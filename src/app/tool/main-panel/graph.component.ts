@@ -77,7 +77,6 @@ export class GraphComponent {
                 this.graphData.links = graphData['links'];
                 this.graphData.author_info = graphData['author_info'];
                 this.graphData.retweet_info = graphData['retweet_info'];
-                console.log('GraphComponent: Graph data added.');
                 this.init();
             }
         });
@@ -178,7 +177,6 @@ export class GraphComponent {
     }
 
     resetGraph() {
-        console.log('resetting graph');
         if ( this.simulation) {
             this.simulation.alpha(0);
             this.simulation.nodes([]);
@@ -219,7 +217,6 @@ export class GraphComponent {
         this.width = $('.d3-graph').width();
         this.height = $('.d3-graph').height();
         this.dpr = window.devicePixelRatio || 1;
-        console.log('dpr: ' + this.dpr);
         this.canvas = document.querySelector('.d3-graph');
         this.canvas.width = this.width * this.dpr;
         this.canvas.height = this.height * this.dpr;
@@ -553,7 +550,6 @@ export class GraphComponent {
             relTimestampList.push(node.rel_timestamp);
         });
         const timeRange = lastRetweetTime - tweetTime;
-        console.log('GraphComponent: Timestamps added.');
         this.graphService.timeRange.next(timeRange);
         this.graphService.relTimestampList.next(relTimestampList);
     }

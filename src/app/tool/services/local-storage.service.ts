@@ -36,7 +36,6 @@ export class LocalStorageService {
             try {
                 return JSON.parse(stringDict);
             } catch (e) {
-                console.log('Destroying corrupt browser storage...');
                 this.remove(key);
                 return {};
             }

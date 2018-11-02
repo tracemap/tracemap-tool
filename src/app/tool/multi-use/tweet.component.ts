@@ -41,7 +41,6 @@ export class TweetComponent implements OnChanges {
                         // Callback to parent for timeline loading animation
                         this.rendered.emit(this.tweetId);
                     }).catch( () => {
-                        console.log('createTweet() Promise has been rejected by reload.');
                     });
                 } else {
                     // Create tweet from tweetId
@@ -57,7 +56,6 @@ export class TweetComponent implements OnChanges {
                         // Callback to parent for timeline loading animation
                         this.rendered.next(this.tweetId);
                     }).catch( () => {
-                        console.log('createTweet() Promise has been rejected by reload.');
                     });
                 }
             });

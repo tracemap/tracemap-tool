@@ -86,7 +86,6 @@ export class TimelineComponent implements OnChanges {
                     }
                 });
                 this.wordcloudService.selectedWord.subscribe( word => {
-                        console.log('called ngOnChanges');
                     if (this.filterWord && !word) {
                         this.filterWord = undefined;
                         this.resort();
@@ -95,7 +94,6 @@ export class TimelineComponent implements OnChanges {
                         this.resort();
                     }
                 });
-                console.log('initial resort called');
                 this.resort(true);
             });
         }
