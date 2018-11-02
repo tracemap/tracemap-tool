@@ -34,7 +34,7 @@ export class MenuComponent {
             path: '/learn-more'
         },
         {
-            label: 'Donate A Token',
+            label: 'Donate a Token',
             path: '/donate-token'
         }
     ];
