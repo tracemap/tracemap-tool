@@ -8,9 +8,9 @@ import { MultiUseModule } from '../multi-use/multi-use.module';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatProgressSpinnerModule } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ToolComponent } from './tool.component';
 import { CookiePolicyComponent } from './cookie-policy.component';
@@ -66,8 +66,8 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
         MatSlideToggleModule,
         MatCheckboxModule,
         MatSliderModule,
-        MatProgressSpinnerModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatRadioModule,
         FormsModule
     ],

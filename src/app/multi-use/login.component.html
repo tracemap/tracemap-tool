@@ -17,11 +17,20 @@ class="button purple-button login-menu-button"
                 #password
                 (keydown.enter)="login(emailAdress.value, password.value)"
                 placeholder="enter your password">
-                <button class="button purple-button login"
-                *ngIf="!forgotOpen"
-                (click)="login(emailAdress.value, password.value)">
-                    Login
-                </button>
+                <div class="login-button-container">
+                    <button class="button purple-button login"
+                    *ngIf="!forgotOpen"
+                    [disabled]="loginLoading"
+                    (click)="login(emailAdress.value, password.value)">
+                        Login
+                    </button>
+                    <mat-spinner
+                    class="spinner"
+                    [diameter]="25"
+                    [color]="primary"
+                    [strokeWidth]="3"
+                    *ngIf="loginLoading"></mat-spinner>
+                </div>
                 <p class="forgot-toggle"
                 (click)="toggleForgot()">
                     Forgot your password?

@@ -54,7 +54,8 @@ p {
     background-color: $color-purple-dark;
     color: #FFF;
     &:disabled {
-        visibility: hidden;
+        background-color: $color-gray-placeholder;
+        border: 2px solid $color-gray-placeholder;
     }
 }
 

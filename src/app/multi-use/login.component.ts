@@ -17,6 +17,7 @@ export class LoginComponent {
     registerOpen = false;
     forgotOpen = false;
     error: string;
+    loginLoading = false;
     loggedIn: boolean;
     // user data
     email: string;
@@ -57,6 +58,7 @@ export class LoginComponent {
 
     login(email: string, password: string): void {
         if (email && password) {
+            this.loginLoading = true;
             this.apiService.authCheckPassword(email, password).subscribe( response => {
                 const passwordCheck = response['password_check'];
                 if (passwordCheck) {
@@ -68,9 +70,11 @@ export class LoginComponent {
                         'session_token': sessionToken
                     });
                     this.guardService.loggedIn.next(true);
+                    this.loginLoading = false;
                     this.menuOpen = false;
                 } else {
                     this.error = response['error'];
+                    this.loginLoading = false;
                 }
             });
         } else {

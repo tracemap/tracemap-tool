@@ -52,7 +52,7 @@
 
     .button {
         margin-top: 10px;
-        margin-right: 20px;
+        margin-right: 10px;
         font-size: 18px;
         line-height: 30px;
         width: 70px;
@@ -104,6 +104,23 @@
                 margin-top: 15px;
                 margin-bottom: 5px;
                 font-size: 11.5px;
+            }
+        }
+        // just for the login spinner
+        .login-button-container {
+            width: 100%;
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 80px 32px;
+            grid-template-areas:
+                "button spinner";
+
+            .login.button {
+                grid-area: button;
+            }
+            .spinner {
+                grid-area: spinner;
+                margin-top: 13.5px;
             }
         }
     }
