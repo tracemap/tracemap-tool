@@ -1,7 +1,9 @@
 @import "../../../styles.scss";
 
 .searchbar {
-    width: 100%;
+    position: relative;
+    z-index: 3;
+    width: 360px;
     height: 100%;
     background-color: $color-gray-font-dark;
     align-items: center;

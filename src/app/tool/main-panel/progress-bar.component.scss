@@ -1,39 +1,45 @@
 .content {
     position: fixed;
-    z-index: 4;
-    top: 10px;
-    left: 379px;
-    width: 360px;
+    z-index: 3;
+    top: 0px;
+    left: 360px;
+    width: 370px;
+    min-height: 72px;
     padding-top: 8px;
     background-color: white;
     box-shadow: 0 0 1px 0 rgba(36,41,51,0.1), 0 2px 2px 0 rgba(15,19,26,0.1), 0 2px 4px 0 rgba(15,19,26,0.1);
+    transition: left 0.2s linear;
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: 1fr;
     grid-template-areas:
         "wrapper"
         "progress_bar";
+    &.collapsed {
+        left: 15px;
+        transition: left 0.2s linear;
+    }
 
     .wrapper {
         grid-area: wrapper;
         display: grid;
         &.unfinished {
-            grid-template-columns: auto 36px;
+            grid-template-columns: auto 36px 20px;
             grid-template-rows: auto auto 32px;
             grid-template-areas:
-                "uncrawled_header uncrawled_header"
-                "unwritten_header unwritten_header"
-                "paragraph icon";
+                "uncrawled_header uncrawled_header collapse_button"
+                "unwritten_header unwritten_header collapse_button"
+                "paragraph icon collapse_button";
         }
         &.finished {
-            grid-template-columns: auto 88px;
+            grid-template-columns: auto 88px 20px;
             grid-template-rows: auto auto;
             grid-template-areas:
-                "finished_header finished_header"
-                "paragraph button";
+                "finished_header finished_header collapse_button"
+                "paragraph button collapse_button";
         }
         h3 {
-            margin: 0px 8px;
+            margin: 3px 8px;
             margin-bottom: 2px;
             font-size: 13px;
             font-weight: 500;
@@ -48,8 +54,8 @@
             grid-area: finished_header;
         }
         p {
-            margin: 0px 8px;
-            margin-bottom: 2px;
+            margin-left: 8px;
+            margin-top: 2px;
             grid-area: paragraph;
             line-height: 14px;
             font-size: 13px;
@@ -58,7 +64,7 @@
             grid-area: icon;
             width: 28px;
             height: 28px;
-            margin-bottom: 3px;
+            margin-top: 5px;
         }
         button {
             grid-area: button;
@@ -67,8 +73,27 @@
             height: 28px;
             font-size: 15px;
         }
+        .collapse-button {
+            grid-area: collapse_button;
+            width: 15px;
+            height: 20px;
+            transform: rotateY(180deg);
+            opacity: 0.3;
+            align-self: center;
+            transition: transform 0.2s linear;
+            &.collapsed {
+                transform: rotateY(0deg);
+                transition: transform 0.2s linear;
+            }
+            &:hover {
+                opacity: 0.6;
+            }
+        }
     }
     .progress-bar {
         grid-area: progress_bar;
+        align-self: end;
+        height: 5px;
+        margin-top: 4px;
     }
 }

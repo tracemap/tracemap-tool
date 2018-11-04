@@ -17,6 +17,7 @@ export class ProgressBarComponent {
     unwrittenUsers: string[];
     active = false;
     finished = false;
+    collapsed = true;
 
     constructor(
         private communicationService: CommunicationService,
@@ -45,6 +46,9 @@ export class ProgressBarComponent {
 
     checkMissingUsers(): void {
         this.active = true;
+        setTimeout( () => {
+            this.collapsed = false;
+        }, 500);
         this.finished = false;
         TimerObservable
         .create(5000, 5000)
@@ -64,5 +68,9 @@ export class ProgressBarComponent {
 
     reload(): void {
         location.reload();
+    }
+
+    toggleCollapse(): void {
+        this.collapsed ? this.collapsed = false : this.collapsed = true;
     }
 }

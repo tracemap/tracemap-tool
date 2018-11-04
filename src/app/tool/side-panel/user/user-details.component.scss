@@ -25,6 +25,7 @@
     .go-back {
         grid-area: go_back;
         position: relative;
+        z-index: 3;
         background-color: $color-gray-font-dark;
         padding-left: 20px;
         align-items: center;

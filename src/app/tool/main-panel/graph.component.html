@@ -1,4 +1,4 @@
-<canvas class="d3-graph" (window:resize)="resizeCanvas()"></canvas>
+<canvas class="d3-graph" (window:resize)="resizeCanvas()" [ngClass]="{'empty': empty}"></canvas>
 <user 
 class="user"
 [ngClass]="{'rendered':userPreviewRendered}" 
@@ -7,3 +7,8 @@ class="user"
 *ngIf="hoveredNode"
 [style.top]="((hoveredNode.cy / dpr) - hoveredNode.r - 50) + 'px'"
 [style.left]="((hoveredNode.cx / dpr) + 365) + 'px'"></user>
+<div class="empty-container" *ngIf="empty">
+    <h3>There are no users in our database for this tweet.</h3>
+    <p>If the input tweet has retweeters which have a public profile,<br>
+    please wait until the missing users are crawled.</p>
+</div>
