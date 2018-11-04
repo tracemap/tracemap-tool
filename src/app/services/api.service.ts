@@ -238,4 +238,18 @@ export class ApiService {
             .post( url, body, {headers: this.jsonHeader})
             .map( response => response.json());
     }
+
+    loggingWriteLog( fileName: string, logObject: object) {
+        console.log('#apiService#: loggingWriteLog()');
+        const url = this.url + '/logging/write_log';
+        const body = JSON.stringify({
+            email: this.email,
+            session_token: this.sessionToken,
+            file_name: fileName,
+            log_object: logObject
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
 }

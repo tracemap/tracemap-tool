@@ -51,6 +51,7 @@ import { GraphService } from './services/graph.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TourService } from './services/tour.service';
 import { WordcloudService } from './services/wordcloud.service';
+import { LoggingService } from './services/logging.service';
 
 import { TimeLabelPipe } from './pipes/time-label.pipe';
 import { ToYearPipe } from './pipes/to-year.pipe';
@@ -75,7 +76,8 @@ import { LinkedStringPipe } from './pipes/linked-string.pipe';
       CommunicationService,
       LocalStorageService,
       TourService,
-      WordcloudService
+      WordcloudService,
+      LoggingService
     ],
     declarations: [
         ToolComponent,

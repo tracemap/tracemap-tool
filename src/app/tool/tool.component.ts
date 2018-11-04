@@ -6,6 +6,7 @@ import { ApiService } from '../services/api.service';
 import { GraphService } from './services/graph.service';
 import { CommunicationService } from './services/communication.service';
 import { LocalStorageService } from './services/local-storage.service';
+import { LoggingService } from './services/logging.service';
 
 @Component({
     selector: 'tool',
@@ -32,6 +33,7 @@ export class ToolComponent implements OnInit {
         private graphService: GraphService,
         private communicationService: CommunicationService,
         private localStorageService: LocalStorageService,
+        private loggingService: LoggingService
     ) {
         this.loadTwitterWidgetScript();
         this.graphService.graphData.subscribe( graphData => {
@@ -87,6 +89,7 @@ export class ToolComponent implements OnInit {
                 this.tweetId = params['tid'];
                 this.communicationService.resetData.next(true);
                 this.communicationService.tweetId.next(params['tid']);
+                this.loggingService.startTracemapGeneration(this.tweetId);
             }
             if ( params['uid']) {
                 this.graphService.activeNode.next(params['uid']);
@@ -218,6 +221,7 @@ export class ToolComponent implements OnInit {
         this.graphData['links'] = graphElements['links'];
 
         this.graphService.graphData.next(this.graphData);
+        this.loggingService.finishTracemapGeneration(this.tracemapData['tweet_data']['retweeter_ids'].length);
     }
 
     targetTweetNewer( sourceId: string, targetId: string): boolean {
