@@ -24,6 +24,6 @@ export class LoggingService {
         const loadingTimeSec = Math.floor(Date.now() / 1000) - this.tracemapLog['time_str'];
         this.tracemapLog['retweet_count'] = retweetCount;
         this.tracemapLog['loading_time_sec'] = loadingTimeSec;
-        this.apiService.loggingWriteLog( 'tracemaps-generated', this.tracemapLog);
+        this.apiService.loggingWriteLog( 'tracemaps-generated', this.tracemapLog).subscribe( reponse => {});
     }
 }

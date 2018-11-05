@@ -239,7 +239,7 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    loggingWriteLog( fileName: string, logObject: object) {
+    loggingWriteLog( fileName: string, logObject: object): Observable<object> {
         console.log('#apiService#: loggingWriteLog()');
         const url = this.url + '/logging/write_log';
         const body = JSON.stringify({
