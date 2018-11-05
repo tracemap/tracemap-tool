@@ -18,9 +18,9 @@ class="user-menu-button"
     src="../../assets/images/user-menu-white_32.png">
 </div>
 <div class="overlay" (click)="toggleMenu()" [ngClass]="{'open': menuOpen}"></div>
-<div class="user-menu tooltip" [ngClass]="{'open': menuOpen}">
-    <div class="shadow"></div>
-    <div class="arrow"></div>
+<div class="user-menu tooltip" [ngClass]="{'open': menuOpen, 'black': color == 'black'}">
+    <div class="shadow" [ngClass]="color"></div>
+    <div class="arrow" [ngClass]="color"></div>
     <div class="head">
         <h2>Hi {{username}}</h2>
         <div class="close-button" (click)="toggleMenu()">

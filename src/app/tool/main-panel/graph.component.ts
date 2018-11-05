@@ -21,6 +21,7 @@ export class GraphComponent {
         author_info: {},
         retweet_info: {}
     };
+    empty = false;
 
     renderedNodes = [];
     renderedLinks = [];
@@ -66,18 +67,22 @@ export class GraphComponent {
     ) {
         this.communicationService.tweetId.subscribe( tweetId => {
             if ( tweetId !== this.tracemapId) {
+                this.empty = false;
                 this.resetGraph();
                 this.tracemapId = tweetId;
             }
         });
         this.graphService.graphData.subscribe( graphData => {
             if ( graphData) {
-
-                this.graphData.nodes = graphData['nodes'];
-                this.graphData.links = graphData['links'];
-                this.graphData.author_info = graphData['author_info'];
-                this.graphData.retweet_info = graphData['retweet_info'];
-                this.init();
+                if (graphData['nodes'].length > 0) {
+                    this.graphData.nodes = graphData['nodes'];
+                    this.graphData.links = graphData['links'];
+                    this.graphData.author_info = graphData['author_info'];
+                    this.graphData.retweet_info = graphData['retweet_info'];
+                    this.init();
+                } else {
+                    this.empty = true;
+                }
             }
         });
         this.graphService.timesliderPosition.subscribe( time => {

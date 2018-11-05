@@ -28,6 +28,7 @@
     }
     &.black {
         background-color: #242933;
+        top: 12px;
     }
     &:hover {
         cursor: pointer;
@@ -85,6 +86,9 @@
         box-shadow: 0 0 1px 0 rgba(15,19,26,0.1), 0 1px 2px 0 rgba(15,19,26,0.1);
         margin-top: 30px;
         margin-right: 30px;
+        &.black {
+            margin-top: 12px;
+        }
 
         img {
             width: 18px;

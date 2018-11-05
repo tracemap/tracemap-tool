@@ -18,7 +18,7 @@ class="menu-button"
 <div class="overlay" (click)="closeMenu()" [ngClass]="{'open': open}">
 </div>
 <div class="menu" [ngClass]="{'open': open}">
-    <div class="close-button" (click)="closeMenu()">
+    <div class="close-button" (click)="closeMenu()" [ngClass]="color">
         <img srcset="
         ../../assets/images/close_128.png 4x,
         ../../assets/images/close_64.png 2x,
