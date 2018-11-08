@@ -28,9 +28,9 @@ export class TourComponent {
     data = [
         {
             head: 'The Network Graph',
-            text: 'You can see how the tweet reached each retweeting user by looking at the connections between them.<br>' +
+            text: 'You can see how the tweet reached each retweeter by looking at the connections between them.<br>' +
             'Bigger nodes indicate more influential users.<br><br>' +
-            'By Hovering a user node, the ingoing connections (friends) and outgoing connections (followers) are highlighted.',
+            'By hovering a user\'s node, the incoming connections (friends) and outgoing connections (followers) are highlighted.',
             selectors: ['.graph'],
             styles: {
                 top: '100px',
@@ -43,7 +43,7 @@ export class TourComponent {
             }
         }, {
             head: 'The Time-Slider',
-            text: 'Use this slider to see the network at any point of time between its creation and the present.',
+            text: 'Use this slider to see the network at any point in time between its creation and the present.',
             selectors: ['.timeslider', '.graph'],
             styles: {
                 bottom: '90px',
