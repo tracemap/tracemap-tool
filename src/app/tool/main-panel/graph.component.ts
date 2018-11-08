@@ -203,6 +203,7 @@ export class GraphComponent {
             this.width = $('.d3-graph').width();
             this.height = $('.d3-graph').height();
             this.dpr = window.devicePixelRatio;
+            console.log('device pixel ratio is ' + this.dpr);
             this.canvas = document.querySelector('.d3-graph');
             this.canvas.width = this.width * this.dpr;
             this.canvas.height = this.height * this.dpr;
@@ -219,12 +220,13 @@ export class GraphComponent {
     }
 
     init() {
-        this.width = $('.d3-graph').width();
-        this.height = $('.d3-graph').height();
         this.dpr = window.devicePixelRatio || 1;
+        this.width = $('.d3-graph').width() * this.dpr;
+        this.height = $('.d3-graph').height() * this.dpr;
+        console.log('device pixel ratio is ' + this.dpr);
         this.canvas = document.querySelector('.d3-graph');
-        this.canvas.width = this.width * this.dpr;
-        this.canvas.height = this.height * this.dpr;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
         this.context = this.canvas.getContext('2d');
         this.context.translate(0.5, 0.5);
         this.context.imageSmoothingEnabled = true;
@@ -237,7 +239,7 @@ export class GraphComponent {
         this.graphData.nodes.forEach( node => {
             node.out_degree = this.getNeighbours(node, 'out');
             node.degree = this.getNeighbours(node);
-            node.r = this.scale(node.out_degree) * 1.6;
+            node.r = this.scale(node.out_degree) * 1.6 * this.dpr;
             node.opacity = 1.0;
             node.color = 0;
         });
