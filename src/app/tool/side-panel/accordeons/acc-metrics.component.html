@@ -20,7 +20,7 @@
                 <p class="text">Ø Links per User</p>
                 <info-button
                 [arrowPos]="'left'"
-                [text]="'The number of links represents the density of a network.'"></info-button>
+                [text]="'The average number of links per user represents the density of the network.'"></info-button>
             </div>
             <div class="metric">
                 <p class="value">{{tracemapMetrics.user_number}}</p>
@@ -32,7 +32,7 @@
                 <p class="text">Propagation Delay</p>
                 <info-button
                 [arrowPos]="'left'"
-                [text]="'This amount of time passed from creation of the tweet until 50% of retweets happended.'"></info-button>
+                [text]="'This is the amount of time it took for this tweet to reach 50% of the current number of retweets.'"></info-button>
             </div>
         </div>
     </div>
@@ -65,14 +65,14 @@
                 <p class="text">Ø Tweets authored per User</p>
                 <info-button
                 [arrowPos]="'left'"
-                [text]="'If the average number of tweets authored by an account is very high compared to their age, this can be an indicator for low quality tweets or even bots.'"></info-button>
+                [text]="'If the number of tweets authored by an account is very high compared to its age, this can be an indicator for low quality tweets and/or automated accounts.'"></info-button>
             </div>
             <div class="metric">
                 <p class="value">{{userMetrics.avg_age | toYear:1}}</p>
                 <p class="text">Ø Account Age in Years</p>
                 <info-button
                 [arrowPos]="'left'"
-                [text]="'Accounts sharing misinformation are younger in average.'"></info-button>
+                [text]="'Accounts sharing misinformation are younger on average.'"></info-button>
             </div>
         </div>
     </div>
