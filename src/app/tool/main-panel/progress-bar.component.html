@@ -3,9 +3,9 @@
 [ngClass]="{'collapsed': collapsed}">
     <div class="wrapper unfinished"
     *ngIf="!finished">
-        <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">{{uncrawledUsers.length}} user<span *ngIf="uncrawledUsers.length > 1">s</span> still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
+        <h3 class="uncrawled-header" *ngIf="uncrawledUsers.length > 0">Progress: {{uncrawledUsers.length}} user<span *ngIf="uncrawledUsers.length > 1">s</span> still need<span *ngIf="uncrawledUsers.length === 1">s</span> to be crawled.</h3>
         <h3 class="unwritten-header" *ngIf="unwrittenUsers.length > 0 && uncrawledUsers.length == 0">{{unwrittenUsers.length}} crawled user<span *ngIf="unwrittenUsers.length > 1">s</span> still need<span *ngIf="unwrittenUsers.length === 1">s</span> to be saved to our database.</h3>
-        <p>You can already use the tool, but keep in mind that some information may be incomplete or distorted.</p>
+        <p>Tracemaps take a few minutes to be up-to-date. Wait for the notification to refresh your browser.</p>
         <img 
         class="icon" 
         srcset="
@@ -23,7 +23,7 @@
     <div class="wrapper finished"
     *ngIf="finished">
         <h3 class="finished-header">Your TraceMap is up to date.</h3>
-        <p>Please reload this page to see<br>the updated tracemap & metrics.</p>
+        <p>Please reload this page to see<br>the updated data.</p>
         <button class="button purple-button" (click)="reload()">Reload</button>
         <img 
         class="collapse-button"

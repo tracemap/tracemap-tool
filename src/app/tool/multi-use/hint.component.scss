@@ -92,4 +92,29 @@
             }
         }
     }
+    &.right {
+        margin-right: 245px;
+        margin-left: -245px;
+        .hint {
+            .shadow {
+                margin: 0px;
+                margin-top: 24px;
+                top: 0px;
+                right: -24px;
+
+                border-left: 12px solid rgba(15,19,26,0.2);
+                border-top: 12px solid transparent;
+                border-bottom: 12px solid transparent;
+            }
+            .arrow {
+                margin: 0px;
+                margin-top: 25px;
+                top: 0px;
+                right: -20px;
+                border-left: 10px solid white;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;               
+            }
+        }
+    }
 }

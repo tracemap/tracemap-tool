@@ -123,7 +123,7 @@ export class TimelineComponent implements OnChanges {
             }
             if (this.filterWord) {
                 this.timelineSorted = this.timelineSorted.filter( (tweet) => {
-                    const text = tweet['text'];
+                    const text = tweet['full_text'];
                     return text.indexOf(this.filterWord) >= 0;
                 });
             }
@@ -143,7 +143,7 @@ export class TimelineComponent implements OnChanges {
     }
 
     sendWordcloudTexts(timeline): void {
-        const timelineTexts = timeline.map( (d) => d['text']);
+        const timelineTexts = timeline.map( (d) => d['full_text']);
         this.wordcloudService.timelineTexts.next( timelineTexts);
 
     }

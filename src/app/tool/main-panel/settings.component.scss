@@ -35,15 +35,29 @@
     .body {
         .setting {
             margin-left: 20px;
+            padding-top: 20px;
+            margin-right: 20px;
+            display: grid;
+            grid-template-columns: auto 44px 1fr;
+            grid-template-rows: auto auto;
+            grid-template-areas:
+                "header info_button ."
+                "control control control";
 
             h2 {
-                padding-top: 20px;
+                grid-area: header;
                 padding-bottom: 16px;
                 color: $color-black-bg;
                 font-size: 18px;
             }
 
+            info-button {
+                margin-left: 20px;
+                grid-area: info_button;
+            }
+
             .control {
+                grid-area: control;
                 padding-bottom: 10px;
                 p {
                     font-size: 13.5px;
@@ -51,6 +65,9 @@
                     color: $color-gray-font-dark;
                 }
             }
+        }
+        .setting-nogrid {
+            display: block; 
         }
         .slider-toggle {
             .control {
@@ -91,8 +108,8 @@
             }
         }
         .footer {
-            position: absolute;
-            bottom: 0px;
+            position: relative;
+            margin-top: 20px;    
             width: 100%;
             height: 20px;
             font-size: 12px;
