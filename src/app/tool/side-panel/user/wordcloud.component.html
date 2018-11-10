@@ -3,6 +3,6 @@
     <app-wordcloud-settings class="wordcloud-settings"></app-wordcloud-settings>
     <info-button 
     [arrowPos]="'left'"
-    [text]="'These are the words which appear often in the last 200 tweets & retweets of this user.'"></info-button>
+    [text]="'These are the words/handles/hashtags most frequently used in the last 200 tweets and retweets of this user.'"></info-button>
     <canvas #canvasElement class="wordcloud-canvas" [ngClass]="{'hovered': hovered}" (click)="unhighlight()"></canvas>
 </div>

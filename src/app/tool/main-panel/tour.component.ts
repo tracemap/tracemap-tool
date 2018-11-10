@@ -27,7 +27,7 @@ export class TourComponent {
 
     data = [
         {
-            head: 'The Network Graph',
+            head: 'The TraceMap',
             text: 'You can see how the tweet reached each retweeter by looking at the connections between them.<br>' +
             'Bigger nodes indicate more influential users.<br><br>' +
             'By hovering a user\'s node, the incoming connections (friends) and outgoing connections (followers) are highlighted.',
