@@ -34,8 +34,8 @@
         </p>
         <p class="search-hint"
         *ngIf="!loggedIn">
-            The public beta will be online soon.<br>
-            Subscribe to the <a (click)="scrollToID('newsletter')">newsletter</a> and stay up to date.
+            We are in closed beta.<br>
+            You can queue up for the closed beta and<br>subscribe to our newsletter <a (click)="scrollToID('newsletter')">here</a>.
         </p>
         <p class="no-search-hint">
             To use the tool, please switch to a bigger screen.
@@ -119,20 +119,36 @@
     </div>
     <div class="section-wrapper white-bg" id="newsletter">
         <div class="section content-box">
-            <h2>Stay up to date</h2>
+            <h2>Queue Up &<br>Stay up to date</h2>
             <div class="box-content newsletter-box">
-                <p>TraceMap is still in closed beta, but we are constantly pushing things forward. Be one of the first to know about new features and releases of TraceMap.</p>
+                <p>We are regularly inviting new user batches to our closed beta.<br>Here you can subscribe to our newsletter and queue up for one of the next user batches given access to our beta.</p>
                 <div class="newsletter-area">
                     <div *ngIf="!subscriptionResponse" class="newsletter-form">
-                        <input type="text" 
-                        #emailAdress
-                        (keydown.enter)="addToNewsletter( emailAdress.value)"
-                        placeholder="Your E-Mail">
-                        <button class="purple-button button" 
-                        (click)="addToNewsletter( emailAdress.value)">
-                            Subscribe
-                        </button>
-                        <p>By subscribing to our newsletter, you accept our <a href="./privacy">Terms</a>.</p>
+                        <div class="email-form">
+                            <input type="text" 
+                            #emailAdress
+                            (keydown.enter)="addToNewsletter( emailAdress.value)"
+                            placeholder="Your E-Mail">
+                            <button class="purple-button button" 
+                            (click)="addToNewsletter( emailAdress.value)">
+                                Subscribe
+                            </button>
+                        </div>
+                        <div class="checkboxes">
+                            <div class="option beta-check">
+                                <mat-checkbox 
+                                color="primary" 
+                                [(ngModel)]="subscriptions.beta_queue"></mat-checkbox>
+                                <p>Beta Queue</p>
+                            </div>
+                            <div class="option newsletter-check">
+                                <mat-checkbox 
+                                color="primary" 
+                                [(ngModel)]="subscriptions.newsletter"></mat-checkbox>
+                                <p>Newsletter</p>
+                            </div>
+                        </div>
+                        <p class="privacy-hint">By subscribing to our newsletter, you accept our <a href="./privacy">Terms</a>.</p>
                     </div>
                     <p *ngIf="emailResponse" [innerHTML]="emailResponse">
                     </p>

@@ -19,6 +19,10 @@ export class HomePageComponent {
     disabled = false;
     loggedIn = false;
     subscriptionResponse = undefined;
+    subscriptions = {
+        beta_queue: true,
+        newsletter: true,
+    };
     emailResponse = '';
 
     constructor(
@@ -82,6 +86,7 @@ export class HomePageComponent {
                 emailAdress !== '' &&
                 this.isValidEmail(emailAdress)) {
             this.apiService.addToNewsletter(emailAdress).subscribe( response => {
+                this.subscriptionResponse = true;
                 if (response['error']) {
                     this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
                 } else {
