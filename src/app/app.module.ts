@@ -5,6 +5,7 @@ import { GestureConfig } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { MatCheckboxModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { MultiUseModule } from './multi-use/multi-use.module';
 
@@ -22,6 +23,7 @@ import { PrivacyComponent } from './home-page/privacy.component';
 import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
 import { UserService } from './services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { UserService } from './services/user.service';
     HttpModule,
     AppRoutingModule,
     RouterModule,
-    MultiUseModule
+    MultiUseModule,
+    MatCheckboxModule,
+    FormsModule
   ],
   providers: [
     ApiService,

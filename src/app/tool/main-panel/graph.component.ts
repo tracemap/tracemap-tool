@@ -492,7 +492,7 @@ export class GraphComponent {
         this.context.moveTo(d.source.cx, d.source.cy);
         this.context.lineTo( xPos, yPos);
         this.context.strokeStyle = 'rgba(' + this.linkColors[d.color] + ',' + d.opacity + ')';
-        this.context.lineWidth = 0.8;
+        this.context.lineWidth = 0.8 * this.dpr;
         this.context.stroke();
         if ( this.settings.arrows) {
             this.drawHead(d, xPos, yPos, angle);
@@ -502,7 +502,7 @@ export class GraphComponent {
     drawHead(node, xPos, yPos, angle) {
         this.context.beginPath();
         this.context.moveTo(xPos, yPos);
-        const headlen = 4;
+        const headlen = 4 * this.dpr;
         const headRightX = xPos - headlen * Math.cos(angle - Math.PI / 6);
         const headRightY = yPos - headlen * Math.sin(angle - Math.PI / 6);
         this.context.lineTo( headRightX, headRightY);
@@ -511,7 +511,7 @@ export class GraphComponent {
         const headLeftY = yPos - headlen * Math.sin(angle + Math.PI / 6);
         this.context.lineTo( headLeftX, headLeftY);
         this.context.strokeStyle = 'rgba(' + this.linkColors[1] + ',' + node.opacity + ')';
-        this.context.lineWbidth = 1.5;
+        this.context.lineWidth = 1 * this.dpr;
         this.context.stroke();
     }
 

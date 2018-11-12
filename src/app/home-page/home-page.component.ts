@@ -19,7 +19,12 @@ export class HomePageComponent {
     disabled = false;
     loggedIn = false;
     subscriptionResponse = undefined;
+    subscriptions = {
+        beta_queue: true,
+        newsletter: true,
+    };
     emailResponse = '';
+    emailError = false;
 
     constructor(
         private apiService: ApiService,
@@ -78,18 +83,26 @@ export class HomePageComponent {
 
     addToNewsletter( emailAdress): void {
         this.subscriptionResponse = undefined;
-        if ( emailAdress &&
-                emailAdress !== '' &&
-                this.isValidEmail(emailAdress)) {
-            this.apiService.addToNewsletter(emailAdress).subscribe( response => {
-                if (response['error']) {
-                    this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
-                } else {
-                    this.emailResponse = 'Tanks for your interest.<br>Your subscription was successful.';
-                }
-            });
+        if (this.subscriptions.beta_queue || this.subscriptions.newsletter) {
+            if ( emailAdress &&
+                    emailAdress !== '' &&
+                    this.isValidEmail(emailAdress)) {
+                    this.emailError = false;
+                this.apiService.addToNewsletter(emailAdress).subscribe( response => {
+                    this.subscriptionResponse = true;
+                    if (response['error']) {
+                        this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
+                    } else {
+                        this.emailResponse = 'Thanks for your interest.<br>Please check your inbox and confirm your email address.';
+                    }
+                });
+            } else {
+                this.emailError = true;
+                this.emailResponse = 'Please enter a valid email.';
+            }
         } else {
-            this.emailResponse = 'Please enter a valid email.';
+            this.emailError = true;
+            this.emailResponse = 'Please select at least one of the checkboxes.';
         }
     }
 

@@ -31,7 +31,7 @@ export class ApiService {
     ) {
         this.userService.credentials.subscribe( credentials => {
             if (credentials) {
-                this.email = credentials['email'];
+                this.email = credentials['email'].toLowerCase();
                 this.sessionToken = credentials['session_token'];
             }
         });
@@ -144,11 +144,26 @@ export class ApiService {
 
     // Nontool Methods
 
+    // Deprecated, use startUserSubscriptioin(...)
     addToNewsletter( email: string): Observable<string> {
         console.log('#apiService#: addToNewsletter()');
         const url = this.url + '/newsletter/save_subscriber';
         const body = JSON.stringify({
-            email: email
+            email: email.toLowerCase()
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => response.json());
+    }
+
+    startUserSubscription( email: string, subscriptions: object): Observable<string> {
+        console.log('#apiService#: addToNewsletter()');
+        const url = this.url + '/newsletter/start_subscription';
+        console.log(subscriptions);
+        const body = JSON.stringify({
+            email: email.toLowerCase(),
+            beta_queue: subscriptions['beta_queue'],
+            newsletter: subscriptions['newsletter']
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -160,7 +175,7 @@ export class ApiService {
         const url = this.url + '/auth/add_user';
         const body = JSON.stringify({
             username: username,
-            email: email
+            email: email.toLowerCase()
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -171,7 +186,7 @@ export class ApiService {
         console.log('#apiService#: authCheckPassword()');
         const url = this.url + '/auth/check_password';
         const body = JSON.stringify({
-            email: email,
+            email: email.toLowerCase(),
             password: password
         });
         return this.http
@@ -183,7 +198,7 @@ export class ApiService {
         console.log('#apiService#: authCheckSession()');
         const url = this.url + '/auth/check_session';
         const body = JSON.stringify({
-            email: email,
+            email: email.toLowerCase(),
             session_token: sessionToken
         });
         return this.http
@@ -195,7 +210,7 @@ export class ApiService {
         console.log('#apiService#: authGetUserData()');
         const url = this.url + '/auth/get_user_data';
         const body = JSON.stringify({
-            email: email,
+            email: email.toLowerCase(),
             session_token: sessionToken
         });
         return this.http
@@ -207,7 +222,7 @@ export class ApiService {
         console.log('#apiService#: authChangePassword()');
         const url = this.url + '/auth/change_password';
         const body = JSON.stringify({
-            email: email,
+            email: email.toLowerCase(),
             old_password: oldPassword,
             new_password: newPassword
         });
@@ -220,7 +235,7 @@ export class ApiService {
         console.log('#apiService#: authRequestReset()');
         const url = this.url + '/auth/request_reset_password';
         const body = JSON.stringify({
-            email: email
+            email: email.toLowerCase()
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -231,7 +246,7 @@ export class ApiService {
         console.log('#apiService#: authDeleteUser()');
         const url = this.url + '/auth/delete_user';
         const body = JSON.stringify({
-            email: email,
+            email: email.toLowerCase(),
             password: password
         });
         return this.http

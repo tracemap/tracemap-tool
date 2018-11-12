@@ -90,8 +90,8 @@ export class AccEnhancedMetricsComponent {
                 lineGraphData['valid'] = users;
             }
             lineGraphData['headline'] = 'Retweets by time';
-            lineGraphData['info_text'] = 'Here you can see how up to the last 100 retweets evolved by time.<br>' +
-                'A gap at the beginning of a line indicates, that the source Tweet has more than 100 retweets.';
+            lineGraphData['info_text'] = 'Here you can see how the last 100 retweets evolved in time.<br>' +
+                'A data gap will be present at the origin when the source tweet has more than 100 retweets.';
             this.retweetsToTimeData = lineGraphData;
             this.rendered.next(true);
         }
@@ -107,8 +107,8 @@ export class AccEnhancedMetricsComponent {
             };
         }).sort( (a, b) => b.value - a.value);
         followersData['headline'] = 'Users sorted by followers';
-        followersData['info_text'] = 'Here you can see the users sorted by the amount of followers they got.<br>' +
-            'You can check if the influential Users have many followers or if they are just well connected in this network.';
+        followersData['info_text'] = 'Here you can see the users sorted by the total amount of followers they have.<br>' +
+            'You can check if the influential users actually have many followers or if they are just well connected within this tracemap.';
         this.usersByFollowersData = followersData;
     }
 
@@ -123,7 +123,7 @@ export class AccEnhancedMetricsComponent {
         }).sort( (a, b) => b.value - a.value);
         tweetsData['headline'] = 'Users sorted by authored tweets';
         tweetsData['info_text'] = 'Here you can see the users sorted by the amount of tweets they authored.<br>' +
-            'You can check who is tweeting a lot compared to the outreach the user got.';
+            'You can check who tweets a lot compared to their outreach.';
         this.usersByTweetsData = tweetsData;
     }
 }

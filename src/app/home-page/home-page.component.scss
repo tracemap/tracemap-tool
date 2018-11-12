@@ -1,7 +1,6 @@
 @import "../../styles.scss";
 
 .content {
-
     .full-screen {
         &.start {
             background-color: transparent;
@@ -220,56 +219,85 @@
 
             .newsletter-area {
                 grid-area: newsletter_area;
-
-                p {
-                    margin-top: -30px;
-                    color: $color-header;
-
-                    &.subscription-answer {
-                        font-weight: 400;
-                    }
-                }
-
                 .newsletter-form {
-                    margin-bottom: 25px;
-                    display: flex;
-                    flex-wrap: wrap;
+                    display: grid;
+                    grid-template-columns:  auto;
+                    grid-template-rows: auto auto auto;
+                    grid-template-areas:
+                        "form"
+                        "checkboxes"
+                        "privacy_hint";
+                    
+                    .email-form {
+                        grid-area: form;
+                        display: flex;
+                        flex-wrap: wrap;
+                        input {
+                            border: 1.5px solid #C0C4CC;
+                            min-width: 280px;
+                            max-width: 380px;
+                            width: 100%;
+                            height: 43px;
+                            border-radius: 4px;
+                            font-size: 18px;
+                            line-height: 28px;
+                            padding-left: 15px;
+                            margin-bottom: 15px;
+                            &::placeholder {
+                                color: #A8ABB3;
+                                opacity: 1;
+                            }
+                        }
 
-                    input {
-                        border: 1.5px solid #C0C4CC;
-                        width: 380px;
-                        height: 43px;
-                        border-radius: 4px;
-                        font-size: 18px;
-                        line-height: 28px;
-                        padding-left: 15px;
-                        margin-bottom: 15px;
-                        &::placeholder {
-                            color: #A8ABB3;
-                            opacity: 1;
+                        .purple-button {
+                            height: 42px;
+                            width: 142px;
+                            margin-bottom: 15px;
+                            vertical-align: top;
                         }
                     }
-
-                    .purple-button {
-                        height: 42px;
-                        width: 142px;
-                        margin-bottom: 15px;
-                        vertical-align: top;
+                    .checkboxes {
+                        grid-area: checkboxes;
+                        display: flex;
+                        flex-wrap: wrap;
+                        .option {
+                            height: 20px;
+                            margin-bottom: 10px;
+                            width: 140px;
+                            display: grid;
+                            grid-template-columns: 22px auto;
+                            grid-template-areas:
+                                "checkbox label";
+                            mat-checkbox {
+                                grid-area: checkbox;
+                            }
+                            p {
+                                grid-area: label;
+                                font-size: 15px;
+                                line-height: 20px;
+                                margin-bottom: 0px;
+                                margin-left: 5px;
+                            }
+                        }
                     }
-                    p {
+                    .privacy-hint {
+                        grid-area: privacy_hint;
                         font-size: 11px;
+                        line-height: 11px;
                         font-weight: 400;
-                        margin: 0px;
+                        margin-bottom: 20px;
                         padding: 0px;
-                        margin-top: -15px;
                     }
+                }
+                .error {
+                    color: red;
+                    font-weight: 400;
                 }
             }
 
 
             .follow-us {
                 grid-area: social_links;
-                height: 30px;
                 display: grid;
                 grid-template-columns: 83px auto;
                 grid-template-rows: auto;
