@@ -12,9 +12,9 @@ export class LoggingService {
     ) {}
 
     startTracemapGeneration(tweetId: string) {
-        const timeString = Math.floor(Date.now() / 1000).toString();
+        const date = new Date()
         this.tracemapLog = {
-            time_str: timeString,
+            datetime: date.toISOString(),
             tweet_id_str: tweetId,
             count: 1
         };
