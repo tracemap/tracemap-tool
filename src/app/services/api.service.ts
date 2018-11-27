@@ -144,26 +144,13 @@ export class ApiService {
 
     // Nontool Methods
 
-    // Deprecated, use startUserSubscriptioin(...)
-    addToNewsletter( email: string): Observable<string> {
-        console.log('#apiService#: addToNewsletter()');
-        const url = this.url + '/newsletter/save_subscriber';
-        const body = JSON.stringify({
-            email: email.toLowerCase()
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    startUserSubscription( email: string, subscriptions: object): Observable<string> {
+    newsletterStartSubscription( email: string, subscriptions: object): Observable<string> {
         console.log('#apiService#: addToNewsletter()');
         const url = this.url + '/newsletter/start_subscription';
-        console.log(subscriptions);
         const body = JSON.stringify({
             email: email.toLowerCase(),
-            beta_queue: subscriptions['beta_queue'],
-            newsletter: subscriptions['newsletter']
+            beta_subscribed: subscriptions['beta_queue'],
+            newsletter_subscribed: subscriptions['newsletter']
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})

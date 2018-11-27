@@ -34,10 +34,10 @@
         </p>
         <p class="search-hint"
         *ngIf="!loggedIn">
-            We are in closed beta.<br>
-            You can register for getting invited and<br>subscribe to our newsletter <a (click)="scrollToID('newsletter')">here</a>.
+            We are in closed beta.<br><br>
+            You can subscribe to our newsletter <a (click)="scrollToID('newsletter')">here</a>.
         </p>
-        <p class="no-search-hint">
+        <p class="no-search-hint" *ngIf="loggedIn">
             To use the tool, please switch to a bigger screen.
         </p>
         <div class="anchors">
