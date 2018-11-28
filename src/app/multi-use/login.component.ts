@@ -60,8 +60,7 @@ export class LoginComponent {
         if (email && password) {
             this.loginLoading = true;
             this.apiService.authCheckPassword(email, password).subscribe( response => {
-                const passwordCheck = response['password_check'];
-                if (passwordCheck) {
+                if (response['session_token']) {
                     const sessionToken = response['session_token'];
                     localStorage.setItem('session_token', sessionToken);
                     localStorage.setItem('session_email', email);

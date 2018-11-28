@@ -193,9 +193,9 @@ export class ApiService {
             .map( response => response.json() );
     }
 
-    authGetUserData( email: string, sessionToken: string): Observable<object> {
+    authGetUsername( email: string, sessionToken: string): Observable<string> {
         console.log('#apiService#: authGetUserData()');
-        const url = this.url + '/auth/get_user_data';
+        const url = this.url + '/auth/get_username';
         const body = JSON.stringify({
             email: email.toLowerCase(),
             session_token: sessionToken
@@ -205,11 +205,11 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authChangePassword( email: string, oldPassword: string, newPassword: string): Observable<object> {
+    authChangePassword( oldPassword: string, newPassword: string): Observable<object> {
         console.log('#apiService#: authChangePassword()');
         const url = this.url + '/auth/change_password';
         const body = JSON.stringify({
-            email: email.toLowerCase(),
+            email: this.email.toLowerCase(),
             old_password: oldPassword,
             new_password: newPassword
         });
@@ -229,11 +229,11 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authDeleteUser( email: string, password: string): Observable<object> {
+    authDeleteUser( password: string): Observable<object> {
         console.log('#apiService#: authDeleteUser()');
         const url = this.url + '/auth/delete_user';
         const body = JSON.stringify({
-            email: email.toLowerCase(),
+            email: this.email.toLowerCase(),
             password: password
         });
         return this.http
