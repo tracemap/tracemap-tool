@@ -6,7 +6,8 @@
             background-color: transparent;
             display: grid;
             grid-template-columns: 500px 1fr;
-            grid-template-rows: 200px 120px 60px 1fr;
+            grid-row-gap: 20px;
+            grid-template-rows: 200px auto auto 1fr;
             grid-template-areas:
                 "slogan slogan"
                 "searchbar searchbar"
@@ -31,9 +32,9 @@
                 height: 60vh;
                 border-radius: 50%;
                 left: 50%;
-                margin-left: -27.5vh;
+                margin-left: -30vh;
                 top: 50%;
-                margin-top: -27.5vh;
+                margin-top: -30vh;
                 background-color: $color-purple-light;
 
                 .bg-inner {
@@ -49,7 +50,7 @@
             .slogan {
                 grid-area: slogan;
                 align-self: end;
-                p {
+                h1 {
                     color: #f5f6f7;
                     line-height: 68px;
                     font-weight: 300;
@@ -59,47 +60,67 @@
 
             .searchbar {
                 grid-area: searchbar;
-                align-self: end;
-                max-width: 400px;
-                height: 60px;
-                margin-top: 30px;
-                border-bottom: 2px solid #f5f6f7;
-                display: grid;
-                grid-template-columns: 1fr 50px;
-                grid-template-rows: 52px;
-                grid-template-areas:
-                    "input button";
+                // align-self: end;
+                // max-width: 400px;
+                // height: 60px;
+                // margin-top: 30px;
+                // border-bottom: 2px solid #f5f6f7;
+                // display: grid;
+                // grid-template-columns: 1fr 50px;
+                // grid-template-rows: 52px;
+                // grid-template-areas:
+                //     "input button";
 
-                &.disabled {
-                    opacity: 0.2;
+                // &.disabled {
+                //     opacity: 0.2;
+                // }
+
+
+                // input[type=text] {
+                //     grid-area: input;
+                //     width: 100%;
+                //     background-color: transparent;
+                //     border: none;
+                //     margin-right: 10px;
+                //     font-size: 23.99px;
+                //     color: #FFF;
+                //     line-height: 40px;
+                //     &::placeholder {
+                //         color: #f5f6f7;
+                //         opacity: 1;
+                //     }
+                // }
+
+                // .search-button {
+                //     grid-area: button;
+                //     &:hover {
+                //         cursor: pointer;
+                //     }
+                //     img {
+                //         width: 40px;
+                //     }
+                // }
+                background-color: rgba(255,255,255,0.7);
+                padding: 24px;
+                border-radius: 12px;
+                margin-top: 20px;
+                max-width: 500px;
+                justify-self: center;
+
+                h3 {
+                    font-size: 20px;
+                    font-weight: 400;
                 }
-
-
-                input[type=text] {
-                    grid-area: input;
-                    width: 100%;
-                    background-color: transparent;
-                    border: none;
-                    margin-right: 10px;
-                    font-size: 23.99px;
-                    color: #FFF;
-                    line-height: 40px;
-                    &::placeholder {
-                        color: #f5f6f7;
-                        opacity: 1;
+                p {
+                    margin-top: 20px;
+                    font-size: 17px;
+                    line-height: 20px;
+                    color: $color-header;
+                    &.end-section {
+                        font-size: 14px;
+                        line-height: 17px;
                     }
                 }
-
-                .search-button {
-                    grid-area: button;
-                    &:hover {
-                        cursor: pointer;
-                    }
-                    img {
-                        width: 40px;
-                    }
-                }
-
             }
 
             .search-hint, .no-search-hint {
@@ -360,7 +381,7 @@
                 padding-bottom: 20px;
                 min-height: 100vh;
                 grid-template-columns: 1fr;
-                grid-template-rows: 100px 30px auto 1fr;
+                grid-template-rows: 150px 30px auto 1fr;
                 grid-template-areas:
                     "slogan"
                     "."
@@ -369,6 +390,7 @@
 
                 .slogan {
                     grid-area: slogan;
+                    align-self: end
                     p {
                         font-size: 32px;
                         line-height: 40px;
