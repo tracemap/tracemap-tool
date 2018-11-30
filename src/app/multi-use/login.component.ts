@@ -60,8 +60,7 @@ export class LoginComponent {
         if (email && password) {
             this.loginLoading = true;
             this.apiService.authCheckPassword(email, password).subscribe( response => {
-                const passwordCheck = response['password_check'];
-                if (passwordCheck) {
+                if (response['session_token']) {
                     const sessionToken = response['session_token'];
                     localStorage.setItem('session_token', sessionToken);
                     localStorage.setItem('session_email', email);
@@ -100,10 +99,11 @@ export class LoginComponent {
     sendResetMail(email: string) {
         if (email) {
             this.apiService.authRequestReset(email).subscribe( response => {
-                if (response['error']) {
-                    this.error = response['error'];
+                if (response) {
+                    this.error = response;
+                    this.forgotOpen = false;
                 } else {
-                    this.error = 'The e-mail was successfully sent.';
+                    this.error = 'Something went wrong.';
                 }
             });
         } else {

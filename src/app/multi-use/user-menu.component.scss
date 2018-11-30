@@ -66,6 +66,13 @@
         }
     }
 
+    .head {
+        h2 {
+            overflow: hidden;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
 
     .body {
         padding: 20px;
@@ -109,6 +116,43 @@
                 font-size: 13px;
                 font-weight: 400;
                 margin-bottom: 5px;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 930px) {
+    .app-login {
+        display: none;
+    }
+    .user-menu-button {
+        top: 16px;
+        right: 64px;
+        width: 36px;
+        height: 36px;
+
+        img {
+            width: 24px;
+            height: 24px;
+            margin-top: 3px;
+            margin-left: 4px;
+        }
+    }
+    .tooltip {
+        top: 10px;
+        right: 130px;
+        .shadow {
+            right: 110px;
+            top: 16px;
+            &.black {
+                top: 16px;
+            }
+        }
+        .arrow {
+            right: 112px;
+            top: 17px;
+            border-left: 18px solid $color-black-bg;
+            &.black {
+                top: 17px;
             }
         }
     }

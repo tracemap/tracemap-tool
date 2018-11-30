@@ -33,7 +33,7 @@ export class GuardService implements CanActivate {
             const email = localStorage.getItem('session_email');
             if (email && sessionToken) {
                 this.apiService.authCheckSession(email, sessionToken).subscribe( response => {
-                    if (response['session']) {
+                    if (response) {
                         this.sessionToken = sessionToken;
                         this.userService.credentials.next({
                             'email': email,

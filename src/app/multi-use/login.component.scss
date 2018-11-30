@@ -98,7 +98,7 @@
             }
         }
         .hint {
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 400;
             &.forgot-hint {
                 margin-top: 15px;
@@ -144,6 +144,7 @@
         align-self: end;
         justify-self: right;
         display: inline;
+        font-size: 12px;
         margin-bottom: 8px; 
         a {
             font-size: 14px;

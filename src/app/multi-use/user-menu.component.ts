@@ -16,7 +16,6 @@ export class UserMenuComponent {
 
     menuOpen = false;
     username = '';
-    email = '';
     formOpen = '';
     errorMsg = '';
 
@@ -29,9 +28,8 @@ export class UserMenuComponent {
             if (credentials) {
                 const email = credentials['email'];
                 const sessionToken = credentials['session_token'];
-                this.apiService.authGetUserData(email, sessionToken).subscribe( response => {
-                    this.username = response['u.username'];
-                    this.email = response['u.email'];
+                this.apiService.authGetUsername(email, sessionToken).subscribe( response => {
+                    this.username = response;
                 });
             }
         });
@@ -58,17 +56,21 @@ export class UserMenuComponent {
     changePassword( oldPass: string, newPass1: string, newPass2: string): void {
         if (oldPass && newPass1 && newPass2) {
             if (newPass1 === newPass2) {
-                this.apiService.authChangePassword(this.email, oldPass, newPass1).subscribe( response => {
-                    if (response['error']) {
-                        this.errorMsg = response['error'];
-                    } else {
-                        this.errorMsg = 'your password has been changed.';
-                        this.formOpen = '';
-                        window.setTimeout( () => {
-                            this.guardService.logout();
-                        }, 2000);
-                    }
-                });
+                if (newPass1 === oldPass) {
+                    this.errorMsg = 'You cannot choose the same password as before.';
+                } else {
+                    this.apiService.authChangePassword( oldPass, newPass1).subscribe( response => {
+                        if (response['error']) {
+                            this.errorMsg = response['error'];
+                        } else {
+                            this.errorMsg = 'your password has been changed.';
+                            this.formOpen = '';
+                            window.setTimeout( () => {
+                                this.guardService.logout();
+                            }, 2000);
+                        }
+                    });
+                }
 
             } else {
                 this.errorMsg = 'the new passwords do not match.';
@@ -81,7 +83,7 @@ export class UserMenuComponent {
 
     deleteAccount( password: string) {
         if (password) {
-            this.apiService.authDeleteUser(this.email, password).subscribe( response => {
+            this.apiService.authDeleteUser( password).subscribe( response => {
                 if (response['error']) {
                     this.errorMsg = response['error'];
                 } else {

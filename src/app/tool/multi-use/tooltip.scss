@@ -49,6 +49,7 @@
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         grid-template-columns: auto 1fr;
+        grid-column-gap: 12px;
         grid-template-rows: 1fr;
         grid-template-areas:
             "header close";

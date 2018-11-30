@@ -20,7 +20,7 @@ export class HomePageComponent {
     loggedIn = false;
     subscriptionResponse = undefined;
     subscriptions = {
-        beta_queue: true,
+        beta_queue: false,
         newsletter: true,
     };
     emailResponse = '';
@@ -88,13 +88,8 @@ export class HomePageComponent {
                     emailAdress !== '' &&
                     this.isValidEmail(emailAdress)) {
                     this.emailError = false;
-                this.apiService.addToNewsletter(emailAdress).subscribe( response => {
-                    this.subscriptionResponse = true;
-                    if (response['error']) {
-                        this.emailResponse = 'Thanks for insisting.<br>You have already subscribed.';
-                    } else {
-                        this.emailResponse = 'Thanks for your interest.<br>Please check your inbox and confirm your email address.';
-                    }
+                this.apiService.newsletterStartSubscription(emailAdress, this.subscriptions).subscribe( response => {
+                    console.log(response);
                 });
             } else {
                 this.emailError = true;

@@ -144,26 +144,13 @@ export class ApiService {
 
     // Nontool Methods
 
-    // Deprecated, use startUserSubscriptioin(...)
-    addToNewsletter( email: string): Observable<string> {
-        console.log('#apiService#: addToNewsletter()');
-        const url = this.url + '/newsletter/save_subscriber';
-        const body = JSON.stringify({
-            email: email.toLowerCase()
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    startUserSubscription( email: string, subscriptions: object): Observable<string> {
+    newsletterStartSubscription( email: string, subscriptions: object): Observable<string> {
         console.log('#apiService#: addToNewsletter()');
         const url = this.url + '/newsletter/start_subscription';
-        console.log(subscriptions);
         const body = JSON.stringify({
             email: email.toLowerCase(),
-            beta_queue: subscriptions['beta_queue'],
-            newsletter: subscriptions['newsletter']
+            beta_subscribed: subscriptions['beta_queue'],
+            newsletter_subscribed: subscriptions['newsletter']
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -206,9 +193,9 @@ export class ApiService {
             .map( response => response.json() );
     }
 
-    authGetUserData( email: string, sessionToken: string): Observable<object> {
+    authGetUsername( email: string, sessionToken: string): Observable<string> {
         console.log('#apiService#: authGetUserData()');
-        const url = this.url + '/auth/get_user_data';
+        const url = this.url + '/auth/get_username';
         const body = JSON.stringify({
             email: email.toLowerCase(),
             session_token: sessionToken
@@ -218,11 +205,11 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authChangePassword( email: string, oldPassword: string, newPassword: string): Observable<object> {
+    authChangePassword( oldPassword: string, newPassword: string): Observable<object> {
         console.log('#apiService#: authChangePassword()');
         const url = this.url + '/auth/change_password';
         const body = JSON.stringify({
-            email: email.toLowerCase(),
+            email: this.email.toLowerCase(),
             old_password: oldPassword,
             new_password: newPassword
         });
@@ -231,7 +218,7 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authRequestReset( email: string): Observable<object> {
+    authRequestReset( email: string): Observable<string> {
         console.log('#apiService#: authRequestReset()');
         const url = this.url + '/auth/request_reset_password';
         const body = JSON.stringify({
@@ -242,11 +229,11 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authDeleteUser( email: string, password: string): Observable<object> {
+    authDeleteUser( password: string): Observable<object> {
         console.log('#apiService#: authDeleteUser()');
         const url = this.url + '/auth/delete_user';
         const body = JSON.stringify({
-            email: email.toLowerCase(),
+            email: this.email.toLowerCase(),
             password: password
         });
         return this.http
