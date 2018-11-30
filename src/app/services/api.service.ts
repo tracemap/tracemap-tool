@@ -218,7 +218,7 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authRequestReset( email: string): Observable<object> {
+    authRequestReset( email: string): Observable<string> {
         console.log('#apiService#: authRequestReset()');
         const url = this.url + '/auth/request_reset_password';
         const body = JSON.stringify({

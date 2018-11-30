@@ -99,10 +99,11 @@ export class LoginComponent {
     sendResetMail(email: string) {
         if (email) {
             this.apiService.authRequestReset(email).subscribe( response => {
-                if (response['error']) {
-                    this.error = response['error'];
+                if (response) {
+                    this.error = response;
+                    this.forgotOpen = false;
                 } else {
-                    this.error = 'The e-mail was successfully sent.';
+                    this.error = 'Something went wrong.';
                 }
             });
         } else {

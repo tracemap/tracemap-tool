@@ -56,17 +56,21 @@ export class UserMenuComponent {
     changePassword( oldPass: string, newPass1: string, newPass2: string): void {
         if (oldPass && newPass1 && newPass2) {
             if (newPass1 === newPass2) {
-                this.apiService.authChangePassword( oldPass, newPass1).subscribe( response => {
-                    if (response['error']) {
-                        this.errorMsg = response['error'];
-                    } else {
-                        this.errorMsg = 'your password has been changed.';
-                        this.formOpen = '';
-                        window.setTimeout( () => {
-                            this.guardService.logout();
-                        }, 2000);
-                    }
-                });
+                if (newPass1 === oldPass) {
+                    this.errorMsg = 'You cannot choose the same password as before.';
+                } else {
+                    this.apiService.authChangePassword( oldPass, newPass1).subscribe( response => {
+                        if (response['error']) {
+                            this.errorMsg = response['error'];
+                        } else {
+                            this.errorMsg = 'your password has been changed.';
+                            this.formOpen = '';
+                            window.setTimeout( () => {
+                                this.guardService.logout();
+                            }, 2000);
+                        }
+                    });
+                }
 
             } else {
                 this.errorMsg = 'the new passwords do not match.';

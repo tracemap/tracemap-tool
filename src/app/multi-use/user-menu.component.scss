@@ -66,6 +66,13 @@
         }
     }
 
+    .head {
+        h2 {
+            overflow: hidden;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    }
 
     .body {
         padding: 20px;
