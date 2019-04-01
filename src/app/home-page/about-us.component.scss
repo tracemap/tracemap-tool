@@ -64,6 +64,9 @@
                     margin-top: 0px;
                     justify-self: start;
                 }
+                &.full-width {
+                    width: 100%;
+                }
                 font-size: 40px;
                 font-weight: 800;
                 text-decoration: none;
@@ -80,11 +83,20 @@
     .content {
         .content-box.partners, .content-box.sponsors {
             .box-content {
+                justify-content: center;
                 a {
                     font-size: 33px;
 
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .content {
+        .box-content.team {
+            justify-content: center;
         }
     }
 }
