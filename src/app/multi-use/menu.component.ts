@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router, RouterLinkActive } from '@angular/router';
-import { GuardService } from '../services/guard.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'menu',
@@ -32,18 +32,14 @@ export class MenuComponent {
         {
             label: 'Learn More',
             path: '/learn-more'
-        },
-        {
-            label: 'Donate a Token',
-            path: '/donate-token'
         }
     ];
 
     constructor(
         private router: Router,
-        private guardService: GuardService
+        private authService: AuthService
     ) {
-        this.guardService.loggedIn.subscribe( loggedIn => {
+        this.authService.loggedIn.subscribe( loggedIn => {
             this.loggedIn = loggedIn;
         });
     }

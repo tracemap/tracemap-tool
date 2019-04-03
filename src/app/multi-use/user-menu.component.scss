@@ -43,7 +43,7 @@
     top: 20px;
     right: 180px;
     &.open {
-        width: 250px;
+        width: auto;
         height: auto;
     }
     &.black {
@@ -77,46 +77,12 @@
     .body {
         padding: 20px;
         height: auto;
+        text-align: center;
+        border-radius: 0px 0px 6px 6px;
         .logout {
+            display: inline-block;
             width: 70px;
             height: 32px;
-            margin-bottom: 20px;
-        }
-        .password-change-button {
-            width: 165px;
-            height: 32px;
-            line-height: 30px;
-            margin-bottom: 20px;
-        }
-        .delete-button {
-            width: 150px;
-            height: 32px;
-            line-height: 30px;
-        }
-        .error {
-            margin-top: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            color: red;
-        }
-        .form {
-            input {
-                width: 226px;
-                height: 30px;
-                border: none;
-                margin-bottom: 10px;
-                font-size: 20px;
-                font-weight: 400;
-                &::placeholder {
-                    color: #A8ABB3;
-                    opacity: 1;
-                }
-            }
-            .hint {
-                font-size: 13px;
-                font-weight: 400;
-                margin-bottom: 5px;
-            }
         }
     }
 }

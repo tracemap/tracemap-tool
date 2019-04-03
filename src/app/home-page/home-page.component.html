@@ -9,7 +9,7 @@
         <div class="slogan">
             <h1>Fact-checking made easy.</h1>
         </div>
-        <!-- <div class="searchbar" 
+        <div class="searchbar" 
         [ngClass]="classes"
         *ngIf="loggedIn">
             <input id="search" [ngClass]="classes" type="text" 
@@ -31,16 +31,7 @@
         <p class="search-hint"
         *ngIf="loggedIn">
             Enter a tweets url from <a href="https://twitter.com" target="_blank">Twitter</a>.
-        </p> -->
-        <div class="beta-broken searchbar" *ngIf="loggedIn">
-            <h3>Dear beta tester,</h3>
-            <p>
-                Twitter has blocked our access to their data.<br>We are trying to bring the tool back to life as soon as possible.<br>We are very sorry about that, and we will let you know once the tool is available again.
-            </p>
-            <p class="end-section">
-                Thanks for your understanding,<br>The TraceMap team.
-            </p>
-        </div>
+        </p>
         <p class="search-hint"
         *ngIf="!loggedIn">
             You can subscribe to our newsletter <a (click)="scrollToID('newsletter')">here</a>.

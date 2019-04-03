@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from './../services/api.service';
-import { GuardService } from './../services/guard.service';
-import { UserService } from '../services/user.service';
+import { AuthService } from './../services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -13,101 +12,36 @@ import { UserService } from '../services/user.service';
 export class LoginComponent {
     @Input('color')
     color: string;
-    menuOpen = false;
-    registerOpen = false;
-    forgotOpen = false;
-    error: string;
-    loginLoading = false;
-    loggedIn: boolean;
-    // user data
-    email: string;
-    sessionToken: string;
 
     constructor(
         private apiService: ApiService,
-        private guardService: GuardService,
-        private userService: UserService
+        private route: ActivatedRoute,
+        private authService: AuthService
     ) {
-        this.guardService.getLastSession();
-        this.guardService.loggedIn.subscribe(loggedIn => {
-            this.loggedIn = loggedIn;
+        this.route.queryParams.subscribe( params => {
+            if (params['oauth_token']) {
+                this.apiService.completeTwitterOauth( params['oauth_token'], params['oauth_verifier'])
+                .subscribe( response => {
+                    if (response['success']) {
+                        this.authService.setSessionToken(response['session_token'], response['user_id']);
+                        this.authService.redirect();
+                    } else {
+                        console.log('authentication failed');
+                    }
+                });
+            } else {
+                this.authService.restoreSession();
+            }
         });
     }
 
-    openMenu(): void {
-        this.error = '';
-        if (this.menuOpen) {
-            this.menuOpen = false;
-            this.registerOpen = false;
-            this.forgotOpen = false;
-        } else {
-            this.menuOpen = true;
-        }
-    }
-
-    toggleRegister(): void {
-        this.error = '';
-        this.registerOpen ? this.registerOpen = false : this.registerOpen = true;
-        this.forgotOpen = false;
-    }
-
-    toggleForgot(): void {
-        this.error = '';
-        this.forgotOpen ? this.forgotOpen = false : this.forgotOpen = true;
-    }
-
-    login(email: string, password: string): void {
-        if (email && password) {
-            this.loginLoading = true;
-            this.apiService.authCheckPassword(email, password).subscribe( response => {
-                if (response['session_token']) {
-                    const sessionToken = response['session_token'];
-                    localStorage.setItem('session_token', sessionToken);
-                    localStorage.setItem('session_email', email);
-                    this.userService.credentials.next({
-                        'email': email,
-                        'session_token': sessionToken
-                    });
-                    this.guardService.loggedIn.next(true);
-                    this.loginLoading = false;
-                    this.menuOpen = false;
-                } else {
-                    this.error = response['error'];
-                    this.loginLoading = false;
-                }
-            });
-        } else {
-            this.error = 'Please enter a valid email and password.';
-        }
-    }
-
-    register(username: string, email: string): void {
-        if (username && email) {
-            this.apiService.authAddUser(username, email).subscribe( response => {
-                if (response['error']) {
-                    this.error = response['error'];
-                } else {
-                    this.error = 'We sent a password to your mail account.';
-                    this.registerOpen = false;
-                }
-            });
-        } else {
-            this.error = 'Please enter a username and a valid email.';
-        }
-    }
-
-    sendResetMail(email: string) {
-        if (email) {
-            this.apiService.authRequestReset(email).subscribe( response => {
-                if (response) {
-                    this.error = response;
-                    this.forgotOpen = false;
-                } else {
-                    this.error = 'Something went wrong.';
-                }
-            });
-        } else {
-            this.error = 'Please enter a valid email.';
-        }
+    getTwitterLink() {
+        this.apiService.getTwitterOauthLink().subscribe( response => {
+            if (response['success']) {
+                window.location.href = response['redirect_url'];
+            } else {
+                console.log(response['status']);
+            }
+        });
     }
 }

@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/forkJoin';
-import { UserService } from './user.service';
 
 @Injectable( )
 
@@ -16,7 +15,6 @@ export class ApiService {
     url = environment.apiUrl;
     email: string;
     sessionToken: string;
-
 
     tracemapData = new BehaviorSubject<object>(undefined);
     graphData = new BehaviorSubject<object>(undefined);
@@ -27,18 +25,43 @@ export class ApiService {
 
     constructor(
         private http: Http,
-        private userService: UserService
-    ) {
-        this.userService.credentials.subscribe( credentials => {
-            if (credentials) {
-                this.email = credentials['email'].toLowerCase();
-                this.sessionToken = credentials['session_token'];
-            }
+    ) { }
+
+    getTwitterOauthLink(): Observable<object> {
+        console.log('#apiService#: getTwitterOauthLink');
+        const url = this.url + '/twitter/start_authenticate';
+        return this.http.get(url).map( response => response.json() );
+    }
+
+    completeTwitterOauth( oauth_token: string, oauth_verifier: string): Observable<object> {
+        console.log('#apiService#: completeTwitterOauth');
+        const url = this.url + '/twitter/complete_authenticate';
+        const body = JSON.stringify({
+            oauth_token: oauth_token,
+            oauth_verifier: oauth_verifier
         });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => {
+                return response.json();
+            });
+    }
+
+    checkTwitterOauthSession( sessionToken: string, sessionUserId: string): Observable<object> {
+        console.log('#apiService#: checkTwitterOauthSession');
+        const url = this.url + '/twitter/check_session';
+        const body = JSON.stringify({
+            session_token: sessionToken,
+            user_id: sessionUserId
+        });
+        return this.http
+            .post( url, body, {headers: this.jsonHeader})
+            .map( response => {
+                return response.json();
+            });
     }
 
     // Tool Methods
-
     getTweetInfo( tweetId: string): Observable<object> {
         console.log('#apiService#: getTweetInfo');
         const url = this.url + '/twitter/get_tweet_info';

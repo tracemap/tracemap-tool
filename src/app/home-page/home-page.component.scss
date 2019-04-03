@@ -60,67 +60,47 @@
 
             .searchbar {
                 grid-area: searchbar;
-                // align-self: end;
-                // max-width: 400px;
-                // height: 60px;
-                // margin-top: 30px;
-                // border-bottom: 2px solid #f5f6f7;
-                // display: grid;
-                // grid-template-columns: 1fr 50px;
-                // grid-template-rows: 52px;
-                // grid-template-areas:
-                //     "input button";
+                align-self: end;
+                max-width: 400px;
+                height: 60px;
+                margin-top: 30px;
+                border-bottom: 2px solid #f5f6f7;
+                display: grid;
+                grid-template-columns: 1fr 50px;
+                grid-template-rows: 52px;
+                grid-template-areas:
+                    "input button";
 
-                // &.disabled {
-                //     opacity: 0.2;
-                // }
-
-
-                // input[type=text] {
-                //     grid-area: input;
-                //     width: 100%;
-                //     background-color: transparent;
-                //     border: none;
-                //     margin-right: 10px;
-                //     font-size: 23.99px;
-                //     color: #FFF;
-                //     line-height: 40px;
-                //     &::placeholder {
-                //         color: #f5f6f7;
-                //         opacity: 1;
-                //     }
-                // }
-
-                // .search-button {
-                //     grid-area: button;
-                //     &:hover {
-                //         cursor: pointer;
-                //     }
-                //     img {
-                //         width: 40px;
-                //     }
-                // }
-                background-color: rgba(255,255,255,0.7);
-                padding: 24px;
-                border-radius: 12px;
-                margin-top: 20px;
-                max-width: 500px;
-                justify-self: center;
-
-                h3 {
-                    font-size: 20px;
-                    font-weight: 400;
+                &.disabled {
+                    opacity: 0.2;
                 }
-                p {
-                    margin-top: 20px;
-                    font-size: 17px;
-                    line-height: 20px;
-                    color: $color-header;
-                    &.end-section {
-                        font-size: 14px;
-                        line-height: 17px;
+
+
+                input[type=text] {
+                    grid-area: input;
+                    width: 100%;
+                    background-color: transparent;
+                    border: none;
+                    margin-right: 10px;
+                    font-size: 23.99px;
+                    color: #FFF;
+                    line-height: 40px;
+                    &::placeholder {
+                        color: #f5f6f7;
+                        opacity: 1;
                     }
                 }
+
+                .search-button {
+                    grid-area: button;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    img {
+                        width: 40px;
+                    }
+                }
+
             }
 
             .search-hint, .no-search-hint {

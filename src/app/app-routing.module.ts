@@ -7,11 +7,10 @@ import { AboutUsComponent } from './home-page/about-us.component';
 import { LearnMoreComponent } from './home-page/learn-more.component';
 import { AboutDataComponent } from './home-page/about-data.component';
 import { SitemapComponent } from './home-page/sitemap.component';
-import { DonateTokenComponent } from './home-page/donate-token.component';
 import { PrivacyComponent } from './home-page/privacy.component';
 
 import { PageNotFoundComponent } from './page-not-found.component';
-import { GuardService } from './services/guard.service';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
 	{ path: 'home', component: HomePageComponent},
@@ -20,10 +19,9 @@ const routes: Routes = [
     // { path: 'codeofconduct', component: CodeOfConductComponent},
     { path: 'about-data', component: AboutDataComponent},
     { path: 'learn-more', component: LearnMoreComponent},
-    { path: 'donate-token', component: DonateTokenComponent},
     { path: 'legal', component: SitemapComponent},
     { path: 'privacy', component: PrivacyComponent},
-    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule', canActivate: [GuardService]},
+    { path: 'tool', loadChildren: 'app/tool/tool.module#ToolModule', canActivate: [AuthService]},
 	{ path: '**', component: PageNotFoundComponent }
 ];
 

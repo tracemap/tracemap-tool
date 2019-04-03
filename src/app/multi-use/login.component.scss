@@ -1,5 +1,5 @@
 @import "../../styles.scss";
-.login-menu-button {
+.login-button {
     position: fixed;
     z-index: 3;
     top: 30px;
@@ -19,13 +19,18 @@
         transition: none;
     }
 }
+.login-menu-button {
+    width: auto;
+    padding: 0px 20px;
+}
+
 .login-menu {
     position: fixed;
     overflow: hidden;
     z-index: 2;
     top: 30px;
     right: 108px;
-    width: 250px;
+    width: 100px;
     height: 48px;
     background-color: #fff;
     border: 2px solid $color-purple-dark;
@@ -45,12 +50,11 @@
     grid-template-rows: auto auto auto 40px;
     grid-row-gap: 40px;
     grid-template-areas:
-        "form"
-        "register"
-        "links"
+        "logout"
         "policy";
 
     .button {
+        grid-area: logout;
         margin-top: 10px;
         margin-right: 10px;
         font-size: 18px;
@@ -66,77 +70,6 @@
         &.forgot {
             width: 150px;
         }
-    }
-
-    .form {
-        grid-area: form;
-        input {
-            width: 226px;
-            height: 30px;
-            border: none;
-            margin-top: 10px;
-            font-size: 20px;
-            font-weight: 400;
-            &::placeholder {
-                color: #A8ABB3;
-                opacity: 1;
-            }
-        }
-        .error {
-            margin-top: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            color: red;
-        }
-        .forgot-toggle {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        .hint {
-            font-size: 10px;
-            font-weight: 400;
-            &.forgot-hint {
-                margin-top: 15px;
-                margin-bottom: 5px;
-                font-size: 11.5px;
-            }
-        }
-        // just for the login spinner
-        .login-button-container {
-            width: 100%;
-            display: grid;
-            grid-template-rows: 1fr;
-            grid-template-columns: 80px 32px;
-            grid-template-areas:
-                "button spinner";
-
-            .login.button {
-                grid-area: button;
-            }
-            .spinner {
-                grid-area: spinner;
-                margin-top: 13.5px;
-            }
-        }
-    }
-    .register {
-        grid-area: register;
-
-        p {
-            line-height: 22px;
-        }
-    }
-    .links {
-        grid-area: links;
-
-        p {
-            line-height: 22px;
-        }        
     }
 
     .policy {

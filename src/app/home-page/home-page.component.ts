@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ApiService } from './../services/api.service';
-import { GuardService } from './../services/guard.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
 	selector: 'home-page',
@@ -28,10 +28,10 @@ export class HomePageComponent {
 
     constructor(
         private apiService: ApiService,
-        private guardService: GuardService,
+        private authService: AuthService,
         private router: Router
     ) {
-        this.guardService.loggedIn.subscribe( value => {
+        this.authService.loggedIn.subscribe( value => {
             this.loggedIn = value;
         });
     }

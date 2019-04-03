@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { GuardService } from '../services/guard.service';
+import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
-import { UserService } from '../services/user.service';
-import { timeInterval } from 'rxjs/operators';
 
 @Component({
     selector: 'app-user-menu',
@@ -15,28 +13,17 @@ export class UserMenuComponent {
     color: string;
 
     menuOpen = false;
-    username = '';
+    screen_name = '';
     formOpen = '';
     errorMsg = '';
 
     constructor(
-        private guardService: GuardService,
+        private authService: AuthService,
         private apiService: ApiService,
-        private userService: UserService
     ) {
-        this.userService.credentials.subscribe( credentials => {
-            if (credentials) {
-                const email = credentials['email'];
-                const sessionToken = credentials['session_token'];
-                this.apiService.authGetUsername(email, sessionToken).subscribe( response => {
-                    this.username = response;
-                });
-            }
+        this.authService.screen_name.subscribe( value => {
+            this.screen_name = value;
         });
-    }
-
-    togglePasswordChange(): void {
-        this.formOpen === 'passwordChange' ? this.formOpen = '' : this.formOpen = 'passwordChange';
     }
 
     toggleDelete(): void {
@@ -50,52 +37,6 @@ export class UserMenuComponent {
     }
 
     logout(): void {
-        this.guardService.logout();
+        this.authService.logout();
     }
-
-    changePassword( oldPass: string, newPass1: string, newPass2: string): void {
-        if (oldPass && newPass1 && newPass2) {
-            if (newPass1 === newPass2) {
-                if (newPass1 === oldPass) {
-                    this.errorMsg = 'You cannot choose the same password as before.';
-                } else {
-                    this.apiService.authChangePassword( oldPass, newPass1).subscribe( response => {
-                        if (response['error']) {
-                            this.errorMsg = response['error'];
-                        } else {
-                            this.errorMsg = 'your password has been changed.';
-                            this.formOpen = '';
-                            window.setTimeout( () => {
-                                this.guardService.logout();
-                            }, 2000);
-                        }
-                    });
-                }
-
-            } else {
-                this.errorMsg = 'the new passwords do not match.';
-            }
-
-        } else {
-            this.errorMsg = 'please fill out all input fields.';
-        }
-    }
-
-    deleteAccount( password: string) {
-        if (password) {
-            this.apiService.authDeleteUser( password).subscribe( response => {
-                if (response['error']) {
-                    this.errorMsg = response['error'];
-                } else {
-                    this.errorMsg = 'Your account has been deleted';
-                    window.setTimeout(() => {
-                        this.guardService.logout();
-                    }, 2000);
-                }
-            });
-        } else {
-            this.errorMsg = 'Please enter your password.';
-        }
-    }
-
 }

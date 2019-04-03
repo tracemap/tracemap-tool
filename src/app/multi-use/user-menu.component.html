@@ -22,7 +22,7 @@ class="user-menu-button"
     <div class="shadow" [ngClass]="color"></div>
     <div class="arrow" [ngClass]="color"></div>
     <div class="head">
-        <h2>Hi {{username}}</h2>
+        <h2>@{{screen_name}}</h2>
         <div class="close-button" (click)="toggleMenu()">
             <img srcset="
             ../../assets/images/close-white_128.png 4x,
@@ -37,49 +37,5 @@ class="user-menu-button"
         (click)="logout()">
             Logout
         </button>
-        <div class="form"
-        *ngIf="formOpen === 'passwordChange'">
-            <input type="password"
-            #oldPassword
-            placeholder="old password">
-            <input type="password"
-            #newPassword1
-            placeholder="new password">
-            <input type="password"
-            #newPassword2
-            (keydown.enter)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)"
-            placeholder="confirm new password">
-            <button class="button purple-button password-change-button"
-            (click)="changePassword(oldPassword.value, newPassword1.value, newPassword2.value)">
-                Change Password
-            </button>
-        </div>
-        <button class="button light-button password-change-button"
-        (click)="togglePasswordChange()"
-        *ngIf="formOpen !== 'passwordChange'">
-            Change Password
-        </button>
-        <div class="form"
-        *ngIf="formOpen === 'deleteAccount'">
-            <p class="hint">
-                We will miss you! You can register again, whenever you want to.
-            </p>
-            <input type="password"
-            #password
-            (keydown.enter)="deleteAccount(password.value)"
-            placeholder='enter your password'>
-            <button class="button red-button delete-button"
-            (click)="deleteAccount(password.value)">
-                Delete Account
-            </button>
-        </div>
-        <button class="button light-button delete-button"
-        (click)="toggleDelete()"
-        *ngIf="formOpen !== 'deleteAccount'">
-            Delete Account
-        </button>
-        <p class="error">
-            {{errorMsg}}
-        </p>
     </div>
 </div>
