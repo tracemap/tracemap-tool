@@ -8,7 +8,6 @@ import { ApiService } from './api.service';
 export class AuthService implements CanActivate {
     loggedIn = new BehaviorSubject<boolean>(false);
     screen_name = new BehaviorSubject<string>(undefined);
-    session_token = new BehaviorSubject<string>(undefined);
 
     constructor(
         private apiService: ApiService,
@@ -39,7 +38,8 @@ export class AuthService implements CanActivate {
                     if (response['success']) {
                         this.loggedIn.next(true);
                         this.screen_name.next(response['screen_name']);
-                        this.session_token.next(response['session_token']);
+                        this.apiService.sessionToken = sessionToken;
+                        this.apiService.userId = sessionUserId;
                         return new Promise((res) => res(response));
                     }
                 });
@@ -55,11 +55,13 @@ export class AuthService implements CanActivate {
     canActivate(): Promise<boolean> {
         return new Promise( res => {
             this.restoreSession().then( response => {
-                if (!response['success']) {
+                if (response['success']) {
+                    res(true);
+                } else {
                     alert('You are not allowed to view this page. You are redirected to the Home Page.');
                     this.router.navigate(['/home']);
+                    res(false);
                 }
-                res(true);
             });
         });
     }

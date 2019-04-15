@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AuthService } from '../services/auth.service';
 
 import { environment } from '../../environments/environment';
 
@@ -13,7 +14,7 @@ import 'rxjs/add/observable/forkJoin';
 
 export class ApiService {
     url = environment.apiUrl;
-    email: string;
+    userId: string;
     sessionToken: string;
 
     tracemapData = new BehaviorSubject<object>(undefined);
@@ -25,15 +26,15 @@ export class ApiService {
 
     constructor(
         private http: Http,
-    ) { }
+    ) {}
 
-    getTwitterOauthLink(): Observable<object> {
+    getTwitterOauthLink(): Observable < object > {
         console.log('#apiService#: getTwitterOauthLink');
         const url = this.url + '/twitter/start_authenticate';
         return this.http.get(url).map( response => response.json() );
     }
 
-    completeTwitterOauth( oauth_token: string, oauth_verifier: string): Observable<object> {
+    completeTwitterOauth( oauth_token: string, oauth_verifier: string): Observable < object > {
         console.log('#apiService#: completeTwitterOauth');
         const url = this.url + '/twitter/complete_authenticate';
         const body = JSON.stringify({
@@ -47,12 +48,12 @@ export class ApiService {
             });
     }
 
-    checkTwitterOauthSession( sessionToken: string, sessionUserId: string): Observable<object> {
+    checkTwitterOauthSession( sessionToken: string, sessionUserId: string): Observable < object > {
         console.log('#apiService#: checkTwitterOauthSession');
         const url = this.url + '/twitter/check_session';
         const body = JSON.stringify({
-            session_token: sessionToken,
-            user_id: sessionUserId
+            auth_session_token: sessionToken,
+            auth_user_id: sessionUserId
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
@@ -62,12 +63,12 @@ export class ApiService {
     }
 
     // Tool Methods
-    getTweetInfo( tweetId: string): Observable<object> {
+    getTweetInfo( tweetId: string): Observable < object > {
         console.log('#apiService#: getTweetInfo');
         const url = this.url + '/twitter/get_tweet_info';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             tweet_id: tweetId
         });
         return this.http
@@ -78,12 +79,12 @@ export class ApiService {
             });
     }
 
-    getTweetData( tweetId: string): Observable<object> {
+    getTweetData( tweetId: string): Observable < object > {
         console.log('#apiService#: getTweetData');
         const url = this.url + '/twitter/get_tweet_data';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             tweet_id: tweetId
         });
         return this.http
@@ -94,12 +95,12 @@ export class ApiService {
             });
     }
 
-    getTimeline( userId: string): Observable<object> {
+    getTimeline( userId: string): Observable < object > {
         console.log('#apiService#: getTimeline');
         const url = this.url + '/twitter/get_user_timeline';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             user_id: userId
         });
         return this.http
@@ -107,12 +108,12 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    getUserInfo( userId: string): Observable<object> {
+    getUserInfo( userId: string): Observable < object > {
         console.log('#apiService#: getUserInfo');
         const url = this.url + '/twitter/get_user_info';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             user_id: userId
         });
         return this.http
@@ -120,13 +121,13 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    getFollowers( retweeterIds: string[], authorId: string): Observable<object> {
+    getFollowers( retweeterIds: string[], authorId: string): Observable < object > {
         console.log('#apiService#: getFollowers');
         const userIds = retweeterIds.concat([authorId]);
         const url = this.url + '/neo4j/get_followers';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             user_ids: userIds
         });
         return this.http
@@ -134,30 +135,28 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    getTracemapData(tweetId: string): Promise<object> {
+    getTracemapData(tweetId: string): Promise < object > {
         console.log('#apiService#: getTracemapData');
         const tracemapData = {};
         return new Promise( (resolve, reject) => {
             this.getTweetData( tweetId)
-                .flatMap( tweetData => {
+                .map( tweetData => {
                     tracemapData['tweet_data'] = tweetData;
                     const userIds = tracemapData['tweet_data']['retweeter_ids'];
                     const authorId = tracemapData['tweet_data']['tweet_info']['user']['id_str'];
-                    return this.getFollowers( userIds, authorId);
-                }).subscribe( followersList => {
-                    tracemapData['followers'] = followersList;
+                    tracemapData['followers'] = [];
                     this.tracemapData.next(tracemapData);
                     resolve( tracemapData);
             });
         });
     }
 
-    labelUnknownUsers( retweeterIds: string[]): Observable<string[]> {
+    labelUnknownUsers( retweeterIds: string[]): Observable < string[] > {
         console.log('#apiService#: labelUnknownUsers');
         const url = this.url + '/neo4j/label_unknown_users';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             user_ids: retweeterIds
         });
         return this.http
@@ -167,7 +166,7 @@ export class ApiService {
 
     // Nontool Methods
 
-    newsletterStartSubscription( email: string, subscriptions: object): Observable<string> {
+    newsletterStartSubscription( email: string, subscriptions: object): Observable < string > {
         console.log('#apiService#: addToNewsletter()');
         const url = this.url + '/newsletter/start_subscription';
         const body = JSON.stringify({
@@ -180,96 +179,12 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    authAddUser( username: string, email: string): Observable<object> {
-        console.log('#apiService#: authAddUser');
-        const url = this.url + '/auth/add_user';
-        const body = JSON.stringify({
-            username: username,
-            email: email.toLowerCase()
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    authCheckPassword( email: string, password: string): Observable<string> {
-        console.log('#apiService#: authCheckPassword()');
-        const url = this.url + '/auth/check_password';
-        const body = JSON.stringify({
-            email: email.toLowerCase(),
-            password: password
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json() );
-    }
-
-    authCheckSession( email: string, sessionToken: string): Observable<string> {
-        console.log('#apiService#: authCheckSession()');
-        const url = this.url + '/auth/check_session';
-        const body = JSON.stringify({
-            email: email.toLowerCase(),
-            session_token: sessionToken
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json() );
-    }
-
-    authGetUsername( email: string, sessionToken: string): Observable<string> {
-        console.log('#apiService#: authGetUserData()');
-        const url = this.url + '/auth/get_username';
-        const body = JSON.stringify({
-            email: email.toLowerCase(),
-            session_token: sessionToken
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    authChangePassword( oldPassword: string, newPassword: string): Observable<object> {
-        console.log('#apiService#: authChangePassword()');
-        const url = this.url + '/auth/change_password';
-        const body = JSON.stringify({
-            email: this.email.toLowerCase(),
-            old_password: oldPassword,
-            new_password: newPassword
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    authRequestReset( email: string): Observable<string> {
-        console.log('#apiService#: authRequestReset()');
-        const url = this.url + '/auth/request_reset_password';
-        const body = JSON.stringify({
-            email: email.toLowerCase()
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    authDeleteUser( password: string): Observable<object> {
-        console.log('#apiService#: authDeleteUser()');
-        const url = this.url + '/auth/delete_user';
-        const body = JSON.stringify({
-            email: this.email.toLowerCase(),
-            password: password
-        });
-        return this.http
-            .post( url, body, {headers: this.jsonHeader})
-            .map( response => response.json());
-    }
-
-    loggingWriteLog( fileName: string, logObject: object): Observable<object> {
+    loggingWriteLog( fileName: string, logObject: object): Observable < object > {
         console.log('#apiService#: loggingWriteLog()');
         const url = this.url + '/logging/write_log';
         const body = JSON.stringify({
-            email: this.email,
-            session_token: this.sessionToken,
+            auth_user_id: this.userId,
+            auth_session_token: this.sessionToken,
             file_name: fileName,
             log_object: logObject
         });
