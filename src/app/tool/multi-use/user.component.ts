@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-import { CommunicationService } from '../services/communication.service';
+import { TwitterDataService } from '../services/twitter-data.service';
 @Component({
     selector: 'user',
     templateUrl: './user.component.html',
@@ -17,17 +17,18 @@ export class UserComponent implements OnChanges {
     screenName: string;
 
     constructor(
-        private communicationService: CommunicationService,
+        private twitterDataService: TwitterDataService
     ) {}
 
     ngOnChanges() {
         if ( this.userId) {
-            this.communicationService.getUserInfo(this.userId).then( info => {
-                this.name = info['name'];
-                this.screenName = info['screen_name'];
-                this.image = info['profile_image_url_https'];
+            const userInfo = this.twitterDataService.getUserInfo(this.userId);
+            if (userInfo) {
+                this.name = userInfo['name'];
+                this.screenName = userInfo['screen_name'];
+                this.image = userInfo['profile_image_url_https'];
                 this.rendered.next(true);
-            }).catch(() => { console.log('user info not present'); });
+            }
         }
     }
 }

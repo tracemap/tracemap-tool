@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CommunicationService } from '../../services/communication.service';
+import { TwitterDataService } from '../../services/twitter-data.service';
 
 @Component({
     selector: 'acc-source',
@@ -19,7 +20,7 @@ export class AccSourceComponent {
     retweetCount: number;
 
     constructor(
-        private communicationService: CommunicationService,
+        private twitterDataService: TwitterDataService,
         private route: ActivatedRoute
     ) {
         this.route.params.subscribe( (params: Params) => {
@@ -28,9 +29,9 @@ export class AccSourceComponent {
             }
             this.tweetId = params['tid'];
         });
-        this.communicationService.retweetCount.subscribe( retweetCount => {
-            if ( retweetCount) {
-                this.retweetCount = retweetCount;
+        this.twitterDataService.isSet.subscribe( isSet => {
+            if ( isSet) {
+                this.retweetCount = this.twitterDataService.retweetCount;
                 this.rendered.next(true);
             }
         });

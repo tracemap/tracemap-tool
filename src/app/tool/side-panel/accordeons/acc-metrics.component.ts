@@ -38,9 +38,9 @@ export class AccMetricsComponent {
         Promise.all([this.propagationDelay, this.graphDataMetrics]).then(() => {
             this.rendered.next(true);
         });
-        this.userDataMetrics.then(() => {
-            this.rendered.next(true);
-        });
+        // this.userDataMetrics.then(() => {
+        //     this.rendered.next(true);
+        // });
         this.communicationService.resetData.subscribe( resetData => {
             if ( resetData) {
                 this.userMetricsRendered = false;
@@ -67,12 +67,14 @@ export class AccMetricsComponent {
                     const nodeCount = graphData['nodes'].length;
                     const avgLinks = linkCount / nodeCount;
                     this.tracemapMetrics.avg_links = avgLinks;
+                    console.log('avgLinks is:' + avgLinks);
                     resolve();
                 });
 
                 const promUserNumber = new Promise( (resolve) => {
                     const userNumber = graphData['nodes'].length;
                     this.tracemapMetrics.user_number = userNumber;
+                    console.log('userNumber is:' + userNumber);
                     resolve();
                 });
 
@@ -83,44 +85,43 @@ export class AccMetricsComponent {
                     this.tracemapMetricsRendered = true;
                     res();
                 });
-
             }
         });
     });
 
-    userDataMetrics = new Promise( (res) => {
-        this.graphService.nodeList.subscribe( nodeList => {
-            if ( nodeList) {
-                const nodeIds = nodeList.map( node => node['id_str']);
-                this.communicationService.userInfo.subscribe( userInfos => {
-                    this.communicationService.userInfosLoaded.next(true);
-                    let userCount = 0;
-                    let followers = 0;
-                    let followees = 0;
-                    let tweets = 0;
-                    let age = 0;
-                    const currentTime = Date.now();
-                    Object.keys(userInfos).forEach( key => {
-                        const user = userInfos[key];
-                        userCount += 1;
-                        followers += user['followers_count'];
-                        followees += user['friends_count'];
-                        tweets += user['statuses_count'];
-                        const creationDate = Date.parse(user['created_at']);
-                        age += currentTime - creationDate;
-                    });
-                    const avgFollowers = Math.floor(followers / userCount);
-                    const avgFollowees = Math.floor(followees / userCount);
-                    const avgTweets = Math.floor(tweets / userCount);
-                    const avgAge = (age / userCount);
-                    this.userMetrics.avg_followers = avgFollowers;
-                    this.userMetrics.avg_followees = avgFollowees;
-                    this.userMetrics.avg_tweets = avgTweets;
-                    this.userMetrics.avg_age = avgAge;
-                    this.userMetricsRendered = true;
-                    res();
-                });
-            }
-        });
-    });
+    // userDataMetrics = new Promise( (res) => {
+    //     this.graphService.nodeList.subscribe( nodeList => {
+    //         if ( nodeList) {
+    //             const nodeIds = nodeList.map( node => node['id_str']);
+    //             this.communicationService.userInfo.subscribe( userInfos => {
+    //                 this.communicationService.userInfosLoaded.next(true);
+    //                 let userCount = 0;
+    //                 let followers = 0;
+    //                 let followees = 0;
+    //                 let tweets = 0;
+    //                 let age = 0;
+    //                 const currentTime = Date.now();
+    //                 Object.keys(userInfos).forEach( key => {
+    //                     const user = userInfos[key];
+    //                     userCount += 1;
+    //                     followers += user['followers_count'];
+    //                     followees += user['friends_count'];
+    //                     tweets += user['statuses_count'];
+    //                     const creationDate = Date.parse(user['created_at']);
+    //                     age += currentTime - creationDate;
+    //                 });
+    //                 const avgFollowers = Math.floor(followers / userCount);
+    //                 const avgFollowees = Math.floor(followees / userCount);
+    //                 const avgTweets = Math.floor(tweets / userCount);
+    //                 const avgAge = (age / userCount);
+    //                 this.userMetrics.avg_followers = avgFollowers;
+    //                 this.userMetrics.avg_followees = avgFollowees;
+    //                 this.userMetrics.avg_tweets = avgTweets;
+    //                 this.userMetrics.avg_age = avgAge;
+    //                 this.userMetricsRendered = true;
+    //                 res();
+    //             });
+    //         }
+    //     });
+    // });
 }

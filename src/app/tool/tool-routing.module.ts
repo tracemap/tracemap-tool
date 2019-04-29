@@ -5,7 +5,7 @@ import { ToolComponent } from './tool.component';
 import { UserDetailsComponent } from './side-panel/user/user-details.component';
 
 const routes: Routes = [
-    { path: ':tid', component: ToolComponent, children:[
+    { path: ':tid', component: ToolComponent, children: [
         {path: 'details/:uid', component: UserDetailsComponent}
     ]}
 ];

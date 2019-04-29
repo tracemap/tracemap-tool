@@ -121,34 +121,17 @@ export class ApiService {
             .map( response => response.json());
     }
 
-    getFollowers( retweeterIds: string[], authorId: string): Observable < object > {
-        console.log('#apiService#: getFollowers');
-        const userIds = retweeterIds.concat([authorId]);
-        const url = this.url + '/neo4j/get_followers';
+    getTweetFollowships(tweetId: string): Observable < object > {
+        console.log('#apiService#: getTweetFollowships');
+        const url = this.url + '/neo4j/get_tweet_followships';
         const body = JSON.stringify({
             auth_user_id: this.userId,
             auth_session_token: this.sessionToken,
-            user_ids: userIds
+            tweet_id: tweetId
         });
         return this.http
             .post( url, body, {headers: this.jsonHeader})
             .map( response => response.json());
-    }
-
-    getTracemapData(tweetId: string): Promise < object > {
-        console.log('#apiService#: getTracemapData');
-        const tracemapData = {};
-        return new Promise( (resolve, reject) => {
-            this.getTweetData( tweetId)
-                .map( tweetData => {
-                    tracemapData['tweet_data'] = tweetData;
-                    const userIds = tracemapData['tweet_data']['retweeter_ids'];
-                    const authorId = tracemapData['tweet_data']['tweet_info']['user']['id_str'];
-                    tracemapData['followers'] = [];
-                    this.tracemapData.next(tracemapData);
-                    resolve( tracemapData);
-            });
-        });
     }
 
     labelUnknownUsers( retweeterIds: string[]): Observable < string[] > {

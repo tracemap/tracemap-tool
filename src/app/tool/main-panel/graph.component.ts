@@ -17,9 +17,7 @@ export class GraphComponent {
     tracemapId;
     graphData = {
         nodes: [],
-        links: [],
-        author_info: {},
-        retweet_info: {}
+        links: []
     };
     empty = false;
 
@@ -77,8 +75,6 @@ export class GraphComponent {
                 if (graphData['nodes'].length > 0) {
                     this.graphData.nodes = graphData['nodes'];
                     this.graphData.links = graphData['links'];
-                    this.graphData.author_info = graphData['author_info'];
-                    this.graphData.retweet_info = graphData['retweet_info'];
                     this.init();
                 } else {
                     this.empty = true;

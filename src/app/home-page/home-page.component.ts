@@ -43,15 +43,16 @@ export class HomePageComponent {
     }
 
     processUrl( searchField): void {
-    const input = String(searchField.value);
-    searchField.value = '';
-    this.getNewRoute(input)
-        .then(
-            response => {
-                document.getElementById('search').blur();
-                this.navigate(response);
-            },
-        reject => this.placeholder = reject);
+        const input = String(searchField.value);
+        searchField.value = '';
+        this.getNewRoute(input)
+            .then(
+                response => {
+                    document.getElementById('search').blur();
+                    this.navigate(response);
+                },
+                reject => this.placeholder = reject
+            );
     }
 
     getNewRoute(url: string): Promise<string> {
